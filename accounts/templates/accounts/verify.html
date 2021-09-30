@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}   
+ <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}"> 
+ <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.css' %}">
+{% endblock %}
+
+{% block header %} 
+{% endblock header %}
+
+{% block body %}
+<div class="row">
+    <div class="col-4">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% include 'accounts/error.html' %}
+            {{form}}
+            <button type="submit" class="btn btn-primary"> Verify</button>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %} 
+{% endblock footer %}

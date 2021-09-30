@@ -1,0 +1,450 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/app/css/fontend.css">
+<link rel="stylesheet" href="/static/app/css/singleproduct.css">
+<link rel="stylesheet" href="/static/app/css/productpage.css">
+{% endblock css %}
+
+{% block inbfol %} onload ="fput()" {% endblock inbfol %}
+
+{% block body %}
+    <!------------This is the start of the Single Product  section----->
+    <div class="single-product-cart-section">
+        <div class="single-product-cart-main">
+          <div class="single-product-cart-container">
+            <div class="single-product-cart-row">
+              <div class="single-product-cart-left">
+                <div class="single-product-cart-left-m">
+                  <div class="single-product-cart-left-r">
+                    
+                    <div class="cart-left-r-right">
+                      <div class="single-product-cart-image img-zoom-container">
+                        <img  id="myimage" src="{{product.product_image.url}}" alt="">
+        
+                        <div id="myresult" class="img-zoom-result"></div>
+                      </div>
+                      <div class="single-product-cart-button">
+                        <div class="add-cart-btn">
+                            <a prod = {{product.id}}  onclick="addToCart(this)" class="cart-btn">Add to cart</a>
+                        </div>
+                        <div class="buy-cart-btn">
+                          <a href="" class="buy-btn">buy now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="single-product-cart-right">
+                <div class="single-product-cart-details">
+                  <div class="single-product-cart-title">
+                    <h1>Wage Universal Wired Gaming Headset - Black/Blue (WMANY-N116)
+                    </h1>
+                  </div>
+  
+                  <div class="s-p-rating">
+                    <div class="s-p-rating-icon">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-angle-down"></i>
+                    </div>
+                    <div class="rating-count">
+                      <a href="#">
+                        <span>123</span>
+                        <span>ratings</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="hr"></div>
+                  <div class="s-p-price">
+                    <span class="price-name">
+                      <p>Price: </p>
+                    </span>
+                    <span class="s-p-all">
+                      <span class="s-p-main-price">
+                        $29.99
+                      </span>
+                      <span class="s-p-shiping-fees">+ $357.31</span>
+                      <span>Shipping & Import Fees Deposit to Bangladesh Details</span>
+                    </span>
+                  </div>
+
+
+                  <div unit = {{product.unit}} id="EmptyDiv">
+                  </div>
+                  
+                  
+                  
+                  <div class="product-all-details">
+                    <ul class="a-unorder-list">
+                      <li>
+                        <span>Pull On closure
+                        </span>
+                      </li>
+  
+                      <li>
+                        <span>
+                          95% Polyester, 5% Spandex, fabric has some stretch
+                        </span>
+                      </li>
+                      <li>
+                        <span>
+                          Occasion: suitable for spring and fall for work,sports and daily
+                        </span>
+                      </li>
+                      <li>
+                        <span>
+                          Graphic sweatshirts with a pocket front, pairing it with jeans and sneakers
+  
+                        </span>
+                      </li>
+                      <li>
+                        <span>
+                          Please refer to the size measurement in image before ordering
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!------------This is the end of the Single Product  section----->
+      <!------------This is the start of the Single Product Description
+   section----->
+      <div class="product-description">
+        <div class="product-description-title rrb">
+          <h1 class="rcb">product Description</h1>
+        </div>
+        <div class="product-description-main">
+          <ul class="details-feature">
+            <li class="feature">
+              <span class="bold">Product Dimensions ‏ :</span>
+              <span>14 x 10.5 x 0.5 inches; 10.41 Ounces</span>
+            </li>
+  
+            <li class="feature">
+              <span class="bold">Item model number :</span>
+              <span>swSSH07200627195-XS</span>
+            </li>
+  
+            <li class="feature">
+              <span class="bold">Department ‏ :</span>
+              <span>Womens</span>
+            </li>
+  
+            <li class="feature">
+              <span class="bold">Date First Available ‏ : ‎</span>
+              <span>July 29, 2020</span>
+            </li>
+            <li class="feature">
+              <span class="bold">ASIN ‏ : ‎</span>
+              <span> B08DTMKF23</span>
+            </li>
+  
+          </ul>
+        </div>
+      </div>
+   <!------------This is the end of the Single Product Description
+   section----->
+  
+   <div class="related-product">
+     <div class="related-product-title">
+       <h2>Related product</h2>
+     </div>
+     <div class="related-product-main">
+         <!-- product start -->
+         <div class="product-col">
+          <div class="product-col-img">
+            <a href="singleporduct.html">
+              <img src="/image/product-3.webp" alt="">
+            </a>
+          </div>
+          <div class="product-col-details">
+            <div class="product-name">
+              <a href="singleporduct.html">
+                <span>2021 Brand Polo Shirts Men's Clothing Summer Tops Plus Size Short Sleeve Homme Casual Cotton
+                  Luxury High Quality Fashion Clothes
+                  Regular</span>
+              </a>
+            </div>
+            <div class="product-rg-so">
+              <span class="borr">regular</span>
+              <span class="borr solg">solid</span>
+            </div>
+            <div class="product-price">
+              <div class="p-price">
+                <h2>US $22.31</h2>
+              </div>
+            </div>
+            <div class="product-s-r">
+              <div class="product-sold">
+                <span class="sold">77</span>
+                <span>sold</span>
+              </div>
+              <div class="product-re">
+                <div class="ratting-icon">
+                  <i class="fa fa-star"></i>
+                </div>
+                <div class="ratiing">
+                  <span>33</span>
+                </div>
+              </div>
+            </div>
+            <div class="shipping-ch">
+              <span>+ Shipping: US $17.63</span>
+            </div>
+  
+            <div class="flex-g"></div>
+  
+            <div class="any-ctg">
+              <span class="any-ctg-spn"><a href="#">Mens curt</a></span>
+              <span class="ad">AD</span>
+            </div>
+  
+          </div>
+        </div>
+        <!-- product-end -->
+  
+            <!-- product start -->
+            <div class="product-col">
+              <div class="product-col-img">
+                <a href="singleporduct.html">
+                  <img src="/image/product-3.webp" alt="">
+                </a>
+              </div>
+              <div class="product-col-details">
+                <div class="product-name">
+                  <a href="singleporduct.html">
+                    <span>2021 Brand Polo Shirts Men's Clothing Summer Tops Plus Size Short Sleeve Homme Casual Cotton
+                      Luxury High Quality Fashion Clothes
+                      Regular</span>
+                  </a>
+                </div>
+                <div class="product-rg-so">
+                  <span class="borr">regular</span>
+                  <span class="borr solg">solid</span>
+                </div>
+                <div class="product-price">
+                  <div class="p-price">
+                    <h2>US $22.31</h2>
+                  </div>
+                </div>
+                <div class="product-s-r">
+                  <div class="product-sold">
+                    <span class="sold">77</span>
+                    <span>sold</span>
+                  </div>
+                  <div class="product-re">
+                    <div class="ratting-icon">
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="ratiing">
+                      <span>33</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="shipping-ch">
+                  <span>+ Shipping: US $17.63</span>
+                </div>
+      
+                <div class="flex-g"></div>
+      
+                <div class="any-ctg">
+                  <span class="any-ctg-spn"><a href="#">Mens curt</a></span>
+                  <span class="ad">AD</span>
+                </div>
+      
+              </div>
+            </div>
+            <!-- product-end -->
+                <!-- product start -->
+         <div class="product-col">
+          <div class="product-col-img">
+            <a href="singleporduct.html">
+              <img src="/image/product-3.webp" alt="">
+            </a>
+          </div>
+          <div class="product-col-details">
+            <div class="product-name">
+              <a href="singleporduct.html">
+                <span>2021 Brand Polo Shirts Men's Clothing Summer Tops Plus Size Short Sleeve Homme Casual Cotton
+                  Luxury High Quality Fashion Clothes
+                  Regular</span>
+              </a>
+            </div>
+            <div class="product-rg-so">
+              <span class="borr">regular</span>
+              <span class="borr solg">solid</span>
+            </div>
+            <div class="product-price">
+              <div class="p-price">
+                <h2>US $22.31</h2>
+              </div>
+            </div>
+            <div class="product-s-r">
+              <div class="product-sold">
+                <span class="sold">77</span>
+                <span>sold</span>
+              </div>
+              <div class="product-re">
+                <div class="ratting-icon">
+                  <i class="fa fa-star"></i>
+                </div>
+                <div class="ratiing">
+                  <span>33</span>
+                </div>
+              </div>
+            </div>
+            <div class="shipping-ch">
+              <span>+ Shipping: US $17.63</span>
+            </div>
+  
+            <div class="flex-g"></div>
+  
+            <div class="any-ctg">
+              <span class="any-ctg-spn"><a href="#">Mens curt</a></span>
+              <span class="ad">AD</span>
+            </div>
+  
+          </div>
+        </div>
+        <!-- product-end -->
+            <!-- product start -->
+            <div class="product-col">
+              <div class="product-col-img">
+                <a href="singleporduct.html">
+                  <img src="/image/product-3.webp" alt="">
+                </a>
+              </div>
+              <div class="product-col-details">
+                <div class="product-name">
+                  <a href="singleporduct.html">
+                    <span>2021 Brand Polo Shirts Men's Clothing Summer Tops Plus Size Short Sleeve Homme Casual Cotton
+                      Luxury High Quality Fashion Clothes
+                      Regular</span>
+                  </a>
+                </div>
+                <div class="product-rg-so">
+                  <span class="borr">regular</span>
+                  <span class="borr solg">solid</span>
+                </div>
+                <div class="product-price">
+                  <div class="p-price">
+                    <h2>US $22.31</h2>
+                  </div>
+                </div>
+                <div class="product-s-r">
+                  <div class="product-sold">
+                    <span class="sold">77</span>
+                    <span>sold</span>
+                  </div>
+                  <div class="product-re">
+                    <div class="ratting-icon">
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="ratiing">
+                      <span>33</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="shipping-ch">
+                  <span>+ Shipping: US $17.63</span>
+                </div>
+      
+                <div class="flex-g"></div>
+      
+                <div class="any-ctg">
+                  <span class="any-ctg-spn"><a href="#">Mens curt</a></span>
+                  <span class="ad">AD</span>
+                </div>
+      
+              </div>
+            </div>
+            <!-- product-end -->
+                <!-- product start -->
+         <div class="product-col">
+          <div class="product-col-img">
+            <a href="singleporduct.html">
+              <img src="/image/product-3.webp" alt="">
+            </a>
+          </div>
+          <div class="product-col-details">
+            <div class="product-name">
+              <a href="singleporduct.html">
+                <span>2021 Brand Polo Shirts Men's Clothing Summer Tops Plus Size Short Sleeve Homme Casual Cotton
+                  Luxury High Quality Fashion Clothes
+                  Regular</span>
+              </a>
+            </div>
+            <div class="product-rg-so">
+              <span class="borr">regular</span>
+              <span class="borr solg">solid</span>
+            </div>
+            <div class="product-price">
+              <div class="p-price">
+                <h2>US $22.31</h2>
+              </div>
+            </div>
+            <div class="product-s-r">
+              <div class="product-sold">
+                <span class="sold">77</span>
+                <span>sold</span>
+              </div>
+              <div class="product-re">
+                <div class="ratting-icon">
+                  <i class="fa fa-star"></i>
+                </div>
+                <div class="ratiing">
+                  <span>33</span>
+                </div>
+              </div>
+            </div>
+            <div class="shipping-ch">
+              <span>+ Shipping: US $17.63</span>
+            </div>
+  
+            <div class="flex-g"></div>
+  
+            <div class="any-ctg">
+              <span class="any-ctg-spn"><a href="#">Mens curt</a></span>
+              <span class="ad">AD</span>
+            </div>
+  
+          </div>
+        </div>
+       
+         
+        
+     </div>
+   </div>
+  
+{% endblock body %}
+
+
+{% block js %}
+<script src = "{% static 'app/js/productPage.js' %}"></script>
+<script src = "{% static 'app/js/jquery.js' %}"></script>
+<script src = "{% static 'app/js/cart.js' %}"></script>
+<script src = "{% static 'app/js/singleproduct.js' %}"></script>
+{% endblock js %}
+
+
+
+
+
+
+
+
+
+  
+
+

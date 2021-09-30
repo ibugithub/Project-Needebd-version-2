@@ -1,0 +1,80 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+
+{% endblock %}
+
+{% block header %} 
+{% endblock header %}
+
+{% block body %}
+<div class="create-account-section-m">
+    <div class="create-logo">
+        <div class="create-logo-m">
+            <a href="{% url 'home' %}">
+                <span style="color:white;">needebd</span>
+                <!-- <img src="/static/app/image/logo-1.png" alt=""> -->
+            </a>
+        </div>
+    </div>
+    <div class="account-main">
+        <form id="form" class="form-account" action="{% url 'tregister' %}" method="post">
+            {% csrf_token %}
+            <h2>Create your account</h2>
+            {% include 'accounts/error.html' %}
+            <div class="form-control">
+                <input type="email" id="email" placeholder="Enter Email" name="email" value="{{data.email}}">
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+                <input type="text" id="username" placeholder="Enter Username" name="username" value="{{data.username}}" autocomplete="off">
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+                <input type="text"  name="phone" value="{{data.phone}}"
+                placeholder="Phone">
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+                <input type="password" id="password" placeholder="Enter Password" name="password" value="">
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+
+                <input type="password" id="password2" placeholder="Enter Password Again" name="password2" value="">
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+                <input type="submit" value="Register" class="account-create-btn" />
+            </div>
+
+        </form>
+        <div class="form-control">
+            <h3 class="trbs">Already have an account?</h3>
+            <a href="{% url 'login' %}" class="sgps">
+                sing in
+            </a>
+        </div>
+        <div class="account-footer">
+            <ul class="account-footer-link">
+                <li class="af-link-item">
+                    <a href="#">privacy policy</a>
+                </li>
+                <li class="af-link-item">
+                    <a href="#">privacy policy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block footer %} 
+{% endblock footer %}
+
+{% block js %}
+  <script src="{% static 'app/js/fontend.js' %}"></script>
+  {% endblock js %}

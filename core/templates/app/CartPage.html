@@ -1,0 +1,182 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="/static/app/css/fontend.css">
+<link rel="stylesheet" href="/static/app/css/cart.css">
+{% endblock css %}
+
+{% block body %}
+<!------------This is the start of the cart section----->
+<div class="cart-section">
+  <div class="cart-section-main">
+    <div class="add-cart-row">
+      <div class="add-cart-left">
+        <div class="add-cart-left-main">
+          <div class="add-cart-left-content">
+            <div class="add-cart-left-top">
+              <div class="add-cart-left-top-title">
+                <div class="top-title-1">
+                  <h2>my cart</h2>
+                </div>
+              </div>
+              <div class="div"></div>
+              <div class="add-cart-content-right">
+                <div class="right-content-details">
+                  <div class="right-content-details-row">
+                    <div class="add-cart-left-top-deliver">
+                      <div class="deliver-img">
+                        <img src="/static/app/image/location.svg" alt="">
+                      </div>
+                      <div class="deliver-name">
+                        <span>Deliver to</span>
+                      </div>
+                    </div>
+                    <div class="add-cart-deliver-input">
+                      <input type="text" placeholder="Enter the deliver pin code" maxlength="6" autocomplete="off">
+                      <span class="rtpr">Check</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% for cart in carts %}
+            <!-- start cart section -->
+            <div class="add-to-cart-d">
+              <div class="add-cart-d-con">
+                <div class="add-cart-d-con-re">
+                  <div class="cart-d-image">
+                    <img src="{{cart.product.product_image.url}}" alt="">
+                  </div>
+
+                  <div class="add-cart-pro-de">
+                    <div class="add-card-pro-de-main">
+                      <div class="pro-de-title">
+                        <a href="#">
+                          asics GEL-WINDHAWK 3 Running Shoes For Men
+                        </a>
+                      </div>
+                      <div class="pro-de-size">
+                        <span>size:{{cart.size}}, grey</span>
+                      </div>
+                      <div class="pro-de-brand">
+                        <span>adidas</span>
+                      </div>
+                      <div class="pro-de-size">
+                        <span class="tk">৳ {{cart.product.selling_prize}}</span>
+                        <span class="tk-now"> ৳{{cart.product.discounted_prize}}</span>
+                        <span class="tk-per">{{cart.product.discount}}% Off</span> 
+                      </div>
+                      <span class="tk-per">Total Cost: <span id="tc">
+                        {{cart.products_cost}}
+                      </span> </span>
+
+
+                    </div>
+                  </div>
+                  <div class="deliver-date-d">
+                    <div class="deliver-date-d-text">
+                      <span class="de-t-tex">Delivery by Thu Aug 5 </span>
+                      <span class="t-line"> | </span>
+                      <span class="t-free">free:</span>
+                      <span class="t-free-tk">৳44</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-to-cart-d-btn">
+                  <div class="cart-d-p-btn">
+                    <button onclick="MinusCart(this)" prod={{cart.product.id}} class="btn-sub"> - </button>
+                    <div class="cart-d-input">
+
+                      <input type="text" class="cart-d-rp" value="{{cart.quantity}}">
+
+                    </div>
+
+                    <button onclick="PlusCart(this)" prod={{cart.product.id}} size = {{cart.size}} class="btn-add"> + </button>
+
+                  </div>
+                  <div class="cart-save-remove">
+                    <div class="cart-d-save">
+                      save for later
+                    </div>
+                    <div prod_id = {{cart.product.id}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            {% endfor cart %}
+
+
+
+            <div class="place-order">
+              <div class="place-or-container">
+                <form action="">
+                  <input type="hidden">
+                  <button class="place-order-btn">Place order</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="add-cart-right">
+        <div class="add-cart-price-main">
+          <div class="add-cart-price-details-rp">
+            <div class="cart-price-details-title">
+              <span>PRICE DETAILS</span>
+            </div>
+            <div class="add-cart-p-details">
+              <div class="cart-p-details">
+                <div class="cart-p-details-itm">
+                  price (2 items)
+                </div>
+                <span class="cart-p-price">৳2222</span>
+              </div>
+              <div class="cart-dis-details">
+                <div class="cart-dis-title">
+                  <span>Discount</span>
+                </div>
+                <div class="cart-dis-price">
+                  <span>-৳234</span>
+                </div>
+              </div>
+              <div class="cart-de-charge">
+                <div class="cart-de-title">
+                  <span>Delivery charge</span>
+                </div>
+                <div class="delivery-de-type">
+                  <span class="type">Free</span>
+                </div>
+              </div>
+
+              <div class="cart-d-total">
+                <div class="total-title">
+                  <span>Total Amount
+                  </span>
+                </div>
+                <div class="total-price">
+                  <span>৳32</span>
+                </div>
+              </div>
+              <div class="save-text">
+                <p>You will save ₹3,591 on this orde</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+<!------------This is the start of the cart section----->
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'app/js/jquery.js' %}"></script>
+<script src="{% static 'app/js/cart.js' %}"></script>
+<script src="{% static 'app/js/productPage.js' %}"></script>
+{% endblock js %}

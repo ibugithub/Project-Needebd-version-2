@@ -1,0 +1,76 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+{% endblock %}
+
+{% block header %} 
+{% endblock header %}
+
+{% block body %}
+
+{% include 'accounts/error.html' %}
+<div class="form-section">
+    <div class="home-logo">
+        <div class="hl-logo">
+            <a href="{% url 'home' %}">
+                <span style="color:white;">needebd</span>
+                <!-- <img src="/static/app/image/logo-1.png" alt=""> -->
+            </a>
+        </div>
+    </div>
+    <div class="form-main">
+
+        <div class="singin-title">
+            <h2>Sign in to your account</h2>
+        </div>
+        <form action="" class="form-box" id="sing-in-form" name="form" method="post" novalidate>
+            {% csrf_token %}
+            {% for fm in form %}
+            <div class="input-section">
+                {{fm}}
+                <small class="text-danger">
+                    {{fm.errors|striptags}} <br>
+                </small>
+            </div>
+            {% endfor %}
+
+            <div class="forgot-pass-section">
+                <a href="{% url 'password_reset' %}">forgot password?</a>
+            </div>
+            <div class="submit-section">
+                <input type="submit" value="Login" class="submit-btn" />
+            </div>
+        </form>
+
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="alert alert-danger">
+            {{error}}
+        </p>
+        {% endfor %}
+        {% endif %}
+        <div class="crate-account-section">
+            <h2>Don't you have an account</h2>
+
+            <a href="{% url 'tregister' %}">
+                create account
+            </a>
+        </div>
+        <div class="form-footer">
+            <div class="form-f-content">
+                <ul class="f-link">
+                    <li><a href="#"> Conditions of Use</a></li>
+                    <li><a href="#"> help center</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock body %}
+
+{% block footer %} 
+{% endblock footer %}

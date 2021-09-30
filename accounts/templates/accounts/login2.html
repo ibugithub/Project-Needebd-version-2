@@ -1,0 +1,26 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+{% block css %}   
+ <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}"> 
+ <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.css' %}">
+{% endblock %}
+{% block header %} 
+{% endblock header %}
+{% block body %}
+<div class="container">
+    <div class="row my-3 justify-content-center text-center">
+        <div class="col-sm-5 ">
+            <h5 class="text-muted">You don't verify your email</h5 >
+            <hr>
+            <h5 class="text-muted">Check Your email</h5>
+            <div class="text-muted">or</div>
+           <a href="{% url 'resend-gmail-verification-link-url-name'  %}" class="btn btn-info btn-sm">Resend verification link</a>
+
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block footer %}
+{% endblock footer %}

@@ -1,0 +1,1260 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block UpperCategoryDesktop %}
+<!-- $Shop BY Category Section desktop -->
+<div class="category-section mobilehide">
+  <div class="category-container">
+    <div class="category-subcontainer">
+
+      <div class="category-product">
+        <a  class="category-product-link" href="{% url 'allcategory-url-name' %}">
+          <div class="category-product_container">
+            <div class="category-product-item">
+              <img alt="Top Offers" src="{% static 'app/images/tcategory/caragory-1.png' %}">
+            </div>
+            <div class="category-product-title">
+              All Category
+            </div>
+          </div>
+        </a>
+      </div>
+      {% for uppercategory in uppercategories %}
+      <div class="category-product">
+        <a class="category-product-link" href="">
+          <div class="category-product_container">
+            <div class="category-product-item">
+              <img alt="Top Offers" src="{{uppercategory.category_image.url}}">
+            </div>
+            <div class="category-product-title">
+              {{uppercategory.name}}
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endblock UpperCategoryDesktop %}
+
+{% block slider %}
+<!-- $Slider Section mobile -->
+<div class="container slider-container" id="m260" style="margin-top: 20px;">
+  <section id="main-slider">
+    <div class="slider-section first">
+      <div class="containerr">
+        <div class="auto-slider">
+            <div class="slider">
+              <div class="slide slide1">
+                <img class="mobileshow desktophide" src="{{msliders.0.slider_image.url}}" alt="">
+
+                <img class="mobilehide" src="{{dsliders.0.slider_image.url}}" alt="">
+              </div>
+              <div class="slide slide2">
+                <img class="mobileshow desktophide" src="{{msliders.1.slider_image.url}}" alt="">
+
+                <img class="mobilehide" src="{{dsliders.1.slider_image.url}}" alt="">
+              </div>
+              <div class="slide slide3">
+                <img class="mobileshow desktophide" src="{{msliders.2.slider_image.url}}" alt="">
+
+                <img class="mobilehide" src="{{dsliders.2.slider_image.url}}" alt="">
+              </div>
+              <div class="slide slide4 active">
+                <img class="mobileshow desktophide" src="{{msliders.3.slider_image.url}}" alt="">
+
+                <img class="mobilehide" src="{{dsliders.3.slider_image.url}}" alt="">
+
+              </div>
+            </div>            
+
+          <div class="control">
+            <a class="sliding-item-section-carousel-prev-a mobilehide prev" href="#">
+              <span class="sliding-item-section-carousel-prev-span">
+                <i class="fas fa-chevron-left"></i>
+              </span>
+            </a>
+            <a class="slider-section-carousel-next-a mobilehide next" href="#">
+              <span class="sliding-item-section-carousel-next-span">
+                <i class="fas fa-chevron-right"></i>
+              </span>
+            </a>
+            <div class="indicator"></div>
+          </div>
+        </div>
+      </div>
+  </section>
+</div>
+
+{% endblock slider %}
+
+{% block UpperCategoryMobile %}
+<!-- $Shop By Category Section mobile -->
+<div class="category-section desktophide mobileshow card"> 
+  <div class="category-section-header">
+    <span>
+      Shop By Category
+    </span>
+  </div>
+  <div class="category-container" id="ccp260">
+    <div class="category-subcontainer">
+
+      <div class="category-product">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
+          <div class="category-product_container">
+            <div class="category-product-item">
+              <img alt="Top Offers" src="{% static 'app/images/tcategory/caragory-1.png' %}">
+            </div>
+            <div class="category-product-title" id="fs260">
+              All Category
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {% for uppercategory in uppercategories %}
+      <div class="category-product">
+        <div class="category-product-link">
+          <div class="category-product_container">
+            <div class="category-product-item">
+              <img alt="Top Offers" src="{{uppercategory.category_image.url}}">
+            </div>
+            <div class="category-product-title" id="fs260">
+              {{uppercategory.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+      
+
+    </div>
+  </div>
+</div>
+{% endblock UpperCategoryMobile %}
+
+{% block shopwithdeal %}
+<!-- $Shop-With-Deal-section mobile -->
+<div class="extra-option-maindiv desktophide mobileshow card">
+  <div class="extra-option-content-maindiv">
+    <div class="EOMHeader" id="Ep260">
+      <h2>Shop With Deal</h2>
+
+      <div id="clockdiv">
+        <div class="count-div">
+          <span class="days"></span>
+
+        </div>
+        <div class="count-div">
+          <span class="hours"></span>
+
+        </div>
+        <div class="count-div">
+          <span class="minutes"></span>
+
+        </div>
+        <div class="count-div">
+          <span class="seconds"></span>
+
+        </div>
+      </div>
+
+    </div>
+
+    <ul class="extra-option-content-ul">
+{% for shop_with_deal in shop_with_deals %}
+      <li class="extra-option-content-li">
+        <a href="" class="a extra-option-content-a">
+          <div class="extra-option-content-imagecontainer">
+            <img src="{{shop_with_deal.product_image.url}}" alt="">
+          </div>
+          <div class="EOaDescription">
+            <p>{{shop_with_deal.description}}</p>
+          </div>
+        </a>
+      </li>
+{% endfor %}
+     
+    </ul>
+
+    <div class='eomfooter'>
+      <span>View More </span>
+    </div>
+
+  </div>
+</div>
+<!-- $Shop-With-Deal-Section Desktop  -->
+<div class="ShopWithDeal mobilehide">
+  <div class="header">
+    <a href="">
+      <div class="swdleft">
+        <div class="title">
+          <h2 class="hf">Shop With Deal</h2>
+        </div>
+
+        <div id="clockdiv">
+          <div class="count-div">
+            <span class="days"></span>
+
+          </div>
+          <div class="count-div">
+            <span class="hours"></span>
+
+          </div>
+          <div class="count-div">
+            <span class="minutes"></span>
+
+          </div>
+          <div class="count-div">
+            <span class="seconds"></span>
+
+          </div>
+        </div>
+
+
+      </div>
+      <span class=" c444 swdright" style="
+      padding-right: 4px;">
+        View more
+      </span>
+    </a>
+  </div>
+  <ul>
+ 
+    {% for shop_with_deal in shop_with_deals %}
+    <li>
+      <a href="">
+        <div class="maindiv">
+          <div class="imgcontainer">
+            <img src="{{shop_with_deal.product_image.url}}" alt="">
+          </div>
+        </div>
+        <div class="footer">
+          <div class="ftop">
+            <div class="ftleft">
+              <span>US ${{shop_with_deal.discounted_prize}}</span>
+            </div>
+            <div class="ftright">
+              <span>{{shop_with_deal.discount}}%</span>
+            </div>
+          </div>
+          <div class="fdown">
+            <span>{{shop_with_deal.sell_amount}} sold</span>
+          </div>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+
+  </ul>
+</div>
+{% endblock shopwithdeal %}
+
+{% block body %}
+<!-- $Body Category Section Mobile -->
+<div class="body-category-container desktophide mobileshow card">
+  <div class="body-category-items-container">
+    <div class="body-category-item-header" id="bp260">
+      <h2>
+        Shop By Department
+      </h2>
+    </div>
+    <div class="body-category-content-maincontainer">
+      <div class="body-category-content-row1 hmc">
+        <div class="body-category-content-container1">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container imgch ">
+                <img src="{{mobile_category.0.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p>{{mobile_category.0.title}}</p>
+
+          </div>
+        </div>
+        <div class="body-category-content-container2">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container imgch">
+                <img src="{{mobile_category.1.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p>{{mobile_category.1.title}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="body-category-content-row2 hmc">
+        <div class="body-category-content-container1">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container">
+                <img src="{{mobile_category.2.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p> {{mobile_category.2.title}}</p>
+          </div>
+        </div>
+        <div class="body-category-content-container2">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container">
+                <img src="{{mobile_category.3.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p> {{mobile_category.3.title}} </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="body-category-item-footer" id="bf260">
+      <a href="">
+        All Deparment
+      </a>
+    </div>
+  </div>
+</div>
+<!-- $Body Category Section Desktop -->
+<div class="body-category-maindiv mobilehide">
+  <div class="body-category-container card pl0">
+    <div class="body-category-items-container">
+      <div class="body-category-item-header">
+        <h2>
+          {{bookandstudy.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{bookandstudy.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+            <div class="body-category-item-title">
+              <span>
+                {{bookandstudy.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{bookandstudy.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{bookandstudy.1.title}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{bookandstudy.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{bookandstudy.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{bookandstudy.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{bookandstudy.3.title}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-category-container card pr0819">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{cookingessential.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{cookingessential.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{cookingessential.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{cookingessential.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{cookingessential.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{cookingessential.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{cookingessential.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{cookingessential.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{cookingessential.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-category-container card dp1079 db822a mb0">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{electronic.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{electronic.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{electronic.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{electronic.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{electronic.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{electronic.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{electronic.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{electronic.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{electronic.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-category-container card dh1079 db822b mb0 pr0">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{fashion.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{fashion.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{fashion.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{fashion.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{fashion.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{fashion.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{fashion.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{fashion.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{fashion.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- $sliding items section -->
+<div class="sliding-item-section-main-div">
+  <div class="sliding-item-section-sub-div">
+    <div class="sliding-item-section-container">
+      <div class="sliding-item-section-title-block">
+        <h2 class="sliding-item-section-title-left" id="sfs260">
+          {{beauty_products.0.display_wraper}}
+        </h2>
+        <span class="sliding-item-section-title-right-span mobilehide">
+          <a class="sliding-item-section-title-right-link" href="">
+            Buy Now
+          </a>
+        </span>
+      </div>
+      <div class="sliding-item-section-carousel-container">
+        <div class="sliding-item-section-carousel-items ">
+          <ul class="sliding-item-section-carousel-items-ul">
+            {% for beauty_product in beauty_products %}
+            <li class="sliding-item-section-carousel-items-li">
+
+              <a class="sliding-item-section-carousel-a" href="">
+                <img alt="" src="{{beauty_product.product_image.url}}" class="product-image">
+              </a>
+
+            </li>
+            {% endfor %}
+           
+
+          </ul>
+        </div>
+
+        <a class="sliding-item-section-carousel-prev-a mobilehide" href="#">
+          <span class="sliding-item-section-carousel-prev-span">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+        </a>
+
+        <a class="slider-section-carousel-next-a mobilehide" href="#">
+          <span class="sliding-item-section-carousel-next-span">
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </a>
+
+      </div>
+
+      <a class="sliding-item-section-title-right-link desktophide mobileshow" href="">
+        Buy Now
+      </a>
+
+    </div>
+  </div>
+</div>
+<!-- $Body Category Section2 Mobile -->
+<div class="body-category-container desktophide mobileshow card">
+  <div class="body-category-items-container">
+
+    <div class="body-category-item-header" id="bp260">
+      <h2>
+        Shop By Department
+      </h2>
+    </div>
+    <div class="body-category-content-maincontainer">
+      <div class="body-category-content-row1 hmc">
+        <div class="body-category-content-container1">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container imgch ">
+                <img src="{{mobile_category.4.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p>{{mobile_category.4.title}}</p>
+
+          </div>
+        </div>
+        <div class="body-category-content-container2">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container imgch">
+                <img src="{{mobile_category.5.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p>{{mobile_category.5.title}}</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="body-category-content-row2 hmc">
+        <div class="body-category-content-container1">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container">
+                <img src="{{mobile_category.6.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p> {{mobile_category.6.title}}</p>
+          </div>
+        </div>
+        <div class="body-category-content-container2">
+          <div class="body-category-item-content">
+            <a href="" class="body-category-item-content-a">
+              <div class="body-category-item-image-container">
+                <img src="{{mobile_category.7.mobile_category_image.url}}" alt="">
+              </div>
+            </a>
+          </div>
+
+          <div class="body-category-item-title">
+            <p> {{mobile_category.7.title}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="body-category-item-footer" id="bf260">
+      <a href="">
+        Buy Now
+      </a>
+    </div>
+  </div>
+</div>
+<!-- $Body Category Section2 Desktop -->
+<div class="body-category-maindiv mobilehide">
+  <div style="padding-left: 0;" class="body-category-container">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{girlsandkids.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{girlsandkids.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{girlsandkids.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{girlsandkids.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{girlsandkids.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{girlsandkids.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{girlsandkids.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{girlsandkids.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{girlsandkids.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-category-container pr0819">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{handmade.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{handmade.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{handmade.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{handmade.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{handmade.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{handmade.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{handmade.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{handmade.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{handmade.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-category-container dp1079 db822a mb0">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{homeessential.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{homeessential.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{homeessential.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{homeessential.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{homeessential.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{homeessential.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{homeessential.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{homeessential.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{homeessential.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-right: 0;" class="body-category-container dh1079 db822b mb0">
+    <div class="body-category-items-container">
+
+      <div class="body-category-item-header">
+        <h2>
+          {{other.0.category_wraper}}
+        </h2>
+      </div>
+      <div class="body-category-content-maincontainer">
+        <div class="body-category-content-row1">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch ">
+                  <img src="{{other.0.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{other.0.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container imgch">
+                  <img src="{{other.1.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{other.1.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <div class="body-category-content-row2">
+          <div class="body-category-content-container1" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{other.2.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{other.2.title}}
+              </span>
+            </div>
+          </div>
+          <div class="body-category-content-container2" style="background-color:#ffff;">
+            <div class="body-category-item-content">
+              <a href="" class="body-category-item-content-a">
+                <div class="body-category-item-image-container">
+                  <img src="{{other.3.category_image.url}}" alt="">
+                </div>
+              </a>
+            </div>
+
+            <div class="body-category-item-title">
+              <span>
+                {{other.3.title}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="body-category-item-footer">
+        <a href="">
+          Shop Now
+
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- $Sliding items section2 -->
+<div class="sliding-item-section-main-div">
+  <div class="sliding-item-section-sub-div">
+    <div class="sliding-item-section-container">
+      <div class="sliding-item-section-title-block">
+        <h2 class="sliding-item-section-title-left" id="sfs260">
+          {{mans_fashions.0.display_wraper}}
+        </h2>
+        <span class="sliding-item-section-title-right-span mobilehide">
+          <a class="sliding-item-section-title-right-link" href="">
+            Buy Now
+          </a>
+        </span>
+      </div>
+      <div class="sliding-item-section-carousel-container">
+        <div class="sliding-item-section-carousel-items ">
+          <ul class="sliding-item-section-carousel-items-ul">
+            {% for mans_fashion in mans_fashions %}
+            <li class="sliding-item-section-carousel-items-li">
+
+              <a class="sliding-item-section-carousel-a" href="">
+                <img alt="" src="{{mans_fashion.product_image.url}}" class="product-image">
+              </a>
+
+            </li>
+            {% endfor %}
+
+          </ul>
+        </div>
+
+        <a class="sliding-item-section-carousel-prev-a mobilehide" href="#">
+          <span class="sliding-item-section-carousel-prev-span">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+        </a>
+
+        <a class="slider-section-carousel-next-a mobilehide" href="#">
+          <span class="sliding-item-section-carousel-next-span">
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </a>
+
+      </div>
+
+      <a class="sliding-item-section-title-right-link desktophide mobileshow" href="">
+        Buy Now
+      </a>
+
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
+{% block brand %}
+<!-- $Brand Section -->
+<div class="love-by-brand card mb0i">
+
+  <div class="love-by-brand-categories">
+    <div class="love-by-brand-head">
+      <h2>Shop By Brand</h2>
+      <span class=" c444 swdright" style="
+      padding-right: 4px; padding-top: 5px;padding-right: 24px;">
+        View more
+      </span>
+    </div>
+
+    <div class="brand-container">
+      {% for logo in brand_logo_row1 %}
+      <div class="love-by-brand-card bb0">
+        <a href="#" class="love-by-brand-categories-content">
+          <div class="brand-img">
+            <img src="{{logo.logo.url}}" alt="">
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="brand-container">
+      {% for logo in brand_logo_row2 %}
+      <div class="love-by-brand-card">
+        <a href="#" class="love-by-brand-categories-content">
+          <div class="brand-img">
+            <img src="{{logo.logo.url}}" alt="">
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="brand-container bb1">
+      {% for logo in brand_logo_row3 %}
+      <div class="love-by-brand-card bb0 bt0">
+        <a href="#" class="love-by-brand-categories-content">
+          <div class="brand-img">
+            <img src="{{logo.logo.url}}" alt="">
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock brand %}

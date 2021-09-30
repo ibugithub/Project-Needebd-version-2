@@ -1,0 +1,87 @@
+{% block body %}
+<!-- This is the start of the all categories section -->
+<div class="all-categories">
+  <div class="all-categories-main">
+    <div class="all-categ-dse">
+      <div class="all-categories-row">
+        {% for category_wraper in category_wrapers_upper %}
+        <!-- col-start -->
+        <div class="all-categories-col-l">
+          <a href="#food" class="rtbs">
+            <div class="all-categories-col-main">
+              <div class="all-categories-col-des">
+                <div class="des-categories-row">
+                  <div class="des-categories-col-img">
+                    <img src="{{category_wraper.category_image.url}}" alt="">
+                  </div>
+                  <div class="des-categories-col-title">
+                    <span>{{category_wraper.name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- col-end -->
+        {% endfor %}
+
+        <!-- col-start -->
+        <div class="all-categories-col-l">
+          <a href="#food" class="rtbs">
+            <div class="all-categories-col-main">
+              <div class="all-categories-col-des">
+                <div class="des-categories-row">
+                  <div class="des-categories-col-img">
+                    <span style="">---</span>
+                  </div>
+                  <div class="des-categories-col-title">
+                    <span>more categories</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- col-end -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- This is the end of the all categories section -->
+
+
+<div class="clear" style="clear: both;"></div>
+
+
+<!-- This is the start of the all categories item section -->
+<div class="all-categories-item-container">
+  <div class="all-categories-item-main">
+
+    <!-- start item -->
+    {% for category_wraper in category_wraper_all %}
+    <div class="all-categories-item" id="food">
+      <div class="items-details">
+        <div class="item-title">
+          <h2><a href="#">{{category_wraper.name}}</a></h2>
+        </div>
+        <div class="sub-item-cont-wearper">
+          <ul class="sub-item-cont-until">
+            {% load core_filters %}
+            {% for category in category_wraper.name|filtering %}
+            
+            <li><a href="{% url 'productpageurlname' category %}">{{category}}</a></li>
+            
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- end item -->
+
+
+
+  </div>
+</div>
+<!-- This is the end of the all categories item section -->
+{% endblock body %}

@@ -1,0 +1,385 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block css %}
+<link rel='stylesheet' href="{% static 'app/css/productpage.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+{% endblock %}
+
+{% block body %}
+<!------------This is the start of the product  section----->
+<div class="product-page">
+  <div class="product-page-main">
+    <div class="product-page-main-row">
+      <div class="product-page-left">
+        <div class="end-3">
+          <div class="click-bar-site-menu-product">
+            <div class="click-bar-all-product">
+              <div class="click-bar-site-menu-container-product">
+                <div class="click-bar-site-menu-main">
+                  <!-- department -->
+                  <div class="click-bar-site-menu-header-department  stpc">
+                    <div class="department-title dtl">
+                      <div class="department-title-row dtr">
+                        <div class="department-name-c dnc">
+                          <h2 class="dnch">
+                            Category
+                          </h2>
+                        </div>
+                        <div class="department all-link">
+                          <a href="#">see all</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- department-menus -->
+
+                    <div class="departments-menu-c">
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Savings Spotlight
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Back to School
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            College & Beyond Shop
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Electronics & Office
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Clothing, Shoes & Accessories
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Home, Furniture & Appliances
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Toys, Games, and Video Games
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Home Improvement
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Movies, Music & Books
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Baby
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Patio & Garden
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Food, Household & Pets
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Pharmacy, Health & Personal Care
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Beauty
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Sports, Fitness & Outdoors
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Auto, Tires & Industrial
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Photo & Personalized Shop
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                      <!-- link-1 -->
+                      <button class="departments-link-c ctg-lnk">
+                        <span class="departments-links-row">
+                          <span class="departments-name ctr">
+                            Arts, Craft, Sewing & Party Supplies
+                          </span>
+                          <img src="/image/right-icons.svg" alt="" width="14" height="14">
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- bottom header -->
+                  <div class="click-bar-site-header-bottom-link">
+                    <!-- link-1 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-1.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Registry
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-2 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-2" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Gift finder
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-3 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-3.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          walmart Service
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-4 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-4.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Digital video by Vudu
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-5 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-5.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Welmart credit Cards
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-6 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-6.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          gift cards
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-7 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-7.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Weekly Ad
+                        </div>
+                      </div>
+                    </a>
+                    <!-- link-8 -->
+                    <a href="#" class="click-links">
+                      <div class="click-links-row">
+                        <img src="/image/bt-8.svg" alt="" class="click-img" width="18" height="18">
+                        <div class="link-empty"></div>
+                        <div class="link-title l-t">
+                          Help
+                        </div>
+                      </div>
+                    </a>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="product-page-right">
+        <div class="product-page-row">
+          <!-- product start -->
+          {% for product in products %}
+          <div class="product-col">
+            <div class="product-col-all-d">
+              <div class="product-col-img">
+                <a class = "setheighta" href="{% url 'singleproducturlname' product.id %}" >
+                  <img  src="{{product.product_image.url}}" alt="">
+                </a>
+              </div>
+              <div class="product-col-details">
+                <div class="product-name">
+                  <a href="">
+                    <span> {{product.description}}</span>
+                  </a>
+                </div>
+                <div class="product-rg-so">
+                  <span class="borr">regular</span>
+                  <span class="borr solg">solid</span>
+                </div>
+                <div class="product-price">
+                  <div class="p-price">
+                    <h2>US $22.31</h2>
+                  </div>
+                </div>
+                <div class="product-s-r">
+                  <div class="product-sold">
+                    <span class="sold">77</span>
+                    <span>sold</span>
+                  </div>
+                  <div class="product-re">
+                    <div class="ratting-icon">
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="ratiing">
+                      <span>33</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="shipping-ch">
+                  <span>+ Shipping: US $17.63</span>
+                </div>
+                <div class="flex-g"></div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- product-end -->
+        </div>
+
+        <!------------This is the start of the pagination section----->
+        <div class="pagination-section">
+          <div class="pagination-container">
+            <div class="pagination-all-btn">
+              <button class="pagination-prev-btn">
+                <span class="prev-icon"><i class="fas fa-chevron-left"></i></span>
+                <span class="prev-text">Previous</span>
+              </button>
+              <button class="pagination-btn pagination-active">1</button>
+              <button class="pagination-btn">2</button>
+              <button class="pagination-btn">3</button>
+              <button class="pagination-btn">4</button>
+              <button class="pagination-btn">5</button>
+              <button class="pagination-btn">6</button>
+              <button class="pagination-btn">7</button>
+              <button class="pagination-btn">8</button>
+              <button class="pagination-btn">9</button>
+              <button class="pagination-btn">10</button>
+
+              <button class="pagination-next-btn">
+                <span class="next-text">Next</span>
+                <span class="next-icon"><i class="fa fa-chevron-right"></i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!------------This is the end of the pagination section----->
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!------------This is the end of the product page  section----->
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'app/js/productPage.js' %}"></script>
+<script src = "{% static 'app/js/subcategory.js' %}"></script>
+
+{% endblock js %}
