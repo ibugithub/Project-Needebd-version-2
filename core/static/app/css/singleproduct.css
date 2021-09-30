@@ -233,18 +233,20 @@
 
     .size-button {
         width: 100%;
-        padding: 5px 0;
+        padding: 5px 10px;
         color: #444;
+
     }
 
     .size-button-btn {
         text-decoration: none;
         color: #444;
-        padding: 0 10px;
+        padding: 3px 10px;
         margin-right: 5px;
         border-radius: 8px;
         background: transparent;
         cursor: pointer;
+        text-align: center;
     }
 .fa-chevron-down{
     color: #EB6529;
@@ -445,7 +447,15 @@
     }
 
 
-
+#unitAmount{
+    border-radius: 8px;
+    width: 93px;
+    border-width: 1px;
+    background-color: transparent;
+    margin-left: 3px;
+    padding: 3px 5px;
+    text-align: center;
+}
 
 
 

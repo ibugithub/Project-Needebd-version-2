@@ -83,8 +83,9 @@ class Product(models.Model):
                         ("ClothSize", "ClothSize"),
                         ("ClothPicesSize", "ClothPicesSize"),
                         ("ShoeSize", "ShoeSize"),
+                        ("Packet", "Packet")
                       )
-    unit = models.CharField(max_length=30, choices = Unit_Choices, null = True, blank = True)
+    unit = models.CharField(max_length=30, choices = Unit_Choices, null = True)
    
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -31,29 +31,35 @@ function fput() {
               <option value = "Squre Meter"> Squre Meter </option>
               <option value = "Squre Yeard"> Squre Yeard </option>             
             </select>
-            <label for = "unitAmount" > Amount: </label>
-            <input id = "unitAmount" type = "number" value = ""  >
           </div>
         </div>
+      <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+      <div> 
+        <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+        <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+      </div>
         
     </div>`;
 
-  let KgUnit = ` <div class="color-size">   
-    <div class="p-size">
-      <div class="p-size-text">
-        <span >Weight:</span>
-      </div>
-      <div class="size-button">
-        <select  id = "unit" class="size-button-btn" name = "unit">
-          <option value = "Kg"> Kg </option>
-          <option value = "Gram"> Gram </option>
-          <option value = "Pound"> Pound </option>             
-        </select>
-        <label for = "unitAmount" > Amount: </label>
-        <input id = "unitAmount" type = "number" value = "">
-      </div>
+  let KgUnit = ` <div class="color-size">
+  <div class="p-size">
+    <div class="p-size-text">
+      <span >Weight:</span>
     </div>
-    </div>`;
+    <div class="size-button">
+      <select  id = "unit" class="size-button-btn" name = "unit">
+        <option value = "Kg"> Kg </option>
+        <option value = "Gram"> Gram </option>
+        <option value = "Pound"> Pound </option>
+      </select> <br> 
+    </div>
+  </div>
+  <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+  <div> 
+    <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+    <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+  </div>
+  </div>`;
 
   let LiterUnit = ` <div class="color-size">
   <div class="p-size">
@@ -64,11 +70,14 @@ function fput() {
       <select  id = "unit" class="size-button-btn" name = "unit">
         <option value = "Liter"> Liter </option>
         <option value = "Mili Liter"> Mili Liter </option>
-      </select>
-      <label for = "unitAmount" > Amount: </label>
-      <input id = "unitAmount" type = "number" value = "">
+      </select> <br> 
     </div>
   </div>
+  <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+  <div> 
+    <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+    <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+    </div>
   </div>`;
 
   let ShoeSizeUnit = ` <div class="color-size">
@@ -101,4 +110,27 @@ function fput() {
     emptydiv.innerHTML += ShoeSizeUnit
   }
 
+}
+
+
+
+aTCBtn = document.getElementById('aTCButton')
+aTCBtn.addEventListener("mouseover", uAmountCk)
+
+
+function uAmountCk() {
+  try {
+  unitAmount = document.getElementById('unitAmount').value
+  STNAlert = document.getElementById('sAlert')
+  if (unitAmount != " " && unitAmount > 0) {
+    aTCBtn.style.cursor = "pointer";
+    aTCBtn.disabled = false;
+    STNAlert.style.display = "none"
+  } else {
+    aTCBtn.style.cursor = "not-allowed";
+    aTCBtn.disabled = true;
+    STNAlert.style.display = "block"
+  }
+  }
+  catch{}
 }

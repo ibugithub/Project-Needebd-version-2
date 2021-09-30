@@ -107,10 +107,11 @@ def AddToCartView(request):
     if request.user.is_authenticated:
         user = request.user
         myproduct = Product.objects.get(id = product_id)
+        print("The product unit is ", myproduct.unit)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
-
-        if myproduct.unit == "Kg" or myproduct.unit == "Liter":
+        if myproduct.unit == "Kg" or myproduct.unit == "Liter" or myproduct.unit  == "ClothPicesSize":
+            print("this is 1st function")
             try:
                 cart = Cart.objects.get(user = user, product = myproduct, unit =unit, unit_amount = unit_amount)
                 cart.quantity +=1
@@ -118,9 +119,22 @@ def AddToCartView(request):
             except:
                 Cart(user = user, product = myproduct, unit = unit, unit_amount = unit_amount).save()
         
-        
-        
+        elif myproduct.unit == "ClothSize" or myproduct.unit == "ShoeSize":
+            print("this is the 2nd function")
+            try:
+                cart =Cart.objects.get(user =user, product = myproduct, size = size)
+                cart.quantity +=1
+                cart.save()
+            except:
+                Cart(user = user, product = myproduct, size = size).save()
 
+        elif myproduct.unit == "Packet":
+            try:
+                cart = Cart.objects.get(user = user, product = myproduct)
+                cart.quantity +=1
+                cart.save()
+            except:
+                Cart(user = user, product = myproduct).save()
 
         # try:  
         #     cart = Cart.objects.get(user= user, product = myproduct, size = size)
