@@ -103,15 +103,26 @@ class Cart(models.Model):
         return str(self.id)
     
     @property
-    def products_cost(self):
+    def products_total_cost(self):
         print("now Im in the products_cost function")
-        if self.unit == "Gram":
-            converted_amount = self.unit_amount / 1000
-        if self.unit == "Kg":
-            converted_amount = self.unit_amount
-        Total_Cost = self.quantity * self.product.discounted_prize * converted_amount
+        # <---This is for the product of having Kg or Liter or Area Unit--->
+        if self.product.unit == "Kg" or self.product.unit == "Liter" or self.product.unit == "ClothPicesSize":
+            if self.unit == "Gram" or self.unit == "MiliLiter":
+                # Adjusting the prize according to the absolute unit....
+                converted_amount = self.unit_amount / 1000
+            elif self.unit == "SqureYeard":
+                converted_amount = self.unit_amount / 1.959900463
+        # Keeping the Liter and Kg the unit of weight.....
+            elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
+                converted_amount = self.unit_amount
+            Total_Cost = self.quantity * self.product.discounted_prize * converted_amount     
+        # For the products which doesn't have the extra unit option....
+        if self.product.unit == "ClothSize" or self.product.unit == "Packet" or self.product.unit == "ShoeSize":
+            Total_Cost = self.quantity * self.product.discounted_prize
+        
         self.total_cost = Total_Cost
-        self.save()
+        if not self.quantity == 0:
+            self.save()
         return Total_Cost
 
     

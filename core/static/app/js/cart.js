@@ -45,6 +45,7 @@ function PlusCart(element)
     var c = element.getAttribute('flc')
     var tcid = ("tc"+c)
     var tProdCostElm = document.getElementById(tcid)
+    var totalCostDom = document.getElementById('totalCostDom')
     
     $.ajax({
         type : "GET",
@@ -59,7 +60,9 @@ function PlusCart(element)
         success: function(data){
             var quantityElm = element.parentNode.children[1].children[0]        
             quantityElm.value  = data.quantity
-            tProdCostElm.innerHTML = data.total_products_cost
+            tProdCostElm.innerHTML = data.products_total_cost
+            totalCostDom.innerHTML = data.Total_Cost
+
         }
     })
 }
@@ -71,6 +74,7 @@ function MinusCart(element)
     var c = element.getAttribute('flc')
     var tcid = ("tc"+c)
     var tProdCostElm = document.getElementById(tcid)
+    var totalCostDom = document.getElementById('totalCostDom')
 
     $.ajax({
         type : "GET",
@@ -91,7 +95,8 @@ function MinusCart(element)
             }
             var quantityElm = element.parentNode.children[1].children[0]
             quantityElm.value  = data.quantity
-            tProdCostElm.innerHTML = data.total_products_cost
+            tProdCostElm.innerHTML = data.products_total_cost
+            totalCostDom.innerHTML = data.Total_Cost
         }
     })
 }
@@ -99,6 +104,7 @@ function MinusCart(element)
 function RemoveCart(element)
 {
     element.parentNode.parentNode.parentNode.parentNode.style.display = 'none'
+    var totalCostDom = document.getElementById('totalCostDom')
     $.ajax({
         method : "GET",
         url : '/removecarturl',
@@ -111,8 +117,8 @@ function RemoveCart(element)
         },
         success: function(data){
             var cartItemCount = document.getElementById('count')
-            var count = data.cartCount
-            cartItemCount.innerHTML =data.cartCount
+            cartItemCount.innerHTML = data.cartCount
+            totalCostDom.innerHTML = data.Total_Cost
         }
 
         

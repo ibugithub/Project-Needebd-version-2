@@ -27,7 +27,6 @@ function fput() {
           </div>
           <div class="size-button">
             <select  id = "unit" class="size-button-btn" name = "unit">
-              <option value = "Yeard"> Yeard </option>
               <option value = "SqureMeter"> Squre Meter </option>
               <option value = "SqureYeard"> Squre Yeard </option>             
             </select>

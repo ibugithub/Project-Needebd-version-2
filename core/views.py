@@ -133,20 +133,21 @@ def AddToCartView(request):
 
 class ShowCartView(Mycontext, TemplateView):
     template_name = 'app/Cartpage.html'
-
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             user = request.user
             carts = Cart.objects.filter(user = user)
 
-            # Total_products_cost = 0
-            # for cart in carts:
-            #     Total_products_cost += cart.products_cost
-            # print(sum)
-            # delivery_charge = 70
-            # Total_Cost = Total_products_cost + delivery_charge
+            Total_products_cost = 0
+            for cart in carts:
+                Total_products_cost += cart.products_total_cost
+            delivery_cost = 70
+            Total_Cost = Total_products_cost + delivery_cost
+            if Total_Cost == delivery_cost:
+                Total_Cost = 0
+ 
 
-            return render(request, self.template_name ,{'carts':carts})
+            return render(request, self.template_name ,{'carts':carts, "Total_Cost": Total_Cost})
         else:
             return redirect('/accounts/login/')
 
@@ -173,9 +174,18 @@ def PlusCartView(request):
             cart.quantity += 1
             cart.save()
 
+        carts = Cart.objects.filter(user = user)
+        Total_products_cost = 0
+        for tccart in carts:
+            Total_products_cost += tccart.products_total_cost
+        delivery_charge = 70
+        Total_Cost = Total_products_cost + delivery_charge        
+
+
         data = {
             'quantity' : cart.quantity,
-            'total_products_cost': cart.products_cost
+            'products_total_cost': cart.products_total_cost,
+            'Total_Cost' : Total_Cost
         }
         
         return JsonResponse(data)
@@ -191,13 +201,15 @@ def MinusCartView(request):
         size = request.GET['size']
 
         if product.unit  == "Liter" or product.unit == "Kg" or product.unit == "ClothPicesSize":
+            print("now i'm at the 1st function")
             cart = Cart.objects.get(user = user, product = product, unit = unit, unit_amount = unit_amount)
             if cart.quantity >= 1:
                 cart.quantity -= 1
-                cart.save()       
+                cart.save()
             if cart.quantity == 0:
                 cart.delete()
         elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+            print("now im at teh 2nd function")
             cart = Cart.objects.get(user = user, product = product, size = size)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -205,6 +217,7 @@ def MinusCartView(request):
             if cart.quantity <= 0:           
                 cart.delete()
         elif product.unit == "Packet":
+            print("now i'm at the 3rd function")
             cart = Cart.objects.get(user = user, product =product)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -212,19 +225,27 @@ def MinusCartView(request):
             if cart.quantity <= 0:           
                 cart.delete()
             
-        newcart = Cart.objects.filter(user = request.user)
+        newcart = Cart.objects.filter(user = user)
         cartCount = len(newcart)
         if cartCount <= 0:
             cartCount = 0
 
+        carts = Cart.objects.filter(user = user)
+        Total_products_cost = 0
+        for tccart in carts:
+            Total_products_cost += tccart.products_total_cost
+        delivery_cost = 70
+        Total_Cost = Total_products_cost + delivery_cost 
+        if Total_Cost == delivery_cost:
+            Total_Cost = 0
+
         data = {
             'quantity' : cart.quantity,
-            'total_products_cost': cart.products_cost,
-            'cartCount': cartCount
-
+            'products_total_cost': cart.products_total_cost,
+            'cartCount': cartCount,
+            "Total_Cost": Total_Cost
         }
         return JsonResponse(data)
-
 
 def RemoveCartView(request):
     user = request.user
@@ -245,14 +266,23 @@ def RemoveCartView(request):
         cart = Cart.objects.get(user = user, product =product)
         cart.delete()
 
-    
-
     cart = Cart.objects.filter(user = request.user)
     cartCount = len(cart)
     if cartCount <= 0:
         cartCount = 0
+
+    carts = Cart.objects.filter(user = user)
+    Total_products_cost = 0
+    for tccart in carts:
+        Total_products_cost += tccart.products_total_cost
+    delivery_cost = 70
+    Total_Cost = Total_products_cost + delivery_cost 
+    if Total_Cost == delivery_cost:
+        Total_Cost = 0
+    
     data = {
         'cartCount' : cartCount,
+        "Total_Cost" : Total_Cost
     }
     return JsonResponse(data)
 

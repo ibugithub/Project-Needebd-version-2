@@ -58,16 +58,22 @@
                       </div>
                       
                       <div class="pro-de-size">
+                      <!-- Filtering the product's extra unit info according to the product's unit -->
                       {% if cart.product.unit == "ClothSize" or cart.product.unit == "ShoeSize"  %}
                         <span>size:{{cart.size}}</span>
+                      {% endif %}
+                      {% if cart.product.unit == "ClothPicesSize" or cart.product.unit == "Liter" or cart.product.unit == "Kg" %}
+                        <span>Amount :  {{cart.unit_amount}}{{cart.unit}}</span>
+                      {% endif %}
+
+                      {% if cart.product.unit == "Packet" %} 
+                      <span>Amount : Single Item</span>
                       {% endif %}
                       </div>
                      
                       
                       <div class="pro-de-size">
-                        {% if cart.product.unit == "ClothPicesSize" or cart.product.unit == "Liter" or cart.product.unit == "Kg" %}
-                        <span>Amount :  {{cart.unit_amount}}{{cart.unit}}</span>
-                        {% endif %}
+                        
                       </div>
                       
                       <div class="pro-de-brand">
@@ -80,7 +86,7 @@
                       </div>
                       <span  class="tk-per">Total Cost: 
                         <span id = "tc{{forloop.counter}}">
-                        {{cart.products_cost}}
+                        {{cart.products_total_cost}}
                         </span> 
                       </span>
 
@@ -169,7 +175,7 @@
                   </span>
                 </div>
                 <div class="total-price">
-                  <span>৳32</span>
+                  <span>৳ <span id = "totalCostDom">{{Total_Cost}}</span></span>
                 </div>
               </div>
               <div class="save-text">
