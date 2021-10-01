@@ -69,6 +69,6 @@ class FooterColum4Admin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product','unit', 'unit_amount', 'color', 'quantity','size']
+    list_display = ['id', 'user', 'product','unit', 'unit_amount', 'color', 'quantity','size', 'total_cost']
 
 # Register your models here.

@@ -80,6 +80,8 @@ class Product(models.Model):
     Unit_Choices = (
                         ("Kg", "Kg"),
                         ("Liter", "Liter"),
+                        ("KgPacket", "KgPacket"),
+                        ("LiterPacket", "LiterPacket"),
                         ("ClothSize", "ClothSize"),
                         ("ClothPicesSize", "ClothPicesSize"),
                         ("ShoeSize", "ShoeSize"),
@@ -92,15 +94,24 @@ class Cart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(0)],  default = 1)
     unit = models.CharField(max_length = 30, null = True)
-    unit_amount = models.IntegerField(null = True)
+    unit_amount = models.FloatField(null = True)
     color = models.CharField(max_length = 30, null = True)
     size  = models.CharField(max_length = 40, null = True)
+    total_cost = models.FloatField(null = True)
    
     def __str__(self):
         return str(self.id)
     
     @property
     def products_cost(self):
-        return self.quantity * self.product.discounted_prize
+        print("now Im in the products_cost function")
+        if self.unit == "Gram":
+            converted_amount = self.unit_amount / 1000
+        if self.unit == "Kg":
+            converted_amount = self.unit_amount
+        Total_Cost = self.quantity * self.product.discounted_prize * converted_amount
+        self.total_cost = Total_Cost
+        self.save()
+        return Total_Cost
 
     

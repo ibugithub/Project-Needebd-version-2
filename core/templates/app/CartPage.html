@@ -56,9 +56,20 @@
                           asics GEL-WINDHAWK 3 Running Shoes For Men
                         </a>
                       </div>
+                      
                       <div class="pro-de-size">
-                        <span>size:{{cart.size}}, grey</span>
+                      {% if cart.product.unit == "ClothSize" or cart.product.unit == "ShoeSize"  %}
+                        <span>size:{{cart.size}}</span>
+                      {% endif %}
                       </div>
+                     
+                      
+                      <div class="pro-de-size">
+                        {% if cart.product.unit == "ClothPicesSize" or cart.product.unit == "Liter" or cart.product.unit == "Kg" %}
+                        <span>Amount :  {{cart.unit_amount}}{{cart.unit}}</span>
+                        {% endif %}
+                      </div>
+                      
                       <div class="pro-de-brand">
                         <span>adidas</span>
                       </div>
@@ -67,9 +78,11 @@
                         <span class="tk-now"> ৳{{cart.product.discounted_prize}}</span>
                         <span class="tk-per">{{cart.product.discount}}% Off</span> 
                       </div>
-                      <span class="tk-per">Total Cost: <span id="tc">
+                      <span  class="tk-per">Total Cost: 
+                        <span id = "tc{{forloop.counter}}">
                         {{cart.products_cost}}
-                      </span> </span>
+                        </span> 
+                      </span>
 
 
                     </div>
@@ -85,21 +98,21 @@
                 </div>
                 <div class="add-to-cart-d-btn">
                   <div class="cart-d-p-btn">
-                    <button onclick="MinusCart(this)" prod={{cart.product.id}} class="btn-sub"> - </button>
+                    <button flc = {{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}  size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}}  class="btn-sub"> - </button>
                     <div class="cart-d-input">
 
                       <input type="text" class="cart-d-rp" value="{{cart.quantity}}">
 
                     </div>
 
-                    <button onclick="PlusCart(this)" prod={{cart.product.id}} size = {{cart.size}} class="btn-add"> + </button>
+                    <button flc = {{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}} class="btn-add"> + </button>
 
                   </div>
                   <div class="cart-save-remove">
                     <div class="cart-d-save">
                       save for later
                     </div>
-                    <div prod_id = {{cart.product.id}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
+                    <div prod_id = {{cart.product.id}}  size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}}   onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
                   </div>
                 </div>
               </div>

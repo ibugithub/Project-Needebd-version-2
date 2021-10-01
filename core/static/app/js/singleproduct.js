@@ -28,8 +28,8 @@ function fput() {
           <div class="size-button">
             <select  id = "unit" class="size-button-btn" name = "unit">
               <option value = "Yeard"> Yeard </option>
-              <option value = "Squre Meter"> Squre Meter </option>
-              <option value = "Squre Yeard"> Squre Yeard </option>             
+              <option value = "SqureMeter"> Squre Meter </option>
+              <option value = "SqureYeard"> Squre Yeard </option>             
             </select>
           </div>
         </div>
@@ -69,7 +69,7 @@ function fput() {
     <div class="size-button">
       <select  id = "unit" class="size-button-btn" name = "unit">
         <option value = "Liter"> Liter </option>
-        <option value = "Mili Liter"> Mili Liter </option>
+        <option value = "MiliLiter"> Mili Liter </option>
       </select> <br> 
     </div>
   </div>

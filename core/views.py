@@ -24,7 +24,6 @@ def test(request):
     }
     return JsonResponse(data)
 
-
 # Create your views here.
 class Mycontext(ContextMixin):
     def get_context_data(self, **kwargs):
@@ -96,54 +95,36 @@ class SingleProductView(Mycontext,DetailView):
     template_name = 'app/singleproduct.html'
 
 def AddToCartView(request):
-    print("it's all right")
     product_id = request.GET['productid']
     unit = request.GET['unit']
     unit_amount = request.GET['unit_amount']
     size = request.GET['Size']
-    print("This is the unit", unit)
-    print("This is the unit amount", unit_amount)
-    print("This is the Size", size)
     if request.user.is_authenticated:
         user = request.user
         myproduct = Product.objects.get(id = product_id)
-        print("The product unit is ", myproduct.unit)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
         if myproduct.unit == "Kg" or myproduct.unit == "Liter" or myproduct.unit  == "ClothPicesSize":
-            print("this is 1st function")
             try:
                 cart = Cart.objects.get(user = user, product = myproduct, unit =unit, unit_amount = unit_amount)
                 cart.quantity +=1
                 cart.save()
             except:
-                Cart(user = user, product = myproduct, unit = unit, unit_amount = unit_amount).save()
-        
+                Cart(user = user, product = myproduct, unit = unit, unit_amount = unit_amount).save()       
         elif myproduct.unit == "ClothSize" or myproduct.unit == "ShoeSize":
-            print("this is the 2nd function")
             try:
                 cart =Cart.objects.get(user =user, product = myproduct, size = size)
                 cart.quantity +=1
                 cart.save()
             except:
                 Cart(user = user, product = myproduct, size = size).save()
-
         elif myproduct.unit == "Packet":
             try:
                 cart = Cart.objects.get(user = user, product = myproduct)
                 cart.quantity +=1
                 cart.save()
             except:
-                Cart(user = user, product = myproduct).save()
-
-        # try:  
-        #     cart = Cart.objects.get(user= user, product = myproduct, size = size)
-        #     cart.quantity += 1
-        #     cart.save()
-        #     print(cart.quantity)
-        # except:
-        #     Cart(user = user, product = myproduct, size = size).save()
-    
+                Cart(user = user, product = myproduct).save()   
     data = {
         'name': "ibrahim"
     }
@@ -154,7 +135,6 @@ class ShowCartView(Mycontext, TemplateView):
     template_name = 'app/Cartpage.html'
 
     def get(self, request, *args, **kwargs):
-        print("now i'm in showcart")
         if request.user.is_authenticated:
             user = request.user
             carts = Cart.objects.filter(user = user)
@@ -173,17 +153,25 @@ class ShowCartView(Mycontext, TemplateView):
 
 def PlusCartView(request):
     if request.user.is_authenticated:
+        user = request.user
         product_key = request.GET['id']
-        psize = request.GET['size']
         product = Product.objects.get(id = product_key)
-        try:
-            cart = Cart.objects.get(user = request.user, product = product, size =psize)
-        except:
-            cart = Cart.objects.get(user = request.user, product = product)
-        cart.quantity += 1
-        cart.save()
-    
-
+        unit = request.GET['unit']
+        unit_amount = request.GET['unit_amount']
+        size = request.GET['size']
+        
+        if product.unit == "Kg" or product.unit == "Liter" or product.unit  == "ClothPicesSize":
+            cart = Cart.objects.get(user = user, product = product, unit = unit, unit_amount = unit_amount)
+            cart.quantity += 1
+            cart.save()
+        elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+            cart =Cart.objects.get(user = user, product = product, size = size)
+            cart.quantity += 1
+            cart.save()        
+        elif product.unit == "Packet":
+            cart = Cart.objects.get(user = user, product =product)
+            cart.quantity += 1
+            cart.save()
 
         data = {
             'quantity' : cart.quantity,
@@ -194,15 +182,35 @@ def PlusCartView(request):
 
 
 def MinusCartView(request):
-    if request.user.is_authenticated:
+    user = request.user
+    if user.is_authenticated:
         product_key = request.GET['id']
         product = Product.objects.get(id = product_key)
-        cart = Cart.objects.get(user= request.user, product = product)       
-        if cart.quantity >= 1:
-            cart.quantity -= 1
-            cart.save()       
-        if cart.quantity == 0:
-            cart.delete()
+        unit = request.GET['unit']
+        unit_amount = request.GET['unit_amount']
+        size = request.GET['size']
+
+        if product.unit  == "Liter" or product.unit == "Kg" or product.unit == "ClothPicesSize":
+            cart = Cart.objects.get(user = user, product = product, unit = unit, unit_amount = unit_amount)
+            if cart.quantity >= 1:
+                cart.quantity -= 1
+                cart.save()       
+            if cart.quantity == 0:
+                cart.delete()
+        elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+            cart = Cart.objects.get(user = user, product = product, size = size)
+            if cart.quantity >= 1:
+                cart.quantity -= 1
+                cart.save()
+            if cart.quantity <= 0:           
+                cart.delete()
+        elif product.unit == "Packet":
+            cart = Cart.objects.get(user = user, product =product)
+            if cart.quantity >= 1:
+                cart.quantity -= 1
+                cart.save()
+            if cart.quantity <= 0:           
+                cart.delete()
             
         newcart = Cart.objects.filter(user = request.user)
         cartCount = len(newcart)
@@ -219,10 +227,26 @@ def MinusCartView(request):
 
 
 def RemoveCartView(request):
+    user = request.user
     product_key = request.GET['prod_id']
     product = Product.objects.get(id = product_key)
-    cart = Cart.objects.get(user = request.user, product = product)
-    cart.delete()
+    unit = request.GET['unit']
+    unit_amount = request.GET['unit_amount']
+    size = request.GET['size']
+    if product.unit  == "Liter" or product.unit == "Kg" or product.unit == "ClothPicesSize":
+        cart = Cart.objects.get(user = user, product = product, unit = unit, unit_amount = unit_amount)
+        cart.delete()
+
+    elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+        cart = Cart.objects.get(user = user, product = product, size = size)
+        cart.delete()
+
+    elif product.unit == "Packet":
+        cart = Cart.objects.get(user = user, product =product)
+        cart.delete()
+
+    
+
     cart = Cart.objects.filter(user = request.user)
     cartCount = len(cart)
     if cartCount <= 0:

@@ -40,37 +40,46 @@ function addToCart(element){
 }
 
 function PlusCart(element)
-{   console.log('connected')
+{ 
     var prod_id = element.getAttribute('prod').toString()
-    var Size = element.getAttribute('size')
-    console.log(prod_id)
+    var c = element.getAttribute('flc')
+    var tcid = ("tc"+c)
+    var tProdCostElm = document.getElementById(tcid)
+    
     $.ajax({
         type : "GET",
         url  : "/pluscarturl",
         data : {
             id : prod_id,
-            size : Size
+            unit : element.getAttribute('unit'),
+            unit_amount : element.getAttribute('unit_amount'),
+            size : element.getAttribute('size')
+
         },
         success: function(data){
-            var quantityElm = element.parentNode.children[1].children[0]
-            var tProdCostElm = element.parentNode.parentNode.parentNode.children[0].children[1].children[0].children[4].children[0]
-             
+            var quantityElm = element.parentNode.children[1].children[0]        
             quantityElm.value  = data.quantity
             tProdCostElm.innerHTML = data.total_products_cost
-
         }
     })
 }
 
 function MinusCart(element)
-{   console.log('connected')
+{    
     var prod_id = element.getAttribute('prod').toString()
     console.log(prod_id)
+    var c = element.getAttribute('flc')
+    var tcid = ("tc"+c)
+    var tProdCostElm = document.getElementById(tcid)
+
     $.ajax({
         type : "GET",
         url  : "/minuscarturl",
         data : {
-            id : prod_id
+            id : prod_id,
+            unit : element.getAttribute('unit'),
+            unit_amount : element.getAttribute('unit_amount'),
+            size : element.getAttribute('size')
         },
         success: function(data){
             console.log(data.quantity)
@@ -81,8 +90,6 @@ function MinusCart(element)
                 cartItemCount.innerHTML = data.cartCount
             }
             var quantityElm = element.parentNode.children[1].children[0]
-            var tProdCostElm = element.parentNode.parentNode.parentNode.children[0].children[1].children[0].children[4].children[0]
-
             quantityElm.value  = data.quantity
             tProdCostElm.innerHTML = data.total_products_cost
         }
@@ -96,7 +103,11 @@ function RemoveCart(element)
         method : "GET",
         url : '/removecarturl',
         data : {
-            prod_id : element.getAttribute('prod_id')
+            prod_id : element.getAttribute('prod_id'),
+            unit : element.getAttribute('unit'),
+            unit_amount : element.getAttribute('unit_amount'),
+            size : element.getAttribute('size')
+
         },
         success: function(data){
             var cartItemCount = document.getElementById('count')
