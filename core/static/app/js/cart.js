@@ -97,6 +97,15 @@ function MinusCart(element)
             quantityElm.value  = data.quantity
             tProdCostElm.innerHTML = data.products_total_cost
             totalCostDom.innerHTML = data.Total_Cost
+            if (data.Item != 'nochange')
+            console.log("the Item count is..", data.Item)
+            {   if (data.Item == 0)
+                {
+                    data.Item  = 0
+                }
+                document.getElementById('ItemCountDom').innerHTML  = data.Item
+            }
+            
         }
     })
 }

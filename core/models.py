@@ -14,7 +14,6 @@ class CategoryWraper(models.Model):
     def __str__(self):
         return str(self.name)
 
-
 DEVICE_CHOICES = (
     ('Mobile', 'Mobile'),
     ('Desktop', 'Desktop')
@@ -52,7 +51,6 @@ class Footer_Colum3(models.Model):
 
 class Footer_Colum4(models.Model):
     content = models.CharField(max_length=200)
-
 
 # Cart functionality will be from here
 
