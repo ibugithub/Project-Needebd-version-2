@@ -31,10 +31,9 @@ class VoucherOffer(models.Model):
         
 class Voucher(models.Model): 
     voucher_offer = models.ForeignKey(VoucherOffer, on_delete=models.CASCADE, null= True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     voucher_code = models.CharField(max_length=25, blank = True)
     count = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1)
-    user_valid_from  = models.DateTimeField(null = True, blank = True)
     user_valid_to     = models.DateTimeField(null = True, blank = True)
     
     def __str__(self):

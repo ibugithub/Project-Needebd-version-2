@@ -1,0 +1,384 @@
+{% extends 'app/base.html' %}
+{% load static %} 
+{% block css %} 
+<link rel="stylesheet" href="../../static/app/css/fontend.css">
+<link rel="stylesheet" href="../../static/app/css/manageAccount.css">
+{% endblock css %}
+
+
+
+{% block body %}
+  <!-- manage account for pc -->
+  <div class="manage-account-section">
+    <div class="manage-account-container">
+      <div class="manage-account-main">
+        <div class="manage-account-row">
+          {% include 'app/aLeftSection.html' %}         
+          <div class="manage-account-right">
+            <div class="manage-account-right-main">
+              <div class="account-right-title">
+               <a href="/templates/app/manageAccount.html">
+                <h1 class="ac-rt">manage my account</h1>
+               </a>
+              </div>
+              <div class="manage-account-r-row">
+                <div class="manage-profile">
+                  <div class="manage-profile-main">
+                    <div class="m-profile-title">
+                      <span class="m-p-title-text">personal profile</span>
+                      <span>|</span>
+                      <a href="/templates/app/editprofile.html">Edit</a>
+                    </div>
+                    <div class="m-p-title-name">
+                      <span class="t-name">
+                        bahadur mia
+                      </span>
+                    </div>
+                    <div class="manage-profile-mail">
+                      <span class="p-mail">
+                        bahadurmia@gmail.com
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="manage-adress">
+                  <div class="manage-adress-main">
+                    <div class="manage-adress-row">
+                      <div class="manage-adress-left">
+                        <div class="address-book">
+                          <div class="ad-book-title">
+                            <span>Address book</span>
+                            <span>|</span>
+                            <a href="/templates/app/addressBook.html">edit</a>
+                          </div>
+                          <div class="add-shiping">
+                            <span>DEFAULT SHIPPING ADDRESS
+                            </span>
+                          </div>
+                          <div class="add-profile-name">
+                            <span class="add-p-text">bahadur mia </span>
+                          </div>
+                          <div class="add-address">
+                            <span>sadar</span>
+                            <span>Dhaka- Gazipur- hazibag</span>
+                            <span class="phone-num">
+                              (+880) 01782808177
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="manage-address-right">
+                        <div class="address-right">
+                          <div class="ad-book-title hidden">
+                            <span></span>
+                            <span>|</span>
+                            <a href="#">edit</a>
+                          </div>
+                          <div class="add-shiping">
+                            <span>DEFAULT SHIPPING ADDRESS
+                            </span>
+                          </div>
+                          <div class="add-profile-name">
+                            <span class="add-p-text">bahadur mia </span>
+                          </div>
+                          <div class="add-address">
+                            <span>sadar</span>
+                            <span>Dhaka- Gazipur- hazibag</span>
+                            <span class="phone-num">
+                              (+880) 01782808177
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+              <!-- recent order start -->
+              <div class="recent-order-section">
+                <div class="recent-order-main">
+                  <div class="recent-order-title">
+                    <h2>recent order</h2>
+                  </div>
+                  <div class="recent-order-content">
+                    <div class="recent-order-con-main">
+                      <div class="next-table-header">
+                        <div class="next-table-header-inner">
+                          <table>
+                            <tbody>
+                              <tr>
+                                <th rowspan="1" class="next-table-header-node">
+                                  <div class="next-table-cell-warpper">
+                                    order #
+                                  </div>
+                                </th>
+                                <th rowspan="1" class="next-table-header-node">
+                                  <div class="next-table-cell-warpper">
+                                    Placed On
+                                  </div>
+                                </th>
+
+                                <th rowspan="1" class="next-table-header-node">
+                                  <div class="next-table-cell-warpper">
+                                    Items
+                                  </div>
+                                </th>
+
+                                <th rowspan="1" class="next-table-header-node">
+                                  <div class="next-table-cell-warpper" style="text-align: right;">
+                                    Total
+
+                                  </div>
+                                </th>
+                                <th rowspan="1" class="next-table-header-node" >
+                                  <div class="next-table-cell-warpper" style="visibility: hidden;">
+                                    Total
+
+                                  </div>
+                                </th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="next-table-body">
+                        <table>
+                          <tbody>
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  619095321531865
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  14/09/2021
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  <div class="tttrb">
+                                    <div class="recent-item-img">
+                                      <img src="/static/app/image/all-1.png" alt="">
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper" style="text-align: right;">
+                                  <span>৳</span>
+                                  <span> 155</span>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
+                                  <a href="#">Manage</a>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  619095321531865
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  14/09/2021
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  <div class="tttrb">
+                                    <div class="recent-item-img">
+                                      <img src="/static/app/image/all-1.png" alt="">
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper" style="text-align: right;">
+                                  <span>৳</span>
+                                  <span> 155</span>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
+                                  <a href="#">Manage</a>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  619095321531865
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  14/09/2021
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  <div class="tttrb">
+                                    <div class="recent-item-img">
+                                      <img src="/static/app/image/all-1.png" alt="">
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper text-rtb" style="text-align: right;">
+                                  <span>৳</span>
+                                  <span> 155</span>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
+                                  <a href="#">Manage</a>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  619095321531865
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  14/09/2021
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper">
+                                  <div class="tttrb">
+                                    <div class="recent-item-img">
+                                      <img src="/static/app/image/all-1.png" alt="">
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper" style="text-align: right;">
+                                  <span>৳</span>
+                                  <span> 155</span>
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
+                                  <a href="#">Manage</a>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- recent-order-end -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+ <!-- manage account-for phone -->
+
+ <div class="phone-manage-account">
+   <div class="phone-manage-account-main">
+     <div class="phone-account-title">
+        <span>
+          <a href="/templates/app/index.html">
+            <i class="fa fa-arrow-left"></i>
+          </a>
+        </span>
+        <span class="otp">my profile</span>
+     </div>
+     <div class="phone-account-name">
+       <span>Hello,</span>
+       <span class="phone-name">Bahadur mia</span>
+     </div>
+     <div class="phone-manage-account-container">
+       <div class="manage-account-element">
+         <ul class="manage-account-list">
+           <li class="manage-account-link">
+             <div class="div-link">
+               <div class="link-icon">
+                 <img src="/static/app/image/all-1.png" alt="">
+               </div>
+               <div class="link-text">
+                 <a href="/templates/app/order.html">
+                   my orders
+                 </a>
+               </div>
+             </div>
+
+           </li>
+
+           <li class="manage-account-link">
+            <div class="div-link">
+              <div class="link-icon">
+                <img src="/static/app/image/all-1.png" alt="">
+              </div>
+              <div class="link-text">
+                <a href="/templates/app/addressBook.html">
+                  Address book
+                </a>
+              </div>
+            </div>
+
+          </li>
+          <li class="manage-account-link">
+            <div class="div-link">
+              <div class="link-icon">
+                <img src="/static/app/image/all-1.png" alt="">
+              </div>
+              <div class="link-text">
+                <a href="/templates/app/profile.html">
+                  account information
+                </a>
+              </div>
+            </div>
+
+          </li>
+
+          <li class="manage-account-link">
+            <div class="div-link">
+              <div class="link-icon">
+                <img src="/static/app/image/all-1.png" alt="">
+              </div>
+              <div class="link-text">
+                <a href="/templates/app/cancellation.html">
+                 my cancellation
+                </a>
+              </div>
+            </div>
+
+          </li>
+          
+          
+          
+         </ul>
+       </div>
+     </div>
+   </div>
+ </div>
+
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'app/js/productPage.js' %}"></script>
+{% endblock js %}
+

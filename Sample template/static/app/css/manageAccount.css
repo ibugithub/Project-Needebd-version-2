@@ -1,0 +1,380 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.manage-account-section{
+    width: 100%;
+}
+.manage-account-container{
+    width: 100%;
+    padding: 0 20px;
+   
+}
+.manage-account-main{
+    width: 100%;
+    margin-bottom: 40px;
+}
+.manage-account-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.manage-account-menu-left{
+    width: 20%;
+    
+}
+.manage-account-left-content{
+    width: 100%;
+}
+.manage-left-head{
+    width: 100%;
+    color: #444;
+    padding: 20px 0;
+}
+.manage-left-head .left-user-name{
+  text-transform: capitalize;
+}
+.account-manage{
+    width: 100%;
+}
+.account-manage-title{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.account-manage-title h2{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #444;
+    font-weight: 600;
+}
+.account-manage-title h2:active{
+    color: red;
+}
+.account-m-menu {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+.acc-m{
+    list-style: none;
+}
+.acc-link{
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    color: #444;
+}
+.acc-link a{
+    color:#444;
+}
+.manage-account-right{
+    width: 80%;
+}
+.manage-account-right-main{
+    width: 100%;
+}
+.account-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ac-rt{
+    text-transform: capitalize;
+    color:#444;
+    font-weight: 600;
+
+}
+.manage-account-r-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.manage-profile{
+  width: 33%;
+  padding-right: 5px;
+ 
+}
+.manage-profile-main{
+    background-color: #fff;
+    padding: 20px 10px 20px 10px;
+    height: 210px;
+}
+.m-profile-title{
+    margin-bottom: 10px;
+    color: #444;
+}
+.m-profile-title a{
+    color: #EB6529;
+    text-transform: uppercase;
+}
+.m-p-title-name{
+    margin-bottom: 10px;
+    color: #444;
+    text-transform: capitalize;
+}
+.manage-profile-mail{
+    margin-bottom: 10px;
+   color: #444;
+
+}
+.manage-adress{
+    width: 67%;
+}
+.manage-adress-main{
+    width:100%;
+    background-color: #fff;
+    padding: 20px 10px;
+    height:210px ;
+}
+.manage-adress-row{
+    display: flex;
+}
+.manage-adress-left{
+    width: 50%;
+   
+}
+.address-book{
+    width: 100%;
+    border-right: 2px solid #444;
+}
+.ad-book-title{
+    color: #444;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+.ad-book-title a{
+    color: #EB6529;
+    text-transform: uppercase;
+}
+.add-shiping{
+    width: 100%;
+    color: #EB6529;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.add-profile-name{
+    margin-bottom: 10px;
+    
+}
+.add-p-text{
+    color: #041E42;
+    text-transform: capitalize;
+}
+.add-address{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.add-address span{
+    display: block;
+    width: 100%;
+    margin-bottom: 3px;
+    color: #444;
+}
+.manage-address-right{
+    width: 50%;
+    padding-left: 10px;
+}
+.hidden{
+    visibility: hidden;
+}
+
+.recent-order-section{
+    width: 100%;
+    margin-top: 10px;
+    background-color: #fff;
+}
+.recent-order-title{
+    width: 100%;
+    color: #444;
+    padding: 10px;
+}
+.recent-order-title h2{
+    color: #444;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.recent-order-content{
+    border-width: 0;
+}
+.recent-order-con-main{
+    box-sizing: border-box;
+}
+.next-table-header{
+    overflow: auto;
+    font-size: 14px;
+}
+.next-table-header-inner{
+    overflow: hidden;
+}
+.recent-order-main table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+    background: #fff;
+}
+.next-table-header-node{
+    padding: 0;
+    background: #fafafa;
+    color: #444;
+    text-align: left;
+    font-weight: 400;
+    /* border: 1px solid #eff0f5; */
+    border-bottom: 1px solid #eff0f5;
+}
+.next-table-cell-warpper{
+    padding: 16px 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+.next-table-body{
+    font-size: 14px;
+}
+.next-table-row{
+    transition: all .3s ease;
+}
+.next-table-cell{
+    padding: 0;
+    border-bottom: 1px solid #eff0f5;
+}
+.next-table-cell-warpper{
+    padding: 16px 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    text-align: left;
+    color: #444;
+}
+.recent-item-img{
+    float: left;
+    margin-right: 4px;
+}
+.recent-item-img img{
+    width: 40px;
+    height: 40px;
+}
+.text-rtb{
+    text-align: center;
+}
+.text-rtb a{
+    text-transform: uppercase;
+    color: #EB6529;
+}
+
+
+
+.phone-manage-account{
+    width: 100%;
+    padding: 0 20px;
+    margin-top: 10px;
+}
+.phone-manage-account-main{
+    width: 100%;
+   
+  
+}
+.phone-account-title{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px 0;
+}
+.phone-account-title span{
+    font-size: 18px;
+    color: #444;
+}
+.otp{
+    color: #444;
+    padding-left: 10px;
+    text-transform: capitalize;
+    font-size: 18px !important;
+}
+.phone-account-name{
+    padding: 10px 0;
+    color: #444;
+}
+.phone-manage-account-container{
+    width: 100%;
+}
+.manage-account-element{
+    width: 100%;
+   
+}
+.manage-account-list{
+    list-style: none;
+}
+.manage-account-link{
+    width: 100%;
+    height: 60px;
+   background-color: #fff;
+    line-height: 60px;
+    border-bottom: 1px solid #EAEDED;
+  
+}
+.div-link{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0 10px;
+}
+.link-icon{
+    width: 40px;
+    height: 40px;
+    line-height: 82px;
+}
+.link-icon img{
+    max-height: 100%;
+    max-width: 100%;
+}
+.link-text{
+    padding-left: 15px;
+    width: 100%;
+}
+.link-text a{
+    color: #444;
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+@media only screen and (max-width: 768px) {
+  .manage-account-section{
+      display: none;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+    .manage-account-section{
+        display: block;
+    }
+    .phone-manage-account{
+        display: none;
+    }
+}
+@media only screen and (max-width: 600px){
+  .phone-manage-account{
+      padding: 0;
+      margin-bottom: 10px;
+  }
+  .phone-account-title{
+      margin-top: 69px;
+      padding-left: 10px;
+  }
+  .phone-account-name{
+      padding-left: 10px;
+  }
+  .phone-account-title{
+      padding: 11px 0;
+  }
+}
+
+@media only screen and (max-width: 250px){
+    .phone-account-title{
+        margin-top: 40px;
+        padding-left: 10px;
+    }
+    .phone-account-name{
+        padding-top: 0;
+    }
+}

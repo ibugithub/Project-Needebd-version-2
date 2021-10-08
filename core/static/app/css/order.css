@@ -1,0 +1,269 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.cancellation-section{
+    width: 100%;
+}
+.cancellation-container{
+    width: 100%;
+    padding: 0 20px;
+   
+}
+.cancellation-main{
+    width: 100%;
+   
+}
+.cancellation-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.cancellation-left{
+    width: 20%;
+    
+}
+.cancellation-left-content{
+    width: 100%;
+}
+.manage-left-head{
+    width: 100%;
+    color: #444;
+    padding: 20px 0;
+}
+.manage-left-head .left-user-name{
+  text-transform: capitalize;
+}
+.account-manage{
+    width: 100%;
+}
+.account-manage-title{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.account-manage-title h2{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #444;
+    font-weight: 600;
+}
+.account-manage-title h2:active{
+    color: red;
+}
+.account-m-menu {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+.acc-m{
+    list-style: none;
+}
+.acc-link{
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    color: #444;
+}
+.acc-link a{
+    color:#444;
+}
+.manage-account-right{
+    width: 80%;
+}
+.manage-account-right-main{
+    width: 100%;
+}
+.account-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ac-rt{
+    text-transform: capitalize;
+    color:#444;
+    font-weight: 600;
+
+}
+.cancellation-right-section{
+    width: 80%;
+    padding-left: 20px;
+}
+.cancellation-right-main{
+    width: 100%;
+}
+.cancellation-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ocrt{
+    width: 100%;
+    color: #444;
+    font-size: 25px;
+    font-weight: 600;
+
+}
+.cancellation-container{
+    width: 100%;
+}
+.cancellation{
+    width: 100%;
+}
+.cancellation-list{
+    width: 100%;
+    width: 100%;
+    margin-top: -8px;
+    margin-bottom: 0px;
+    background-color: #fff;
+    
+}
+.order{
+    width: 100%;
+}
+.order-info{
+    border-bottom: 2px solid #EAEDED;
+    padding: 8px;
+}
+.order-item{
+    min-height: 80px;
+    margin: 15px 0;
+    padding: 0 10px;
+    width: 100%;
+    padding-bottom: 12px;
+}
+.order-item-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.order-image{
+    width: 15%;
+}
+.image-set{
+    width: 70px;
+    height: 70px;
+}
+.order-image img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.order-product-title{
+    width: 50%;
+    padding-right: 10px;
+}
+.order-qu{
+    padding-right: 10px;
+}
+
+.order-info-row{
+    width: 100%;
+}
+.oc{
+    color: #444;
+    text-transform: capitalize;
+}
+.order-date{
+    color: #444;
+    text-transform: capitalize;
+}
+.on{
+    color: #444;
+    text-transform: capitalize;
+}
+.op-title{
+    color: #444;
+    text-transform: capitalize;
+}
+.order-qu{
+    color: #444;
+    text-transform: capitalize;
+}
+.order-status{
+    color: #444;
+    text-transform: capitalize;
+}
+.os{
+    background-color: #EB6529;
+    color: #fff;
+    padding: 0 5px;
+   cursor: pointer;
+    text-transform: capitalize;
+}
+.phone-oder-title-section{
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+    
+}
+.phone-order-icons{
+    padding-right: 10px;
+}
+.phone-order-icons a{
+    font-size: 20px;
+    color: #444;
+}
+.pot{
+    color: #444;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+@media only screen and (min-width: 768px){
+    .phone-oder-title-section{
+        display: none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .cancellation-right-title{
+        display: none;
+    }
+    .cancellation-menu-left{
+        display: none;
+    }
+    .cancellation-right-section{
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .phone-oder-title-section{
+        margin-top: 65px;
+    }
+    .cancellation-container{
+        padding: 0 0;
+    }
+    .cancellation{
+        padding-right: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .order-item-row{
+        justify-content: end;
+    }
+    .order-image{
+        width: 40%;
+    }
+    .order-product-title{
+        width: 60%;
+    }
+    .image-set {
+        width: 86%;
+        height: 100%;
+    }
+    .order-qu{
+        padding: 20px 0;
+    }
+    .order-status{
+        padding: 20px 10px;
+    }
+}
+@media only screen and (max-width: 320px){
+    .order-image{
+        width: 100%;
+    }
+    .order-product-title{
+        width: 100%;
+    }
+    .order-item-row{
+        justify-content: center;
+    }
+
+}

@@ -1,0 +1,363 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.edit-profile-section{
+    width: 100%;
+}
+.edit-profile-container{
+    width: 100%;
+    padding: 0 15px;
+   
+}
+.edit-profile-main{
+    width: 100%;
+    margin-bottom: 40px;
+}
+.edit-profile-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.edit-profile-menu-left{
+    width: 20%;
+    
+}
+.edit-profile-left-content{
+    width: 100%;
+}
+.manage-left-head{
+    width: 100%;
+    color: #444;
+    padding: 20px 0;
+}
+.manage-left-head .left-user-name{
+  text-transform: capitalize;
+}
+.account-manage{
+    width: 100%;
+}
+.account-manage-title{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.account-manage-title h2{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #444;
+    font-weight: 600;
+}
+.account-manage-title h2:active{
+    color: red;
+}
+.account-m-menu {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+.acc-m{
+    list-style: none;
+}
+.acc-link{
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    color: #444;
+}
+.acc-link a{
+    color:#444;
+}
+.manage-account-right{
+    width: 80%;
+}
+.manage-account-right-main{
+    width: 100%;
+}
+.account-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ac-rt{
+    text-transform: capitalize;
+    color:#444;
+    font-weight: 600;
+
+}
+.edit-profile-right{
+    width: 80%;
+}
+.edit-profile-right-main{
+    width: 100%;
+    padding-left: 30px;
+}
+.edit-profile-right-title{
+    padding: 20px 0;
+}
+.cbstr{
+    color: #444;
+    font-weight: 600;
+    font-size: 25px;
+}
+.edit-profile-right-container{
+    width: 100%;
+    background-color: #fff;
+}
+.profile-right-container-main{
+    padding: 20px;
+}
+.edit-profile-top-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.profile-edit-name{
+    width: 33%;
+}
+.profile-name-title{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.profile-name-title h3{
+    color:#444;
+    font-weight: 400;
+    font-size:16px;
+}
+.edit-name-fild{
+    padding: 10px 0;
+}
+.enf{
+    width: 90%;
+    padding: 10px;
+    text-transform: capitalize;
+    color: #444;
+}
+.edit-profile-email{
+    width: 33%;
+}
+.profile-email-name{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.email-name{
+    font-size: 16px;
+    color: #444;
+    font-weight: 400;
+}
+.profile-email-name span{
+    color:#444;
+}
+.profile-email-name span a{
+    color:#EB6529;
+}
+.profile-email-fild{
+    padding: 10px 0;
+}
+.profile-email-fild .profile-email{
+    color: #444;
+}
+
+
+.edit-profile-phone{
+    width: 33%;
+}
+.profile-phone-fld{
+    margin-bottom: 10px;
+}
+.profile-phone-title{
+    color: #444;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.profile-phone-fld span{
+    color: #444;
+}
+.profile-phone-fld span a{
+    color: #EB6529;
+}
+.edit-profile-mobile{
+    padding:10px 0;
+}
+.profile-mobile{
+    color: #444;
+    font-weight: 400;
+}
+
+.edit-profile-info-middle{
+    width: 100%;
+    padding-top: 40px;
+}
+.profile-info-middle-main{
+    width: 100%;
+}
+.profile-info-row{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.info-birthday{
+    width: 33%;
+}
+.birthday-title{
+    margin-bottom: 10px;
+}
+.info-birthday-option{
+    width: 100%;
+}
+.info-birthday-option-row{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border: 1px solid #444;
+}
+.month, .day, .year{
+    width: 33.33%;
+    border-right: 1px solid #444;
+ 
+}
+.year{
+    border-right: none;
+}
+.opt{
+    width: 100%;
+    border: none;
+    padding: 10px 0;
+    text-transform: capitalize;
+    text-align: center;
+}
+.opt option{
+    padding: 5px 0;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.info-gender{
+    width: 33%;
+    padding-left: 20px;
+}
+.info-gender-title{
+    margin-bottom: 10px;
+}
+.rtp{
+    
+    padding: 10px 0;
+    text-transform: capitalize;
+    text-align: cente  
+}
+.edit-profile-bottom{
+    width: 100%;
+    
+}
+.profile-bottom-main{
+    margin-top: 70px;
+}
+.p-save-btn{
+    display: block;
+    width: 200px;
+    padding: 15px;
+    border: none;
+    background-color: #EB6529;
+    text-align: center;
+    color: #fff;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.phone-edit-profile{
+    width: 100%;
+}
+.phone-edit-profile-row{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 20px 0;
+}
+.edit-profile-icon{
+    font-size: 20px;
+    padding-right: 10px;
+    
+}
+.edit-profile-icon a{
+    color: #444;
+}
+.phone-edit-profile-tilte{
+    color: #444;
+}
+.phone-edit-profile-tilte h1{
+    font-size: 20px;
+}
+
+@media only screen and (min-width: 768px){
+    .phone-edit-profile{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .edit-profile-right-title{
+        display: none;
+    }
+    .edit-profile-menu-left{
+        display: none;
+    }
+    .edit-profile-right{
+        width: 100%;
+    }
+    .edit-profile-right-main{
+        padding-left: 0;
+    }
+
+}
+@media only screen and (max-width: 600px){
+    .edit-profile-top-row{
+        display: block;
+    }
+    .profile-edit-name{
+        width: 100%;
+    }
+    .edit-profile-email{
+       width: 100%;
+    }
+    .edit-profile-phone{
+        width: 100%;
+    }
+    .edit-name-fild{
+        padding-top: 0 !important;
+    }
+    .profile-email-name{
+        margin-bottom: 0;
+    }
+    .profile-phone-fld{
+        margin-bottom: 0;
+    }
+    .edit-profile-info-middle{
+        padding-top: 20px;
+    }
+    .profile-info-row{
+        display: block;
+    }
+    .info-gender{
+        width: 100%;
+        padding-left: 0;
+    }
+    .info-birthday{
+        width: 100%;
+    }
+    .enf{
+        width: 100%;
+    }
+    .info-gender-title{
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+    .profile-bottom-main{
+        margin-top: 20px;
+    }
+    .phone-edit-profile{
+        margin-top: 60px;
+    }
+}
+
+@media only screen and (max-width: 300px){
+    .p-save-btn{
+        width: 100%;
+    }
+}

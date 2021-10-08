@@ -1,0 +1,287 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.address-book-section{
+    width: 100%;
+}
+.address-book-container{
+    width: 100%;
+    padding: 0 20px;
+   
+}
+.address-book-main{
+    width: 100%;
+    margin-bottom: 40px;
+}
+.address-book-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.address-book-left{
+    width: 20%;
+    
+}
+.address-book-left-content{
+    width: 100%;
+}
+.manage-left-head{
+    width: 100%;
+    color: #444;
+    padding: 20px 0;
+}
+.manage-left-head .left-user-name{
+  text-transform: capitalize;
+}
+.account-manage{
+    width: 100%;
+}
+.account-manage-title{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.account-manage-title h2{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #444;
+    font-weight: 600;
+}
+.account-manage-title h2:active{
+    color: red;
+}
+.account-m-menu {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+.acc-m{
+    list-style: none;
+}
+.acc-link{
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    color: #444;
+}
+.acc-link a{
+    color:#444;
+}
+.manage-account-right{
+    width: 80%;
+}
+.manage-account-right-main{
+    width: 100%;
+}
+.account-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ac-rt{
+    text-transform: capitalize;
+    color:#444;
+    font-weight: 600;
+
+}
+
+.address-book-right{
+    width: 80%;
+    padding-left: 10px;
+}
+.address-book-main{
+    width: 100%;
+}
+.address-book-title{
+    margin-bottom: 20px;
+    padding: 20px 0;
+}
+.address-book-title h1{
+    color: #444;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.address-book{
+    width: 100%;
+    background-color: #fff;
+}
+.address-book-table{
+    background-color: #fff;
+    padding: 20px;
+    min-height: 200px;
+}
+.next-table{
+    border-width: 0;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.28571;
+    position: relative;
+}
+.next-table-header{
+    overflow: auto;
+    font-size: 14px;
+}
+.next-table-header-inner{
+    overflow: hidden;
+}
+.next-table table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    table-layout: fixed;
+    background: #fff;
+}
+.next-table.only-bottom-border th {
+    border-width: 0 0 1px;
+}
+.next-table-header-node{
+    padding: 0;
+    background: #fafafa;
+    color: #757575;
+    text-align: left;
+    font-weight: 400;
+    border-top: 1px solid #eff0f5;
+    border-bottom: 1px solid #eff0f5;
+}
+.next-table-cell-wrapper{
+    padding: 12px 0 12px 10px!important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    text-transform: capitalize;
+}
+.next-table-body{
+    overflow: auto;
+}
+.next-table-row{
+    transition: all .3s ease;
+}
+.next-table-cell-wrapper p{
+    font-size: 12px;
+}
+.rrtbc{
+    text-transform: uppercase;
+    color: #EB6529;
+    text-align: center;
+}
+.address-book-btn{
+    width: 100%;
+    margin-top: 30px;
+    text-align: right;
+}
+.book-btn{
+    border: none;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    text-transform: capitalize;
+    background: #EB6529;
+    color: #fff;
+    font-family: 'Cairo';
+    font-weight: 400;
+    cursor: pointer;
+}
+
+
+/* Address book for phone */
+.phone-address-book{
+    width: 100%;
+    padding: 0 20px;
+}
+.phone-address-book-container{
+    width: 100%;
+}
+.phone-address-title{
+   padding: 20px 0;
+   width: 100%;
+    display: flex;
+    
+}
+.address-title-icon{
+    padding-right: 10px;
+    font-size: 20px;
+    
+}
+.address-title-icon a{
+    color: #444;
+}
+.phone-title{
+    font-size: 20px;
+    color: #444;
+}
+.phone-container-content{
+    width: 100%;
+}
+.address-book-add-list{
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+    font-size: 16px;
+    background: rgba(0,148,182,.02);
+    border: 1px dashed #EB6529;
+    border-radius: 6px;
+    color: #444;
+}
+.address-book-add-list a{
+    display: inline-block;
+    width: 100%;
+}
+.phone-address-book-body{
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+.phone-address-book-body{
+    width: 100%;
+    border-top: 1x solid #fff;
+}
+.phone-address-body-details{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    border-top: 1px solid #fff;
+    padding-top: 10px;
+}
+.phone-address-body-icon{
+    width: 5%;
+   color: #EB6529;
+}
+.phone-address-body-info{
+    width: 90%;
+    color: #444;
+}
+.phone-address-body-action{
+    width: 5%;
+    color: #EB6529;
+}
+.phone-address-body-action a{
+    color: #EB6529;
+    text-transform: capitalize;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .address-book-section{
+      display: none;
+  }
+}
+@media only screen and (max-width: 600px){
+    .phone-address-title{
+        margin-top: 70px;
+    }
+    .phone-address-body-info{
+        padding-left: 15px;
+    }
+}
+@media only screen and (max-width: 250px){
+    .phone-address-title{
+        margin-top: 35px;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .address-book-section{
+        display: block;
+    }
+    .phone-address-book{
+        display: none;
+    }
+}

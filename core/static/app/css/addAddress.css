@@ -1,0 +1,246 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+
+.add-address-section{
+    width: 100%;
+}
+.add-address-container{
+    width: 100%;
+    padding: 0 15px;
+   
+}
+.add-address-main{
+    width: 100%;
+    
+}
+.add-address-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+.add-address-left{
+    width: 20%;
+    
+}
+.add-address-left-content{
+    width: 100%;
+}
+.manage-left-head{
+    width: 100%;
+    color: #444;
+    padding: 20px 0;
+}
+.manage-left-head .left-user-name{
+  text-transform: capitalize;
+}
+.account-manage{
+    width: 100%;
+}
+.account-manage-title{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.account-manage-title h2{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: #444;
+    font-weight: 600;
+}
+.account-manage-title h2:active{
+    color: red;
+}
+.account-m-menu {
+    padding-left: 20px;
+    padding-bottom: 30px;
+}
+.acc-m{
+    list-style: none;
+}
+.acc-link{
+    padding-bottom: 5px;
+    text-transform: capitalize;
+    color: #444;
+}
+.acc-link a{
+    color:#444;
+}
+.manage-account-right{
+    width: 80%;
+}
+.manage-account-right-main{
+    width: 100%;
+}
+.account-right-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.ac-rt{
+    text-transform: capitalize;
+    color:#444;
+    font-weight: 600;
+
+}
+.add-address-form{
+    width: 80%;
+    padding-left: 30px;
+    padding-bottom: 15px;
+}
+.add-address-form-main{
+    width: 100%;
+}
+.add-address-from-title{
+    width: 100%;
+    padding: 20px 0;
+}
+.add-address-from-title h1{
+    font-size: 24px;
+    color: #444;
+    font-weight: 400;
+
+}
+.add-address-from-container{
+    width: 100%;
+    background-color: #fff;
+}
+.address-form{
+    width: 100%;
+    padding: 20px;
+}
+.address-form-row{
+    width: 100%;
+    display: flex;
+    flex-flow: wrap;
+}
+.address-form-left{
+    width: 50%;
+     padding-right: 20px;
+}
+.form-left{
+    width: 100%;
+}
+
+.form-input-field{
+    width: 100%;
+    padding-bottom: 15px;
+}
+.input-field{
+    width: 100%;
+    padding: 10px;
+}
+.input-field::placeholder{
+    color: rgb(192, 185, 185);
+}
+.form-input-field label{
+    display: block;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+.address-form-right{
+    width: 50%;
+    padding-left: 10px;
+}
+.form-right{
+    width: 100%;
+}
+.address-form-btn{
+    width: 100%;
+    text-align: right;
+}
+.cancel-btn{
+    width: 150px;
+    background-color: #444;
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
+.address-save-btn{
+    width: 150px;
+    background-color: #EB6529;
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
+.phone-address-title-icons a{
+    font-size: 20px;
+    color: #444;
+}
+.phone-address-title-text h1{
+  font-size: 20px;
+  padding-left: 10px;
+  text-transform: capitalize;
+  color: #444;
+}
+
+
+
+.phone-address-title{
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px 0;
+}
+
+@media only screen and (min-width: 768px){
+    .add-address-from-title{
+        display: block;
+    }
+    .phone-address-title{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+   .add-address-from-title{
+       display: none;
+   }
+   .add-address-row {
+     display: block;
+   }
+   .add-address-menu-left{
+       display: none;
+   }
+   .add-address-form{
+     width: 100%;
+     padding-left: 0 !important;
+   }
+   .cancel-btn{
+       width: 100% !important;
+       margin-bottom: 10px;
+       text-transform: capitalize;
+   }
+   .address-save-btn{
+       width: 100%;
+       text-transform: capitalize;
+   }
+}
+@media only screen and (max-width: 600px){
+    .phone-address-title{
+        margin-top: 65px;
+    }
+    .address-form-row{
+        display: block;
+    }
+    .address-form-left{
+        width: 100%;
+        padding-right: 0;
+    }
+    .address-form-right{
+        width: 100%;
+        padding-left: 0;
+    }
+    .add-address-from-title{
+        margin-top: 60px;
+    }
+}
+
+@media only screen and (max-width: 250px){
+    .phone-address-title{
+        margin-top: 45px;
+    }
+}

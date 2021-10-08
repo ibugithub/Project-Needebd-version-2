@@ -9,7 +9,7 @@ urlpatterns  = [
     # path('verify/', views.verify_view, name = 'verify_view'),
     path('login/', views.log_in, name = 'login'),
     path('logout/', views.log_out , name = 'logout'),
-    path('changepass/',auth_views.PasswordChangeView.as_view(template_name = 'accounts/passwordchange.html', form_class = password_user_change, success_url = '/accounts/changepassdone/'), name= 'changepass'),
+    path('changepass/',auth_views.PasswordChangeView.as_view(template_name = 'accounts/changepassword.html', form_class = password_user_change, success_url = '/accounts/changepassdone/'), name= 'changepass'),
     path('changepassdone/', auth_views.PasswordChangeDoneView.as_view(template_name = 'accounts/password-change-done.html'), name = 'change_pass_done'),
 
     

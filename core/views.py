@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.detail import DetailView
@@ -5,7 +6,7 @@ from .models import Brand_Logo_row1,Brand_Logo_row2, Brand_Logo_row3, Category, 
 from django.views.generic.base import ContextMixin
 from django.views.generic import ListView, TemplateView
 from django.http import JsonResponse
-from coupons.models import Coupon
+from coupons.models import Coupon, Voucher
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -338,11 +339,43 @@ def VoucherChecker(request):
             message = f"You will have to buy more than {coupon.condition_rate}. "
             total_amount = "Nan"
     except ObjectDoesNotExist:
-        message = "Code Doesn't Found"
-        total_amount = "Nan"
-        discount = "Nan"
-        if code == "":
-            message  = "Plz Enter a Code"
+        try:
+            voucher = Voucher.objects.get(
+                user = request.user,
+                voucher_code = code,
+            )
+            discount = voucher.voucher_offer.discount
+    # When if the admin or staff doesn't provide the user valid date ......
+            if not voucher.user_valid_to == None :
+                if now > voucher.user_valid_to:
+                    res = True
+                else:
+                    res = False
+            else:
+                res = False          
+
+            if now > voucher.voucher_offer.offer_valid_to or res:
+                message = "This voucher has been expired"
+                total_amount = "Nan"
+            
+            elif voucher.count > voucher.voucher_offer.limit:
+                message = "You have already used maximum of it"
+                total_amount = "Nan"
+
+            elif total_amount < voucher.voucher_offer.condition_rate:
+                message = f"You will have to buy more than {voucher.voucher_offer.condition_rate}."
+                total_amount = "Nan"
+
+            else:
+                total_amount = (total_amount - voucher.voucher_offer.discount) + delivery_cost
+                message = ""
+
+        except ObjectDoesNotExist:
+            message = "Code Doesn't Found"
+            total_amount = "Nan"
+            discount = "Nan"
+            if code == "":
+                message  = "Plz Enter a Code"
     data = {
         "discount" : discount,
         "message" : message,
@@ -350,4 +383,40 @@ def VoucherChecker(request):
     }
     return JsonResponse(data)
 
+def VoucherView(request):
+    # vcode = request.GET['dcode']
+    # print(vcode)
+    try:
+        voucher = Voucher.objects.filter(user = request.user)
+        return render(request, 'app/voucher.html', {'vouchers': voucher})
+    except ObjectDoesNotExist:
+        return None
     
+class ManageAccountView(TemplateView):
+    template_name = 'app/manageAccount.html'
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class ProfileView(TemplateView):
+    template_name = "app/profile.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class EditProfileView(TemplateView):
+    template_name = "app/editprofile.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class AddressBookView(TemplateView):
+    template_name = "app/addressBook.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+class AddAddressView(TemplateView):
+    template_name = "app/addAddress.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+
+        

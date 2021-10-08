@@ -1,0 +1,148 @@
+.email-verification{
+    width: 100%;
+    padding-bottom: 10px;
+}
+.email-verification-container{
+    width: 70%;
+    margin:0 auto ;
+}
+.email-verification-title{
+    padding: 20px 0;
+}
+.email-verification-title h1{
+    color: #444;
+    font-size: 18px;
+}
+.email-verification-content{
+    background-color: #fff;
+    padding: 40px 30px;
+}
+.verification-fild{
+    width: 50%;
+   
+}
+.field-text{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+    padding:10px 0;
+}
+.field-icon{
+    margin-right: 5px;
+}
+.field-icon .fa{
+    font-size: 27px;
+    color: #EB6529;
+}
+.field-text-p p{
+    color: #444;
+}
+.field-middle-inpt{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.field-middle-inpt input{
+    width: 100%;
+    padding: 10px;
+}
+.recent-field-input{
+    display: flex;
+    position: relative;
+}
+.field-input-row{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.field-input-row input{
+    padding: 10px;
+    width: 100%;
+}
+.email-verification-btn .sent-btn{
+    position: absolute;
+    left: 90%;
+    right: 0;
+    top: 11px;
+    background-color: transparent;
+    border: none;
+    text-transform: capitalize;
+}
+.email-verification-bottom{
+    width: 100%;
+    margin-top: 10px;
+}
+.bottom-btn{
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #EB6529;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+.phone-email-verification-title{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px 0;
+}
+.phone-email-verification-icons{
+    color: #444;
+    font-size: 20px;
+    padding-right: 10px;
+}
+.phone-email-verification-icons a{
+    color: #444;
+}
+.phone-email-verification-title-text h1{
+    font-size: 20px;
+    color: #444;
+}
+
+@media only screen and (min-width: 768px) {
+    .phone-email-verification-title{
+        display: none;
+    }
+}
+@media only screen and (max-width: 900px){
+    .email-verification-btn .sent-btn{
+        left:85%
+    }
+}
+@media only screen and (max-width: 768px){
+     .phone-email-verification-title-text{
+         display: block;
+     }
+     .email-verification-title{
+         display: none;
+     }
+     .verification-fild{
+         width: 100%;
+     }
+}
+@media only screen and (max-width: 600px){
+    .phone-email-verification-title{
+        margin-top: 60px;
+    }
+}
+@media only screen and (max-width: 600px){
+    .email-verification-container{
+        width: 100%;
+        padding: 0 15px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .email-verification-content{
+        padding: 20px 5px;
+    }
+    .email-verification-container{
+        padding: 0px 5px;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .phone-email-verification-title{
+        margin-top: 40px;
+    }
+}

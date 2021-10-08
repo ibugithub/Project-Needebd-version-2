@@ -1,0 +1,168 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.all-categories-section{
+  width: 100%;
+  background-color: #fff;
+}
+.categories-section-main{
+  width: 97%;
+  margin: 0 auto;
+ 
+}
+.categories-content-lp{
+  width: 100%;
+}
+.us-en{
+  width: 100%;
+  font-size: 12px;
+}
+.ux-breadcump{
+  padding: 10px 0;
+}
+.ux-breadcump h2{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 400;
+}
+table {
+  border-collapse: collapse;
+}
+#nav-contain{
+  z-index: 1000 !important;
+}
+.categories-static-nav{
+  position: static;
+  top: auto;
+  left: auto;
+  bottom: auto;
+}
+.cg-nav-wearper{
+  overflow: hidden;
+  display: block;
+}
+.cg-nav-wearper .selected{
+  border: 2px solid rebeccapurple;
+}
+.cg-nav-wearper td{
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  border: 1px solid #333;
+}
+.anchor-wrap{
+  width: 16.7%;
+}
+.cg-nav-wearper .selected a{
+ color: #041e42;
+}
+.anchor-wrap a{
+  color: #333;
+  font-weight: 700;
+  z-index: 2;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+}
+.cg-icons{
+  background-position: -29px -246px;
+}
+.anchor-wrap .cg-icons{
+  position: absolute;
+  top: 13px;
+  left: 10px;
+
+}
+.cg-icons img{
+  width: 40px;
+  height: 40px;
+}
+.cg-nav-wearper .cg-desc{
+  margin-left: 50px;
+  text-transform: capitalize;
+  display: block;
+  overflow: hidden;
+  color:#444;
+  font-weight: 400;
+
+}
+.t-r{
+  display:table;
+  width:100%;
+}
+.tb{
+
+  display:block;
+}
+.until-clearfix{
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.cg-main{
+   width: 80%;
+   margin: 0 auto;
+    background: #fff;
+    overflow: hidden;
+}
+.cg-item{
+  position: relative;
+  margin-top: 25px;
+  border-bottom: 1px solid #e8e8e8;
+  padding-top: 80px;
+ 
+}
+.item-head{
+    height: 22px;
+    line-height: 22px;
+    font-size: 16px;
+    color: #f60;
+    padding-right: 25px;
+    background-color: #fff;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+    font-weight: 400;
+    position: relative;
+   
+}
+.sub-item-content-warpper{
+  margin-bottom: 20px;
+}
+.sub-item-content{
+  overflow: hidden;
+}
+.sub-item-content li{
+  line-height: 24px;
+  height: 20px;
+  font-size: 13px;
+  float: left;
+  width: 23%;
+  margin-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+  text-align: center;
+}
+.sub-item-content li a{
+  color: #444;
+  text-transform: capitalize;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+  .categories-static-nav{
+    display: none;
+  }
+  .cg-item{
+    padding: 0;
+  }
+  .sub-item-content li{
+    width: 23%;
+  }
+  .sub-item-content{
+    margin-top: 25px;
+  }
+}

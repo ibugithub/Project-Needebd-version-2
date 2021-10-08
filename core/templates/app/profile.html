@@ -1,0 +1,131 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+
+{% block css %}
+<link rel = "stylesheet" href = "{% static 'app/css/fontend.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/profile.css' %}">
+{% endblock css %}
+{% block body %}
+  <!-- manage account for pc -->
+  <div class="edit-profile-section">
+    <div class="edit-profile-container">
+      <div class="edit-profile-main">
+        <div class="edit-profile-row">
+          {% include 'app/aLeftSection.html' %}
+            <div class="edit-profile-right">
+                <div class="edit-profile-right-main">
+                    <div class="phn-main">
+                      <div class="phn-profile">
+                        <div class="phn-profile-icon">
+                          <a href="/templates/app/manageAccount.html"><i class="fa fa-arrow-left"></i></a>
+                        </div>
+                        <div class="phn-profile-text">
+                          <span>Account information</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="edit-profile-right-title">
+                        <h1 class="cbstr">my profile</h1>
+                    </div>
+                    <div class="edit-profile-right-container">
+                       <div class="profile-right-container-main">
+                           <div class="edit-profile-top-row">
+                               <div class="profile-edit-name">
+                                   <div class="profile-name-title">
+                                       <h3>full name</h3>
+                                   </div>
+                                   <div class="edit-name-fild">
+                                       <span>Bahadur mia</span>
+                                   </div>
+                               </div>
+                               <div class="edit-profile-email">
+                                 <div class="profile-email-name">
+                                   <span class="email-name">
+                                    Email Address
+                                   </span>
+                                   <span>|</span>
+                                   <span>
+                                     <a href="/templates/app/userSecurity.html">change</a>
+                                   </span>
+                                 </div>
+                                 <div class="profile-email-fild">
+                                   <span class="profile-email">
+                                     bahadurmia7@gmail.com
+                                   </span>
+                                 </div>
+                               </div>
+                               <div class="edit-profile-phone">
+                                 <div class="profile-phone-fld">
+                                  <span class="profile-phone-title">
+                                    mobile
+                                  </span>
+                                  <span>|</span>
+                                  <span>
+                                    <a href="#">ADD</a>
+                                  </span>
+                                 </div>
+                                 <div class="edit-profile-mobile">
+                                   <span class="profile-mobile">
+                                     09876543f213
+                                   </span>
+                                 </div>
+                               </div>
+                           </div>
+                           <div class="edit-profile-info-middle">
+                             <div class="profile-info-middle-main">
+                               <div class="profile-info-row">
+                                <div class="info-birthday">
+                                  <div class="birthday-title">
+                                    <span>Birthday</span>
+                                  </div>
+                                  <div class="info-birthday-option">
+                                     <div class="info-birthday-option-row">
+                                       <div class="month">
+                                        jan-23-1996
+                                       </div>
+                                      
+
+                                     </div>
+                                  </div>
+                                </div>
+                                <div class="info-gender">
+                                  <div class="info-gender-title">
+                                    <span class="gender-title">
+                                      Gender
+                                    </span>
+                                  </div>
+                                  <div class="gender">
+                                   male/ female
+                                  </div>
+                                </div>
+                               </div>
+                             </div>
+                           </div>
+
+                           <div class="edit-profile-bottom">
+                             <div class="profile-bottom-main">
+                                <div class="profile-save-btn">
+                                  <a href="{% url 'eprofileurlname' %}" class="p-save-btn">edit profile</a>
+                                </div>
+                                <div class="profile-save-btn">
+                                    <a href="{% url 'changepass' %}" class="p-save-btn">Change password</a>
+                                  </div>
+                             </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+
+
+{% block js %}
+  <script src="/static/app/js/productPage.js"></script>
+{% endblock js %}

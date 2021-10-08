@@ -1,0 +1,219 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+<link rel="stylesheet" href=" {% static 'app/css/editprofile.css' %}">
+{% endblock css %}
+
+{% block body %}
+<!-- manage account for pc -->
+<div class="edit-profile-section">
+  <div class="edit-profile-container">
+    <div class="edit-profile-main">
+      <div class="edit-profile-row">
+        {% include 'app/aLeftSection.html' %}
+        <div class="edit-profile-right">
+          <div class="edit-profile-right-main">
+            <div class="phone-edit-profile">
+              <div class="phone-edit-profile-row">
+                <div class="edit-profile-icon">
+                  <a href="/templates/app/profile.html"><i class="fa fa-arrow-left"></i></a>
+                </div>
+                <div class="phone-edit-profile-tilte">
+                  <h1>Edit profile</h1>
+                </div>
+              </div>
+            </div>
+            <div class="edit-profile-right-title">
+              <h1 class="cbstr">Edit Profile</h1>
+            </div>
+            <div class="edit-profile-right-container">
+              <div class="profile-right-container-main">
+                <div class="edit-profile-top-row">
+                  <div class="profile-edit-name">
+                    <div class="profile-name-title">
+                      <h3>full name</h3>
+                    </div>
+                    <div class="edit-name-fild">
+                      <input class="enf" type="text" value="Bahadur mia ">
+                    </div>
+                  </div>
+                  <div class="edit-profile-email">
+                    <div class="profile-email-name">
+                      <span class="email-name">
+                        Email Address
+                      </span>
+                      <span>|</span>
+                      <span>
+                        <a href="/templates/app/userSecurity.html">change</a>
+                      </span>
+                    </div>
+                    <div class="profile-email-fild">
+                      <span class="profile-email">
+                        bahadurmia7@gmail.com
+                      </span>
+                    </div>
+                  </div>
+                  <div class="edit-profile-phone">
+                    <div class="profile-phone-fld">
+                      <span class="profile-phone-title">
+                        mobile
+                      </span>
+                      <span>|</span>
+                      <span>
+                        <a href="#">ADD</a>
+                      </span>
+                    </div>
+                    <div class="edit-profile-mobile">
+                      <span class="profile-mobile">
+                        09876543f213
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="edit-profile-info-middle">
+                  <div class="profile-info-middle-main">
+                    <div class="profile-info-row">
+                      <div class="info-birthday">
+                        <div class="birthday-title">
+                          <span>Birthday</span>
+                        </div>
+                        <div class="info-birthday-option">
+                          <div class="info-birthday-option-row">
+                            <div class="month">
+                              <select class="opt">
+                                <option value="0">month:</option>
+                                <option value="1">Audi</option>
+                                <option value="2">BMW</option>
+                                <option value="3">Citroen</option>
+                                <option value="4">Ford</option>
+                                <option value="5">Honda</option>
+                                <option value="6">Jaguar</option>
+                                <option value="7">Land Rover</option>
+                                <option value="8">Mercedes</option>
+                                <option value="9">Mini</option>
+                                <option value="10">Nissan</option>
+                                <option value="11">Toyota</option>
+                                <option value="12">Volvo</option>
+                              </select>
+                            </div>
+                            <div class="day">
+                              <select class="opt">
+                                <option value="0">day:</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="1">13</option>
+                                <option value="2">14</option>
+                                <option value="3">15</option>
+                                <option value="4">6</option>
+                                <option value="5">17</option>
+                                <option value="6">18</option>
+                                <option value="7">19</option>
+                                <option value="8">20</option>
+                                <option value="9">21</option>
+                                <option value="2">22</option>
+                                <option value="3">23</option>
+                                <option value="4">24</option>
+                                <option value="5">25</option>
+                                <option value="6">26</option>
+                                <option value="7">27</option>
+                                <option value="8">28</option>
+                                <option value="9">29</option>
+                                <option value="9">30</option>
+                                <option value="9">31</option>
+                              </select>
+                            </div>
+
+                            <div class="year">
+                              <select class="opt">
+                                <option value="0">year:</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="1">13</option>
+                                <option value="2">14</option>
+                                <option value="3">15</option>
+                                <option value="4">6</option>
+                                <option value="5">17</option>
+                                <option value="6">18</option>
+                                <option value="7">19</option>
+                                <option value="8">20</option>
+                                <option value="9">21</option>
+                                <option value="2">22</option>
+                                <option value="3">23</option>
+                                <option value="4">24</option>
+                                <option value="5">25</option>
+                                <option value="6">26</option>
+                                <option value="7">27</option>
+                                <option value="8">28</option>
+                                <option value="9">29</option>
+                                <option value="9">30</option>
+                                <option value="9">31</option>
+                              </select>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="info-gender">
+                        <div class="info-gender-title">
+                          <span class="gender-title">
+                            Gender
+                          </span>
+                        </div>
+                        <div class="gender">
+                          <select class="rtp">
+                            <option value="0">gender:</option>
+                            <option value="1">male</option>
+                            <option value="2">female</option>
+
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="edit-profile-bottom">
+                  <div class="profile-bottom-main">
+                    <div class="profile-save-btn">
+                      <a href="/templates/app/profile.html" class="p-save-btn">Save change</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'app/js/productPage.js' %}" ></script>
+{% endblock js %}

@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %} 
+{% load static %} 
+{% block body %}
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    {% include 'accounts/error.html' %}
+    <div style="text-align: center;" class="col-sm-6">
+      <h4>Your voucher</h4>
+      <p>
+        When you'll use this voucher once the code will automatically change. so
+        everytime copy this code before use
+      </p>
+  
+      {% if vouchers %}
+      <table
+        style="width: 100%; text-align: center; margin-top: 20px"
+        class="table"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Voucher name</th>
+            <th scope="col">Code</th>
+            <th scope="col">Valid till</th>
+          </tr>
+        </thead>
+        {% for voucher in vouchers %}
+        <tbody>
+          <tr>
+            <th scope="row">{{voucher.voucher_offer}}</th>
+            <td>{{voucher.voucher_code}}</td>
+            <td>{{voucher.user_valid_to}}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+      {% else %}
+      <h3>You have no voucher right now</h3>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock body %} 
+
+{% block footer %} 
+{% endblock footer %}

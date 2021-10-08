@@ -1,0 +1,99 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+{% block css %} 
+<link rel = "stylesheet" href = "{% static 'app/css/fontend.css' %}">
+<link rel = "stylesheet" href = "{% static 'app/css/addAddress.css' %}">
+{% endblock css %}
+
+
+{% block body %}
+    <!-- manage account for pc -->
+    <div class="add-address-section">
+        <div class="add-address-container">
+            <div class="add-address-main">
+                <div class="add-address-row">
+                    {% include 'app/aLeftSection.html' %}
+                    <div class="add-address-form">
+                        <div class="add-address-form-main">
+                            <div class="phone-address-title">
+                                <div class="phone-address-title-icons">
+                                    <a href="/templates/app/manageAccount.html">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </a>
+                                </div>
+                                <div class="phone-address-title-text">
+                                    <h1>Add new Address</h1>
+                                </div>
+                            </div>
+                            <div class="add-address-from-title">
+                                <h1>Add new address</h1>
+                            </div>
+                            <div class="add-address-from-container">
+                                <form action="">
+                                    <div class="address-form">
+                                        <div class="address-form-row">
+                                            <div class="address-form-left">
+                                                <div class="form-left">
+                                                    <div class="form-input-field">
+                                                        <label for="">Full name</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="Enter your full name Example : 'Bahadur mia' ">
+                                                    </div>
+                                                </div>
+                                                <div class="form-input-field">
+                                                    <label for="">phone number</label>
+                                                    <input type="text" class="input-field"
+                                                        placeholder="Enter your Number">
+                                                </div>
+                                            </div>
+                                            <div class="address-form-right">
+                                                <div class="form-right">
+                                                    <div class="form-input-field">
+                                                        <label for="">Division</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="Enter your Division">
+                                                    </div>
+                                                    <div class="form-input-field">
+                                                        <label for="">District</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="Enter your District">
+                                                    </div>
+                                                    <div class="form-input-field">
+                                                        <label for="">city</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="Enter your city">
+                                                    </div>
+                                                    <div class="form-input-field">
+                                                        <label for="">Area</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="Enter Your Area">
+                                                    </div>
+                                                    <div class="form-input-field">
+                                                        <label for="">Address</label>
+                                                        <input type="text" class="input-field"
+                                                            placeholder="For Example: House #123, street #123, ABC Road">
+                                                    </div>
+
+                                                    <div class="address-form-btn">
+                                                        <a href="/templates/app/addressBook.html"
+                                                            class="cancel-btn">cancel</a>
+                                                        <a class="address-save-btn">save</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock body %}
+
+{% block js %} 
+<script src = "{% static 'app/js/productPage.js' %}"></script>
+{% endblock js %}

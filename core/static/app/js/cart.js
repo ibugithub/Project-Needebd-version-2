@@ -25,7 +25,7 @@ function PlusCart(element)
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             disCountDom.innerHTML = data.Total_discount
             totalCostDom.innerHTML = data.Total_Cost
-
+            document.getElementById('DDom').style.display = 'none'
         }
     })
 }
@@ -64,8 +64,8 @@ function MinusCart(element)
             itemCounterDom.innerHTML  = data.Item
             disCountDom.innerHTML = data.Total_discount  
             totalSellCostDom.innerHTML = data.TotalSell_Cost   
-            totalCostDom.innerHTML = data.Total_Cost       
-            
+            totalCostDom.innerHTML = data.Total_Cost
+            document.getElementById('DDom').style.display = 'none'              
         }
     })
 }
@@ -94,10 +94,9 @@ function RemoveCart(element)
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             totalCostDom.innerHTML = data.Total_Cost
             itemCounterDom.innerHTML  = data.Item
-            disCountDom.innerHTML = data.Total_discount              
-        }
-
-        
+            disCountDom.innerHTML = data.Total_discount   
+            document.getElementById('DDom').style.display = 'none'           
+        }       
     })
 }
 
@@ -119,6 +118,8 @@ function voucherChecker()
             document.getElementById('NADom').innerHTML = data.total_amount
             DMDom.style.display = "block"
             DMDom.innerHTML = data.message
+            document.getElementById('code').value = ""
+
         }
         else{
             DMDom.style.display = "block"
@@ -127,8 +128,5 @@ function voucherChecker()
         }
        
     }
-    
-    
-    
     })
 }

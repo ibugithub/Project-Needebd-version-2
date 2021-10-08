@@ -1,0 +1,200 @@
+{% extends 'app/base.html' %}
+{% load static %} 
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}" />
+<link rel="stylesheet" href="{% static 'app/css/adressBook.css' %}" />
+{% endblock css %} 
+
+{% block body %}
+<!-- Address book for pc -->
+<div class="address-book-section">
+  <div class="address-book-container">
+    <div class="address-book-main">
+      <div class="address-book-row">
+        {% include 'app/aLeftSection.html' %}
+        <div class="address-book-right">
+          <div class="address-book-main">
+            <div class="address-book-title">
+              <h1>Address Book</h1>
+            </div>
+            <div class="address-book">
+              <div class="address-book-table">
+                <div class="next-table">
+                  <div class="next-table-inner">
+                    <div class="next-table-header">
+                      <div class="next-table-header-inner">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  full name
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  Address
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  Region
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  Phone Number
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div
+                                  class="next-table-cell-wrapper"
+                                  style="visibility: hidden"
+                                >
+                                  full name
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div
+                                  class="next-table-cell-wrapper"
+                                  style="visibility: hidden"
+                                >
+                                  full name
+                                </div>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="next-table-body">
+                      <table>
+                        <tbody>
+                          <tr class="next-table-row">
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                Bahadur mia
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                Kudab, pubail, gazipur
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                Bahadur mia
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                Bahadur mia
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                <p>Default Shipping Address</p>
+                                <p>Default Billing Address</p>
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div
+                                class="next-table-cell-wrapper"
+                                style="text-align: center"
+                              >
+                                <a
+                                  href="/templates/app/addAddress.html"
+                                  class="rrtbc"
+                                  >Edit</a
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="address-book-btn">
+                  <a href="{% url 'aaddressurlname' %}" class="book-btn"
+                    >+ add new address</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Address book for phone -->
+<div class="phone-address-book">
+  <div class="phone-address-book-container">
+    <div class="phone-address-title">
+      <div class="address-title-icon">
+        <a href="/templates/app/manageAccount.html">
+          <i class="fas fa-arrow-left"></i>
+        </a>
+      </div>
+      <div class="phone-title">
+        <span>Address book</span>
+      </div>
+    </div>
+    <div class="phone-address-container">
+      <div class="phone-container-content">
+        <div class="address-book-add-list">
+          <a href="/templates/app/addAddress.html">
+            <i>+</i>
+            <span>Add address</span></a
+          >
+        </div>
+      </div>
+
+      <div class="phone-address-book-body">
+        <div class="phone-address-body-details">
+          <div class="phone-address-body-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="phone-address-body-info">
+            <div class="phone-address-info-user">bahadur mia</div>
+            <div class="phone-address-body-info-phone">0178298477</div>
+            <div class="phone-address-body-info-address">
+              <span class="info-division">Dhaka</span>
+              <span class="info-distric">Gazipur</span>
+              <span class="info-details">Gazipur-sadar, razbair, hazibag</span>
+              <span class="info-home">home #4444</span>
+            </div>
+          </div>
+          <div class="phone-address-body-action">
+            <a href="/templates/app/editprofile.html">Edit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %} {% block js %}
+<script src="{ % static 'app/js/productPage.js' %}"></script>
+{% endblock js %}
