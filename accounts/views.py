@@ -144,8 +144,6 @@ class ActivateAccountView(View):
             return redirect('/accounts/login/')
         return render(request, 'accounts/activate_failed.html', status=401)
 
-
-
 def log_in(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -170,8 +168,6 @@ def log_in(request):
 
     else:
         return render(request, 'accounts/profile.html')
-
-
 
 def ResendGmailVerificationLink(request):
         pk = request.session.get('forresendpk') 
@@ -198,8 +194,6 @@ def ResendGmailVerificationLink(request):
         EmailThread(email_message).start()
         messages.add_message(request, messages.SUCCESS, "A verification link sent to your gmail account")
         return redirect('/accounts/login/')
-
-
 
 # def verify_view(request):
 #     form = CodeForm(request.POST or None)
@@ -228,11 +222,8 @@ def ResendGmailVerificationLink(request):
 #                 return HttpResponseRedirect('/accounts/login')
 #     return render(request, 'accounts/verify.html', {'form':form})            
 
-
-
 def profile(request):
     return render(request, 'accounts/profile.html')
-
 
 def log_out(request):
     logout(request)

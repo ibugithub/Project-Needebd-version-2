@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import SET_NULL
 from ProjectNeedeBd import settings
 from django.core.validators import MinValueValidator,  MaxValueValidator
 # Create your models here.
@@ -57,20 +58,20 @@ class Footer_Colum4(models.Model):
 class Category(models.Model):
     title= models.CharField(max_length=100)
     category_image = models.ImageField(upload_to = 'simages', null= True, blank=True)
-    category_wraper = models.ForeignKey(CategoryWraper, on_delete=models.CASCADE, null=True, blank=True)
-    display_wraper = models.ForeignKey(DisplayWraper, on_delete=models.CASCADE, null=True, blank=True)
+    category_wraper = models.ForeignKey(CategoryWraper, models.SET_NULL, null=True, blank=True)
+    display_wraper = models.ForeignKey(DisplayWraper, models.SET_NULL, null=True, blank=True)
     def __str__(self):
         return str(self.title)
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to = 'product_image')
-    product_category = models.ForeignKey(Category, on_delete= models.CASCADE, null=True)
+    product_category = models.ForeignKey(Category, models.SET_NULL, blank = True, null=True)
     selling_prize =models.FloatField()
     discounted_prize = models.FloatField()
     description = models.TextField()
     brand = models.CharField(max_length=100, null=True, blank=True)
-    display_wraper = models.ForeignKey(DisplayWraper, on_delete=models.CASCADE, null=True, blank=True)   
+    display_wraper = models.ForeignKey(DisplayWraper, models.SET_NULL, null=True, blank=True)   
     discount = models.IntegerField(null=True, blank=True)
     sell_amount= models.IntegerField(null=True, blank=True)
     def __str__(self):
@@ -95,21 +96,42 @@ class Cart(models.Model):
     unit_amount = models.FloatField(null = True)
     color = models.CharField(max_length = 30, null = True)
     size  = models.CharField(max_length = 40, null = True)
-    total_cost = models.FloatField(null = True)
-   
+  
     def __str__(self):
         return str(self.id)
     
     @property
+    def products_total_selling_cost(self):
+         # <---This is for the product of having Kg or Liter or Area Unit--->
+        if self.product.unit == "Kg" or self.product.unit == "Liter" or self.product.unit == "ClothPicesSize":
+            if self.unit == "Gram" or self.unit == "MiliLiter":
+                # Adjusting the prize according to the absolute unit....
+                converted_amount = self.unit_amount * 0.001
+            elif self.unit == "Pound":
+                converted_amount = self.unit_amount * 0.45359237
+            elif self.unit == "SqureYeard":
+                converted_amount = self.unit_amount * 0.83612736
+        # Keeping the Liter and Kg the unit of weight.....
+            elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
+                converted_amount = self.unit_amount
+            Total_Cost = self.quantity * self.product.selling_prize * converted_amount     
+        # For the products which doesn't have the extra unit option....
+        if self.product.unit == "ClothSize" or self.product.unit == "Packet" or self.product.unit == "ShoeSize":
+            Total_Cost = self.quantity * self.product.selling_prize
+        
+        return Total_Cost
+
+    @property
     def products_total_cost(self):
-        print("now Im in the products_cost function")
         # <---This is for the product of having Kg or Liter or Area Unit--->
         if self.product.unit == "Kg" or self.product.unit == "Liter" or self.product.unit == "ClothPicesSize":
             if self.unit == "Gram" or self.unit == "MiliLiter":
                 # Adjusting the prize according to the absolute unit....
-                converted_amount = self.unit_amount / 1000
+                converted_amount = self.unit_amount * 0.001
+            elif self.unit == "Pound":
+                converted_amount = self.unit_amount * 0.45359237
             elif self.unit == "SqureYeard":
-                converted_amount = self.unit_amount / 1.959900463
+                converted_amount = self.unit_amount * 0.83612736
         # Keeping the Liter and Kg the unit of weight.....
             elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
                 converted_amount = self.unit_amount
@@ -117,10 +139,6 @@ class Cart(models.Model):
         # For the products which doesn't have the extra unit option....
         if self.product.unit == "ClothSize" or self.product.unit == "Packet" or self.product.unit == "ShoeSize":
             Total_Cost = self.quantity * self.product.discounted_prize
-        
-        self.total_cost = Total_Cost
-        if not self.quantity == 0:
-            self.save()
         return Total_Cost
 
     

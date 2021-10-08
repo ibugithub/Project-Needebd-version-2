@@ -1,3 +1,39 @@
+function addToCart(element){
+  let prod_id = element.getAttribute('prod')
+  try {
+      unit = document.getElementById('unit').value
+  }
+  catch{
+      unit = "-"
+  }
+  try{
+      unit_amount = document.getElementById('unitAmount').value
+  }
+  catch{
+      unit_amount = "-"
+  }
+  try{
+       size = document.getElementById('size').value
+  }
+  catch {
+      size = "-"
+  }
+  $.ajax({
+      method : "GET",
+      url : '/addtocarturl/',
+      data : {
+          productid : prod_id,
+          unit : unit,
+          unit_amount : unit_amount,
+          Size : size
+      },
+      success: function(){
+        document.getElementById('Rproduct').style.display = "none"
+        document.getElementById('Sproduct').style.display = 'block'        
+      }
+  })
+}
+
 function fput() {
   console.log("it's connected");
   let emptydiv = document.getElementById("EmptyDiv");
@@ -111,11 +147,8 @@ function fput() {
 
 }
 
-
-
 aTCBtn = document.getElementById('aTCButton')
 aTCBtn.addEventListener("mouseover", uAmountCk)
-
 
 function uAmountCk() {
   try {

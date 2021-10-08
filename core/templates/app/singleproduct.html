@@ -10,8 +10,11 @@
 {% block inbfol %} onload ="fput()" {% endblock inbfol %}
 
 {% block body %}
-    <!------------This is the start of the Single Product  section----->
-    <div class="single-product-cart-section">
+    <div  id="Sproduct" style="display: none; text-align: center; background-color: gray;">
+      <a href="{% url 'showcarturlname' %}">Your product has been added. Cart</a>
+    </div>
+    <!---------Single Product ---->
+    <div id ="Rproduct" class="single-product-cart-section">
         <div class="single-product-cart-main">
           <div class="single-product-cart-container">
             <div class="single-product-cart-row">
@@ -117,9 +120,8 @@
           </div>
         </div>
       </div>
-      <!------------This is the end of the Single Product  section----->
-      <!------------This is the start of the Single Product Description
-   section----->
+ 
+      <!-----Single Product Description----->
       <div class="product-description">
         <div class="product-description-title rrb">
           <h1 class="rcb">product Description</h1>
@@ -153,9 +155,7 @@
           </ul>
         </div>
       </div>
-   <!------------This is the end of the Single Product Description
-   section----->
-  
+      <!-- related Product -->
    <div class="related-product">
      <div class="related-product-title">
        <h2>Related product</h2>

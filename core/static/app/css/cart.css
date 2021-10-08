@@ -329,20 +329,20 @@
 
     .add-cart-right {
         width: 30%;
-
-        background-color: #fff;
         margin-left: 10px;
         position: sticky;
         top: 64px;
         bottom: 0;
         z-index: 2;
         height: 300px;
-        box-shadow: rgb(0 0 0 / 20%) 0px 1px 2px 0px;
-
     }
 
     .add-cart-price-main {
         width: 100%;
+        background-color: white;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+        box-shadow: rgb(0 0 0 / 20%) 0px 1px 2px 0px;
     }
 
     .cart-price-details-title {
@@ -420,7 +420,70 @@
         width: 100%;
         font-size: 16px;
         color: #ffc220;
+        margin-top: 20px;
     }
+
+.couponMainDiv{
+    text-align : center;
+}
+
+
+
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+
+.h5, h5 {
+    font-size: 1.25rem;
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.mt-3 {
+    margin-top: 1rem !important;
+}
+.btn-group-sm>.btn, .btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+
 
 
 

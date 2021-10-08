@@ -17,28 +17,23 @@ class UserAdminConfig(UserAdmin):
     # form = UserAdminChangeForm
     # add_form = UserAdminCreationForm
 
-    list_display = ['email','is_admin', 'user_name', 'phone_number','timestamp']
+    list_display = ['email','is_admin', 'user_name', 'phone_number','timestamp', 'is_verified']
     list_filter = ['is_admin', 'is_staff', 'is_active']
-
 
     fieldsets = (
         (None, {'fields' : ('email', 'password', 'user_name', 'phone_number' )}),
         ('personal', {'fields': ()}),
         ('permissions', {'fields':('is_admin', 'is_staff', 'is_active', 'is_verified')}),
-
     ) 
-
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'user_name', 'phone_number', 'password1', 'password2')}
         ),
     )
-    
     search_fields = ['email',]
     ordering = ['email',]
     filter_horizontal = ()
-
 
 admin.site.register(User, UserAdminConfig)
 

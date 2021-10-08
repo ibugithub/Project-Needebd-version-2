@@ -15,4 +15,5 @@ urlpatterns = [
     path('pluscarturl/', views.PlusCartView, name = 'pluscarturlname'),
     path('minuscarturl/', views.MinusCartView, name= 'minuscarturlname'),
     path('removecarturl/', views.RemoveCartView, name = 'removecarturlname'),
+    path('vcurl/', views.VoucherChecker, name = "vcurlname"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

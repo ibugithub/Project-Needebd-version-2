@@ -14,7 +14,6 @@ from .models import (
     Footer_Colum3,
     Footer_Colum4,
     Cart,
-    
 )
 @admin.register(CategoryWraper)
 class WaraperCategoryAdmin(admin.ModelAdmin):
@@ -69,6 +68,6 @@ class FooterColum4Admin(admin.ModelAdmin):
 
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'product','unit', 'unit_amount', 'color', 'quantity','size', 'total_cost']
+    list_display = ['id', 'user', 'product','unit', 'unit_amount', 'color', 'quantity','size']
 
 # Register your models here.

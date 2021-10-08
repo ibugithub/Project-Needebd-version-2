@@ -8,29 +8,35 @@ import random
 User = get_user_model()
 
 class Coupon(models.Model):
-    coupon_code       = models.CharField(max_length=50, unique=True)
+    coupon_code = models.CharField(max_length=50, unique=True)
     valid_from = models.DateTimeField()
     valid_to   = models.DateTimeField()
     condition_rate = models.PositiveIntegerField(blank=True, null=True)
-    discount   = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)])
-    active     = models.BooleanField(default=False)
+    discount   = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000)])
+    active   = models.BooleanField(default=False)
 
     def __str__(self):
         return self.coupon_code
 
-
-
+class VoucherOffer(models.Model):
+    title     = models.CharField(max_length=40)
+    offer_valid_from = models.DateTimeField()
+    offer_valid_to   = models.DateTimeField()
+    discount   = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(500)])
+    condition_rate = models.PositiveIntegerField()
+    limit = models.PositiveIntegerField(validators=[MinValueValidator(1)], default=1)
+    active = models.BooleanField(default=False)  
+    def __str__(self):
+        return self.title
+        
 class Voucher(models.Model): 
-    title = models.CharField(max_length=30, null= True)
+    voucher_offer = models.ForeignKey(VoucherOffer, on_delete=models.CASCADE, null= True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     voucher_code = models.CharField(max_length=25, blank = True)
-    valid_from   = models.DateTimeField()
-    valid_to     = models.DateTimeField()
-    condition_rate = models.PositiveIntegerField()
-    discount      = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(500)])
-    count         = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1)
-    limit         = models.PositiveIntegerField(validators=[MinValueValidator(1)], default = 1)
-
+    count = models.PositiveIntegerField(validators=[MinValueValidator(1)],default=1)
+    user_valid_from  = models.DateTimeField(null = True, blank = True)
+    user_valid_to     = models.DateTimeField(null = True, blank = True)
+    
     def __str__(self):
         return str(self.voucher_code)
     
@@ -46,15 +52,3 @@ class Voucher(models.Model):
         code_string = "".join(str(item) for item in code_items)
         self.voucher_code = code_string
         super().save(*args, **kwargs)
-
-
-class VoucherOffer(models.Model):
-    title     = models.CharField(max_length=40)
-    offer_valid_from = models.DateTimeField()
-    offer_valid_to   = models.DateTimeField()
-    user_valid_from  = models.DateTimeField()
-    user_valid_to     = models.DateTimeField()
-    discount   = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),MaxValueValidator(500)])
-    condition_rate = models.PositiveIntegerField()
-    limit = models.PositiveIntegerField(default=1)
-    active = models.BooleanField(default=False)

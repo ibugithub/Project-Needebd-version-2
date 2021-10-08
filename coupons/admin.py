@@ -10,10 +10,10 @@ class CouponAdmin(admin.ModelAdmin):
 admin.site.register(Coupon, CouponAdmin)
 
 class VoucherAdmin(admin.ModelAdmin):
-    list_display = ['user','title', 'voucher_code', 'valid_from', 'valid_to', 'condition_rate', 'discount', 'count', 'limit']
+    list_display = ['user',"voucher_offer", 'voucher_code','user_valid_from','user_valid_to',  'count']
 
 class VoucherOfferAdmin(admin.ModelAdmin):
-    list_display = ['title', 'offer_valid_from', 'offer_valid_to','user_valid_from','user_valid_to','condition_rate', 'discount', 'limit', 'active']
+    list_display = ['title', 'offer_valid_from', 'offer_valid_to','condition_rate', 'discount', 'limit', 'active']
 
 admin.site.register(Voucher,VoucherAdmin)
 admin.site.register(VoucherOffer, VoucherOfferAdmin)

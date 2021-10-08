@@ -56,38 +56,51 @@
                           asics GEL-WINDHAWK 3 Running Shoes For Men
                         </a>
                       </div>
-                      
-                      <div class="pro-de-size">
-                      <!-- Filtering the product's extra unit info according to the product's unit -->
-                      {% if cart.product.unit == "ClothSize" or cart.product.unit == "ShoeSize"  %}
-                        <span>size:{{cart.size}}</span>
-                      {% endif %}
-                      {% if cart.product.unit == "ClothPicesSize" or cart.product.unit == "Liter" or cart.product.unit == "Kg" %}
-                        <span>Amount :  {{cart.unit_amount}}{{cart.unit}}</span>
-                      {% endif %}
 
-                      {% if cart.product.unit == "Packet" %} 
-                      <span>Amount : Single Item</span>
-                      {% endif %}
-                      </div>
-                     
-                      
                       <div class="pro-de-size">
-                        
+                        <!-- Filtering the product's extra unit info according to the product's unit -->
+                        {% if cart.product.unit == "ClothSize" or cart.product.unit == "ShoeSize"  %}
+                        <span>size:{{cart.size}}</span>
+                        {% endif %}
+                        {% if cart.product.unit == "ClothPicesSize" or cart.product.unit == "Liter" or cart.product.unit == "Kg" %}
+                        <span>Amount : {{cart.unit_amount}}{{cart.unit}}</span>
+                        {% endif %}
+
+                        {% if cart.product.unit == "Packet" %}
+                        <span>Amount : Single Item</span>
+                        {% endif %}
                       </div>
-                      
+
+
+                      <div class="pro-de-size">
+
+                      </div>
+
                       <div class="pro-de-brand">
                         <span>adidas</span>
                       </div>
+                      <span class="tk-per">{{cart.product.discount}}% Off</span> <br>
                       <div class="pro-de-size">
                         <span class="tk">৳ {{cart.product.selling_prize}}</span>
-                        <span class="tk-now"> ৳{{cart.product.discounted_prize}}</span>
-                        <span class="tk-per">{{cart.product.discount}}% Off</span> 
+
+                        <span class="tk-now"> ৳{{cart.product.discounted_prize}}
+                          <!-- filtering for Showing the rate unit in the cart page  -->
+                          {% if cart.product.unit == "Kg" or cart.product.unit == "Gram" or cart.product.unit == "Pound" %}
+                          (per kg)
+                          {% elif cart.product.unit == "Liter" or cart.product.unit == "MiliLiter" %}
+                          (per liter)
+                          {% endif %}
+                        </span>
+
+
+                        </span>
+
                       </div>
-                      <span  class="tk-per">Total Cost: 
-                        <span id = "tc{{forloop.counter}}">
-                        {{cart.products_total_cost}}
-                        </span> 
+
+                      <span class="tk-per">Total Cost:
+                        <span id="tc{{forloop.counter}}">
+                          {{cart.products_total_cost}}
+                        </span>
                       </span>
 
 
@@ -104,21 +117,25 @@
                 </div>
                 <div class="add-to-cart-d-btn">
                   <div class="cart-d-p-btn">
-                    <button flc = {{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}  size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}}  class="btn-sub"> - </button>
+                    <button flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}
+                      size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
+                    </button>
                     <div class="cart-d-input">
 
                       <input type="text" class="cart-d-rp" value="{{cart.quantity}}">
 
                     </div>
 
-                    <button flc = {{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}} class="btn-add"> + </button>
+                    <button flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} size={{cart.size}}
+                      unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-add"> + </button>
 
                   </div>
                   <div class="cart-save-remove">
                     <div class="cart-d-save">
                       save for later
                     </div>
-                    <div prod_id = {{cart.product.id}}  size = {{cart.size}} unit = {{cart.unit}} unit_amount = {{cart.unit_amount}}   onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
+                    <div prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
+                      unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
                   </div>
                 </div>
               </div>
@@ -144,20 +161,20 @@
           <div class="add-cart-price-details-rp">
             <div class="cart-price-details-title">
               <span>PRICE DETAILS</span>
-            </div> 
+            </div>
             <div class="add-cart-p-details">
               <div class="cart-p-details">
                 <div class="cart-p-details-itm">
-                  price (<span id ="ItemCountDom">{{Item}}</span> items)
+                  price (<span id="ItemCountDom">{{Item}}</span> items)
                 </div>
-                <span class="cart-p-price">৳<span id = "totalCostDom">{{Total_Cost}}</span></span>
+                <span class="cart-p-price">৳<span id="totalSellCostDom">{{Total_Selling_Cost}}</span></span>
               </div>
               <div class="cart-dis-details">
                 <div class="cart-dis-title">
                   <span>Discount</span>
                 </div>
                 <div class="cart-dis-price">
-                  <span>-৳234</span>
+                  <span>-৳ <span id="discountDom">{{Total_discount}}</span></span>
                 </div>
               </div>
               <div class="cart-de-charge">
@@ -165,7 +182,7 @@
                   <span>Delivery charge</span>
                 </div>
                 <div class="delivery-de-type">
-                  <span class="type">Free</span>
+                  <span class="type">+৳ {{delivery_cost}} </span>
                 </div>
               </div>
 
@@ -175,18 +192,59 @@
                   </span>
                 </div>
                 <div class="total-price">
-                  <span>৳ <span id = ""></span></span>
+                  <span>৳ <span id="totalCostDom">{{Total_Cost}}</span></span>
                 </div>
               </div>
+              <div id = "DDom" style="display: none;">
+                <div class="cart-de-charge">
+                  <div class="cart-de-title">
+                    <span id="COVDTDom">Coupon Discount
+                    </span>
+                  </div>
+                  <div class="total-price">
+                    <span>৳ -<span id="DADom"></span></span>
+                  </div>
+                </div>
+
+                <div  class="cart-d-total">
+                  <div class="total-title">
+                    <span>New Amount
+                    </span>
+                  </div>
+                  <div class="total-price">
+                    <span>৳ <span id="NADom"></span></span>
+                  </div>
+                </div>
+              </div>
+
+
+
               <div class="save-text">
                 <p>You will save ₹3,591 on this orde</p>
               </div>
             </div>
           </div>
         </div>
+
+        <div id="DMDom" style="color:red; display: none; text-align: center;"></div>
+        <div class="card ">
+          <div class="card-body">
+            <h5>
+              <small class="text-muted">Apply your coupon here</small>
+            </h5>
+            <span id="coupon_selector" style="color:red"></span>
+            <input class="form-control" style="color:gray" type="text" name="code" id="code">
+            <button class="coupon btn btn-sm btn-outline-primary mt-3" id='apply'>Apply</button>
+          </div>
+        </div>
+
+
+
+
       </div>
 
     </div>
+
 
 
   </div>

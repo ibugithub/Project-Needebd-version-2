@@ -8,31 +8,22 @@ import random
 
 
 class UserManager(BaseUserManager):
-
-
-
-    #<---------------------- The main method for creating all kind of Users----------------->
-    
+    #<-- The main method for creating all kind of Users-------------
     def create_user(self,email,user_name,phone_number, password =None, is_active = True, is_staff = False, is_admin = False, is_verified = False ):
         if not email:
             raise ValueError('User must have an email address')
 
-  
         if not user_name:
             raise ValueError('User must have a username')
 
-
         if not phone_number:
             raise ValueError('User must have a phone number')
-
         user_obj = self.model(
             email = self.normalize_email(email),
             user_name = user_name,
             phone_number = phone_number,     
         )
-
     #   <------------Saving all fields Items here-------------->
-
         user_obj.set_password(password)
         user_obj.user_name = user_name
         user_obj.is_admin = is_admin
@@ -43,10 +34,6 @@ class UserManager(BaseUserManager):
         user_obj.save(using = self._db)
         return user_obj
 
-
-
-
-    
     def create_staffuser(self, email, user_name, password=None):
         user = self.create_user(
             email,
@@ -56,8 +43,6 @@ class UserManager(BaseUserManager):
         )
         return user
 
-
-    
     def create_superuser(self, email,user_name,phone_number, password = None):
         user = self.create_user(
             email,
@@ -70,9 +55,6 @@ class UserManager(BaseUserManager):
         )
         return user
 
-
-
-
 class User(AbstractBaseUser):
     email = models.EmailField(max_length= 255, unique = True)
     user_name = models.CharField(max_length = 255, unique =  True)
@@ -83,8 +65,6 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
     is_admin = models.BooleanField(default = False)
-
-    
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone_number','user_name']
@@ -106,7 +86,6 @@ class User(AbstractBaseUser):
     def has_module_perms(self, perm, obj = None):
         return True
 
-
     #< --------- Still I'm confused with this two (  staff and admin and a little bit for active)--------->
 
     @property
@@ -120,8 +99,6 @@ class User(AbstractBaseUser):
     @property 
     def active(self):
         return self.is_active
-
-
 
 class Code(models.Model):
     number = models.CharField(max_length=5, blank = True)
