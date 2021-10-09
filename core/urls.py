@@ -17,9 +17,12 @@ urlpatterns = [
     path('removecarturl/', views.RemoveCartView, name = 'removecarturlname'),
     path('vcurl/', views.VoucherChecker, name = "vcurlname"),
     path('vchrviewurl/', views.VoucherView, name = 'vchrurlname'),
+    # Account realted ...
     path('maccounturl/', views.ManageAccountView.as_view(), name = "maccounturlname"),
     path('profileurl/', views.ProfileView.as_view(), name = "profileurlname"), 
     path('eprofileurl/', views.EditProfileView.as_view(), name = "eprofileurlname"),
     path('abookurl/', views.AddressBookView.as_view(), name = 'abookurlname'), 
-    path('aaddressurl/', views.AddAddressView.as_view(), name ='aaddressurlname')
+    path('aaddressurl/', views.AddAddressView.as_view(), name ='aaddressurlname'),
+    path('orderurl/', views.OrderView.as_view(), name="orderurlname"),
+    path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

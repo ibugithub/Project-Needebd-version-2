@@ -417,6 +417,14 @@ class AddAddressView(TemplateView):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
+class OrderView(TemplateView):
+    template_name = "app/order.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
+class CancellationView(TemplateView):
+    template_name = "app/cancellation.html"
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
         

@@ -9,30 +9,33 @@
       </div>
       <div class="account-manage">
         <div class="account-manage-main">
-          <div class="account-manage-title">
-           <a href="/templates/app/manageAccount.html">
-            <h2 class="rctb">Manage my account</h2>
+          <div style="padding-bottom: 7px;" class="account-manage-title">
+           <a href="{% url 'maccounturlname' %}">
+            <span style="padding-bottom:0px; margin-left:20px; display: inline-block; " class="acc-link">Account</span>
           </a>
           </div>
           <div class="account-m-menu">
             <ul class="acc-m">
-              <li class="acc-link"><a href="{% url 'profileurlname' %}">My Profile</a></li>
-              <li class="acc-link"><a href="{% url 'abookurlname' %}">Address Book</a></li>
-              <li class="acc-link"><a href="">My Payment Options</a></li>
+              <li class="acc-link"><a href="{% url 'profileurlname' %}">Profile</a></li>
+              <li class="acc-link"><a href="{% url 'abookurlname' %}">Address </a></li>
+              <li class="acc-link"><a href="">Payment Options</a></li>
               <li class="acc-link"><a href="{% url 'vchrurlname' %}">Vouchers</a></li>
             </ul>
           </div>
-          <div class="account-manage-title">
-            <h2>my order</h2>
+          <div style="padding-bottom: 5px;" class="account-manage-title">
+            <a href="{% url 'orderurlname' %}">
+              <span class="acc-link" style="display: inline-block; margin-left: 20px;">Order</span>
+            </a>
+            
           </div>
           <div class="account-m-menu">
             <ul class="acc-m">
-              <li class="acc-link"><a href="#">My Returns</a></li>
-              <li class="acc-link"><a href="/templates/app/cancellation.html">My Cancellations</a></li>
+              <li class="acc-link"><a href="#">Returned Order</a></li>
+              <li class="acc-link"><a href="{% url 'cancellationurlname' %}">Cancelled Order</a></li>
               
             </ul>
           </div>
         </div>
       </div>
     </div>
-  </div>
+</div>

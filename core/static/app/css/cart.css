@@ -1,8 +1,8 @@
     /*============ this is the  Cart page Start  =============*/
 
     .cart-section {
-        width: 97%;
-        margin: 0px auto 20px auto;
+        width: 98%;
+        margin: 0 auto 20px auto;
         padding: 8px;
     }
 
@@ -45,7 +45,8 @@
         line-height: 46px;
         padding: 0 24px;
         font-weight: 500;
-        color: #0F1111;
+       color:#444;
+       text-transform: capitalize;
     }
 
     .add-cart-content-right {
@@ -177,9 +178,11 @@
 
     .pro-de-title a {
         font-size: 16px;
-        color: #444;
+        color: #041e42;
         line-height: 1;
         display: inline;
+        text-transform: capitalize;
+        font-weight: 600;
     }
 
     .pro-de-size,
@@ -188,7 +191,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         display: block;
-        color: #878787;
+        color: #444;
         font-size: 14px;
         height: 20px;
     }
@@ -196,12 +199,13 @@
     .pro-de-size {
         display: flex;
         margin-top: 1px;
+        color:#444;
     }
 
     .pro-de-size .tk {
         font-size: 14px;
         margin-right: 10px;
-        color: #878787;
+        color: #444;
         text-decoration: line-through;
     }
 
@@ -213,7 +217,7 @@
 
     .pro-de-size .tk-per {
         cursor: not-allowed;
-        color: #041e42;
+        color: #444;
         font-weight: 600;
     }
 
@@ -230,14 +234,16 @@
     .btn-add {
         width: 28px;
         height: 28px;
-        background: linear-gradient(#fff, #f9f9f9);
+       background-color: #EB6529;
         display: inline-block;
-        border: 1px solid #c2c2c2;
+        border: none;
         cursor: pointer;
         font-size: 16px;
         border-radius: 50%;
         padding-top: 1px;
         line-height: 1;
+        color: #fff;
+        font-weight: bold;
     }
 
     .cart-d-input {
@@ -246,8 +252,10 @@
         height: 28px;
         margin: 0 5px;
         border-radius: 2px;
-        background-color: #fff;
-        border: 1px solid #c2c2c2;
+        background-color: #EB6529;
+        border: none;
+       
+        font-weight: bold;
     }
 
     .cart-d-input .cart-d-rp {
@@ -257,6 +265,8 @@
         font-weight: 500;
         vertical-align: middle;
         text-align: center;
+        background-color: transparent;
+        color: #fff;
     }
 
     .cart-d-input .cart-d-rp:focus {
@@ -275,6 +285,7 @@
         padding-top: 5px;
         font-weight: 500;
         cursor: pointer;
+        color:#444;
 
     }
 
@@ -289,6 +300,7 @@
         padding-top: 5px;
         font-weight: 500;
         cursor: pointer;
+        color:#444;
     }
 
     .cart-d-remove:hover {
@@ -315,13 +327,13 @@
     .place-order .place-order-btn {
         text-transform: capitalize;
         width: 200px;
-        padding: 18px 10px;
+        padding: 10px 10px;
         border: none;
-        background: #444;
+        background: #041e42;
         color: #fff;
         font-size: 16px;
         font-weight: 500;
-
+         font-family: Cairo;
         margin-right: 15px;
 
 
@@ -335,14 +347,14 @@
         bottom: 0;
         z-index: 2;
         height: 300px;
+        box-shadow: rgb(0 0 0 / 20%) 0px 1px 2px 0px;
+        
     }
 
     .add-cart-price-main {
         width: 100%;
-        background-color: white;
-        padding-bottom: 12px;
-        margin-bottom: 20px;
-        box-shadow: rgb(0 0 0 / 20%) 0px 1px 2px 0px;
+        background: white;
+        
     }
 
     .cart-price-details-title {
@@ -366,6 +378,7 @@
         display: flex;
         margin: 8px 0;
         justify-content: space-between;
+        color: #444;
     }
 
     .cart-p-details-itm,
@@ -374,6 +387,7 @@
         font-size: 14px;
         text-transform: capitalize;
         font-weight: 400;
+        color:#444;
     }
 
     .cart-p-price,
@@ -381,6 +395,7 @@
     .delivery-de-type {
         font-size: 14px;
         font-weight: 400;
+        color:#444;
     }
 
     .cart-dis-details,
@@ -392,7 +407,7 @@
 
     .delivery-de-type .type {
         text-transform: uppercase;
-        color: #ffc220;
+        color: #EB6529;
     }
 
     .cart-d-total {
@@ -412,24 +427,324 @@
 
     .total-price {
         font-size: 18px;
-        color: #212121;
+        color: #444;
         font-weight: 600;
     }
 
     .save-text {
         width: 100%;
         font-size: 16px;
-        color: #ffc220;
-        margin-top: 20px;
+        color: #EB6529;
     }
 
-.couponMainDiv{
-    text-align : center;
+
+
+
+    /*============ this is the  Cart page end  =============*/
+
+
+    
+ /*------------------- This is the start of the cart for the small device -------------*/
+
+ .small-cart{
+    width: 100%;
+}
+.small-cart-container{
+    width: 100%;
+    clear: both;
+    padding-right: 20px;
+    padding-left: 20px;
+
+}
+
+.s-cart-details{
+    width: 100%;
+    margin-top: 64px;
+}
+.s-cart-m{
+    margin-bottom: 5px;
+    background-color: #fff;
+    padding: 0 10px;
+}
+.s-cart-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.s-cart-left-m{
+    width: 100%;
+}
+.cart-m-title{
+    width: 100%;
+    padding: 10px 0;
+}
+.cart-m-title{
+    color: #EB6529;
+    font-weight: 400;
+    font-size: 18px !important;
+    font-family: 'Cairo', sans-serif;
+}
+.cart-m-title a{
+    color: #041e42;
+    font-weight: 600;
+}
+.cart-m-brand{
+    color: #444;
+}
+.s-cart-prod-d{
+    color:#444;
+}
+.s-cart-right-main{
+    width: 100%;
+}
+
+.s-cart-right-img{
+    width: 120px;
+    height: 100px;
+   text-align: center ;
+}
+.s-cart-right-img img{
+  max-width: 100%;
+  max-height: 100%;
+}
+.s-cart-price-quty{
+    width: 100%;
+}
+.price-quty-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.s-cart-price-main{
+  width: 100%;
+}
+.s-cart-price-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.s-c-price-now{
+    color: #444;
+    margin-right: 10px;
+}
+.s-cart-price-disc{
+    color: #444;
+    margin-right: 10px;
+    text-decoration: line-through;
+}
+.s-price-off{
+    color: #444;
+}
+
+.cart-quty-main{
+    width: 100%;
+}
+.cart-quty-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  
+}
+.quty-decre{
+    margin-right: 5px;
+}
+.quty-decre button{
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #fff;
+    border:none;
+    background-color: #EB6529;
+    font-weight: bold;
+}
+.quty-input{
+    margin-right: 5px;
+}
+.quty-input input{
+    width: 34px;
+    text-align: center;
+    padding: 5px;
+    border: none;
+    font-weight: bold;
+    background-color: #EB6529;
+    color: #fff;
+}
+.quty-incre button{
+    padding: 5px 10px;
+    border-radius: 50%;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    background-color: #EB6529;
+}
+
+.delivery{
+    width: 100%;
+}
+.delivery-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.delivery-date{
+    color:#444
+}
+.delivery-price{
+    margin-left: 10px;
+}
+.d-price-text{
+    color: #444;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.d-price{
+    text-decoration-line: line-through;
+    text-decoration-style: solid;
+    color: #444;
+}
+
+.s-cart-btn-t{
+    width: 100%;
+    border-top: 1px solid #444;
+    margin-top: 10px;
+}
+.s-cart-btn-main{
+    width: 100%;
+}
+.s-cart-btn-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.save-btn{
+    width: 50%;
+    text-align: center;
+    border-right: 1px solid #444;
+}
+.save-btn .save{
+    background-color: transparent;
+    border: none;
+    text-transform: capitalize;
+    cursor: pointer;
+    font-family: cairo;
+    font-weight: 600;
+}
+.remove-btn{
+    width: 50%;
+    text-align: center;
+}
+.remove-btn .remove{
+    background-color: transparent;
+    border: none;
+    font-family: cairo;
+    font-weight: 600;
+}
+
+.small-place-btn{
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px -4px 4px -2px;
+    margin: 0px;
+}
+.cdfr{
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
+}
+.small-place-btn-row{
+   width: 100%;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   padding: 10px 5px;
+   position: relative;
+}
+.s-all-price{
+    font-family: cairo;
+    color: #444;
+    font-size: 13px;
+}
+.a-price{
+    font-weight: 300;
+    font-size:21px;
+}
+.s-place-btn{
+    padding: 10px;
+    width: 168px;
+    text-transform: capitalize;
+    font-family: cairo;
+    background-color: #041e42;
+    color: #ffff;
+    border: none;
+}
+.asdf{
+    position: fixed;
+    width: 100%;
+    top: 90vh;
+}
+.rrtb{
+    padding-right: 40px;
+}
+
+.deliver-date-d-text-r{
+    color:#444;
+}
+.deliver-date-d{
+    color:#444;
 }
 
 
 
 
+
+
+
+@media only screen and (min-width: 768px) {
+    .cart-section {
+        display: block;
+    }
+    .small-cart{
+        display: none;
+    }
+  .deliver-date-d{
+      display: none;
+  }
+
+}
+@media only screen and (min-width: 1024px){
+    .deliver-date-d-r{
+        display: none;
+    }
+    .deliver-date-d{
+        display: block;
+    }
+}
+@media only screen and (max-width: 768px) {
+.cart-section {
+    display: none;
+}
+.small-cart{
+    display: block;
+}
+}
+
+@media only screen and (max-width: 400px){
+    .s-place-btn{
+        width: 115px;
+    }
+}
+@media only screen and (max-width: 400px){
+
+}
+
+/* Coupon section */
+
+.couponMainDiv{
+    text-align : center;
+}
 .card {
     position: relative;
     display: flex;
@@ -440,6 +755,7 @@
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
+    margin-top: 5px;
 }
 .card-body {
     flex: 1 1 auto;
@@ -483,9 +799,3 @@
 [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
     cursor: pointer;
 }
-
-
-
-
-
-    /*============ this is the  Cart page end  =============*/
