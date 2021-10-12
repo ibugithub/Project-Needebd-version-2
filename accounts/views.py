@@ -18,6 +18,7 @@ from .forms import LoginForm
 import threading
 import re
 from .forms import CodeForm
+from core.models import CustomerProfile
 
 
 
@@ -141,6 +142,7 @@ class ActivateAccountView(View):
             user.save()
             messages.add_message(request, messages.SUCCESS,
                                  'Email verified successfully')
+            CustomerProfile(user = user, email = user.email, phone_number = user.phone_number).save()
             return redirect('/accounts/login/')
         return render(request, 'accounts/activate_failed.html', status=401)
 

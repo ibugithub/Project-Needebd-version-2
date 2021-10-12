@@ -1,29 +1,35 @@
 from datetime import timedelta
+import datetime
+import json
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.detail import DetailView
-from .models import Brand_Logo_row1,Brand_Logo_row2, Brand_Logo_row3, Category, Slider, Mobile_Category,  Footer_Colum1, Footer_Colum2, Footer_Colum3, Footer_Colum4, Product,CategoryWraper, Cart
+from .models import (
+    Brand_Logo_row1,
+    Brand_Logo_row2,
+    Brand_Logo_row3,
+    Category, 
+    Slider, 
+    Mobile_Category,  
+    Footer_Colum1, 
+    Footer_Colum2, 
+    Footer_Colum3, 
+    Footer_Colum4, 
+    Product,
+    CategoryWraper, 
+    Cart,  
+    CustomerProfile,
+    Divisions,
+    Districts,
+    Unions,
+    Upazilas
+    )
 from django.views.generic.base import ContextMixin
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, View
 from django.http import JsonResponse
 from coupons.models import Coupon, Voucher
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-
-  
-def test(request):
-    unit_value = request.GET['myvalue']
-    product_id = request.GET['prod_id']
-    print(product_id)
-    product = Product.objects.get(id = product_id)
-    Cart(user = request.user, product = product, size = unit_value).save()
-    
-    print(unit_value)
-    data = {
-        "item" : 'success'
-    }
-    return JsonResponse(data)
-
 # Create your views here.
 class Mycontext(ContextMixin):
     def get_context_data(self, **kwargs):
@@ -126,7 +132,7 @@ def AddToCartView(request):
     }
     return JsonResponse(data)
 
-class ShowCartView(Mycontext, TemplateView):
+class ShowCartView(TemplateView):
     template_name = 'app/CartPage.html'
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -147,8 +153,7 @@ class ShowCartView(Mycontext, TemplateView):
             
             if Total_Cost == delivery_cost:
                 Total_Cost = 0
- 
-            return render(request, self.template_name ,{'carts':carts, "Total_Cost": Total_Cost, "Item" : Item,"Total_Selling_Cost": Total_Selling_Cost, "Total_discount":Total_discount, "delivery_cost" : delivery_cost})
+            return render(request, self.template_name ,{'carts':carts, "Total_Cost": Total_Cost, "Item" : Item,"Total_Selling_Cost": Total_Selling_Cost, "Total_discount":Total_discount, "delivery_cost" : delivery_cost,  })
         else:
             return redirect('/accounts/login/')
 
@@ -399,13 +404,39 @@ class ManageAccountView(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = "app/profile.html"
+    
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        user = request.user
+        if user.is_authenticated:
+            try:
+                profile = CustomerProfile.objects.get(user = request.user)
+                return render (request, self.template_name, {"profile": profile})
+            except:
+                return render(request, self.template_name)
+        else:
+            return redirect('login')
 
-class EditProfileView(TemplateView):
+class EditProfileView(View):
     template_name = "app/editprofile.html"
+    
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        customerprofile = CustomerProfile.objects.get(user = request.user)
+        try:
+            birthmonth = customerprofile.birthdate.strftime('%B')
+            return render(request, self.template_name, {"profile":customerprofile, "birthmonth" : birthmonth})
+        except:
+            return render(request, self.template_name, {"profile":customerprofile})
+    def post(self, request):
+        customerprofile = CustomerProfile.objects.get(user = request.user)
+        name = request.POST.get('name')
+        year = int(request.POST.get('year'))
+        month = int(request.POST.get('month'))
+        day = int(request.POST.get('day'))
+        gender = request.POST.get('gender')
+        customerprofile.birthdate = datetime.date(year, month, day)
+        customerprofile.gender = gender
+        customerprofile.save()
+        return redirect('profileurlname')
 
 class AddressBookView(TemplateView):
     template_name = "app/addressBook.html"
@@ -415,7 +446,11 @@ class AddressBookView(TemplateView):
 class AddAddressView(TemplateView):
     template_name = "app/addAddress.html"
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
+        division = Divisions.objects.all()
+        districts = Districts.objects.all()
+        upazilas = Upazilas.objects.all()
+        unions = Unions.objects.all()
+        return render(request, self.template_name,{'divisions':division, 'districts':districts, 'upazilas':upazilas, 'unions': unions})
 
 class OrderView(TemplateView):
     template_name = "app/order.html"
@@ -427,4 +462,52 @@ class CancellationView(TemplateView):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-        
+def DivisionSetter(request):
+    DivName = request.GET['DivName']
+    division = Divisions.objects.get(name = DivName)
+    request.session['divId'] = division.id  
+    data = {
+        'msg': "success"
+    }
+    return JsonResponse(data)
+
+def DistrictsFilter(request):
+    district_id = request.session['divId']
+    data = {
+        'divId': district_id
+    }
+    return JsonResponse(data)
+
+def DistrictSetter(request):
+    DistrictName = request.GET['DistrictName']
+    district = Districts.objects.get(name = DistrictName)
+    request.session['districtId'] = district.id
+    data = {
+        "msg" : 'success'
+    }
+    return JsonResponse(data)
+
+def UpazilaFilter(request):
+    districtId = request.session['districtId']
+    data = {
+        'districtId': districtId
+    }
+    return JsonResponse(data)
+
+def UpazilaNameSetter(request):
+    upazilaName = request.GET['upazilaNamex']
+    print(upazilaName)
+    upazila = Upazilas.objects.get(name = upazilaName)
+    upaziaId = upazila.id
+    request.session['upazilaId'] = upaziaId
+    data = {
+        'msg' : 'success'
+    }
+    return JsonResponse(data)
+
+def UpazilaIdGiver(request):
+    upazilaId = request.session['upazilaId']
+    data = {
+        'upazilaId' : upazilaId
+    }
+    return JsonResponse(data)

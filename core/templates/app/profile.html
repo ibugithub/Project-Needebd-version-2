@@ -35,7 +35,7 @@
                                        <h3>full name</h3>
                                    </div>
                                    <div class="edit-name-fild">
-                                       <span>Bahadur mia</span>
+                                       <span>{{profile.full_name}}</span>
                                    </div>
                                </div>
                                <div class="edit-profile-email">
@@ -50,7 +50,7 @@
                                  </div>
                                  <div class="profile-email-fild">
                                    <span class="profile-email">
-                                     bahadurmia7@gmail.com
+                                     {{profile.user.email}}
                                    </span>
                                  </div>
                                </div>
@@ -66,7 +66,7 @@
                                  </div>
                                  <div class="edit-profile-mobile">
                                    <span class="profile-mobile">
-                                     09876543f213
+                                     {{profile.user.phone_number}}
                                    </span>
                                  </div>
                                </div>
@@ -76,12 +76,12 @@
                                <div class="profile-info-row">
                                 <div class="info-birthday">
                                   <div class="birthday-title">
-                                    <span>Birthday</span>
+                                    <span>BirthDate</span>
                                   </div>
                                   <div class="info-birthday-option">
                                      <div class="info-birthday-option-row">
                                        <div class="month">
-                                        jan-23-1996
+                                        {{profile.birthdate}}
                                        </div>
                                       
 
@@ -95,7 +95,7 @@
                                     </span>
                                   </div>
                                   <div class="gender">
-                                   male/ female
+                                   {{profile.gender}}
                                   </div>
                                 </div>
                                </div>

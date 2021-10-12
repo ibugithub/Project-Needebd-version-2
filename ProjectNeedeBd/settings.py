@@ -63,6 +63,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processor.cart_item',
+                'core.context_processor.profilepic',
+
             ],
         },
     },
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'ProjectNeedeBd.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db2.sqlite3',
     }
 }
 

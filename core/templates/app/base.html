@@ -74,8 +74,10 @@
           <button class="account-subcontainer">
             <span class="account-subcontainer2">
               <span class="account-subcontainer3">
-                <span class="account-logo">
-                  <img alt="null" aria-hidden="true" width="24" height="24" src="{% static 'app/image/user.svg' %}">
+                <span class="account-logo">                  
+                  {% if request.user.is_authenticated %}            
+                  <img style="border-radius:50%" alt="null" aria-hidden="true" width="24" height="24" src = "{{image}}">
+                  {% endif %}
                 </span>
                 <span class="account-title">
                   {% if request.user.is_authenticated %} 
@@ -515,7 +517,7 @@
           <div class="account-left">
             <div class="account-row">
               <div class="account-img">
-                <img src="{% static 'app/image/user-white.svg' %}" alt="" width="24" height="24">
+                <img  src="{{image}}" alt="" width="24" height="40">
               </div>
               <div class="account-title act">
                 {% if request.user.is_authenticated %}
@@ -711,6 +713,10 @@
   </div>
 </div>
 {% endblock footer %}
+
+{% block internaljs %}
+
+{% endblock internaljs %}
 
   {% block js %}
   <!-- Custome js-->

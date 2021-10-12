@@ -1,12 +1,7 @@
-{% extends 'app/base.html' %} 
-{% load static %}
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
-<link rel="stylesheet" href=" {% static 'app/css/editprofile.css' %}">
-{% endblock css %}
-
-{% block body %}
+{% extends 'app/base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}" />
+<link rel="stylesheet" href=" {% static 'app/css/editprofile.css' %}" />
+{% endblock css %} {% block body %}
 <!-- manage account for pc -->
 <div class="edit-profile-section">
   <div class="edit-profile-container">
@@ -18,7 +13,9 @@
             <div class="phone-edit-profile">
               <div class="phone-edit-profile-row">
                 <div class="edit-profile-icon">
-                  <a href="/templates/app/profile.html"><i class="fa fa-arrow-left"></i></a>
+                  <a href="/templates/app/profile.html"
+                    ><i class="fa fa-arrow-left"></i
+                  ></a>
                 </div>
                 <div class="phone-edit-profile-tilte">
                   <h1>Edit profile</h1>
@@ -29,191 +26,240 @@
               <h1 class="cbstr">Edit Profile</h1>
             </div>
             <div class="edit-profile-right-container">
-              <div class="profile-right-container-main">
-                <div class="edit-profile-top-row">
-                  <div class="profile-edit-name">
-                    <div class="profile-name-title">
-                      <h3>full name</h3>
+              <form action="{% url 'eprofileurlname' %}" method="post">
+                {% csrf_token %}
+                <div class="profile-right-container-main">
+                  <div class="edit-profile-top-row">
+                    <div class="profile-edit-name">
+                      <div class="profile-name-title">
+                        <h3>full name</h3>
+                      </div>
+                      <div class="edit-name-fild">
+                        <input class="enf" type="text" name = 'name'  value="{{profile.full_name}}" />
+                      </div>
                     </div>
-                    <div class="edit-name-fild">
-                      <input class="enf" type="text" value="Bahadur mia ">
+                    <div class="edit-profile-email">
+                      <div class="profile-email-name">
+                        <span class="email-name"> Email Address </span>
+                        <span>|</span>
+                        <span>
+                          <a href="/templates/app/userSecurity.html">change</a>
+                        </span>
+                      </div>
+                      <div class="profile-email-fild">
+                        <span class="profile-email">
+                          bahadurmia7@gmail.com
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div class="edit-profile-email">
-                    <div class="profile-email-name">
-                      <span class="email-name">
-                        Email Address
-                      </span>
-                      <span>|</span>
-                      <span>
-                        <a href="/templates/app/userSecurity.html">change</a>
-                      </span>
-                    </div>
-                    <div class="profile-email-fild">
-                      <span class="profile-email">
-                        bahadurmia7@gmail.com
-                      </span>
-                    </div>
-                  </div>
-                  <div class="edit-profile-phone">
-                    <div class="profile-phone-fld">
-                      <span class="profile-phone-title">
-                        mobile
-                      </span>
-                      <span>|</span>
-                      <span>
-                        <a href="#">ADD</a>
-                      </span>
-                    </div>
-                    <div class="edit-profile-mobile">
-                      <span class="profile-mobile">
-                        09876543f213
-                      </span>
+                    <div class="edit-profile-phone">
+                      <div class="profile-phone-fld">
+                        <span class="profile-phone-title"> mobile </span>
+                        <span>|</span>
+                        <span>
+                          <a href="#">ADD</a>
+                        </span>
+                      </div>
+                      <div class="edit-profile-mobile">
+                        <span class="profile-mobile"> 09876543f213 </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="edit-profile-info-middle">
-                  <div class="profile-info-middle-main">
-                    <div class="profile-info-row">
-                      <div class="info-birthday">
-                        <div class="birthday-title">
-                          <span>Birthday</span>
+                  <div class="edit-profile-info-middle">
+                    <div class="profile-info-middle-main">
+                      <div class="profile-info-row">
+                        <div class="info-birthday">
+                          <div class="birthday-title">
+                            <span>Birthdate</span>
+                          </div>
+                          <div class="info-birthday-option">
+                            <div class="info-birthday-option-row">
+                              <div class="month">
+                                <select name = "month" onclick = "titleRemove('month')" class="opt">
+                                  {% if birthmonth %}
+                                  <option id = "month1" value="{{profile.birthdate.month}}">{{birthmonth}}</option>
+                                  {% else %}
+                                  <option id = "month2" value="">Month</option>
+                                  {% endif %}
+                                  <option value="1"> January </option>
+                                  <option value="2">February</option>
+                                  <option value="3">March</option>
+                                  <option value="4">April</option>
+                                  <option value="5">May</option>
+                                  <option value="6">June</option>
+                                  <option value="7">July</option>
+                                  <option value="8">August</option>
+                                  <option value="9">September</option>
+                                  <option value="10">October</option>
+                                  <option value="11">November</option>
+                                  <option value="12">December</option>
+                                </select>
+                              </div>
+                              <div class="day">
+                                <select name = "day" onclick = "titleRemove('day')" class="opt">
+                                  {% if profile.birthdate %}
+                                  <option id = "day1" value="{{profile.birthdate.day}}">{{profile.birthdate.day}}</option>
+                                  {% else %}
+                                  <option id = "day2" value="0">day:</option>
+                                  {% endif %}
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                  <option value="13">13</option>
+                                  <option value="14">14</option>
+                                  <option value="15">15</option>
+                                  <option value="16">6</option>
+                                  <option value="17">17</option>
+                                  <option value="18">18</option>
+                                  <option value="19">19</option>
+                                  <option value="20">20</option>
+                                  <option value="21">21</option>
+                                  <option value="22">22</option>
+                                  <option value="23">23</option>
+                                  <option value="24">24</option>
+                                  <option value="25">25</option>
+                                  <option value="26">26</option>
+                                  <option value="27">27</option>
+                                  <option value="28">28</option>
+                                  <option value="29">29</option>
+                                  <option value="30">30</option>
+                                  <option value="31">31</option>
+                                </select>
+                              </div>
+                              <div class="year">
+                                <select name = "year" onclick = "titleRemove('year')" class="opt">
+                                  {% if profile.birthdate %} 
+                                  <option id = "year1" value="{{profile.birthdate.year}}">{{profile.birthdate.year}}</option>
+                                  {% else %}
+                                  <option id = "year2" class="tremove" value="0">year:</option>
+                                  {% endif %}
+                                  <option value="1990">1990</option>
+                                  <option value="1991">1991</option>
+                                  <option value="1992">1992</option>
+                                  <option value="1993">1993</option>
+                                  <option value="1994">1994</option>
+                                  <option value="1995">1995</option>
+                                  <option value="1996">1996</option>
+                                  <option value="1997">1997</option>
+                                  <option value="1998">1998</option>
+                                  <option value="1999">1999</option>
+                                  <option value="2000">2000</option>
+                                  <option value="2001">2001</option>
+                                  <option value="2002">2002</option>
+                                  <option value="2003">2003</option>
+                                  <option value="2004">2004</option>
+                                  <option value="2005">2005</option>
+                                  <option value="2006">2006</option>
+                                  <option value="2007">2007</option>
+                                  <option value="2008">2008</option>
+                                  <option value="2009">2009</option>
+                                  <option value="2010">2010</option>
+                                  <option value="2011">2011</option>
+                                  <option value="2012">2012</option>
+                                  <option value="2013">2013</option>
+                                  <option value="2014">2014</option>
+                                  <option value="2015">2015</option>
+                                  <option value="2016">2016</option>
+                                  <option value="2017">2017</option>
+                                  <option value="2018">2018</option>
+                                  <option value="2019">2019</option>
+                                  <option value="2016">2020</option>
+                                  <option value="2017">2021</option>
+                                  <option value="2018">2022</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="info-birthday-option">
-                          <div class="info-birthday-option-row">
-                            <div class="month">
-                              <select class="opt">
-                                <option value="0">month:</option>
-                                <option value="1">Audi</option>
-                                <option value="2">BMW</option>
-                                <option value="3">Citroen</option>
-                                <option value="4">Ford</option>
-                                <option value="5">Honda</option>
-                                <option value="6">Jaguar</option>
-                                <option value="7">Land Rover</option>
-                                <option value="8">Mercedes</option>
-                                <option value="9">Mini</option>
-                                <option value="10">Nissan</option>
-                                <option value="11">Toyota</option>
-                                <option value="12">Volvo</option>
-                              </select>
-                            </div>
-                            <div class="day">
-                              <select class="opt">
-                                <option value="0">day:</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="1">13</option>
-                                <option value="2">14</option>
-                                <option value="3">15</option>
-                                <option value="4">6</option>
-                                <option value="5">17</option>
-                                <option value="6">18</option>
-                                <option value="7">19</option>
-                                <option value="8">20</option>
-                                <option value="9">21</option>
-                                <option value="2">22</option>
-                                <option value="3">23</option>
-                                <option value="4">24</option>
-                                <option value="5">25</option>
-                                <option value="6">26</option>
-                                <option value="7">27</option>
-                                <option value="8">28</option>
-                                <option value="9">29</option>
-                                <option value="9">30</option>
-                                <option value="9">31</option>
-                              </select>
-                            </div>
-
-                            <div class="year">
-                              <select class="opt">
-                                <option value="0">year:</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                                <option value="1">13</option>
-                                <option value="2">14</option>
-                                <option value="3">15</option>
-                                <option value="4">6</option>
-                                <option value="5">17</option>
-                                <option value="6">18</option>
-                                <option value="7">19</option>
-                                <option value="8">20</option>
-                                <option value="9">21</option>
-                                <option value="2">22</option>
-                                <option value="3">23</option>
-                                <option value="4">24</option>
-                                <option value="5">25</option>
-                                <option value="6">26</option>
-                                <option value="7">27</option>
-                                <option value="8">28</option>
-                                <option value="9">29</option>
-                                <option value="9">30</option>
-                                <option value="9">31</option>
-                              </select>
-                            </div>
-
+                        <div class="info-gender">
+                          <div class="info-gender-title">
+                            <span class="gender-title"> Gender </span>
+                          </div>
+                          <div class="gender">
+                            <select name = "gender" onclick="titleRemove('gender')" class="rtp">
+                              {% if profile.gender %}
+                              <option id = "gender1" value = {{profile.gender}}>{{profile.gender}} </option>
+                              {% else %}
+                              <option id = "gender2" class="tremove" value="male">Gender</option>
+                              {% endif %}
+                              <option value="male">male</option>
+                              <option value="female">female</option>
+                            </select>
                           </div>
                         </div>
                       </div>
-                      <div class="info-gender">
-                        <div class="info-gender-title">
-                          <span class="gender-title">
-                            Gender
-                          </span>
-                        </div>
-                        <div class="gender">
-                          <select class="rtp">
-                            <option value="0">gender:</option>
-                            <option value="1">male</option>
-                            <option value="2">female</option>
+                    </div>
+                  </div>
 
-                          </select>
-                        </div>
+                  <div class="edit-profile-bottom">
+                    <div class="profile-bottom-main">
+                      <div class="profile-save-btn">
+                        <button type="submit" class="p-save-btn"
+                          >Update</button>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <div class="edit-profile-bottom">
-                  <div class="profile-bottom-main">
-                    <div class="profile-save-btn">
-                      <a href="/templates/app/profile.html" class="p-save-btn">Save change</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
-
-
       </div>
-
     </div>
   </div>
 </div>
-{% endblock body %}
+{% endblock body %} 
+
+{% block internaljs %} 
+<script>
+  function titleRemove(el)
+  {
+    if (el == "month"){
+      try{
+        document.getElementById('month1').style.display = "none";
+      }
+      catch{
+        document.getElementById('month2').style.display = "none"
+      }
+    }
+    if( el == 'day'){
+      try{
+        document.getElementById('day1').style.display = "none"
+      }
+      catch{
+        document.getElementById('day2').style.display = "none"
+      }
+    }
+    if(el == "year"){
+      try{
+       document.getElementById('year1').style.display = "none" 
+      }
+      catch{
+        document.getElementById('year2').style.display = 'none'
+      }
+    }
+    if (el == "gender"){
+      try {
+        document.getElementById('gender1').style.display = 'none'
+      }
+      catch{
+        document.getElementById('gender2').style.display = 'none'
+      }
+    }
+  }
+</script>
+
+{% endblock internaljs %}
 
 {% block js %}
-<script src="{% static 'app/js/productPage.js' %}" ></script>
+<script src="{% static 'app/js/productPage.js' %}"></script>
 {% endblock js %}

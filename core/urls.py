@@ -25,4 +25,10 @@ urlpatterns = [
     path('aaddressurl/', views.AddAddressView.as_view(), name ='aaddressurlname'),
     path('orderurl/', views.OrderView.as_view(), name="orderurlname"),
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
+    path('divsetterurl/', views.DivisionSetter),
+    path("disfilterurl/", views.DistrictsFilter),
+    path("dissetterurl/", views.DistrictSetter),
+    path('upafilterurl/', views.UpazilaFilter),
+    path('upasetterurl/', views.UpazilaNameSetter),
+    path('upaidgiverurl/', views.UpazilaIdGiver),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

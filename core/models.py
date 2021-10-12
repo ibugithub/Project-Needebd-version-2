@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import SET_NULL
 from ProjectNeedeBd import settings
 from django.core.validators import MinValueValidator,  MaxValueValidator
+from django.core.validators import RegexValidator
 # Create your models here.
 
 class DisplayWraper(models.Model):
@@ -54,7 +55,6 @@ class Footer_Colum4(models.Model):
     content = models.CharField(max_length=200)
 
 # Cart functionality will be from here
-
 class Category(models.Model):
     title= models.CharField(max_length=100)
     category_image = models.ImageField(upload_to = 'simages', null= True, blank=True)
@@ -141,4 +141,62 @@ class Cart(models.Model):
             Total_Cost = self.quantity * self.product.discounted_prize
         return Total_Cost
 
-    
+# Account Related Models...
+GENDER_CHOICES = (
+    ("Male", "Male"),
+    ("Female", "Female"),
+    ("Others", "Others")
+)
+class CustomerProfile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    email = models.EmailField( null = True, blank=True)
+    full_name = models.CharField(max_length= 20 ,null=True)
+    phone_reg = RegexValidator(regex=r'^\+?1?\d{9,15}$', message = "phone_number must be entered in the format: ' +99999999'. Up to 15 digits allowed")
+    phone_number =  models.CharField(validators = [phone_reg], max_length = 16, unique=True)
+    birthdate = models.DateField( null = True, blank = True)
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, null = True, blank = True)
+    image = models.ImageField(upload_to = 'customerimages', null = True, blank = True)
+
+class Divisions(models.Model):
+    name = models.CharField(max_length = 25)
+    bn_name = models.CharField(max_length = 25)
+    url = models.CharField(max_length = 50)
+    def __str__(self):
+        return self.name
+
+class Districts(models.Model):
+    division_id = models.IntegerField()
+    name = models.CharField(max_length=40)
+    bn_name = models.CharField(max_length= 25, null=True)
+    lat = models.CharField(max_length = 15, null=True)
+    lon = models.CharField(max_length = 15, null = True)
+    url = models.CharField(max_length=50, null=True)
+    def __str__(self):
+        return self.name
+
+class Upazilas(models.Model):
+    district_id = models.IntegerField()
+    name = models.CharField(max_length = 25)
+    bn_name = models.CharField(max_length = 25)
+    url  = models.CharField(max_length = 50)
+    def __str__(self):
+        return self.name
+
+class Unions(models.Model):
+    upazilla_id = models.IntegerField()
+    name  = models.CharField(max_length= 25)
+    bn_name = models.CharField(max_length = 25)
+    url = models.CharField(max_length = 50)
+    def __str__(self):
+        return self.name
+
+class CustomerAddress(models.Model):
+    full_name = models.CharField(max_length = 20)
+    phone_reg = RegexValidator(regex=r'^\+?1?\d{9,15}$', message = "phone_number must be entered in the format: ' +99999999'. Up to 15 digits allowed")
+    phone_number =  models.CharField(validators = [phone_reg], max_length = 16, unique=True)
+    divisions = models.ForeignKey(Divisions, on_delete=models.CASCADE)
+    districts = models.ForeignKey(Districts, on_delete=models.CASCADE)
+    upazilas = models.ForeignKey(Upazilas, on_delete=models.CASCADE)
+    unions = models.ForeignKey(Unions, on_delete=models.CASCADE)
+    address = models.CharField(max_length = 100)
+

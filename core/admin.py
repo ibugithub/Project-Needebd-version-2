@@ -14,6 +14,12 @@ from .models import (
     Footer_Colum3,
     Footer_Colum4,
     Cart,
+    CustomerProfile,
+    Districts,
+    Divisions,
+    Unions,
+    Upazilas,
+    CustomerAddress,
 )
 @admin.register(CategoryWraper)
 class WaraperCategoryAdmin(admin.ModelAdmin):
@@ -70,4 +76,28 @@ class FooterColum4Admin(admin.ModelAdmin):
 class CartAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'product','unit', 'unit_amount', 'color', 'quantity','size']
 
-# Register your models here.
+@admin.register(CustomerProfile)
+class CustomerProfileAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'full_name','phone_number', 'birthdate', 'gender', 'image']
+
+@admin.register(Divisions)
+class DivisionsAdmin(admin.ModelAdmin):
+    list_display = ['id','name','bn_name','url']
+
+@admin.register(Districts)
+class DistrictsAdmin(admin.ModelAdmin):
+    list_display = ['id','division_id', 'name','bn_name', 'lat','lon', 'url']
+
+@admin.register(Upazilas)
+class UpazilasAdmin(admin.ModelAdmin):
+    list_display = ['id','district_id', 'name', 'bn_name', 'url']
+
+@admin.register(Unions)
+class UnionsAdmin(admin.ModelAdmin):
+    list_display = ['id','upazilla_id', 'name', 'bn_name','url']
+
+@admin.register(CustomerAddress)
+class CustomerAddressAdmin(admin.ModelAdmin):
+    list_display = ['full_name','phone_number', 'divisions', 'districts','upazilas', 'unions', 'address']
+
+
