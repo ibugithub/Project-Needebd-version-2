@@ -49,38 +49,44 @@
                                             <div class="form-right">
                                                 <div class="form-input-field">
                                                     <label for="">Division</label>
-                                                    <select onchange="getdivision(this)" class="input-field" name="divisions" id="division">
+                                                    <select onchange="districtsFilter()" class="input-field"
+                                                        name="divisions" id="divisions">
                                                         <option> -------- </option>
                                                         {% for division in divisions %}
-                                                        <option value="{{division.name}}">{{division.name}}</option>
+                                                        <option value="{{division.id}}">{{division.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                                <div class="form-input-field">
+                                                <div id="districtDiv" class="form-input-field">
                                                     <label for="">District</label>
-                                                    <select onchange="getDistrictName()" onclick="districtsFilter()" disabled class="input-field" name="districts" id="districts" >
-                                                        <option id = 'opremove' >--------</option>
+                                                    <select  style="display: none;" onchange="upazilaFilter()" disabled
+                                                        class="input-field" name="districts" id="districts">
+                                                        <option id='opremove'>--------</option>
                                                         {% for district in districts %}
-                                                        <option class="districts"  divid = "{{district.division_id}}" value="{{district.name}}">{{district.name}}</option>
-                                                        
+                                                        <option class="allDistrictOptions" divisionId = "{{district.division_id}}"
+                                                            value="{{district.id}}">{{district.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                                <div class="form-input-field">
+                                                <div id = "upazilaDiv" class="form-input-field">
                                                     <label for="">Upazila</label>
-                                                    <select onchange="getUpazilaName()"  onclick="upazilaFilter()" id = "upazilas" disabled class="input-field" name="upazilas">
+                                                    <select style = "display : none" onchange="unionFilter()"
+                                                        id="upazilas" disabled class="input-field" name="upazilas">
                                                         <option id="opremove2"> -------- </option>
                                                         {% for upazila in upazilas %}
-                                                        <option district_id = "{{upazila.district_id}}" class = 'upazilas' value="{{upazila.name}}">{{upazila.name}}</option>
+                                                        <option district_id="{{upazila.district_id}}" class='upazilas'
+                                                            value="{{upazila.id}}">{{upazila.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                                <div  class="form-input-field">
+                                                <div id="uniondiv" class="form-input-field">
                                                     <label for="">Union</label>
-                                                    <select onclick="unionFilter()" disabled class="input-field" name="division" id="division">
-                                                        <option> -------- </option>
+                                                    <select style="display: none;" class="input-field" name="union"
+                                                        id="unions">
+                                                        <option id="opremove3"> -------- </option>
                                                         {% for union in unions %}
-                                                        <option value="{{union.name}}">{{union.name}}</option>
+                                                        <option upazilaId="{{union.upazilla_id}}" class="unions"
+                                                            value="{{union.id}}">{{union.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -113,5 +119,5 @@
 {% block js %}
 <script src="{% static 'app/js/productPage.js' %}"></script>
 <script src="{% static 'app/js/addaddress.js' %}"></script>
-<script src = "{% static 'app/js/jquery.js' %}"></script>
+<script src="{% static 'app/js/jquery.js' %}"></script>
 {% endblock js %}

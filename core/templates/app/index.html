@@ -21,7 +21,7 @@
       </div>
       {% for uppercategory in uppercategories %}
       <div class="category-product">
-        <a class="category-product-link" href="">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{{uppercategory.category_image.url}}">
@@ -116,7 +116,7 @@
 
       {% for uppercategory in uppercategories %}
       <div class="category-product">
-        <div class="category-product-link">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{{uppercategory.category_image.url}}">
@@ -125,7 +125,7 @@
               {{uppercategory.name}}
             </div>
           </div>
-        </div>
+        </a>
       </div>
       {% endfor %}
 

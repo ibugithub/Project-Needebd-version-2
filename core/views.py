@@ -495,11 +495,9 @@ def UpazilaFilter(request):
     return JsonResponse(data)
 
 def UpazilaNameSetter(request):
-    upazilaName = request.GET['upazilaNamex']
-    print(upazilaName)
-    upazila = Upazilas.objects.get(name = upazilaName)
-    upaziaId = upazila.id
-    request.session['upazilaId'] = upaziaId
+    upazilaId = request.GET['upazilaIdx']
+    print(upazilaId)
+    request.session['upazilaId'] = upazilaId
     data = {
         'msg' : 'success'
     }
