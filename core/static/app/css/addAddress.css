@@ -154,10 +154,11 @@
 .cancel-btn{
     width: 150px;
     background-color: #444;
-    display: inline-block;
     text-align: center;
-    padding: 10px;
+    padding: 7px;
     color: #fff;
+    display: inline-block;
+    height: 35px;
 }
 .address-save-btn{
     width: 150px;
@@ -166,6 +167,7 @@
     text-align: center;
     padding: 10px;
     color: #fff;
+    border-style: none;
 }
 .phone-address-title-icons a{
     font-size: 20px;
@@ -217,6 +219,7 @@
    .address-save-btn{
        width: 100%;
        text-transform: capitalize;
+       border-style: none;
    }
 }
 @media only screen and (max-width: 600px){

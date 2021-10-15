@@ -3,23 +3,26 @@ function DOptionRemover(elm, param)
 {   
     if (param == "diff")
     {
-        elm.childNodes[1].style.display = 'none'
+        elm.childNodes[1].style.visibility = 'hidden'
     }
     else{
-        elm.childNodes[0].style.display = 'none'
+        elm.childNodes[0].style.visibility = 'hidden'
     }
+    elm.parentNode.childNodes[3].style.display = 'none'
 }
 
 // for Filtering the districts.....
 var districtSelect = document.createElement("Select")
 districtSelect.setAttribute("disabled", "True")
 districtSelect.setAttribute("class", "input-field")
-districtSelect.setAttribute("id", "districtSelect")
 districtSelect.setAttribute("class", "input-field")
+districtSelect.setAttribute("id", "districtSelect")
+districtSelect.setAttribute("name", "districtId")
 districtSelect.setAttribute("onclick", "DOptionRemover(this, 'nodiff')")
 districtSelect.setAttribute("onchange", "upazilaFilter()")
 // creating default options...
 var defaultOptions = document.createElement("option")
+defaultOptions.setAttribute("value", "default")
 var node = document.createTextNode("select the district")
 defaultOptions.appendChild(node)
 districtSelect.appendChild(defaultOptions)
@@ -60,11 +63,13 @@ function districtsFilter(){
 var upazilaSelect = document.createElement("select")
 upazilaSelect.setAttribute("class", "input-field")
 upazilaSelect.setAttribute("id", "upazilaSelect")
+upazilaSelect.setAttribute("name", 'upazilaId')
 upazilaSelect.setAttribute("disabled", "true")
 upazilaSelect.setAttribute("onchange", "unionFilter()")
 upazilaSelect.setAttribute("onclick", "DOptionRemover(this, 'notdiff')")
 // creating default options...
 var defaultOptions = document.createElement("option")
+defaultOptions.setAttribute("value", "default")
 var node = document.createTextNode("select the upazila")
 defaultOptions.appendChild(node)
 upazilaSelect.appendChild(defaultOptions)
@@ -107,10 +112,12 @@ function upazilaFilter()
 var select = document.createElement("Select")
 select.setAttribute("class", "input-field")
 select.setAttribute("id", "unionSelect")
+select.setAttribute("name", "unionId")
 select.setAttribute("disabled", "True")
 select.setAttribute("onclick", "DOptionRemover(this, 'notdiff')")
 // creating default options...
 var defaultOptions = document.createElement("option")
+defaultOptions.setAttribute("value", "default")
 var node = document.createTextNode("select the union")
 defaultOptions.appendChild(node)
 select.appendChild(defaultOptions)

@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models.deletion import SET_NULL
 from ProjectNeedeBd import settings
-from django.core.validators import MinValueValidator,  MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.core.validators import RegexValidator
 # Create your models here.
 
@@ -157,6 +157,7 @@ class CustomerProfile(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, null = True, blank = True)
     image = models.ImageField(upload_to = 'customerimages', null = True, blank = True)
 
+# These model is for all the location information of bangladash....
 class Divisions(models.Model):
     name = models.CharField(max_length = 25)
     bn_name = models.CharField(max_length = 25)
