@@ -529,58 +529,96 @@ class AddAddressView(View):
         # print(districtId == )
         if fullName == "":
             nameerror = "Write your name"
+            attempt = "failed"
         else:
             nameerror = ""
+
         if phoneNumber == "":
             phonerror = "Set you phone number"
+            attempt = "failed"
         else:
             phonerror = ""
+
         if divisionId == "default" or divisionId == None:
             diverrormsg = "Select a divition"
+            attempt = "failed"
         else:
             diverrormsg =""
+
         if districtId == "default" or districtId == None:
             diserrormsg = "Select a district"
+            attempt = "failed"
         else:
             diserrormsg = ""
+
         if upazilaId == 'default' or upazilaId == None:
             upaerrormsg = "Select a upazila"
+            attempt = "failed"
         else:
             upaerrormsg = ""
+
         if unionId == "default" or unionId == None:
             unionerrormsg = "Select a union"
+            attempt = "failed"
         else:
             unionerrormsg = "" 
+
         if address == "":
             addrerror = "Give your address"
+            attempt = "failed"
         else:
             addrerror = ""
-  
-            # division = Divisions.objects.get(id=divisionId)
-            # district = Districts.objects.get(id=districtId)
-            # upazila = Upazilas.objects.get(id=upazilaId)
-            # union = Unions.objects.get(id=unionId)
-            # address = request.POST.get("address")
-            # print(fullName)
-            # print(phoneNumber)
-            # print(division)
-            # print(district)
-            # print(upazila)
-            # print(union)
-            # print(address)
-        context1 = {
-            'divisions': self.division,
-            'districts': self.districts,
-            'upazilas': self.upazilas,
-            'unions': self.unions,
-            "diverror": diverrormsg,
-            "diserror": diserrormsg,
-            "upaerror": upaerrormsg,
-            "unionerror": unionerrormsg,
-            "nameerror": nameerror,
-            "phoneerror":phonerror,
-            'addrerror': addrerror
-        }
+        
+        if not attempt == "failed":  
+            division = Divisions.objects.get(id=divisionId)
+            district = Districts.objects.get(id=districtId)
+            upazila = Upazilas.objects.get(id=upazilaId)
+            union = Unions.objects.get(id=unionId)
+            print(fullName)
+            print(phoneNumber)
+            print(division)
+            print(district)
+            print(upazila)
+            print(union)
+            print(address)
+        
+            context1 = {
+                'divisions': self.division,
+                'districts': self.districts,
+                'upazilas': self.upazilas,
+                'unions': self.unions,
+                "diverror": diverrormsg,
+                "diserror": diserrormsg,
+                "upaerror": upaerrormsg,
+                "unionerror": unionerrormsg,
+                "nameerror": nameerror,
+                "phoneerror":phonerror,
+                'addrerror': addrerror,
+                "fullName" : fullName,
+                "phoneNumber": phoneNumber,
+                "divisionName": division,
+                "districtName" : district,
+                "upazilaName" : upazila,
+                "unionName" : union
+            }
+        
+        else:
+            context1 = {
+                'divisions': self.division,
+                'districts': self.districts,
+                'upazilas': self.upazilas,
+                'unions': self.unions,
+                "diverror": diverrormsg,
+                "diserror": diserrormsg,
+                "upaerror": upaerrormsg,
+                "unionerror": unionerrormsg,
+                "nameerror": nameerror,
+                "phoneerror":phonerror,
+                'addrerror': addrerror,
+                "fullName" : fullName,
+                "phoneNumber": phoneNumber,
+                }
+
         return render(request, self.template_name,context=context1)
 
 
