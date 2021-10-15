@@ -1,3 +1,14 @@
+// This function Will handle the default Options when to hide and show the default options...
+function DOptionRemover(elm, param)
+{   
+    if (param == "diff")
+    {
+        elm.childNodes[1].style.display = 'none'
+    }
+    else{
+        elm.childNodes[0].style.display = 'none'
+    }
+}
 
 // for Filtering the districts.....
 var districtSelect = document.createElement("Select")
@@ -5,11 +16,19 @@ districtSelect.setAttribute("disabled", "True")
 districtSelect.setAttribute("class", "input-field")
 districtSelect.setAttribute("id", "districtSelect")
 districtSelect.setAttribute("class", "input-field")
+districtSelect.setAttribute("onclick", "DOptionRemover(this, 'nodiff')")
 districtSelect.setAttribute("onchange", "upazilaFilter()")
+// creating default options...
+var defaultOptions = document.createElement("option")
+var node = document.createTextNode("select the district")
+defaultOptions.appendChild(node)
+districtSelect.appendChild(defaultOptions)
+
 document.getElementById('districtDiv').appendChild(districtSelect)
 
 function districtsFilter(){
     document.getElementById('districtSelect').disabled = false
+    document.getElementById('defaultOption1').style.display = 'none'
     var divisionId1 = document.getElementById('divisions').value
     var allDistrictOptions = document.getElementsByClassName("allDistrictOptions") 
     let len = allDistrictOptions.length
@@ -43,7 +62,15 @@ upazilaSelect.setAttribute("class", "input-field")
 upazilaSelect.setAttribute("id", "upazilaSelect")
 upazilaSelect.setAttribute("disabled", "true")
 upazilaSelect.setAttribute("onchange", "unionFilter()")
+upazilaSelect.setAttribute("onclick", "DOptionRemover(this, 'notdiff')")
+// creating default options...
+var defaultOptions = document.createElement("option")
+var node = document.createTextNode("select the upazila")
+defaultOptions.appendChild(node)
+upazilaSelect.appendChild(defaultOptions)
+
 document.getElementById('upazilaDiv').appendChild(upazilaSelect)
+
 // creating the filtering function for upazila..
 function upazilaFilter()
 { 
@@ -81,11 +108,18 @@ var select = document.createElement("Select")
 select.setAttribute("class", "input-field")
 select.setAttribute("id", "unionSelect")
 select.setAttribute("disabled", "True")
+select.setAttribute("onclick", "DOptionRemover(this, 'notdiff')")
+// creating default options...
+var defaultOptions = document.createElement("option")
+var node = document.createTextNode("select the union")
+defaultOptions.appendChild(node)
+select.appendChild(defaultOptions)
+
 document.getElementById('uniondiv').appendChild(select)
 
 function unionFilter() {
     document.getElementById('unionSelect').disabled = false
-    upazilaId1 = document.getElementById('unionSelect').value
+    upazilaId1 = document.getElementById('upazilaSelect').value
     let previousOption = document.getElementsByClassName('unionoption')
     if (document.getElementsByClassName('unionoption').length != 0) {
         while(previousOption[0]){
@@ -97,7 +131,6 @@ function unionFilter() {
     for (let i = 0; i < len; i++) {
         upazilaId2 = unionElements[i].getAttribute('upazilaId')
         if (upazilaId1 == upazilaId2) {
-            console.log("matched")
             let option = document.createElement("option")
             option.setAttribute('class', 'unionoption')
             let val1 = unionElements[i].value

@@ -49,9 +49,9 @@
                                             <div class="form-right">
                                                 <div class="form-input-field">
                                                     <label for="">Division</label>
-                                                    <select onchange="districtsFilter()" class="input-field"
+                                                    <select onclick="DOptionRemover(this, 'diff')" onchange="districtsFilter()" class="input-field"
                                                         name="divisions" id="divisions">
-                                                        <option> -------- </option>
+                                                        <option id = "defaultOption1">select the division</option>
                                                         {% for division in divisions %}
                                                         <option value="{{division.id}}">{{division.name}}</option>
                                                         {% endfor %}
@@ -59,22 +59,21 @@
                                                 </div>
                                                 <div id="districtDiv" class="form-input-field">
                                                     <label for="">District</label>
-                                                    <select  style="display: none;" onchange="upazilaFilter()" disabled
+                                                    <select style="display: none;" onchange="upazilaFilter()" disabled
                                                         class="input-field" name="districts" id="districts">
-                                                        <option id='opremove'>--------</option>
                                                         {% for district in districts %}
-                                                        <option class="allDistrictOptions" divisionId = "{{district.division_id}}"
+                                                        <option class="allDistrictOptions"
+                                                            divisionId="{{district.division_id}}"
                                                             value="{{district.id}}">{{district.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
-                                                <div id = "upazilaDiv" class="form-input-field">
+                                                <div id="upazilaDiv" class="form-input-field">
                                                     <label for="">Upazila</label>
-                                                    <select style = "display : none" onchange="unionFilter()"
+                                                    <select style="display : none"
                                                         id="upazilas" disabled class="input-field" name="upazilas">
-                                                        <option id="opremove2"> -------- </option>
                                                         {% for upazila in upazilas %}
-                                                        <option district_id="{{upazila.district_id}}" class='upazilas'
+                                                        <option districtId="{{upazila.district_id}}" class='AllUpazilaOptions'
                                                             value="{{upazila.id}}">{{upazila.name}}</option>
                                                         {% endfor %}
                                                     </select>
@@ -83,7 +82,6 @@
                                                     <label for="">Union</label>
                                                     <select style="display: none;" class="input-field" name="union"
                                                         id="unions">
-                                                        <option id="opremove3"> -------- </option>
                                                         {% for union in unions %}
                                                         <option upazilaId="{{union.upazilla_id}}" class="unions"
                                                             value="{{union.id}}">{{union.name}}</option>

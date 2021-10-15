@@ -462,50 +462,6 @@ class CancellationView(TemplateView):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-def DivisionSetter(request):
-    DivName = request.GET['DivName']
-    division = Divisions.objects.get(name = DivName)
-    request.session['divId'] = division.id  
-    data = {
-        'msg': "success"
-    }
-    return JsonResponse(data)
 
-def DistrictsFilter(request):
-    district_id = request.session['divId']
-    data = {
-        'divId': district_id
-    }
-    return JsonResponse(data)
 
-def DistrictSetter(request):
-    DistrictName = request.GET['DistrictName']
-    district = Districts.objects.get(name = DistrictName)
-    request.session['districtId'] = district.id
-    data = {
-        "msg" : 'success'
-    }
-    return JsonResponse(data)
 
-def UpazilaFilter(request):
-    districtId = request.session['districtId']
-    data = {
-        'districtId': districtId
-    }
-    return JsonResponse(data)
-
-def UpazilaNameSetter(request):
-    upazilaId = request.GET['upazilaIdx']
-    print(upazilaId)
-    request.session['upazilaId'] = upazilaId
-    data = {
-        'msg' : 'success'
-    }
-    return JsonResponse(data)
-
-def UpazilaIdGiver(request):
-    upazilaId = request.session['upazilaId']
-    data = {
-        'upazilaId' : upazilaId
-    }
-    return JsonResponse(data)
