@@ -82,6 +82,9 @@
                             {% endfor %}
                           </select>
                         </div>
+                        <!-- for giving teh data to the fontend -->
+                        <div id = "dataGiver" districtId = "{{districtId}}" districtName = "{{districtName}}" upazilaId = "{{upazilaId}}" upazilaName = "{{upazilaName}}" unionId = "{{unionId}}" unionName = "{{unionName}}"}></div>
+                        <!-- --- -->
                         <div id="districtDiv" class="form-input-field">
                           <label for="">District</label>
                           <span style="font-size: 10px; color: red;">{{diserror}}</span>
@@ -89,10 +92,9 @@
                             style="display: none"
                             disabled
                             class="input-field"
-                            name="districts"
+                            name="districtId"
                             id="districts"
                           >
-                            <option id = "dataGiver" districtId = "{{districtId}}" districtName = "{{districtName}}"></option>
                             {% for district in districts %}
                             <option
                               class="allDistrictOptions"
@@ -152,6 +154,7 @@
                             name = "address"
                             type="text"
                             class="input-field errelm"
+                            value="{{address}}"
                             placeholder="For Example: House #123, street #123, ABC Road"
                           />
                         </div>

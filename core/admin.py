@@ -98,6 +98,6 @@ class UnionsAdmin(admin.ModelAdmin):
 
 @admin.register(CustomerAddress)
 class CustomerAddressAdmin(admin.ModelAdmin):
-    list_display = ['full_name','phone_number', 'divisions', 'districts','upazilas', 'unions', 'address']
+    list_display = ['user','full_name','phone_number', 'divisions', 'districts','upazilas', 'unions', 'address']
 
 

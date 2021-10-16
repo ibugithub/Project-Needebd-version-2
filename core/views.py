@@ -8,7 +8,7 @@ from .models import (Brand_Logo_row1, Brand_Logo_row2, Brand_Logo_row3,
                      Category, Slider, Mobile_Category, Footer_Colum1,
                      Footer_Colum2, Footer_Colum3, Footer_Colum4, Product,
                      CategoryWraper, Cart, CustomerProfile, Divisions,
-                     Districts, Unions, Upazilas)
+                     Districts, Unions, Upazilas, CustomerAddress)
 from django.views.generic.base import ContextMixin
 from django.views.generic import ListView, TemplateView, View
 from django.http import JsonResponse
@@ -527,23 +527,8 @@ class AddAddressView(View):
                 'districts': self.districts,
                 'upazilas': self.upazilas,
                 'unions': self.unions,
-                # "diverror": diverrormsg,
-                # "diserror": diserrormsg,
-                # "upaerror": upaerrormsg,
-                # "unionerror": unionerrormsg,
-                # "nameerror": nameerror,
-                # "phoneerror":phonerror,
-                # 'addrerror': addrerror,
-                # "fullName" : fullName,
-                # "phoneNumber": phoneNumber,
                 }
 
-        # print(divisionId)
-        # print(districtId)
-        # print(upazilaId)
-        # print(unionId)
-        # print(divisionId == "default")
-        # print(districtId == )
         if fullName == "":
             context["nameerror"] = "Write your name"
             attempt = "failed"
@@ -556,6 +541,7 @@ class AddAddressView(View):
             attempt = "failed"
         else:
             attempt = "success"
+            context['phoneNumber'] = phoneNumber
 
         if divisionId == "default" or divisionId == None:
             context["diverror"] = "Select a divition"
@@ -569,6 +555,7 @@ class AddAddressView(View):
             context["diserror"] = "Select a district"
             disattempt = "failed"
             attempt = "failed"
+            
         else:
             disattempt = "success"
             attempt = "success"
@@ -594,6 +581,7 @@ class AddAddressView(View):
             attempt = "failed"
         else:
             attempt = "success"
+            context['address'] = address
         
         if not divattempt == "failed":  
             division = Divisions.objects.get(id=divisionId)
@@ -603,57 +591,22 @@ class AddAddressView(View):
             district = Districts.objects.get(id=districtId)
             context['districtName'] = district
             context['districtId'] = districtId
-            print("..............", context["districtName"])
         if not upaattempt == "failed":
             upazila = Upazilas.objects.get(id=upazilaId)
+            context['upazilaName'] = upazila
+            context['upazilaId'] = upazilaId
         if not uniattempt == "failed":
             union = Unions.objects.get(id=unionId)
+            context['unionName'] = union
+            context['unionId'] = unionId
+
+        if attempt == "success" and attempt != "failed":
+            print("Now you can save all the data")
+            CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
+        else:
+            print("No you can't save all the data")
         
-            # print(fullName)
-            # print(phoneNumber)
-            # print(division)
-            # print(district)
-            # print(upazila)
-            # print(union)
-            # print(address)
         
-            # context1 = {
-            #     'divisions': self.division,
-            #     'districts': self.districts,
-            #     'upazilas': self.upazilas,
-            #     'unions': self.unions,
-            #     "diverror": diverrormsg,
-            #     "diserror": diserrormsg,
-            #     "upaerror": upaerrormsg,
-            #     "unionerror": unionerrormsg,
-            #     "nameerror": nameerror,
-            #     "phoneerror":phonerror,
-            #     'addrerror': addrerror,
-            #     "fullName" : fullName,
-            #     "phoneNumber": phoneNumber,
-            #     "divisionName": division,
-            #     "districtName" : district,
-            #     "upazilaName" : upazila,
-            #     "unionName" : union
-            # }
-        
-        # context1 = {
-        #     'divisions': self.division,
-        #     'districts': self.districts,
-        #     'upazilas': self.upazilas,
-        #     'unions': self.unions,
-        #     "diverror": diverrormsg,
-        #     "diserror": diserrormsg,
-        #     "upaerror": upaerrormsg,
-        #     "unionerror": unionerrormsg,
-        #     "nameerror": nameerror,
-        #     "phoneerror":phonerror,
-        #     'addrerror': addrerror,
-        #     "fullName" : fullName,
-        #     "phoneNumber": phoneNumber,
-        #     }
-        # print(".....",context1['divisionName'])
-        print(context)
         return render(request, self.template_name,context=context)
 
 

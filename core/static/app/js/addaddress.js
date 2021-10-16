@@ -4,18 +4,21 @@ districtSelect.setAttribute("disabled", "True")
 districtSelect.classList.add('input-field', 'errelm2')
 districtSelect.setAttribute("id", "districtSelect")
 districtSelect.setAttribute("name", "districtId")
-// districtSelect.setAttribute("onclick", "DOptionRemover(this, 'nodiff')")
 districtSelect.setAttribute("onclick", "upazilaFilter()")
 
-console.log(document.getElementById('dataGiver').getAttribute("districtId") == '')
-console.log(document.getElementById('dataGiver').getAttribute("districtName") == '')
+// I've create this section to save teh user's selected data after relode page.......
 var datadistrictId = document.getElementById('dataGiver').getAttribute("districtId")
 var datadistrictName = document.getElementById('dataGiver').getAttribute("districtName")
 if (datadistrictName != "" && datadistrictId != "") {
     var dataOptions = document.createElement("option")
     dataOptions.setAttribute("value", datadistrictId)
+    dataOptions.setAttribute("id", "psoption1")
     let innernode = document.createTextNode(datadistrictName)
     dataOptions.appendChild(innernode)
+    districtSelect.removeAttribute('disabled')
+    districtSelect.appendChild(dataOptions)
+    document.getElementById('districtDiv').appendChild(districtSelect)
+    districtsFilter()
 }
 // creating default options...
 var defaultOptions = document.createElement("option")
@@ -27,14 +30,17 @@ districtSelect.appendChild(defaultOptions)
 
 document.getElementById('districtDiv').appendChild(districtSelect)
 
-let f = 1
-
+var f = 1
 function districtsFilter() {
+    document.getElementById('districtSelect').disabled = false
     if (f == 1) {
         document.getElementById('defaultOption1').remove()
+        if (datadistrictName != "" && datadistrictId != ""){
+            document.getElementById("psoption1").remove()
+        }
+        
         f++
     }
-    document.getElementById('districtSelect').disabled = false
     var divisionId1 = document.getElementById('divisions').value
     var allDistrictOptions = document.getElementsByClassName("allDistrictOptions")
     let len = allDistrictOptions.length
@@ -59,7 +65,6 @@ function districtsFilter() {
     }
 }
 
-
 // for filtering the upazila ...
 // creating a new select option....
 var upazilaSelect = document.createElement("select")
@@ -68,6 +73,22 @@ upazilaSelect.setAttribute("id", "upazilaSelect")
 upazilaSelect.setAttribute("name", 'upazilaId')
 upazilaSelect.setAttribute("disabled", "true")
 upazilaSelect.setAttribute("onclick", "unionFilter()")
+
+// I've create this section to save teh user's selected data after relode page.......
+var dataUpazilaId = document.getElementById('dataGiver').getAttribute("upazilaId")
+var dataUpazilaName = document.getElementById('dataGiver').getAttribute("upazilaName")
+if (dataUpazilaName != "" && dataUpazilaId != "") {
+    var dataOptions = document.createElement("option")
+    dataOptions.setAttribute("id", "psoption2")
+    dataOptions.setAttribute("value", dataUpazilaId)
+    let innernode = document.createTextNode(dataUpazilaName)
+    dataOptions.appendChild(innernode)
+    upazilaSelect.removeAttribute('disabled')
+    upazilaSelect.appendChild(dataOptions)
+    document.getElementById('upazilaDiv').appendChild(upazilaSelect)
+    upazilaFilter()
+}
+
 // creating default options...
 var defaultOptions = document.createElement("option")
 defaultOptions.setAttribute("id", "defaultOption3")
@@ -79,14 +100,17 @@ upazilaSelect.appendChild(defaultOptions)
 document.getElementById('upazilaDiv').appendChild(upazilaSelect)
 
 // creating the filtering function for upazila..
-let f2 = 1
+var f2 = 1
 
-function upazilaFilter() {
+function upazilaFilter() {    
+    document.getElementById('upazilaSelect').disabled = false
     if (f2 == 1) {
         document.getElementById("defaultOption2").remove()
+        if (dataUpazilaName != "" && dataUpazilaId != ""){
+            document.getElementById("psoption2").remove()
+        }
         f2++
     }
-    document.getElementById('upazilaSelect').disabled = false
     var districtId1 = document.getElementById('districtSelect').value
     var AllUpazilaOptions = document.getElementsByClassName('AllUpazilaOptions')
     let len = AllUpazilaOptions.length
@@ -111,7 +135,6 @@ function upazilaFilter() {
     }
 }
 
-
 // for filtering the Unions according to the Upazila.....
 var select = document.createElement("Select")
 select.classList.add('input-field', 'errelm2')
@@ -119,6 +142,22 @@ select.setAttribute("id", "unionSelect")
 select.setAttribute("name", "unionId")
 select.setAttribute("disabled", "True")
 select.setAttribute("onclick", "dOption4Remover()")
+
+// I've create this section to save teh user's selected data after relode page.......
+var dataUnionId = document.getElementById('dataGiver').getAttribute("unionId")
+var dataUnionName = document.getElementById('dataGiver').getAttribute("unionName")
+if (dataUnionName != "" && dataUnionId != "") {
+    var dataOptions = document.createElement("option")
+    dataOptions.setAttribute("id", "psoption3")
+    dataOptions.setAttribute("value", dataUnionId)
+    let innernode = document.createTextNode(dataUnionName)
+    dataOptions.appendChild(innernode)
+    select.removeAttribute('disabled')
+    select.appendChild(dataOptions)
+    document.getElementById('uniondiv').appendChild(select)
+    unionFilter()
+}
+
 // creating default options...
 var defaultOptions = document.createElement("option")
 defaultOptions.setAttribute("id", "defaultOption4")
@@ -129,14 +168,17 @@ select.appendChild(defaultOptions)
 
 document.getElementById('uniondiv').appendChild(select)
 
-let f3 = 1
-
-function unionFilter() {
+var f3 = 1
+function unionFilter() {    
+    document.getElementById('unionSelect').disabled = false
     if (f3 == 1) {
         document.getElementById('defaultOption3').remove()
+        if (dataUnionName != "" && dataUnionId != ""){
+            document.getElementById('psoption3').remove()
+        }
+
         f3++
     }
-    document.getElementById('unionSelect').disabled = false
     upazilaId1 = document.getElementById('upazilaSelect').value
     let previousOption = document.getElementsByClassName('unionoption')
     if (document.getElementsByClassName('unionoption').length != 0) {
@@ -160,16 +202,14 @@ function unionFilter() {
         }
     }
 }
-let f4 = 1
 
+let f4 = 1
 function dOption4Remover() {
     if (f4 == 1) {
         document.getElementById("defaultOption4").remove()
         f4++
     }
 }
-
-
 
 // Validating all the inputs..
 errorElm = document.getElementsByClassName('errelm')
