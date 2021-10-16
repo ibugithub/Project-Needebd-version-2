@@ -60,12 +60,17 @@
                           <label for="">Division</label>
                           <span style="font-size: 10px; color: red;">{{diverror}}</span>
                           <select
-                            onclick="DOptionRemover(this, 'diff')"
-                            onchange="districtsFilter()"
-                            class="input-field errelm"
+                            
+                            onclick="districtsFilter()"
+                            class="input-field errelm2"
                             name="divisionId"
                             id="divisions"
-                          >
+                         
+                          > 
+                          {% if divisionId %}
+                          <option value="{{divisionId}}">{{divisionName}}</option>                             
+                          {% endif %}
+
                             <option id="defaultOption1" value = "default">
                               select the division
                             </option>
@@ -73,6 +78,7 @@
                             <option value="{{division.id}}">
                               {{division.name}}
                             </option>
+
                             {% endfor %}
                           </select>
                         </div>
@@ -81,12 +87,12 @@
                           <span style="font-size: 10px; color: red;">{{diserror}}</span>
                           <select
                             style="display: none"
-                            onchange="upazilaFilter()"
                             disabled
                             class="input-field"
                             name="districts"
                             id="districts"
                           >
+                            <option id = "dataGiver" districtId = "{{districtId}}" districtName = "{{districtName}}"></option>
                             {% for district in districts %}
                             <option
                               class="allDistrictOptions"
