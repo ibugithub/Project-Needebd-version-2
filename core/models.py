@@ -195,7 +195,7 @@ class CustomerAddress(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, null = True)
     full_name = models.CharField(max_length = 20)
     phone_reg = RegexValidator(regex=r'^\+?1?\d{9,15}$', message = "phone_number must be entered in the format: ' +99999999'. Up to 15 digits allowed")
-    phone_number =  models.CharField(validators = [phone_reg], max_length = 16, unique=True)
+    phone_number =  models.CharField(validators = [phone_reg], max_length = 16)
     divisions = models.ForeignKey(Divisions, on_delete=models.CASCADE)
     districts = models.ForeignKey(Districts, on_delete=models.CASCADE)
     upazilas = models.ForeignKey(Upazilas, on_delete=models.CASCADE)

@@ -38,7 +38,12 @@
                             type="text"
                             class="input-field errelm"
                             placeholder="Enter your full name Example : 'Bahadur mia' "
+                            {% if newaddress %}
+                            value = "{{newaddress.full_name}}"
+                            {% else %}
                             value="{{fullName}}"
+                            {% endif %}
+                            
                           />
                         </div>
                       </div>
@@ -50,7 +55,11 @@
                           type="text"
                           class="input-field errelm"
                           placeholder="Enter your Number"
+                          {% if newaddress %}
+                          value = {{newaddress.phone_number}}
+                          {% else %}
                           value="{{phoneNumber}}"
+                          {% endif %}
                         />
                       </div>
                     </div>
@@ -67,10 +76,13 @@
                             id="divisions"
                          
                           > 
+                          {% if newaddress %}
+                          <option value =  "{{newaddress.divisions.id}}" >{{newaddress.divisions}}</option>
+                          {% else %}
                           {% if divisionId %}
                           <option value="{{divisionId}}">{{divisionName}}</option>                             
                           {% endif %}
-
+                          {% endif %}
                             <option id="defaultOption1" value = "default">
                               select the division
                             </option>
@@ -82,8 +94,18 @@
                             {% endfor %}
                           </select>
                         </div>
-                        <!-- for giving teh data to the fontend -->
-                        <div id = "dataGiver" districtId = "{{districtId}}" districtName = "{{districtName}}" upazilaId = "{{upazilaId}}" upazilaName = "{{upazilaName}}" unionId = "{{unionId}}" unionName = "{{unionName}}"}></div>
+                        <!-- for giving the data to the fontend -->
+                        <div id = "dataGiver" 
+                        {% if newaddress %} 
+
+                        districtId = "{{newaddress.districts.id}}" districtName = "{{newaddress.districts.name}}" upazilaId = "{{newaddress.upazilas.id}}" upazilaName = "{{newaddress.upazilas.name}}" unionId = "{{newaddress.unions.id}}" unionName = "{{newaddress.unions.name}}"
+
+                        {% else %} 
+
+                        districtId = "{{districtId}}" districtName = "{{districtName}}" upazilaId = "{{upazilaId}}" upazilaName = "{{upazilaName}}" unionId = "{{unionId}}" unionName = "{{unionName}}"}
+
+                        {% endif %} 
+                        ></div>
                         <!-- --- -->
                         <div id="districtDiv" class="form-input-field">
                           <label for="">District</label>
@@ -154,7 +176,11 @@
                             name = "address"
                             type="text"
                             class="input-field errelm"
+                            {% if newaddress %}
+                            value = "{{newaddress.address}}"
+                            {% else %}
                             value="{{address}}"
+                            {% endif %}
                             placeholder="For Example: House #123, street #123, ABC Road"
                           />
                         </div>
@@ -164,8 +190,13 @@
                             href="/templates/app/addressBook.html"
                             class="cancel-btn"
                             ><span>cancel</span> </a
-                          >
+                          >{% if newaddress %}
+                          <input type="text" style="display: none;" name = "pk" value="{{newaddress.id}}">
+                          <button type = "submit" class = "address-save-btn">update</button>
+                          {% else %}
+                          
                           <button type="submit" class="address-save-btn">save</button>
+                          {% endif %}
                         </div>
                       </div>
                     </div>

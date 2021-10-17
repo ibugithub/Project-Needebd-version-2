@@ -148,6 +148,7 @@
     text-overflow: ellipsis;
     word-break: break-all;
     text-transform: capitalize;
+    text-align: center;
 }
 .next-table-body{
     overflow: auto;

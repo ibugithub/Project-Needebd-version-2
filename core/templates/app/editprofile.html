@@ -35,7 +35,7 @@
                         <h3>full name</h3>
                       </div>
                       <div class="edit-name-fild">
-                        <input class="enf" type="text" name = 'name'  value="{{profile.full_name}}" />
+                        <input {% if nameerror %} style="border: 1px solid red ;" {% endif %} placeholder= "Name" class="enf" type="text" name = 'name' {% if not nameerror %} value="{{profile.full_name}}" {% endif %} value = "" />
                       </div>
                     </div>
                     <div class="edit-profile-email">
@@ -73,13 +73,13 @@
                             <span>Birthdate</span>
                           </div>
                           <div class="info-birthday-option">
-                            <div class="info-birthday-option-row">
+                            <div {% if yearerror or montherror or dayerror %} style="border:1px solid red;" {% endif %}class="info-birthday-option-row">
                               <div class="month">
                                 <select name = "month" onclick = "titleRemove('month')" class="opt">
-                                  {% if birthmonth %}
-                                  <option id = "month1" value="{{profile.birthdate.month}}">{{birthmonth}}</option>
+                                  {% if profile.birthdate %}
+                                  <option id = "month1" value="{{profile.birthdate.month}}">{{profile.birthdate.month}}</option>
                                   {% else %}
-                                  <option id = "month2" value="">Month</option>
+                                  <option  id = "month2" value="">Month</option>
                                   {% endif %}
                                   <option value="1"> January </option>
                                   <option value="2">February</option>
@@ -185,14 +185,15 @@
                             <span class="gender-title"> Gender </span>
                           </div>
                           <div class="gender">
-                            <select name = "gender" onclick="titleRemove('gender')" class="rtp">
+                            <select {% if gendererror %} style="border: 1px solid red;" {% endif %} name = "gender" onclick="titleRemove('gender')" class="rtp">
                               {% if profile.gender %}
                               <option id = "gender1" value = {{profile.gender}}>{{profile.gender}} </option>
                               {% else %}
-                              <option id = "gender2" class="tremove" value="male">Gender</option>
+                              <option id = "gender2" class="tremove" value="">Gender</option>
                               {% endif %}
-                              <option value="male">male</option>
-                              <option value="female">female</option>
+                              <option value = "Male">Male</option>
+                              <option value = "Female">Female</option>
+                              <option value = "Others">Others</option>
                             </select>
                           </div>
                         </div>

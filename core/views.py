@@ -30,7 +30,6 @@ class Mycontext(ContextMixin):
             context['item'] = len(carts)
         return context
 
-
 class IndexView(Mycontext, ListView):
     model = Category
     template_name = 'app/index.html'
@@ -70,10 +69,8 @@ class IndexView(Mycontext, ListView):
 
         return context
 
-
 def account(request):
     return render(request, 'app/account.html')
-
 
 class AllCategoryView(Mycontext, ListView):
     model = Footer_Colum1
@@ -87,7 +84,6 @@ class AllCategoryView(Mycontext, ListView):
         context['category'] = Category.objects.all()
         return context
 
-
 class ProductPageView(Mycontext, ListView):
     model = Product
     context_object_name = 'products'
@@ -97,12 +93,10 @@ class ProductPageView(Mycontext, ListView):
         qs = super(ProductPageView, self).get_queryset()
         return qs.filter(product_category__title=self.kwargs.get('category'))
 
-
 class SingleProductView(Mycontext, DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'app/singleproduct.html'
-
 
 def AddToCartView(request):
     product_id = request.GET['productid']
@@ -146,7 +140,6 @@ def AddToCartView(request):
     data = {'demo': "data"}
     return JsonResponse(data)
 
-
 class ShowCartView(TemplateView):
     template_name = 'app/CartPage.html'
 
@@ -181,7 +174,6 @@ class ShowCartView(TemplateView):
                 })
         else:
             return redirect('/accounts/login/')
-
 
 def PlusCartView(request):
     if request.user.is_authenticated:
@@ -229,7 +221,6 @@ def PlusCartView(request):
         }
 
         return JsonResponse(data)
-
 
 def MinusCartView(request):
     user = request.user
@@ -309,7 +300,6 @@ def MinusCartView(request):
         }
         return JsonResponse(data)
 
-
 def RemoveCartView(request):
     user = request.user
     product_key = request.GET['prod_id']
@@ -359,7 +349,6 @@ def RemoveCartView(request):
         "Item": Item
     }
     return JsonResponse(data)
-
 
 def VoucherChecker(request):
     carts = Cart.objects.filter(user=request.user)
@@ -427,7 +416,6 @@ def VoucherChecker(request):
     }
     return JsonResponse(data)
 
-
 def VoucherView(request):
     # vcode = request.GET['dcode']
     # print(vcode)
@@ -437,13 +425,12 @@ def VoucherView(request):
     except ObjectDoesNotExist:
         return None
 
-
 class ManageAccountView(TemplateView):
     template_name = 'app/manageAccount.html'
 
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
+        profile = CustomerProfile.objects.get(user = request.user)
+        return render(request, self.template_name, {"profile": profile})
 
 class ProfileView(TemplateView):
     template_name = "app/profile.html"
@@ -459,7 +446,6 @@ class ProfileView(TemplateView):
                 return render(request, self.template_name)
         else:
             return redirect('login')
-
 
 class EditProfileView(View):
     template_name = "app/editprofile.html"
@@ -478,24 +464,75 @@ class EditProfileView(View):
 
     def post(self, request):
         customerprofile = CustomerProfile.objects.get(user=request.user)
+        context = {
+            "profile":customerprofile
+        }
         name = request.POST.get('name')
         year = int(request.POST.get('year'))
-        month = int(request.POST.get('month'))
+        month = request.POST.get('month')
         day = int(request.POST.get('day'))
         gender = request.POST.get('gender')
-        customerprofile.full_name = name
-        customerprofile.birthdate = datetime.date(year, month, day)
-        customerprofile.gender = gender
-        customerprofile.save()
-        return redirect('profileurlname')
 
+        if name == "" or len(name) < 3:
+            context["nameerror"] = "atleast 3 character Needed"
+            attempt1 = "failed"
+            print("name is not here")
+        else:
+            attempt1 = "success"
+            print('name is here')
+        
+        print("name is", name)
+        print(name == "")
+        print(type(name))
+        
+        if year == 0:
+            context["yearerror"] = "set it"
+            attempt2 = "failed"
+        else:
+            attempt2 = "success"
+        
+        if month == "":
+            context["montherror"] = "set it"
+            attempt3 = "failed"
+        else:
+            attempt3 = "success"
+            month = int(month)
+        
+        if day == 0:
+            context["day"] = "set it"
+            attempt4 = "failed"
+        else: 
+            attempt4 = "success"
+
+        if gender == "":
+            context['gendererror'] = "select your gender"
+            attempt5 = "failed"
+        else:
+            attempt5 = "success"
+
+        print(attempt1)
+        print(attempt2)
+        print(attempt3)
+        print(attempt4)
+        print(attempt5)
+        print(month)
+        print("...", gender)
+        if attempt1 == "success" and attempt2 == "success" and attempt3 == "success" and attempt4 == "success" and attempt5 == "success":
+            print("condition matched")
+            customerprofile.full_name = name
+            customerprofile.birthdate = datetime.date(year, month, day)
+            print("....",gender)
+            customerprofile.gender = gender
+            customerprofile.save()
+            return redirect('profileurlname')
+        else:
+            return render(request, self.template_name, context=context)
 
 class AddressBookView(TemplateView):
     template_name = "app/addressBook.html"
-
     def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
+        newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
+        return render(request, self.template_name, {"newaddress":newCustomerAddress})
 
 class AddAddressView(View):
     template_name = "app/addAddress.html"
@@ -504,14 +541,22 @@ class AddAddressView(View):
     upazilas = Upazilas.objects.all()
     unions = Unions.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, pk = 'none', *args, **kwargs):
+        print("...",pk)
+        context = {
+            'divisions': self.division,
+            'districts': self.districts,
+            'upazilas': self.upazilas,
+            'unions': self.unions,
+        }
+        try:
+            newCustomerAddress  = CustomerAddress.objects.get(id = pk)
+            context['newaddress'] = newCustomerAddress
+        except :
+            pass
+
         return render(
-            request, self.template_name, {
-                'divisions': self.division,
-                'districts': self.districts,
-                'upazilas': self.upazilas,
-                'unions': self.unions
-            })
+            request, self.template_name, context = context)
 
     def post(self, request, *args, **kwargs):
         fullName = request.POST.get("fullName")
@@ -521,7 +566,8 @@ class AddAddressView(View):
         upazilaId = request.POST.get("upazilaId")
         unionId = request.POST.get("unionId")
         address = request.POST.get('address')
-
+        pk = request.POST.get('pk')
+    
         context = {
                 'divisions': self.division,
                 'districts': self.districts,
@@ -531,56 +577,55 @@ class AddAddressView(View):
 
         if fullName == "":
             context["nameerror"] = "Write your name"
-            attempt = "failed"
+            attempt1 = "failed"
         else:
-            attempt = "success"
+            attempt1 = "success"
             context["fullName"] = fullName
 
         if phoneNumber == "":
             context["phoneerror"] = "Set you phone number"
-            attempt = "failed"
+            attempt2 = "failed"
         else:
-            attempt = "success"
+            attempt2 = "success"
             context['phoneNumber'] = phoneNumber
 
         if divisionId == "default" or divisionId == None:
             context["diverror"] = "Select a divition"
             divattempt = "failed"
-            attempt = "failed"
+            attempt3 = "failed"
         else:
             divattempt = "success"
-            attempt = "success"
+            attempt3 = "success"
 
         if districtId == "default" or districtId == None:
             context["diserror"] = "Select a district"
             disattempt = "failed"
-            attempt = "failed"
-            
+            attempt4 = "failed"
         else:
             disattempt = "success"
-            attempt = "success"
+            attempt4 = "success"
 
         if upazilaId == 'default' or upazilaId == None:
             context["upaerror"] = "Select a upazila"
             upaattempt = "failed"
-            attempt = "failed"
+            attempt5 = "failed"
         else:
             upaattempt = "success"
-            attempt = "success"
+            attempt5 = "success"
 
         if unionId == "default" or unionId == None:
             context["unionerror"] = "Select a union"
             uniattempt = "failed"
-            attempt = "failed"
+            attempt6 = "failed"
         else:
             uniattempt = "success"
-            attempt = "success"
+            attempt6 = "success"
 
         if address == "":
             context["addrerror"] = "Give your address"
-            attempt = "failed"
+            attempt7 = "failed"
         else:
-            attempt = "success"
+            attempt7 = "success"
             context['address'] = address
         
         if not divattempt == "failed":  
@@ -600,22 +645,37 @@ class AddAddressView(View):
             context['unionName'] = union
             context['unionId'] = unionId
 
-        if attempt == "success" and attempt != "failed":
-            print("Now you can save all the data")
-            CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
-        else:
-            print("No you can't save all the data")
-        
-        
-        return render(request, self.template_name,context=context)
+        if pk != None:
+            newaddress = CustomerAddress.objects.get(id = pk)
+            context["newaddress"] = newaddress
 
+        if attempt1 == "success" and attempt2 == "success" and attempt3 == "success" and attempt4 == "success" and attempt5 == "success" and attempt6 == "success" and attempt7 == "success":
+            
+            if pk != None:
+                newaddress.full_name = fullName
+                newaddress.phone_number = phoneNumber
+                newaddress.divisions = division
+                newaddress.districts = district
+                newaddress.upazilas = upazila
+                newaddress.unions = union
+                newaddress.address = address
+                newaddress.save()
+                return redirect("/abookurl")
+                
+            else:
+                print("pk is not in here")
+                print("The pk is ", pk)
+                CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
+                return redirect("/abookurl")
+        else:
+            print("No you can't save all the data")       
+            return render(request, self.template_name, context = context)
 
 class OrderView(TemplateView):
     template_name = "app/order.html"
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
-
 
 class CancellationView(TemplateView):
     template_name = "app/cancellation.html"

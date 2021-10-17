@@ -78,7 +78,7 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(CustomerProfile)
 class CustomerProfileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'full_name','phone_number', 'birthdate', 'gender', 'image']
+    list_display = ['id', 'user', 'full_name','phone_number','email', 'birthdate', 'gender', 'image']
 
 @admin.register(Divisions)
 class DivisionsAdmin(admin.ModelAdmin):

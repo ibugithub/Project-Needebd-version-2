@@ -2,6 +2,7 @@ from django.urls import path, include
 from core import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 
 
 urlpatterns = [
@@ -23,6 +24,7 @@ urlpatterns = [
     path('eprofileurl/', views.EditProfileView.as_view(), name = "eprofileurlname"),
     path('abookurl/', views.AddressBookView.as_view(), name = 'abookurlname'), 
     path('aaddressurl/', views.AddAddressView.as_view(), name ='aaddressurlname'),
+    url(r'^aaddressurl/(?P<pk>\d+)$', views.AddAddressView.as_view(), name = 'aaddressurlname'),
     path('orderurl/', views.OrderView.as_view(), name="orderurlname"),
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
