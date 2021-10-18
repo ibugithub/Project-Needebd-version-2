@@ -127,6 +127,7 @@
 }
 .manage-adress-row{
     display: flex;
+    justify-content: space-around;
 }
 .manage-adress-left{
     width: 50%;
@@ -134,7 +135,6 @@
 }
 .address-book{
     width: 100%;
-    border-right: 2px solid #444;
 }
 .ad-book-title{
     color: #444;

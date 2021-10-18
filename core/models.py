@@ -201,4 +201,5 @@ class CustomerAddress(models.Model):
     upazilas = models.ForeignKey(Upazilas, on_delete=models.CASCADE)
     unions = models.ForeignKey(Unions, on_delete=models.CASCADE)
     address = models.CharField(max_length = 100)
+    isDefault = models.BooleanField(null = True, blank = True, default = False)
 

@@ -49,25 +49,31 @@
                           <div class="ad-book-title">
                             <span>Address book</span>
                             <span>|</span>
-                            <a href="{% url 'aaddressurlname' %}">edit</a>
+                            {% if defaultAddress %}
+                            <a href="{% url 'aaddressurlname' defaultAddress.id %}">edit</a>
+                            {% else %} 
+                            <a href="{% url 'aaddressurlname' %}">Add</a>
+                            {% endif %}
                           </div>
                           <div class="add-shiping">
                             <span>DEFAULT SHIPPING ADDRESS
                             </span>
                           </div>
                           <div class="add-profile-name">
-                            <span class="add-p-text">bahadur mia </span>
+                            <span class="add-p-text">{{defaultAddress.full_name}} </span>
                           </div>
                           <div class="add-address">
-                            <span>sadar</span>
-                            <span>Dhaka- Gazipur- hazibag</span>
+                            {% if defaultAddress %}
+                            <span>{{defaultAddress.divisions}}, {{defaultAddress.districts}}, {{defaultAddress.upazilas}}, {{defaultAddress.unions}}</span>
+                            <span>{{defaultAddress.address}}</span>
                             <span class="phone-num">
-                              (+880) 01782808177
+                              {{defaultAddress.phone_number}}
                             </span>
+                            {% endif %}
                           </div>
                         </div>
                       </div>
-                      <div class="manage-address-right">
+                      <!-- <div class="manage-address-right">
                         <div class="address-right">
                           <div class="ad-book-title hidden">
                             <span></span>
@@ -75,7 +81,7 @@
                             <a href="#">edit</a>
                           </div>
                           <div class="add-shiping">
-                            <span>DEFAULT SHIPPING ADDRESS
+                            <span>DEFAULT BIPPING ADDRESS
                             </span>
                           </div>
                           <div class="add-profile-name">
@@ -89,7 +95,7 @@
                             </span>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                     </div>
 

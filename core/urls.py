@@ -23,8 +23,10 @@ urlpatterns = [
     path('profileurl/', views.ProfileView.as_view(), name = "profileurlname"), 
     path('eprofileurl/', views.EditProfileView.as_view(), name = "eprofileurlname"),
     path('abookurl/', views.AddressBookView.as_view(), name = 'abookurlname'), 
+    path('dfadrmaker/', views.defaultAddressMaker),
     path('aaddressurl/', views.AddAddressView.as_view(), name ='aaddressurlname'),
     url(r'^aaddressurl/(?P<pk>\d+)$', views.AddAddressView.as_view(), name = 'aaddressurlname'),
     path('orderurl/', views.OrderView.as_view(), name="orderurlname"),
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
+    path('checkouturl/', views.Checkout, name = "checkouturlname")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

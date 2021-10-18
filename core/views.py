@@ -430,7 +430,15 @@ class ManageAccountView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         profile = CustomerProfile.objects.get(user = request.user)
-        return render(request, self.template_name, {"profile": profile})
+        context = {
+            "profile": profile
+        }
+        newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
+        if len(newCustomerAddress) > 0:
+            defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+            context["defaultAddress"] = defaultAddress
+
+        return render(request, self.template_name, context = context)
 
 class ProfileView(TemplateView):
     template_name = "app/profile.html"
@@ -533,6 +541,20 @@ class AddressBookView(TemplateView):
     def get(self, request, *args, **kwargs):
         newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
         return render(request, self.template_name, {"newaddress":newCustomerAddress})
+
+def defaultAddressMaker(request):
+    id = request.GET['id']
+    print(id)
+    newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    newCustomerAddress1.isDefault = False
+    newCustomerAddress1.save()
+    newCustomerAddress2 = CustomerAddress.objects.get(id = id)
+    newCustomerAddress2.isDefault = True
+    newCustomerAddress2.save()
+    data = {
+        "name":"ibrahim"
+    }
+    return JsonResponse(data)
 
 class AddAddressView(View):
     template_name = "app/addAddress.html"
@@ -662,10 +684,16 @@ class AddAddressView(View):
                 newaddress.save()
                 return redirect("/abookurl")
                 
-            else:
-                print("pk is not in here")
-                print("The pk is ", pk)
-                CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
+            else:                    
+                newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
+                print(len(newCustomerAddress))
+                if len(newCustomerAddress) == 0:
+                    print("this is the first time")
+                    CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address, isDefault = True).save()
+                else:
+                    print("This is not the first time")
+                    CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
+               
                 return redirect("/abookurl")
         else:
             print("No you can't save all the data")       
@@ -682,3 +710,6 @@ class CancellationView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+def Checkout(request):
+    return render(request,'app/checkout.html')

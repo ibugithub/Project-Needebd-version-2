@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="{% static 'app/css/fontend.css' %}" />
 <link rel="stylesheet" href="{% static 'app/css/adressBook.css' %}" />
 {% endblock css %} 
+{% block extraLink %} 
+<script src="https://kit.fontawesome.com/9bc804fb98.js" crossorigin="anonymous"></script>
+{% endblock extraLink %}
 
 {% block body %}
 <!-- Address book for pc -->
@@ -112,8 +115,14 @@
                             </td>
                             <td class="next-table-cell">
                               <div class="next-table-cell-wrapper">
-                                <input name = "is_default" type="radio" value = "active{{forloop.counter}}">
-                              </div>
+                                {% if address.isDefault == True %}
+                                <i style="color: #EB6529;" id="checked" class="fas fa-check-circle"></i>
+                                <input style="display: none;"  name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+                                {% else %}
+
+                                <input  id = 'circlebox' name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+                                {% endif %}                                                                                       
+                             </div>
                             </td>
                             <td class="next-table-cell">
                               <div
@@ -194,8 +203,45 @@
     </div>
   </div>
 </div>
+{% endblock body %} 
 
-{% endblock body %} {% block js %}
+{% block internaljs %}
+<script>
+var elm = document.getElementsByClassName('isDefaultClass')
+let len = elm.length
+for (let i = 0; i < len; i++){
+  elm[i].addEventListener("change", function(){
+    defaultMaker(this)
+  })
+}
+
+function defaultMaker(elm){
+  let addressId = elm.getAttribute('CAddressId')
+  let checkedBox = document.getElementById('checked')
+  checkedBox.style.display = "none"
+  let circleBox = document.getElementsByClassName('isDefaultClass')
+  let len = circleBox.length
+  for (let i = 0; i < len; i++){
+    if (circleBox[i].value == "True"){
+      circleBox[i].style.display = "inline-block"
+    }
+  }
+  $.ajax({
+    type : 'GET',
+    url : '/dfadrmaker',
+    data : {
+      id : addressId
+    },
+    success : function(){
+      console.log("transmission successed...")
+    }
+  })
+
+}
+</script>
+{% endblock internaljs %}
+
+{% block js %}
+<script src = "{% static 'app/js/jquery.js' %}"></script>
 <script src="{ % static 'app/js/productPage.js' %}"></script>
-<script src = "{% static 'app/js/addaddress.js' %}"></script>
 {% endblock js %}

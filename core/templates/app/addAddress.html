@@ -184,7 +184,6 @@
                             placeholder="For Example: House #123, street #123, ABC Road"
                           />
                         </div>
-
                         <div class="address-form-btn">
                           <a
                             href="/templates/app/addressBook.html"
@@ -210,7 +209,9 @@
     </div>
   </div>
 </div>
-{% endblock body %} {% block js %}
+{% endblock body %} 
+
+{% block js %}
 <script src="{% static 'app/js/productPage.js' %}"></script>
 <script src="{% static 'app/js/addaddress.js' %}"></script>
 <script src="{% static 'app/js/jquery.js' %}"></script>
