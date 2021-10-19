@@ -83,12 +83,14 @@
                       <div class="pro-de-size">
                         <span class="tk">৳ {{cart.product.selling_prize}}</span>
 
-                        <span class="tk-now"> ৳{{cart.product.discounted_prize}}
+                        <span style="font-size: 14px;" class="tk-now"> ৳{{cart.product.discounted_prize}}
                           <!-- filtering for Showing the rate unit in the cart page  -->
                           {% if cart.product.unit == "Kg" or cart.product.unit == "Gram" or cart.product.unit == "Pound" %}
-                          (per kg)
+                          /kg
                           {% elif cart.product.unit == "Liter" or cart.product.unit == "MiliLiter" %}
-                          (per liter)
+                          /liter
+                          {% else %} 
+                          /quantity
                           {% endif %}
                         </span>
 

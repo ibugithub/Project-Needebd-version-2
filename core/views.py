@@ -712,4 +712,27 @@ class CancellationView(TemplateView):
         return render(request, self.template_name)
 
 def Checkout(request):
-    return render(request,'app/checkout.html')
+    newCart = Cart.objects.filter(user = request.user)
+    length = len(newCart)
+    shippingCost = 70
+    subTotal = 0
+    for cart in newCart:
+        subTotal += cart.products_total_cost
+    total = subTotal + shippingCost
+    newProfile = CustomerProfile.objects.get(user = request.user)
+    newAddress = CustomerAddress.objects.filter(user = request.user)
+    if  len(newAddress) < 1:
+        return redirect('/abookurl')
+
+
+    context = {
+        "carts" : newCart,
+        "len" :length,
+        "subTotal" : subTotal,
+        "shippingCost" : shippingCost,
+        "total" : total,
+        "profile" : newProfile,
+        "newaddress" :newAddress
+    } 
+    
+    return render(request,'app/checkout.html', context = context)

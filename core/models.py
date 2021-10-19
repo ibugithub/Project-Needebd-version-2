@@ -87,6 +87,13 @@ class Product(models.Model):
                         ("Packet", "Packet")
                       )
     unit = models.CharField(max_length=30, choices = Unit_Choices, null = True)
+    
+    def save(self, *args, **kwargs):
+        prizeGap =  self.selling_prize - self.discounted_prize
+        sellingPrizePercent = self.selling_prize / 100 
+        PrizeGapPercent = prizeGap / sellingPrizePercent 
+        self.discount = round(PrizeGapPercent)
+        super().save(*args, **kwargs) 
    
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -140,6 +147,7 @@ class Cart(models.Model):
         if self.product.unit == "ClothSize" or self.product.unit == "Packet" or self.product.unit == "ShoeSize":
             Total_Cost = self.quantity * self.product.discounted_prize
         return Total_Cost
+    
 
 # Account Related Models...
 GENDER_CHOICES = (
