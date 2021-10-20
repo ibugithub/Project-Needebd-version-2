@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^aaddressurl/(?P<pk>\d+)$', views.AddAddressView.as_view(), name = 'aaddressurlname'),
     path('orderurl/', views.OrderView.as_view(), name="orderurlname"),
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
-    path('checkouturl/', views.Checkout, name = "checkouturlname")
+    path('checkouturl/', views.Checkout, name = "checkouturlname"),
+    path('sadrurl/', views.SelectAddressView, name = "sadrurlname")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

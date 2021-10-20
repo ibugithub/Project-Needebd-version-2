@@ -7,7 +7,11 @@
   src="https://kit.fontawesome.com/9bc804fb98.js"
   crossorigin="anonymous"
 ></script>
-{% endblock extraLink %} {% block body %}
+{% endblock extraLink %} 
+
+
+{% block body %} 
+
 <!-- check out page for pc -->
 <div class="check-out-main">
   <div class="check-out-container">
@@ -115,120 +119,137 @@
         </div>
 
         <div class="check-out-right">
+          <div class="check-out-posi">
+            <div class="check-out-right-main">
+              <div class="ck-pay-btn">
+                <button id="ptp" class="pay-btn">Proceed to pay</button>
+              </div>
 
-          <!--hidden address changer.. -->
-          <div id="adrDiv" style="display: none" class="address-book">
-            <div style="min-height: auto;" class="address-book-table">
-              <div class="next-table">
-                <div class="next-table-inner">
-                  <div class="next-table-body">
-                    <table style="font-size: 13px;">
-                        {% for address in newaddress %}
-                        <tbody>
-                          <tr class="next-table-row">
-                            <td class="next-table-cell">
-                              <div class="next-table-cell-wrapper">
-                                {{address.full_name}}
-                              </div>
-                            </td>
-                            <td class="next-table-cell">
-                              <div class="next-table-cell-wrapper">
-                                {{address.address}}
-                              </div>
-                            </td>
-                            <td class="next-table-cell">
-                              <div class="next-table-cell-wrapper">
-                                {{address.districts}}
-                              </div>
-                            </td>
-                            <td class="next-table-cell">
-                              <div class="next-table-cell-wrapper">
-                                {{address.phone_number}}
-                              </div>
-                            </td>
-                            <td class="next-table-cell">
-                              <div class="next-table-cell-wrapper">
-                                {% if address.isDefault == True %}
-                                <i style="color: #EB6529;" id="checked" class="fas fa-check-circle"></i>
-                                <input style="display: none;"  name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
-                                {% else %}
+              <!-- Editing Area -->
+              <div id="editDiv">
+                <div class="check-out-right-title">
+                  <h1 class="ck-r-t">Shipping & Billing</h1>
+                </div>
+                <div class="ck-profile">
+                  <div class="ck-profile-text">
+                    <span class="ck-icn"
+                      ><i class="fa fa-map-marker-alt"></i
+                    ></span>
+                    <span id="shAdrName" class="ck-profile-name">
+                      {{daddress.full_name}}
+                    </span>
+                  </div>
+                  <div class="ck-profile-edit">
+                    <a href="#" id="adredit" class="ck-edit">Edit</a>
+                  </div>
+                </div>
+                <div class="ck-all-address">
+                  <span id="adrWithLocations" class="ck-address"
+                    >{{daddress.address}}, {{daddress.unions}},
+                    {{daddress.upazilas}}, {{daddress.districts}},
+                    {{daddress.divisions}}</span
+                  >
+                </div>
 
-                                <input  id = 'circlebox' name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
-                                {% endif %}                                                                                       
-                             </div>
-                            </td>
-                            <td class="next-table-cell">
-                              <div
-                                class="next-table-cell-wrapper"
-                                style="text-align: center"
-                              >
-                                <a
-                                  href="{% url 'aaddressurlname' address.id %}"
-                                  class="rrtbc"
-                                  >Edit</a
-                                >
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                        {% endfor %}
-                      </table>
+                <div class="email-address">
+                  <div class="email-address-tex">
+                    <span class="email-icons">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                    <span class="email-text">{{profile.email}}</span>
+                  </div>
+                </div>
+
+                <div class="phone-address">
+                  <div class="phone-address-tex">
+                    <span class="phone-icons">
+                      <i class="fa fa-phone"></i>
+                    </span>
+                    <span class="phone-text">{{profile.phone_number}}</span>
                   </div>
                 </div>
               </div>
+              <!-- Editing Area -->
 
-            </div>
-          </div>
-          <!--hidden address changer.. -->
-
-          <div id="editDiv" class="check-out-posi">
-            <div class="check-out-right-main">
-              <div class="ck-pay-btn">
-                <button class="pay-btn">Proceed to pay</button>
-              </div>
-              <div class="check-out-right-title">
-                <h1 class="ck-r-t">Shipping & Billing</h1>
-              </div>
-              <div class="ck-profile">
-                <div class="ck-profile-text">
-                  <span class="ck-icn"
-                    ><i class="fa fa-map-marker-alt"></i
-                  ></span>
-                  <span class="ck-profile-name"> {{profile.full_name}} </span>
-                </div>
-                <div class="ck-profile-edit">
-                  <a href="#" id="adredit" class="ck-edit">Edit</a>
-                </div>
-              </div>
-              <div class="ck-all-address">
-                <span class="ck-address"
-                  >sadar, Rajbari Math Joydebpur, Gazipur, Dhaka</span
+              <!--hidden address changer.. -->
+              <div id="adrDiv" style="display: none" class="address-book">
+                <div
+                  style="
+                    min-height: auto;
+                    padding-top: 10px;
+                    max-height: 212px;
+                    overflow: auto;
+                  "
+                  class="address-book-table scroll"
                 >
-              </div>
+                  <div class="next-table">
+                    <div class="next-table-inner">
+                      <div class="next-table-body">
+                        <table style="font-size: 13px">
+                          {% for address in newaddress %}
+                          <tbody>
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div
+                                  style="
+                                    text-align: left;
+                                    padding-left: 0px !important;
+                                  "
+                                  class="next-table-cell-wrapper"
+                                >
+                                  {{address.full_name}}
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div
+                                  style="
+                                    text-align: left;
+                                    padding-left: 0px !important;
+                                  "
+                                  class="next-table-cell-wrapper"
+                                >
+                                  {{address.address}}
+                                </div>
+                              </td>
+                              <td style="width: 10%" class="next-table-cell">
+                                <div class="next-table-cell-wrapper">
+                                  {% if address.isDefault == True %}
+                                  <i
+                                    style="color: #eb6529"
+                                    id="checked"
+                                    class="fas fa-check-circle cHK"
+                                  ></i>
+                                  <input
+                                    style="display: none"
+                                    name="isDefaultName"
+                                    CAddressId="{{address.id}}"
+                                    type="radio"
+                                    class="isDefaultClass cHK"
+                                    value="{{address.isDefault}}"
+                                  />
+                                  {% else %}
 
-              <div class="email-address">
-                <div class="email-address-tex">
-                  <span class="email-icons">
-                    <i class="fa fa-envelope"></i>
-                  </span>
-                  <span class="email-text">{{profile.email}}</span>
-                </div>
-                <div class="email-address-edit">
-                  <a href="" class="e-address-edit">Edit</a>
-                </div>
-              </div>
-
-              <div class="phone-address">
-                <div class="phone-address-tex">
-                  <span class="phone-icons">
-                    <i class="fa fa-phone"></i>
-                  </span>
-                  <span class="phone-text">{{profile.phone_number}}</span>
-                </div>
-                <div class="phone-address-edit">
-                  <a href="" class="p-address-edit">Edit</a>
+                                  <input
+                                    id="circlebox"
+                                    name="isDefaultName"
+                                    CAddressId="{{address.id}}"
+                                    type="radio"
+                                    class="isDefaultClass cHK"
+                                    value="{{address.isDefault}}"
+                                  />
+                                  {% endif %}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                          {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <!--hidden address changer.. -->
 
               <div class="order-summery">
                 <div class="os-title">
@@ -532,18 +553,61 @@
     </div>
   </div>
 </div>
+
 {% endblock body %} {% block internaljs %}
 <script>
-  adrEditElm = document.getElementById("adredit");
+  let adrEditElm = document.getElementById("adredit");
   adrEditElm.addEventListener("click", adrEditFunc);
 
   function adrEditFunc() {
-    editDiv = document.getElementById("editDiv");
-    adrDiv = document.getElementById("adrDiv");
+    document.getElementById("ptp").innerText = "Select your shipping address";
+    let editDiv = document.getElementById("editDiv");
+    let adrDiv = document.getElementById("adrDiv");
     editDiv.style.display = "none";
     adrDiv.style.display = "block";
   }
+  let clickChecker = document.getElementsByClassName("cHK");
+  let len = clickChecker.length;
+  for (let i = 0; i < len; i++) {
+    clickChecker[i].addEventListener("click", function () {
+      addrSelector(this);
+    });
+  }
+
+  function addrSelector(elm) {
+    document.getElementById("ptp").innerText = "Proceed To Pay";
+    sAdrDiv = document.getElementById("adrDiv");
+    odrSDiv = document.getElementById("editDiv");
+    adrId = elm.getAttribute("CAddressId");
+    let checkedBox = document.getElementById("checked");
+    checkedBox.style.display = "none";
+    let circleBox = document.getElementsByClassName("isDefaultClass");
+    let len = circleBox.length;
+    for (let i = 0; i < len; i++) {
+      if (circleBox[i].value == "True") {
+        circleBox[i].style.display = "inline-block";
+      }
+    }
+    $.ajax({
+      type: "GET",
+      url: "/sadrurl",
+      data: {
+        adrId: adrId,
+      },
+      success: function (data) {
+        document.getElementById("shAdrName").innerText = data.name;
+        document.getElementById(
+          "adrWithLocations"
+        ).innerText = `${data.address}, ${data.union}, ${data.upazila},${data.district}, ${data.division}`;
+        console.log();
+      },
+    });
+    sAdrDiv.style.display = "none";
+    odrSDiv.style.display = "block";
+  }
 </script>
+
 {% endblock internaljs %} {% block js %}
+<script src="{% static 'app/js/jquery.js' %}"></script>
 <script src="{% static 'app/js/productPage.js' %}"></script>
 {% endblock js %}

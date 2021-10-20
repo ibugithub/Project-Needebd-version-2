@@ -109,6 +109,9 @@
     padding: 20px;
     min-height: 200px;
 }
+.scroll::-webkit-scrollbar{
+    display: none;
+}
 .next-table{
     border-width: 0;
     color: #444;
@@ -286,3 +289,7 @@
         display: none;
     }
 }
+
+
+
+/* later part modification */

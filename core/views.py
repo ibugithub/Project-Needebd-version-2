@@ -144,6 +144,7 @@ class ShowCartView(TemplateView):
     template_name = 'app/CartPage.html'
 
     def get(self, request, *args, **kwargs):
+        request.session['code'] = 'invalidCode'
         if request.user.is_authenticated:
             user = request.user
             carts = Cart.objects.filter(user=user)
@@ -366,10 +367,12 @@ def VoucherChecker(request):
         discount = coupon.discount
         if total_amount >= coupon.condition_rate:
             message = ""
+            request.session['code'] = code
             total_amount = (total_amount - coupon.discount) + delivery_cost
         else:
             message = f"You will have to buy more than {coupon.condition_rate}. "
             total_amount = "Nan"
+            request.session['code'] = 'invalidCode'
     except ObjectDoesNotExist:
         try:
             voucher = Voucher.objects.get(
@@ -402,6 +405,7 @@ def VoucherChecker(request):
                 total_amount = (total_amount -
                                 voucher.voucher_offer.discount) + delivery_cost
                 message = ""
+                request.session['code'] = code
 
         except ObjectDoesNotExist:
             message = "Code Doesn't Found"
@@ -409,6 +413,7 @@ def VoucherChecker(request):
             discount = "Nan"
             if code == "":
                 message = "Plz Enter a Code"
+                request.session['code'] = 'invalidCode'
     data = {
         "discount": discount,
         "message": message,
@@ -417,8 +422,6 @@ def VoucherChecker(request):
     return JsonResponse(data)
 
 def VoucherView(request):
-    # vcode = request.GET['dcode']
-    # print(vcode)
     try:
         voucher = Voucher.objects.filter(user=request.user)
         return render(request, 'app/voucher.html', {'vouchers': voucher})
@@ -544,7 +547,6 @@ class AddressBookView(TemplateView):
 
 def defaultAddressMaker(request):
     id = request.GET['id']
-    print(id)
     newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
     newCustomerAddress1.isDefault = False
     newCustomerAddress1.save()
@@ -721,9 +723,9 @@ def Checkout(request):
     total = subTotal + shippingCost
     newProfile = CustomerProfile.objects.get(user = request.user)
     newAddress = CustomerAddress.objects.filter(user = request.user)
+    defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
     if  len(newAddress) < 1:
         return redirect('/abookurl')
-
 
     context = {
         "carts" : newCart,
@@ -732,7 +734,37 @@ def Checkout(request):
         "shippingCost" : shippingCost,
         "total" : total,
         "profile" : newProfile,
-        "newaddress" :newAddress
+        "newaddress" :newAddress,
+        "daddress" : defaultAddress
     } 
-    
+
+    code = request.session['code']
+    print("The Code is", code)
     return render(request,'app/checkout.html', context = context)
+
+# This function will work when user will click the Edit option on checkout page for changing the shipping address when checking out
+def SelectAddressView(request):
+    id = request.GET['adrId']
+    print(id)
+    newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    newCustomerAddress1.isDefault = False
+    newCustomerAddress1.save()
+    newCustomerAddress2 = CustomerAddress.objects.get(id = id)
+    newCustomerAddress2.isDefault = True
+    newCustomerAddress2.save()
+    address = newCustomerAddress2.address
+    union = newCustomerAddress2.unions.name
+    upazila = newCustomerAddress2.upazilas.name
+    district = newCustomerAddress2.districts.name
+    division = newCustomerAddress2.divisions.name
+    name = newCustomerAddress2.full_name
+
+    data = {
+        'name'  : name,
+        "address" : address,
+        "union" : union,
+        "upazila" : upazila,
+        "district" : district,
+        "division" : division
+    }
+    return JsonResponse(data)
