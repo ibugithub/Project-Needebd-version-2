@@ -231,7 +231,7 @@
  
     {% for shop_with_deal in shop_with_deals %}
     <li>
-      <a href="">
+      <a href="{% url 'singleproducturlname' shop_with_deal.id %}">
         <div class="maindiv">
           <div class="imgcontainer">
             <img src="{{shop_with_deal.product_image.url}}" alt="">
@@ -697,7 +697,7 @@
             {% for beauty_product in beauty_products %}
             <li class="sliding-item-section-carousel-items-li">
 
-              <a class="sliding-item-section-carousel-a" href="">
+              <a class="sliding-item-section-carousel-a" href="{% url 'singleproducturlname' beauty_product.id %}">
                 <img alt="" src="{{beauty_product.product_image.url}}" class="product-image">
               </a>
 
@@ -1176,7 +1176,7 @@
             {% for mans_fashion in mans_fashions %}
             <li class="sliding-item-section-carousel-items-li">
 
-              <a class="sliding-item-section-carousel-a" href="">
+              <a class="sliding-item-section-carousel-a" href="{% url 'singleproducturlname' mans_fashion.id %}">
                 <img alt="" src="{{mans_fashion.product_image.url}}" class="product-image">
               </a>
 

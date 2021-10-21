@@ -897,6 +897,7 @@ body>div.main_container>div>form>button.search-icon-container {
     width: 100%;
     border-style: none;
     height: 44px;
+    cursor: pointer;
 }
 .account-subcontainer2 {
     -webkit-box-align: center;
@@ -1826,7 +1827,6 @@ padding-left: 0 !important;
     text-align: center;
     box-shadow: 0 1px 3px #888;
 }
-
 .sliding-item-section-carousel-a img{
    height: 200px;
 }
@@ -2012,49 +2012,28 @@ body>div.container.mgt20>div:nth-child(10) {
     color: #ffff;
     font-size: 14px;
 }
-/* Account Bar Section */
-#main-dorpdown{
-    z-index: 111;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-}
 .account-dropdown-main{
-    width: 100%;
-    position: fixed;
-    overflow: hidden;
+    width: 20%;
+    position: absolute;
+    background: white;
+    z-index: 3;
+    right: 51px;
+    padding-left: 16px;
+    padding-right: 20px;
+    height: 60%;
+    top: 71px;
     display: none;
+    border: 1px solid #041e42;
+    position: fixed;
 }
 .account-dropdown-main-active{
     display: block;
-}
-.account-dropdown{
-    background-color: rgba(0, 0, 0, .16);
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    top: 0;
-}
-.account-dropdown-content{
-    position: absolute;
-    width: 320px;
-    height: 100%;
-    background-color: #ffff;
-    right: 0;
-    overflow: auto;
-    overflow-x: hidden;
-    top:70px;
-   
-    padding: 20px;
-  
 }
 .account-dropdown-top{
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
-
 .account-row{
     width: 100%;
     display: flex;
@@ -2066,7 +2045,6 @@ body>div.container.mgt20>div:nth-child(10) {
     align-items: center;
     line-height: 44px;
     border-radius: 50%;
-
 }
 .account-img img{
     width: 100%;
@@ -2074,16 +2052,15 @@ body>div.container.mgt20>div:nth-child(10) {
     margin-top: 10px;
 }
 .account-title h2{
-    margin-top: 10px;
-    margin-left: 15px;
+    margin-top: 15px;
+    margin-left: 20px;
+    color: #EB6529;
 }
-
 .close-section .close-account-btn{
     background-color: transparent;
     border: none;
     margin-top: 10px;
 }
-
 .all-elements-link{
   width: 100%;
   padding: 20px 0;
@@ -2106,25 +2083,13 @@ body>div.container.mgt20>div:nth-child(10) {
 .elements-name:hover{
     text-decoration: underline;
 }
+
 /* Desktop version End*/
-
-
-
-
-
-
-
-
-
-
-
-
 .alert-danger {
     color: #842029;
     background-color: #f8d7da;
     border-color: #f5c2c7;
 }
-
 .alert {
     position: relative;
     padding: 1rem 1rem;
@@ -2137,15 +2102,8 @@ body>div.container.mgt20>div:nth-child(10) {
 }
 
 
-
-
-
-
-
-
 /*------------------- This is the start of sing in section -------------*/
 .form-section {
-
     background-color: #EAEDED;
 }
 
@@ -2155,7 +2113,6 @@ body>div.container.mgt20>div:nth-child(10) {
 
 .home-logo {
     width: 100%;
-
 }
 
 .hl-logo {

@@ -93,10 +93,18 @@ class ProductPageView(Mycontext, ListView):
         qs = super(ProductPageView, self).get_queryset()
         return qs.filter(product_category__title=self.kwargs.get('category'))
 
-class SingleProductView(Mycontext, DetailView):
-    model = Product
-    context_object_name = 'product'
+def SingleProductView(request, pk):
     template_name = 'app/singleproduct.html'
+    product = Product.objects.get(id = pk)
+    category = product.product_category
+    relatedProduct = Product.objects.filter(product_category = category)
+    context = {
+        "product" : product,
+        "relatedProduct" : relatedProduct,
+        "showedProductId" : pk
+    }
+    return render(request, template_name, context = context)
+   
 
 def AddToCartView(request):
     product_id = request.GET['productid']
@@ -144,7 +152,7 @@ class ShowCartView(TemplateView):
     template_name = 'app/CartPage.html'
 
     def get(self, request, *args, **kwargs):
-        request.session['code'] = 'invalidCode'
+        request.session['code'] = 'none'
         if request.user.is_authenticated:
             user = request.user
             carts = Cart.objects.filter(user=user)
@@ -177,6 +185,7 @@ class ShowCartView(TemplateView):
             return redirect('/accounts/login/')
 
 def PlusCartView(request):
+    request.session['code'] = 'none'
     if request.user.is_authenticated:
         user = request.user
         product_key = request.GET['id']
@@ -224,6 +233,7 @@ def PlusCartView(request):
         return JsonResponse(data)
 
 def MinusCartView(request):
+    request.session['code'] = 'none'
     user = request.user
     if user.is_authenticated:
         product_key = request.GET['id']
@@ -302,6 +312,7 @@ def MinusCartView(request):
         return JsonResponse(data)
 
 def RemoveCartView(request):
+    request.session['code'] = 'none'
     user = request.user
     product_key = request.GET['prod_id']
     product = Product.objects.get(id=product_key)
@@ -351,13 +362,20 @@ def RemoveCartView(request):
     }
     return JsonResponse(data)
 
-def VoucherChecker(request):
+def VoucherChecker(request, redirect = False):
     carts = Cart.objects.filter(user=request.user)
     total_amount = 0
     for cart in carts:
         total_amount += cart.products_total_cost
     delivery_cost = 70
-    code = request.GET['code']
+
+    if redirect == True:
+        code = request.session['code']
+    else:
+        code = request.GET['code']
+    
+    print('The msg is', redirect)
+
     now = timezone.now()
     try:
         coupon = Coupon.objects.get(coupon_code=code,
@@ -367,12 +385,11 @@ def VoucherChecker(request):
         discount = coupon.discount
         if total_amount >= coupon.condition_rate:
             message = ""
-            request.session['code'] = code
             total_amount = (total_amount - coupon.discount) + delivery_cost
+            request.session['code'] = code
         else:
             message = f"You will have to buy more than {coupon.condition_rate}. "
             total_amount = "Nan"
-            request.session['code'] = 'invalidCode'
     except ObjectDoesNotExist:
         try:
             voucher = Voucher.objects.get(
@@ -409,11 +426,16 @@ def VoucherChecker(request):
 
         except ObjectDoesNotExist:
             message = "Code Doesn't Found"
+            request.session['code'] = 'invalidCode'
             total_amount = "Nan"
             discount = "Nan"
             if code == "":
                 message = "Plz Enter a Code"
-                request.session['code'] = 'invalidCode'
+
+    # redirect Action will get the data from this return...
+    if redirect == True:
+        return {"amount":total_amount, "discount":discount }
+
     data = {
         "discount": discount,
         "message": message,
@@ -721,31 +743,42 @@ def Checkout(request):
     for cart in newCart:
         subTotal += cart.products_total_cost
     total = subTotal + shippingCost
+  
     newProfile = CustomerProfile.objects.get(user = request.user)
     newAddress = CustomerAddress.objects.filter(user = request.user)
-    defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+
     if  len(newAddress) < 1:
         return redirect('/abookurl')
 
+    try:
+        defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    except:
+        return redirect('/aaddressurl')
+    
     context = {
         "carts" : newCart,
         "len" :length,
         "subTotal" : subTotal,
         "shippingCost" : shippingCost,
-        "total" : total,
         "profile" : newProfile,
         "newaddress" :newAddress,
-        "daddress" : defaultAddress
+        "daddress" : defaultAddress,
     } 
+    if not request.session["code"] == 'none':
+        # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
+        data = VoucherChecker(request, redirect=True)
+        if data['amount'] != "Nan" and data['discount'] != "Nan":
+            context["totalAmount"] = data['amount']
+            context["discount"] = data['discount']
+    else:
+        context["totalAmount"] = total 
 
-    code = request.session['code']
-    print("The Code is", code)
     return render(request,'app/checkout.html', context = context)
+
 
 # This function will work when user will click the Edit option on checkout page for changing the shipping address when checking out
 def SelectAddressView(request):
     id = request.GET['adrId']
-    print(id)
     newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
     newCustomerAddress1.isDefault = False
     newCustomerAddress1.save()
@@ -768,3 +801,6 @@ def SelectAddressView(request):
         "division" : division
     }
     return JsonResponse(data)
+
+
+

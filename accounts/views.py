@@ -59,11 +59,12 @@ class RegistrationView(View):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
 
-        # if check(phone):
-        #     pass
-        # else:
-        #     messages.add_message(request, messages.ERROR, "Phone number is Invalid")
-        #     context['has_error'] = True
+        regex=r'^\+?1?\d{9,15}$'
+        if re.search(regex, phone):
+            pass
+        else:
+            messages.add_message(request, messages.ERROR, "Phone number is Invalid")
+            context['has_error'] = True
 
         if len(password) < 8:
             messages.add_message(request, messages.ERROR, 'password should be at least 8 characters long')

@@ -147,8 +147,11 @@ function fput() {
 
 }
 
-aTCBtn = document.getElementById('aTCButton')
+try{
+  aTCBtn = document.getElementById('aTCButton')
 aTCBtn.addEventListener("mouseover", uAmountCk)
+}
+catch{}
 
 function uAmountCk() {
   try {

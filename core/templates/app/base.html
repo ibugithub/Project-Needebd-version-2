@@ -46,7 +46,7 @@
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
           </svg>
         </button>
-        <div class="logo_container">
+        <div  class="logo_container">
           <a href="{% url 'home' %}">
             <img id = "logoimg" src="{% static 'app/image/logo.png' %}" alt="">
             
@@ -73,7 +73,7 @@
 
       <div class="account-and-myitem-container">
         <div class="account-container">
-          <button class="account-subcontainer">
+          <button id = 'test2' class="account-subcontainer">
             <span class="account-subcontainer2">
               <span class="account-subcontainer3">
                 <span class="account-logo">                  
@@ -530,16 +530,8 @@
               </div>
             </div>
           </div>
-
-          <div class="account-right">
-            <div class="close-section">
-              <button class="close-account-btn">
-                <img src="{% static 'app/image/remove-black.svg' %}" alt="" width="24" height="24">
-
-              </button>
-            </div>
-          </div>
         </div>
+        
         <div class="all-elements-link">
           {% if request.user.is_authenticated %}
           <a href="{% url 'maccounturlname' %}" class="elements">

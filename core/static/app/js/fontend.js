@@ -82,6 +82,7 @@ function autoPlay(){
 }
 let timer =setInterval(autoPlay,6000);
 // Slider Section End
+
 //Account Bar 
 const accountButton = document.querySelector('.account-subcontainer')
 const accountCloseButton = document.querySelector('.close-account-btn')
@@ -89,9 +90,16 @@ const accountDropDown = document.querySelector('.account-dropdown-main')
 accountButton.addEventListener('click', function(){
     accountDropDown.classList.add('account-dropdown-main-active')
 })
-accountCloseButton.addEventListener('click', function(){
+accountDropDown.addEventListener('mouseover', function(){
+    accountDropDown.classList.add('account-dropdown-main-active')
+})
+
+accountDropDown.addEventListener('mouseout', function(){
     accountDropDown.classList.remove('account-dropdown-main-active')
 })
+
+
+
 // countdown section
 function getTimeRemaining(endtime) {
     var t = Date.parse(endtime) - Date.parse(new Date());

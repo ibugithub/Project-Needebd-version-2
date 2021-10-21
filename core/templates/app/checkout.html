@@ -7,10 +7,7 @@
   src="https://kit.fontawesome.com/9bc804fb98.js"
   crossorigin="anonymous"
 ></script>
-{% endblock extraLink %} 
-
-
-{% block body %} 
+{% endblock extraLink %} {% block body %}
 
 <!-- check out page for pc -->
 <div class="check-out-main">
@@ -91,10 +88,7 @@
                       <div class="ck-product-main-price">
                         <span>৳ {{cart.product.discounted_prize}}</span>
                       </div>
-
-                      <div class="ck-del-icon">
-                        <i class="fa fa-trash"></i>
-                      </div>
+                      
                     </div>
 
                     <div class="ck-checkout-right">
@@ -217,7 +211,7 @@
                                   <i
                                     style="color: #eb6529"
                                     id="checked"
-                                    class="fas fa-check-circle cHK"
+                                    class="fas fa-check-circle"
                                   ></i>
                                   <input
                                     style="display: none"
@@ -265,6 +259,16 @@
                     <span> ৳ {{subTotal}}</span>
                   </div>
                 </div>
+                {% if discount %}
+                <div class="os-shipping">
+                  <div class="os-sipping-text">
+                    <span>Coupon or voucher</span>
+                  </div>
+                  <div class="shipping-money">
+                    <span> ৳ - {{discount}}</span>
+                  </div>
+                </div>
+                {% endif %}
                 <div class="os-shipping">
                   <div class="os-sipping-text">
                     <span>Shipping fee</span>
@@ -278,7 +282,7 @@
                     <span>Total:</span>
                   </div>
                   <div class="total-amount">
-                    <span class="amount"> ৳ {{total}}</span>
+                    <span class="amount"> ৳ {{totalAmount}}</span>
                   </div>
                 </div>
                 <div class="ck-pay-btn">
@@ -555,6 +559,8 @@
 </div>
 
 {% endblock body %} {% block internaljs %}
+
+<!-- This Script will work on the changing the default address in checkout page on order summery. -->
 <script>
   let adrEditElm = document.getElementById("adredit");
   adrEditElm.addEventListener("click", adrEditFunc);
@@ -576,9 +582,9 @@
 
   function addrSelector(elm) {
     document.getElementById("ptp").innerText = "Proceed To Pay";
-    sAdrDiv = document.getElementById("adrDiv");
-    odrSDiv = document.getElementById("editDiv");
-    adrId = elm.getAttribute("CAddressId");
+    let sAdrDiv = document.getElementById("adrDiv");
+    let odrSDiv = document.getElementById("editDiv");
+    let adrId = elm.getAttribute("CAddressId");
     let checkedBox = document.getElementById("checked");
     checkedBox.style.display = "none";
     let circleBox = document.getElementsByClassName("isDefaultClass");
@@ -605,6 +611,13 @@
     sAdrDiv.style.display = "none";
     odrSDiv.style.display = "block";
   }
+
+  // when the Checked Icon will be clicked then it will work...
+  document.getElementById("checked").addEventListener("click", function () {
+      console.log("checked item has been clicked")
+      document.getElementById("adrDiv").style.display = "none";
+      document.getElementById("editDiv").style.display = "block";
+    });
 </script>
 
 {% endblock internaljs %} {% block js %}
