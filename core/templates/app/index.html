@@ -1277,10 +1277,11 @@
 
   leftArrow1.addEventListener('click', function () {
     if (position != 0) {
-      let margin = 200
+      let margin = 400
       position += margin
       let value = position + "px"
       content.style.marginLeft = value
+      content.style.transition = "all .2s"
     }
   })
 
@@ -1294,18 +1295,19 @@
     totalContentLength -= iContainer.clientWidth
 
     if (position > -totalContentLength) {
-      let margin = -200
+      let margin = -400
       position += margin
       let value = position + "px"
       content.style.marginLeft = value
+      content.style.transition = "all .2s"
     } 
     // for removing the extra white space after getting margin..
     if (position < -totalContentLength) {
       let diff = position + totalContentLength
       let val = position - diff
       content.style.marginLeft = val + "px"
+      content.style.transition = "all .2s"
     }
-
   })
 </script>
 
@@ -1321,10 +1323,11 @@
 
   leftArrow2.addEventListener('click', function () {
     if (position2 != 0) {
-      let margin = 200
+      let margin = 400
       position2 += margin
       let value = position2 + "px"
       content2.style.marginLeft = value
+      content2.style.transition = "all .2s"
     }
   })
 
@@ -1338,15 +1341,17 @@
     totalContentLength2 -= iContainer2.clientWidth
 
     if (position2 > -totalContentLength2) {
-      let margin = -200
+      let margin = -400
       position2 += margin
       let value = position2 + "px"
       content2.style.marginLeft = value
+      content2.style.transition = "all .2s"
     }
     if (position2 < -totalContentLength2) {
       let diff = position2 + totalContentLength2
       let val = position2 - diff
       content2.style.marginLeft = val + "px"
+      content2.style.transition = "all .2s"
     }
   })
 </script>
