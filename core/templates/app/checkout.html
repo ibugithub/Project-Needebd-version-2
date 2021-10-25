@@ -116,7 +116,7 @@
           <div class="check-out-posi">
             <div class="check-out-right-main">
               <div class="ck-pay-btn">
-                <button id="ptp" class="pay-btn">Proceed to pay</button>
+                <button id="ptp" class="pay-btn">Select your address</button>
               </div>
 
               <!-- Editing Area -->
@@ -286,7 +286,10 @@
                   </div>
                 </div>
                 <div class="ck-pay-btn">
-                  <button class="pay-btn">Proceed to pay</button>
+                  <a href="{% url 'paymentpageurlname' %}">
+                    <button class="pay-btn">Proceed to pay</button>
+                  </a>
+                  
                 </div>
               </div>
             </div>
@@ -558,8 +561,9 @@
   </div>
 </div>
 
-{% endblock body %} {% block internaljs %}
+{% endblock body %} 
 
+{% block internaljs %}
 <!-- This Script will work on the changing the default address in checkout page on order summery. -->
 <script>
   let adrEditElm = document.getElementById("adredit");
@@ -619,8 +623,9 @@
       document.getElementById("editDiv").style.display = "block";
     });
 </script>
+{% endblock internaljs %} 
 
-{% endblock internaljs %} {% block js %}
+{% block js %}
 <script src="{% static 'app/js/jquery.js' %}"></script>
 <script src="{% static 'app/js/productPage.js' %}"></script>
 {% endblock js %}

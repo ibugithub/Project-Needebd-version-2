@@ -30,4 +30,5 @@ urlpatterns = [
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
     path('checkouturl/', views.Checkout, name = "checkouturlname"),
     path('sadrurl/', views.SelectAddressView, name = "sadrurlname"),
+    path('paymentpageurl/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

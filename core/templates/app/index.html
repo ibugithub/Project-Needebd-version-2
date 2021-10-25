@@ -1,7 +1,7 @@
 {% extends 'app/base.html' %}
 {% load static %}
 
-{% block extraLink %} 
+{% block extraLink %}
 <script src="https://kit.fontawesome.com/9bc804fb98.js" crossorigin="anonymous"></script>
 {% endblock extraLink %}
 
@@ -12,7 +12,7 @@
     <div class="category-subcontainer">
 
       <div class="category-product">
-        <a  class="category-product-link" href="{% url 'allcategory-url-name' %}">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{% static 'app/images/tcategory/caragory-1.png' %}">
@@ -50,29 +50,29 @@
     <div class="slider-section first">
       <div class="containerr">
         <div class="auto-slider">
-            <div class="slider">
-              <div class="slide slide1">
-                <img class="mobileshow desktophide" src="{{msliders.0.slider_image.url}}" alt="">
+          <div class="slider">
+            <div class="slide slide1">
+              <img class="mobileshow desktophide" src="{{msliders.0.slider_image.url}}" alt="">
 
-                <img class="mobilehide" src="{{dsliders.0.slider_image.url}}" alt="">
-              </div>
-              <div class="slide slide2">
-                <img class="mobileshow desktophide" src="{{msliders.1.slider_image.url}}" alt="">
+              <img class="mobilehide" src="{{dsliders.0.slider_image.url}}" alt="">
+            </div>
+            <div class="slide slide2">
+              <img class="mobileshow desktophide" src="{{msliders.1.slider_image.url}}" alt="">
 
-                <img class="mobilehide" src="{{dsliders.1.slider_image.url}}" alt="">
-              </div>
-              <div class="slide slide3">
-                <img class="mobileshow desktophide" src="{{msliders.2.slider_image.url}}" alt="">
+              <img class="mobilehide" src="{{dsliders.1.slider_image.url}}" alt="">
+            </div>
+            <div class="slide slide3">
+              <img class="mobileshow desktophide" src="{{msliders.2.slider_image.url}}" alt="">
 
-                <img class="mobilehide" src="{{dsliders.2.slider_image.url}}" alt="">
-              </div>
-              <div class="slide slide4 active">
-                <img class="mobileshow desktophide" src="{{msliders.3.slider_image.url}}" alt="">
+              <img class="mobilehide" src="{{dsliders.2.slider_image.url}}" alt="">
+            </div>
+            <div class="slide slide4 active">
+              <img class="mobileshow desktophide" src="{{msliders.3.slider_image.url}}" alt="">
 
-                <img class="mobilehide" src="{{dsliders.3.slider_image.url}}" alt="">
+              <img class="mobilehide" src="{{dsliders.3.slider_image.url}}" alt="">
 
-              </div>
-            </div>            
+            </div>
+          </div>
 
           <div class="control">
             <a class="sliding-item-section-carousel-prev-a mobilehide prev" href="#">
@@ -96,7 +96,7 @@
 
 {% block UpperCategoryMobile %}
 <!-- $Shop By Category Section mobile -->
-<div class="category-section desktophide mobileshow card"> 
+<div class="category-section desktophide mobileshow card">
   <div class="category-section-header">
     <span>
       Shop By Category
@@ -134,7 +134,7 @@
       {% endfor %}
 
 
-      
+
 
     </div>
   </div>
@@ -170,7 +170,7 @@
     </div>
 
     <ul class="extra-option-content-ul">
-{% for shop_with_deal in shop_with_deals %}
+      {% for shop_with_deal in shop_with_deals %}
       <li class="extra-option-content-li">
         <a href="" class="a extra-option-content-a">
           <div class="extra-option-content-imagecontainer">
@@ -181,8 +181,8 @@
           </div>
         </a>
       </li>
-{% endfor %}
-     
+      {% endfor %}
+
     </ul>
 
     <div class='eomfooter'>
@@ -228,7 +228,7 @@
     </a>
   </div>
   <ul>
- 
+
     {% for shop_with_deal in shop_with_deals %}
     <li>
       <a href="{% url 'singleproducturlname' shop_with_deal.id %}">
@@ -692,33 +692,33 @@
         </span>
       </div>
       <div class="sliding-item-section-carousel-container">
-        <div class="sliding-item-section-carousel-items ">
-          <ul class="sliding-item-section-carousel-items-ul">
+        <div id="iContainer" class="sliding-item-section-carousel-items ">
+          <ul id="movingContent" class="sliding-item-section-carousel-items-ul">
             {% for beauty_product in beauty_products %}
             <li class="sliding-item-section-carousel-items-li">
 
               <a class="sliding-item-section-carousel-a" href="{% url 'singleproducturlname' beauty_product.id %}">
-                <img alt="" src="{{beauty_product.product_image.url}}" class="product-image">
+                <img alt="" src="{{beauty_product.product_image.url}}" class="product-image innerContent">
               </a>
 
             </li>
             {% endfor %}
-           
+
 
           </ul>
         </div>
 
-        <a class="sliding-item-section-carousel-prev-a mobilehide" href="#">
+        <button id="leftArrow1" class="sliding-item-section-carousel-prev-a mobilehide">
           <span class="sliding-item-section-carousel-prev-span">
             <i class="fas fa-chevron-left"></i>
           </span>
-        </a>
+        </button>
 
-        <a class="slider-section-carousel-next-a mobilehide" href="#">
+        <button id="rightArrow1" class="slider-section-carousel-next-a mobilehide">
           <span class="sliding-item-section-carousel-next-span">
             <i class="fas fa-chevron-right"></i>
           </span>
-        </a>
+        </button>
 
       </div>
 
@@ -1171,13 +1171,13 @@
         </span>
       </div>
       <div class="sliding-item-section-carousel-container">
-        <div class="sliding-item-section-carousel-items ">
-          <ul class="sliding-item-section-carousel-items-ul">
+        <div id="iContainer2" class="sliding-item-section-carousel-items ">
+          <ul id="movingContent2" class="sliding-item-section-carousel-items-ul">
             {% for mans_fashion in mans_fashions %}
             <li class="sliding-item-section-carousel-items-li">
 
               <a class="sliding-item-section-carousel-a" href="{% url 'singleproducturlname' mans_fashion.id %}">
-                <img alt="" src="{{mans_fashion.product_image.url}}" class="product-image">
+                <img alt="" src="{{mans_fashion.product_image.url}}" class="product-image innerContent2">
               </a>
 
             </li>
@@ -1186,17 +1186,17 @@
           </ul>
         </div>
 
-        <a class="sliding-item-section-carousel-prev-a mobilehide" href="#">
+        <button id="leftArrow2" class="sliding-item-section-carousel-prev-a mobilehide">
           <span class="sliding-item-section-carousel-prev-span">
             <i class="fas fa-chevron-left"></i>
           </span>
-        </a>
+        </button>
 
-        <a class="slider-section-carousel-next-a mobilehide" href="#">
+        <button id="rightArrow2" class="slider-section-carousel-next-a mobilehide">
           <span class="sliding-item-section-carousel-next-span">
             <i class="fas fa-chevron-right"></i>
           </span>
-        </a>
+        </button>
 
       </div>
 
@@ -1260,5 +1260,94 @@
 
   </div>
 </div>
-
 {% endblock brand %}
+
+{% block internaljs %}
+
+<!-- for controlling the sliding item section by left and right arrow key -->
+<script>
+  var rightArrow1 = document.getElementById('rightArrow1');
+  var leftArrow1 = document.getElementById('leftArrow1');
+  var content = document.getElementById('movingContent');
+  var position = 0;
+  var innerContent = document.getElementsByClassName('innerContent');
+  var icontainer = document.getElementById("iContainer")
+  var totalContentLength = 0
+
+
+  leftArrow1.addEventListener('click', function () {
+    if (position != 0) {
+      let margin = 200
+      position += margin
+      let value = position + "px"
+      content.style.marginLeft = value
+    }
+  })
+
+  rightArrow1.addEventListener('click', function () {
+    let len = innerContent.length;
+    var totalContentLength = 0;
+    for (let i = 0; i < len; i++) {
+      var cLength = innerContent[i].clientWidth;
+      totalContentLength += cLength + 13
+    }
+    totalContentLength -= iContainer.clientWidth
+
+    if (position > -totalContentLength) {
+      let margin = -200
+      position += margin
+      let value = position + "px"
+      content.style.marginLeft = value
+    } 
+    // for removing the extra white space after getting margin..
+    if (position < -totalContentLength) {
+      let diff = position + totalContentLength
+      let val = position - diff
+      content.style.marginLeft = val + "px"
+    }
+
+  })
+</script>
+
+<script>
+  var rightArrow2 = document.getElementById('rightArrow2');
+  var leftArrow2 = document.getElementById('leftArrow2');
+  var content2 = document.getElementById('movingContent2');
+  var position2 = 0;
+  var innerContent2 = document.getElementsByClassName('innerContent2');
+  var icontainer2 = document.getElementById("iContainer2")
+  var totalContentLength2 = 0
+
+
+  leftArrow2.addEventListener('click', function () {
+    if (position2 != 0) {
+      let margin = 200
+      position2 += margin
+      let value = position2 + "px"
+      content2.style.marginLeft = value
+    }
+  })
+
+  rightArrow2.addEventListener('click', function () {
+    let len2 = innerContent2.length;
+    var totalContentLength2 = 0;
+    for (let i = 0; i < len2; i++) {
+      var cLength2 = innerContent2[i].clientWidth;
+      totalContentLength2 += cLength2 + 13
+    }
+    totalContentLength2 -= iContainer2.clientWidth
+
+    if (position2 > -totalContentLength2) {
+      let margin = -200
+      position2 += margin
+      let value = position2 + "px"
+      content2.style.marginLeft = value
+    }
+    if (position2 < -totalContentLength2) {
+      let diff = position2 + totalContentLength2
+      let val = position2 - diff
+      content2.style.marginLeft = val + "px"
+    }
+  })
+</script>
+{% endblock internaljs %}

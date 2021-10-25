@@ -1745,6 +1745,11 @@ padding-left: 0 !important;
     width: 100%;
     position: relative;
 }
+
+.sliding-item-section-carousel-items::-webkit-scrollbar {
+    display: none;
+}
+
 .sliding-item-section-carousel-items {
     width: 100%;
     white-space: nowrap;
@@ -1805,6 +1810,7 @@ padding-left: 0 !important;
         box-shadow: 0 1px 3px #888;
         left: -25px;
         padding-right: 5px;
+        border: none;
 }
 .sliding-item-section-carousel-prev-a:focus,
 .slider-section-carousel-next-a:focus {
@@ -1826,9 +1832,11 @@ padding-left: 0 !important;
     width: 34px;
     text-align: center;
     box-shadow: 0 1px 3px #888;
+    border: none;
 }
 .sliding-item-section-carousel-a img{
    height: 200px;
+   
 }
 /* extra options section */
 .hf, .body-category-item-header>h2, .sliding-item-section-title-left, .love-by-brand-head h2{

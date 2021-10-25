@@ -1,0 +1,251 @@
+{% extends 'app/base.html' %} 
+{% load static %}
+{% block css %} 
+<link rel = "stylesheet" href="{% static 'app/css/paymentPage.css' %}" >
+<link rel="stylesheet" href = "{% static 'app/css/fontend.css' %}">
+{% endblock css %}
+
+
+{% block body %}
+    <!-- payment page for pc -->
+    <div class="payment-main">
+        <div class="payment-container">
+            <div class="payment-section">
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <div style="color: red;" id="selectionError"></div>
+                        <div class="payment-left-container">
+                            <div class="tab">
+                                <button id="defaultOpen" class="tablinks"
+                                    onclick="payment(event, 'credit-card')">Credit/ Debit card</button>
+                                <button class="tablinks" onclick="payment(event, 'net-banking')">Net Banking</button>
+                                <button class="tablinks" onclick="payment(event, 'cash-on')">Cash on delivery</button>
+                            </div>
+
+                            <div id="credit-card" class="tabcontent">
+                                <div class="credit-card-content">
+                                    <div class="card-row">
+                                        <div class="visa-card">
+                                            <div class="visa-card-content">
+                                                <div class="visa-logo">
+                                                    <img src="/static/app/image/visa.png" alt="">
+                                                </div>
+                                                <div class="visa-card-number">
+                                                    <input type="text" placeholder="card number">
+                                                </div>
+                                                <div class="visa-card-date">
+                                                    <span class="visa-text">Expires</span>
+                                                    <span class="visa-date">10-19</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="master-card">
+                                            <div class="master-card-content">
+                                                <div class="master-logo">
+                                                    <img src="/static/app/image/MasterCard.png" alt="">
+                                                </div>
+                                                <div class="master-card-number">
+                                                    <input type="text" placeholder="card number">
+                                                </div>
+                                                <div class="master-card-date">
+                                                    <span class="master-text">Expires</span>
+                                                    <span class="master-date">10-18</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="net-banking" class="tabcontent">
+                                <h3>net Banking</h3>
+
+                            </div>
+
+                            <div id="cash-on" class="tabcontent">
+                                <span>cash on </span>
+                                <input type="checkbox" name="" id="cODCheckbox" value="cashOnDelivery">
+
+                            </div>
+                        </div>
+
+                        <div class="courier-section">
+                            <div class="courier-container">
+                                <div class="courier-title">
+                                    <h3>choose your courier</h3>
+                                </div>
+                                <!-- courier content start -->
+                                <div class="courier-content">
+                                    <form action="">
+                                        <div class="courier-content-row">
+                                            <div class="courier-box">
+                                                <input type="checkbox" id="sundorbon" name="sundorbon" value="sundorBon">
+                                            </div>
+                                            <div class="courier-name">
+                                                <h3 class="courier-text">
+                                                    Sundor Ban
+                                                </h3>
+                                            </div>
+                                            <div class="courier-logo">
+                                                <img src="/static/app/image/sundorban.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- courier content end -->
+
+                                <!-- courier content start -->
+                                <div class="courier-content">
+                                    <form action="">
+                                        <div class="courier-content-row">
+                                            <div class="courier-box">
+                                                <input type="checkbox" id="sundorbon" name="sundorbon" value="sundorBon">
+                                            </div>
+                                            <div class="courier-name">
+                                                <h3 class="courier-text">
+                                                    Sundor Ban
+                                                </h3>
+                                            </div>
+                                            <div class="courier-logo">
+                                                <img src="/static/app/image/sundorban.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- courier content end -->
+
+                                <!-- courier content start -->
+                                <div class="courier-content">
+                                    <form action="">
+                                        <div class="courier-content-row">
+                                            <div class="courier-box">
+                                                <input type="checkbox" id="sundorbon" name="sundorbon" value="sundorBon">
+                                            </div>
+                                            <div class="courier-name">
+                                                <h3 class="courier-text">
+                                                    Sundor Ban
+                                                </h3>
+                                            </div>
+                                            <div class="courier-logo">
+                                                <img src="/static/app/image/sundorban.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- courier content end -->
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="payment-right">
+                        <div class="payment-posi">
+
+                            <div class="payment-right-main">
+                                <div class="ck-pay-btn">
+                                    <button class="pay-btn">Select your address</button>
+                                </div>
+                                <div class="payment-right-title">
+                                    <h1 class="ck-r-t">Shipping & Billing</h1>
+                                </div>
+                                <div class="ck-profile">
+                                    <div class="ck-profile-text">
+                                        <span class="ck-icn"><i class="fa fa-map-marker-alt"></i></span>
+                                        <span class="ck-profile-name">
+                                            Bahadur
+                                        </span>
+                                    </div>
+                                    <div class="ck-profile-edit">
+                                        <a href="#" class="ck-edit">Edit</a>
+                                    </div>
+                                </div>
+                                <div class="ck-all-address">
+                                    <span class="ck-address">sadar, Rajbari Math Joydebpur, Gazipur, Dhaka</span>
+                                </div>
+                                <div class="billing-address">
+                                    <div class="billing-address-tex">
+                                        <span class="billing-icons">
+                                            <i class="fa fa-list-alt"></i>
+                                        </span>
+                                        <span class="billing-text">Bill to the same address</span>
+                                    </div>
+                                    <div class="bill-address-edit">
+                                        <a href="" class="b-address-edit">Edit</a>
+                                    </div>
+                                </div>
+
+                                <div class="phone-address">
+                                    <div class="phone-address-tex">
+                                        <span class="phone-icons">
+                                            <i class="fa fa-phone"></i>
+                                        </span>
+                                        <span class="phone-text">098765432d1</span>
+                                    </div>
+                                    <div class="phone-address-edit">
+                                        <a href="" class="p-address-edit">Edit</a>
+                                    </div>
+                                </div>
+
+                                <div class="email-address">
+                                    <div class="email-address-tex">
+                                        <span class="email-icons">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        <span class="email-text">abc@gmail.com</span>
+                                    </div>
+                                    <div class="email-address-edit">
+                                        <a href="" class="e-address-edit">Edit</a>
+                                    </div>
+                                </div>
+
+                                <div class="order-summery">
+                                    <div class="os-title">
+                                        <h1>Order Summary</h1>
+                                    </div>
+                                    <div class="os-total-section">
+                                        <div class="os-total-text">
+                                            <div class="os-total">
+                                                Subtotal <span class="tottal">(3 Items)</span>
+                                            </div>
+                                        </div>
+                                        <div class="os-tatal-con">
+                                            <span> ৳ 250</span>
+                                        </div>
+                                    </div>
+                                    <div class="os-shipping">
+                                        <div class="os-sipping-text">
+                                            <span>Shipping fee</span>
+                                        </div>
+                                        <div class="shipping-money">
+                                            <span> ৳ 25</span>
+                                        </div>
+                                    </div>
+                                    <div class="total-section">
+                                        <div class="total-text">
+                                            <span>Total:</span>
+                                        </div>
+                                        <div class="total-amount">
+                                            <span class="amount"> ৳ 2500</span>
+                                        </div>
+                                    </div>
+                                    <div id = "PTPayBtn" class="ck-pay-btn">
+                                        <a  href="">
+                                            <button disabled class="pay-btn"> Proceed to pay </button>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block js %}
+    <script src="{% static 'app/js/productPage.js' %}"></script>
+    <script src="{% static 'app/js/paymentPage.js' %}"></script>
+{% endblock js %}

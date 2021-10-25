@@ -104,8 +104,7 @@ def SingleProductView(request, pk):
         "showedProductId" : pk
     }
     return render(request, template_name, context = context)
-   
-
+    
 def AddToCartView(request):
     product_id = request.GET['productid']
     unit = request.GET['unit']
@@ -726,14 +725,8 @@ class AddAddressView(View):
 class OrderView(TemplateView):
     template_name = "app/order.html"
 
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
-
 class CancellationView(TemplateView):
     template_name = "app/cancellation.html"
-
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name)
 
 def Checkout(request):
     newCart = Cart.objects.filter(user = request.user)
@@ -775,7 +768,6 @@ def Checkout(request):
 
     return render(request,'app/checkout.html', context = context)
 
-
 # This function will work when user will click the Edit option on checkout page for changing the shipping address when checking out
 def SelectAddressView(request):
     id = request.GET['adrId']
@@ -801,6 +793,9 @@ def SelectAddressView(request):
         "division" : division
     }
     return JsonResponse(data)
+
+class paymentPageView(TemplateView):
+    template_name = "app/paymentPage.html"
 
 
 
