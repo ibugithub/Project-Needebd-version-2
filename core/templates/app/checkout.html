@@ -2,13 +2,16 @@
 <link rel="stylesheet" href="{% static 'app/css/fontend.css' %}" />
 <link rel="stylesheet" href="{% static 'app/css/adressBook.css' %}" />
 <link rel="stylesheet" href="{% static 'app/css/checkout.css' %}" />
-{% endblock %} {% block extraLink %}
+{% endblock %} 
+
+{% block extraLink %}
 <script
   src="https://kit.fontawesome.com/9bc804fb98.js"
   crossorigin="anonymous"
 ></script>
-{% endblock extraLink %} {% block body %}
+{% endblock extraLink %} 
 
+{% block body %}
 <!-- check out page for pc -->
 <div class="check-out-main">
   <div class="check-out-container">
@@ -173,6 +176,7 @@
                     padding-top: 10px;
                     max-height: 212px;
                     overflow: auto;
+                    padding: 0;
                   "
                   class="address-book-table scroll"
                 >
@@ -187,7 +191,7 @@
                                 <div
                                   style="
                                     text-align: left;
-                                    padding-left: 0px !important;
+                                    padding: 0px !important;
                                   "
                                   class="next-table-cell-wrapper"
                                 >
@@ -198,7 +202,7 @@
                                 <div
                                   style="
                                     text-align: left;
-                                    padding-left: 0px !important;
+                                    padding: 0px !important;
                                   "
                                   class="next-table-cell-wrapper"
                                 >
@@ -563,69 +567,8 @@
 
 {% endblock body %} 
 
-{% block internaljs %}
-<!-- This Script will work on the changing the default address in checkout page on order summery. -->
-<script>
-  let adrEditElm = document.getElementById("adredit");
-  adrEditElm.addEventListener("click", adrEditFunc);
-
-  function adrEditFunc() {
-    document.getElementById("ptp").innerText = "Select your shipping address";
-    let editDiv = document.getElementById("editDiv");
-    let adrDiv = document.getElementById("adrDiv");
-    editDiv.style.display = "none";
-    adrDiv.style.display = "block";
-  }
-  let clickChecker = document.getElementsByClassName("cHK");
-  let len = clickChecker.length;
-  for (let i = 0; i < len; i++) {
-    clickChecker[i].addEventListener("click", function () {
-      addrSelector(this);
-    });
-  }
-
-  function addrSelector(elm) {
-    document.getElementById("ptp").innerText = "Proceed To Pay";
-    let sAdrDiv = document.getElementById("adrDiv");
-    let odrSDiv = document.getElementById("editDiv");
-    let adrId = elm.getAttribute("CAddressId");
-    let checkedBox = document.getElementById("checked");
-    checkedBox.style.display = "none";
-    let circleBox = document.getElementsByClassName("isDefaultClass");
-    let len = circleBox.length;
-    for (let i = 0; i < len; i++) {
-      if (circleBox[i].value == "True") {
-        circleBox[i].style.display = "inline-block";
-      }
-    }
-    $.ajax({
-      type: "GET",
-      url: "/sadrurl",
-      data: {
-        adrId: adrId,
-      },
-      success: function (data) {
-        document.getElementById("shAdrName").innerText = data.name;
-        document.getElementById(
-          "adrWithLocations"
-        ).innerText = `${data.address}, ${data.union}, ${data.upazila},${data.district}, ${data.division}`;
-        console.log();
-      },
-    });
-    sAdrDiv.style.display = "none";
-    odrSDiv.style.display = "block";
-  }
-
-  // when the Checked Icon will be clicked then it will work...
-  document.getElementById("checked").addEventListener("click", function () {
-      console.log("checked item has been clicked")
-      document.getElementById("adrDiv").style.display = "none";
-      document.getElementById("editDiv").style.display = "block";
-    });
-</script>
-{% endblock internaljs %} 
-
 {% block js %}
 <script src="{% static 'app/js/jquery.js' %}"></script>
-<script src="{% static 'app/js/productPage.js' %}"></script>
+<script src = "{% static 'app/js/checkout.js' %}"></script>
+
 {% endblock js %}

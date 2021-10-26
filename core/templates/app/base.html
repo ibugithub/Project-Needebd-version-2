@@ -712,11 +712,14 @@
 
 {% endblock internaljs %}
 
-  {% block js %}
   <!-- Custome js-->
-  <script src="{% static 'app/js/fontend.js' %}"></script>
-  <script src = "{% static 'app/js/singleproduct.js' %}"></script>
+  {% block js %}
+
   {% endblock js %}
+
+  {% block commonjs %} 
+  <script src="{% static 'app/js/common.js' %}"></script>
+  {% endblock commonjs %}
 </body>
 
 </html>

@@ -1,14 +1,3 @@
-// Site Menu Bar
-const navIcon = document.querySelector('.nav_icon')
-const siteCloseBtn = document.querySelector('.site-menu-close-btn')
-const clickBarSiteMenu = document.querySelector('.click-bar-site-menu')
-navIcon.addEventListener('click', function(){
-clickBarSiteMenu.classList.add('click-bar-site-menu-active')
-})
-siteCloseBtn.addEventListener('click',function(){
-    clickBarSiteMenu.classList.remove('click-bar-site-menu-active')
-})
-window.addEventListener('click' , e => e.target == clickBarSiteMenu?clickBarSiteMenu.classList.remove('click-bar-site-menu-active'):false);
 // Slider Section
 const slides =document.querySelector(".slider").children;
 const prev = document.querySelector(".prev");
@@ -83,23 +72,6 @@ function autoPlay(){
 let timer =setInterval(autoPlay,6000);
 // Slider Section End
 
-//Account Bar 
-const accountButton = document.querySelector('.account-subcontainer')
-const accountCloseButton = document.querySelector('.close-account-btn')
-const accountDropDown = document.querySelector('.account-dropdown-main')
-accountButton.addEventListener('click', function(){
-    accountDropDown.classList.add('account-dropdown-main-active')
-})
-accountDropDown.addEventListener('mouseover', function(){
-    accountDropDown.classList.add('account-dropdown-main-active')
-})
-
-accountDropDown.addEventListener('mouseout', function(){
-    accountDropDown.classList.remove('account-dropdown-main-active')
-})
-
-
-
 // countdown section
 function getTimeRemaining(endtime) {
     var t = Date.parse(endtime) - Date.parse(new Date());
@@ -136,3 +108,89 @@ function getTimeRemaining(endtime) {
   }
   var deadline = new Date(Date.parse(new Date()) + 2 * 24 * 60 * 60 * 1000);
   initializeClock('clockdiv', deadline);
+
+
+
+
+// Scrolling the sliding item section1
+  var rightArrow1 = document.getElementById('rightArrow1');
+  var leftArrow1 = document.getElementById('leftArrow1');
+  var content = document.getElementById('movingContent');
+  var position = 0;
+  var innerContent = document.getElementsByClassName('innerContent');
+  var icontainer = document.getElementById("iContainer")
+  var totalContentLength = 0
+  leftArrow1.addEventListener('click', function () {
+    if (position != 0) {
+      let margin = 400
+      position += margin
+      let value = position + "px"
+      content.style.marginLeft = value
+      content.style.transition = "all .2s"
+    }
+  })
+  rightArrow1.addEventListener('click', function () {
+    let len = innerContent.length;
+    var totalContentLength = 0;
+    for (let i = 0; i < len; i++) {
+      var cLength = innerContent[i].clientWidth;
+      totalContentLength += cLength + 13
+    }
+    totalContentLength -= iContainer.clientWidth
+    if (position > -totalContentLength) {
+      let margin = -400
+      position += margin
+      let value = position + "px"
+      content.style.marginLeft = value
+      content.style.transition = "all .2s"
+    } 
+    // for removing the extra white space after getting margin..
+    if (position < -totalContentLength) {
+      let diff = position + totalContentLength
+      let val = position - diff
+      content.style.marginLeft = val + "px"
+      content.style.transition = "all .2s"
+    }
+  })
+
+
+// Scrolling the sliding item section2
+  var rightArrow2 = document.getElementById('rightArrow2');
+  var leftArrow2 = document.getElementById('leftArrow2');
+  var content2 = document.getElementById('movingContent2');
+  var position2 = 0;
+  var innerContent2 = document.getElementsByClassName('innerContent2');
+  var icontainer2 = document.getElementById("iContainer2")
+  var totalContentLength2 = 0
+  leftArrow2.addEventListener('click', function () {
+    if (position2 != 0) {
+      let margin = 400
+      position2 += margin
+      let value = position2 + "px"
+      content2.style.marginLeft = value
+      content2.style.transition = "all .2s"
+    }
+  })
+  rightArrow2.addEventListener('click', function () {
+    let len2 = innerContent2.length;
+    var totalContentLength2 = 0;
+    for (let i = 0; i < len2; i++) {
+      var cLength2 = innerContent2[i].clientWidth;
+      totalContentLength2 += cLength2 + 13
+    }
+    totalContentLength2 -= iContainer2.clientWidth
+    if (position2 > -totalContentLength2) {
+      let margin = -400
+      position2 += margin
+      let value = position2 + "px"
+      content2.style.marginLeft = value
+      content2.style.transition = "all .2s"
+    }
+    if (position2 < -totalContentLength2) {
+      let diff = position2 + totalContentLength2
+      let val = position2 - diff
+      content2.style.marginLeft = val + "px"
+      content2.style.transition = "all .2s"
+    }
+  })
+

@@ -796,6 +796,47 @@ def SelectAddressView(request):
 
 class paymentPageView(TemplateView):
     template_name = "app/paymentPage.html"
+    
+    def get (self, request, *args, **kwargs):
+        newCart = Cart.objects.filter(user = request.user)
+        length = len(newCart)
+        shippingCost = 70
+        subTotal = 0
+        for cart in newCart:
+            subTotal += cart.products_total_cost
+        total = subTotal + shippingCost
+    
+        newProfile = CustomerProfile.objects.get(user = request.user)
+        newAddress = CustomerAddress.objects.filter(user = request.user)
+
+        if  len(newAddress) < 1:
+            return redirect('/abookurl')
+
+        try:
+            defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+        except:
+            return redirect('/aaddressurl')
+        
+        context = {
+            "carts" : newCart,
+            "len" :length,
+            "subTotal" : subTotal,
+            "shippingCost" : shippingCost,
+            "profile" : newProfile,
+            "newaddress" :newAddress,
+            "daddress" : defaultAddress,
+        } 
+        if not request.session["code"] == 'none':
+            # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
+            data = VoucherChecker(request, redirect=True)
+            if data['amount'] != "Nan" and data['discount'] != "Nan":
+                context["totalAmount"] = data['amount']
+                context["discount"] = data['discount']
+        else:
+            context["totalAmount"] = total 
+
+        return render(request,self.template_name, context = context)
+            
 
 
 

@@ -3,7 +3,12 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'app/css/paymentPage.css' %}">
 <link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/checkout.css' %}">
 {% endblock css %}
+
+{% block extraLink %}
+<script src="https://kit.fontawesome.com/9bc804fb98.js" crossorigin="anonymous"></script>
+{% endblock extraLink %}
 
 
 {% block body %}
@@ -74,13 +79,16 @@
                             <div class="courier-title">
                                 <h3>choose your courier</h3>
                             </div>
+
+                            <div style="color: red;" id="curierSelectionError"></div>
+
                             <!-- courier content start -->
                             <form action="">
                                 <div class="courier-content">
 
                                     <div class="courier-content-row">
                                         <div class="courier-box">
-                                            <input type="checkbox"  class="curier" name="curier" value="sundorBon">
+                                            <input type="checkbox" class="curier" name="curier" value="sundorBon">
                                         </div>
                                         <div class="courier-name">
                                             <h3 class="courier-text">
@@ -138,68 +146,121 @@
                         </div>
                     </div>
 
-
                 </div>
 
-                <div class="payment-right">
-                    <div class="payment-posi">
-
-                        <div class="payment-right-main">
+                <div class="check-out-right">
+                    <div class="check-out-posi">
+                        <div class="check-out-right-main">
                             <div class="ck-pay-btn">
-                                <button class="pay-btn">Select your address</button>
-                            </div>
-                            <div class="payment-right-title">
-                                <h1 class="ck-r-t">Shipping & Billing</h1>
-                            </div>
-                            <div class="ck-profile">
-                                <div class="ck-profile-text">
-                                    <span class="ck-icn"><i class="fa fa-map-marker-alt"></i></span>
-                                    <span class="ck-profile-name">
-                                        Bahadur
-                                    </span>
-                                </div>
-                                <div class="ck-profile-edit">
-                                    <a href="#" class="ck-edit">Edit</a>
-                                </div>
-                            </div>
-                            <div class="ck-all-address">
-                                <span class="ck-address">sadar, Rajbari Math Joydebpur, Gazipur, Dhaka</span>
-                            </div>
-                            <div class="billing-address">
-                                <div class="billing-address-tex">
-                                    <span class="billing-icons">
-                                        <i class="fa fa-list-alt"></i>
-                                    </span>
-                                    <span class="billing-text">Bill to the same address</span>
-                                </div>
-                                <div class="bill-address-edit">
-                                    <a href="" class="b-address-edit">Edit</a>
-                                </div>
+                                <button id="ptp" class="pay-btn">Select your address</button>
                             </div>
 
-                            <div class="phone-address">
-                                <div class="phone-address-tex">
-                                    <span class="phone-icons">
-                                        <i class="fa fa-phone"></i>
-                                    </span>
-                                    <span class="phone-text">098765432d1</span>
+                            <!-- Editing Area -->
+                            <div id="editDiv">
+                                <div class="check-out-right-title">
+                                    <h1 class="ck-r-t">Shipping & Billing</h1>
                                 </div>
-                                <div class="phone-address-edit">
-                                    <a href="" class="p-address-edit">Edit</a>
+                                <div class="ck-profile">
+                                    <div class="ck-profile-text">
+                                        <span class="ck-icn"><i class="fa fa-map-marker-alt"></i></span>
+                                        <span id="shAdrName" class="ck-profile-name">
+                                            {{daddress.full_name}}
+                                        </span>
+                                    </div>
+                                    <div class="ck-profile-edit">
+                                        <a href="#" id="adredit" class="ck-edit">Edit</a>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="ck-all-address">
+                                    <span id="adrWithLocations" class="ck-address">{{daddress.address}},
+                                        {{daddress.unions}},
+                                        {{daddress.upazilas}}, {{daddress.districts}},
+                                        {{daddress.divisions}}</span>
+                                </div>
 
-                            <div class="email-address">
-                                <div class="email-address-tex">
-                                    <span class="email-icons">
-                                        <i class="fa fa-envelope"></i>
-                                    </span>
-                                    <span class="email-text">abc@gmail.com</span>
+                                <div class="email-address">
+                                    <div class="email-address-tex">
+                                        <span class="email-icons">
+                                            <i class="fa fa-envelope"></i>
+                                        </span>
+                                        <span class="email-text">{{profile.email}}</span>
+                                    </div>
                                 </div>
-                                <div class="email-address-edit">
-                                    <a href="" class="e-address-edit">Edit</a>
+
+                                <div class="phone-address">
+                                    <div class="phone-address-tex">
+                                        <span class="phone-icons">
+                                            <i class="fa fa-phone"></i>
+                                        </span>
+                                        <span class="phone-text">{{profile.phone_number}}</span>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Editing Area -->
+
+                            <!--hidden address changer.. -->
+                            <div id="adrDiv" style="display: none" class="address-book">
+                                <div style="
+                              min-height: auto;
+                              padding-top: 10px;
+                              max-height: 212px;
+                              overflow: auto;
+                            " class="address-book-table scroll">
+                                    <div class="next-table">
+                                        <div class="next-table-inner">
+                                            <div class="next-table-body">
+                                                <table style="font-size: 13px; width: 100%;">
+                                                         {% for address in newaddress %}
+                                                    <tbody>
+                                                        <tr class="next-table-row">
+                                                            <td class="next-table-cell">
+                                                                <div style="
+                                                        text-align: left;
+                                                        padding: 0px !important;
+                                                        margin-bottom: 10px;
+                                                        " class="next-table-cell-wrapper">
+                                                                    {{address.full_name}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="next-table-cell">
+                                                                <div style="
+                                              text-align: left;
+                                              padding: 0px !important;
+                                              margin-bottom: 10px;
+                                            " class="next-table-cell-wrapper">
+                                                                    {{address.address}}
+                                                                </div>
+                                                            </td>
+                                                            <td style="width: 10%" class="next-table-cell">
+                                                                <div class="next-table-cell-wrapper">
+                                                                    {% if address.isDefault == True %}
+                                                                    <i style="color: #eb6529" id="checked"
+                                                                        class="fas fa-check-circle"></i>
+                                                                    <input style="display: none" name="isDefaultName"
+                                                                        CAddressId="{{address.id}}" type="radio"
+                                                                        class="isDefaultClass cHK"
+                                                                        value="{{address.isDefault}}" />
+                                                                    {% else %}
+
+                                                                    <input id="circlebox" name="isDefaultName"
+                                                                        CAddressId="{{address.id}}" type="radio"
+                                                                        class="isDefaultClass cHK"
+                                                                        value="{{address.isDefault}}" />
+                                                                    {% endif %}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    {% endfor %}
+                                                
+                                                   
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--hidden address changer.. -->
 
                             <div class="order-summery">
                                 <div class="os-title">
@@ -208,19 +269,29 @@
                                 <div class="os-total-section">
                                     <div class="os-total-text">
                                         <div class="os-total">
-                                            Subtotal <span class="tottal">(3 Items)</span>
+                                            Subtotal <span class="tottal">({{len}} items)</span>
                                         </div>
                                     </div>
                                     <div class="os-tatal-con">
-                                        <span> ৳ 250</span>
+                                        <span> ৳ {{subTotal}}</span>
                                     </div>
                                 </div>
+                                {% if discount %}
+                                <div class="os-shipping">
+                                    <div class="os-sipping-text">
+                                        <span>Coupon or voucher</span>
+                                    </div>
+                                    <div class="shipping-money">
+                                        <span> ৳ - {{discount}}</span>
+                                    </div>
+                                </div>
+                                {% endif %}
                                 <div class="os-shipping">
                                     <div class="os-sipping-text">
                                         <span>Shipping fee</span>
                                     </div>
                                     <div class="shipping-money">
-                                        <span> ৳ 25</span>
+                                        <span> ৳ {{shippingCost}}</span>
                                     </div>
                                 </div>
                                 <div class="total-section">
@@ -228,12 +299,12 @@
                                         <span>Total:</span>
                                     </div>
                                     <div class="total-amount">
-                                        <span class="amount"> ৳ 2500</span>
+                                        <span class="amount"> ৳ {{totalAmount}}</span>
                                     </div>
                                 </div>
                                 <div class="ck-pay-btn">
                                     <a href="">
-                                        <button id="PTPayBtn" class="pay-btn"> Proceed to pay </button>
+                                        <button id="PTPayBtn" class="pay-btn">Proceed to pay</button>
                                     </a>
 
                                 </div>
@@ -241,6 +312,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -248,6 +320,7 @@
 {% endblock body %}
 
 {% block js %}
-<script src="{% static 'app/js/productPage.js' %}"></script>
+<script src="{% static 'app/js/jquery.js' %}"></script>
 <script src="{% static 'app/js/paymentPage.js' %}"></script>
+<script src="{% static 'app/js/checkout.js' %}"></script>
 {% endblock js %}

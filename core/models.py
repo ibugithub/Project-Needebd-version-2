@@ -142,7 +142,7 @@ class Cart(models.Model):
         # Keeping the Liter and Kg the unit of weight.....
             elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
                 converted_amount = self.unit_amount
-            Total_Cost = self.quantity * self.product.discounted_prize * converted_amount     
+            Total_Cost = round(self.quantity * self.product.discounted_prize * converted_amount)  
         # For the products which doesn't have the extra unit option....
         if self.product.unit == "ClothSize" or self.product.unit == "Packet" or self.product.unit == "ShoeSize":
             Total_Cost = self.quantity * self.product.discounted_prize
