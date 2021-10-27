@@ -31,4 +31,5 @@ urlpatterns = [
     path('checkouturl/', views.Checkout, name = "checkouturlname"),
     path('sadrurl/', views.SelectAddressView, name = "sadrurlname"),
     path('paymentpageurl/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
+    url(r'^buynow/(?P<pk>\d+)$', views.Buynow, name = "buynowurlname")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

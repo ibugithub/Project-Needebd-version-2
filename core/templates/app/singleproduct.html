@@ -28,7 +28,7 @@
                     </button>
                   </div>
                   <div class="buy-cart-btn">
-                    <a href="" class="buy-btn">buy now</a>
+                    <a href="{% url 'buynowurlname' product.id %}" class="buy-btn">buy now</a>
                   </div>
                 </div>
               </div>
@@ -39,7 +39,7 @@
           <div class="single-product-cart-details">
             <div class="single-product-cart-title">
               <h1>
-                Wage Universal Wired Gaming Headset - Black/Blue (WMANY-N116)
+                {{product.title}}
               </h1>
             </div>
 

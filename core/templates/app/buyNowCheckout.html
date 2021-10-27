@@ -1,0 +1,567 @@
+{% extends 'app/base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'app/css/buynowcheckout.css' %}" />
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}" />
+<link rel="stylesheet" href="{% static 'app/css/adressBook.css' %}" />
+<link rel="stylesheet" href="{% static 'app/css/checkout.css' %}" />
+<link rel="stylesheet" href="{% static 'app/css/cart.css' %}" />
+
+{% endblock %}
+
+{% block extraLink %}
+<script src="https://kit.fontawesome.com/9bc804fb98.js" crossorigin="anonymous"></script>
+{% endblock extraLink %}
+
+{% block body %}
+<!-- check out page for pc -->
+<div class="check-out-main">
+  <div class="check-out-container">
+    <div class="check-out-section">
+      <div class="check-out-row">
+        <div id = "buyNowLeft" class="check-out-left">
+          <div class="checkout-header">
+            <div class="checkout-header-row">
+              <div class="checkout-items">
+                <span>Items: 1 </span>
+              </div>
+              <div class="checkout-price">
+                <span>Price</span>
+              </div>
+              <div class="checkout-quantity">
+                <span>Quantity</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- product-start -->
+          <div class="check-out-left-container">
+            <div class="checkout-content-section">
+              <div class="checkout-package">
+                <div class="package-left">
+                  <span>package {{forloop.counter}} of {{len}}</span>
+                </div>
+                <div class="package-right">
+                  <span class="package-by"> shipped by : </span>
+                  <span class="package-brand-name"> bata shop </span>
+                </div>
+              </div>
+              <div class="checkout-content">
+                <div class="checkout-head">
+                  <span>checkout option</span>
+                </div>
+
+                <div class="checkout-items-r">
+                  <div class="checkout-items-row">
+                    <div class="ck-product">
+                      <div class="ck-product-details">
+                        <div class="ck-product-img">
+                          <img src="{{product.product_image.url}}" alt="" />
+                        </div>
+                        <div class="ck-product-title">
+                          <div class="ck-title">
+                            <h2>{{product.title}}</h2>
+                          </div>
+                          <div class="ck-details">
+                            <span class="brand-name">audi brand</span>
+                            {% if cart.size %}
+                            <span class="ck-size-text">size: {{cart.size}}</span>
+                            {% endif %} {% if cart.color %}
+                            <span class="ck-color-text">Color:{{cart.color}}</span>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="checkout-middle">
+                      <div class="ck-product-price">
+                        <span>{{product.selling_prize}}</span>
+                      </div>
+
+                      <div class="ck-free-percent">
+                        <span>-{{product.discount}}%</span>
+                      </div>
+
+                      <div class="ck-product-main-price">
+                        <span>৳ {{product.discounted_prize}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="ck-checkout-right">
+                      <div class="ck-qun">
+                        <span  class="qun-text">Qty: <span id = "quantityRight"> 1 </span> </span>
+                      </div>
+                      <div>
+                        <span style="text-decoration: line-through">cost: {{cart.products_total_selling_cost}}</span>
+                      </div>
+                      <div>cost: {{cart.products_total_cost}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-to-cart-d-btn">
+                  <div class="cart-d-p-btn">
+                    <button  onclick="MinusCart(this)" prod={{cart.product.id}}
+                      size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
+                    </button>
+                    <div class="cart-d-input">
+
+                      <input id = "quantityValue" type="text" class="cart-d-rp" value="1">
+
+                    </div>
+
+                    <button  onclick="PlusCart(this)" prod={{cart.product.id}} size={{cart.size}}
+                      unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-add"> + </button>
+
+                  </div>
+                  <div class="cart-save-remove">
+                    <div class="cart-d-save">
+                      save for later
+                    </div>
+                    <div prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
+                      unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin: 0;" class="checkout-package ">
+               
+              </div>
+            </div>
+          </div>
+          <!-- product-end -->
+        </div>
+        <div class="check-out-right">
+          <div class="check-out-posi">
+            <div class="check-out-right-main">
+              <div class="ck-pay-btn">
+                <button id="ptp" class="pay-btn">Select your address</button>
+              </div>
+
+              <!-- Editing Area -->
+              <div id="editDiv">
+                <div class="check-out-right-title">
+                  <h1 class="ck-r-t">Shipping & Billing</h1>
+                </div>
+                <div class="ck-profile">
+                  <div class="ck-profile-text">
+                    <span class="ck-icn"><i class="fa fa-map-marker-alt"></i></span>
+                    <span id="shAdrName" class="ck-profile-name">
+                      {{daddress.full_name}}
+                    </span>
+                  </div>
+                  <div class="ck-profile-edit">
+                    <a href="#" id="adredit" class="ck-edit">Edit</a>
+                  </div>
+                </div>
+                <div class="ck-all-address">
+                  <span id="adrWithLocations" class="ck-address">{{daddress.address}}, {{daddress.unions}},
+                    {{daddress.upazilas}}, {{daddress.districts}},
+                    {{daddress.divisions}}</span>
+                </div>
+
+                <div class="email-address">
+                  <div class="email-address-tex">
+                    <span class="email-icons">
+                      <i class="fa fa-envelope"></i>
+                    </span>
+                    <span class="email-text">{{profile.email}}</span>
+                  </div>
+                </div>
+
+                <div class="phone-address">
+                  <div class="phone-address-tex">
+                    <span class="phone-icons">
+                      <i class="fa fa-phone"></i>
+                    </span>
+                    <span class="phone-text">{{profile.phone_number}}</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Editing Area -->
+
+              <!--hidden address changer.. -->
+              <div id="adrDiv" style="display: none" class="address-book">
+                <div style="
+                    min-height: auto;
+                    padding-top: 10px;
+                    max-height: 212px;
+                    overflow: auto;
+                    padding: 0;
+                  " class="address-book-table scroll">
+                  <div class="next-table">
+                    <div class="next-table-inner">
+                      <div class="next-table-body">
+                        <table style="font-size: 13px">
+                          {% for address in newaddress %}
+                          <tbody>
+                            <tr class="next-table-row">
+                              <td class="next-table-cell">
+                                <div style="
+                                    text-align: left;
+                                    padding: 0px !important;
+                                  " class="next-table-cell-wrapper">
+                                  {{address.full_name}}
+                                </div>
+                              </td>
+                              <td class="next-table-cell">
+                                <div style="
+                                    text-align: left;
+                                    padding: 0px !important;
+                                  " class="next-table-cell-wrapper">
+                                  {{address.address}}
+                                </div>
+                              </td>
+                              <td style="width: 10%" class="next-table-cell">
+                                <div class="next-table-cell-wrapper">
+                                  {% if address.isDefault == True %}
+                                  <i style="color: #eb6529" id="checked" class="fas fa-check-circle"></i>
+                                  <input style="display: none" name="isDefaultName" CAddressId="{{address.id}}"
+                                    type="radio" class="isDefaultClass cHK" value="{{address.isDefault}}" />
+                                  {% else %}
+
+                                  <input id="circlebox" name="isDefaultName" CAddressId="{{address.id}}" type="radio"
+                                    class="isDefaultClass cHK" value="{{address.isDefault}}" />
+                                  {% endif %}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                          {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--hidden address changer.. -->
+
+              <div class="order-summery">
+                <div class="os-title">
+                  <h1>Order Summary</h1>
+                </div>
+                <div class="os-total-section">
+                  <div class="os-total-text">
+                    <div class="os-total">
+                      Subtotal <span class="tottal">({{len}} items)</span>
+                    </div>
+                  </div>
+                  <div class="os-tatal-con">
+                    <span> ৳ {{subTotal}}</span>
+                  </div>
+                </div>
+                {% if discount %}
+                <div class="os-shipping">
+                  <div class="os-sipping-text">
+                    <span>Coupon or voucher</span>
+                  </div>
+                  <div class="shipping-money">
+                    <span> ৳ - {{discount}}</span>
+                  </div>
+                </div>
+                {% endif %}
+                <div class="os-shipping">
+                  <div class="os-sipping-text">
+                    <span>Shipping fee</span>
+                  </div>
+                  <div class="shipping-money">
+                    <span> ৳ {{shippingCost}}</span>
+                  </div>
+                </div>
+                <div class="total-section">
+                  <div class="total-text">
+                    <span>Total:</span>
+                  </div>
+                  <div class="total-amount">
+                    <span class="amount"> ৳ {{totalAmount}}</span>
+                  </div>
+                </div>
+
+
+                <div id='couponApply' style="display: none;" class="card ">
+                  <div class="card-body">
+                    <div id="titleCont">
+                      <div id="title"><small class="text-muted">Apply your coupon here</small></div>
+                      <div id="cancelIcon"><i class="far fa-times-circle"></i></div>
+                    </div>
+                    <span id="coupon_selector" style="color:red"></span>
+                    <input class="form-control" style="color:gray" type="text" name="code" id="code">
+                    <div class="buttons">
+                      <button class="coupon btn btn-sm btn-outline-primary mt-3" id="apply">Apply</button>
+                    </div>
+
+
+                  </div>
+                </div>
+                <span id="hacoupon">have any coupon or voucher?</span>
+                <div class="ck-pay-btn">
+                  <a href="{% url 'paymentpageurlname' %}">
+                    <button class="pay-btn">Proceed to pay</button>
+                  </a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- checkout page for phone -->
+<div class="phone-checkout-section">
+  <div class="phone-checkout-container">
+    <div class="ph-checkout-title">
+      <span class="ph-left">
+        <a href="/templates/app/cartPage.html">
+          <i class="fa fa-arrow-left"></i>
+        </a>
+      </span>
+      <span class="ph-title">Checkout</span>
+    </div>
+    <div class="phone-checkout-address">
+      <div class="ph-checkout-address-information">
+        <div class="ph-name-text">
+          <div class="ph-name">
+            <span class="name-icons"><i class="fa fa-map-marker-alt"></i></span>
+            <span class="name-text">Bahadur</span>
+          </div>
+          <div class="ph-edit">
+            <span><a href="#">Edit</a></span>
+          </div>
+        </div>
+        <div class="phone-address-details">
+          <span class="ph-ad-text">sadar, Rajbari Math Joydebpur, Gazipur, Dhaka</span>
+        </div>
+        <div class="phone-bill-address">
+          <div class="phone-bill-left">
+            <span class="bil-icons">
+              <i class="fa fa-list-alt"></i>
+            </span>
+            <span class="bill-text">Bill to the same address</span>
+          </div>
+          <div class="phone-bill-right">
+            <span class="edit-text">
+              <a href="#">Edit</a>
+            </span>
+          </div>
+        </div>
+        <div class="ch-phone-address">
+          <div class="phone-address-left">
+            <span class="phone-d-icons">
+              <i class="fas fa-phone"></i>
+            </span>
+            <span class="phone-d-name">Phone</span>
+          </div>
+          <div class="phone-address-right">
+            <span class="phone-d-edit"><a href="">Edit</a></span>
+          </div>
+        </div>
+        <div class="phone-email-address">
+          <div class="phone-email-left">
+            <span class="phone-email-icons">
+              <i class="fa fa-envelope"></i>
+            </span>
+            <span class="phone-email-text">Email</span>
+          </div>
+          <div class="phone-email-right">
+            <span class="phone-email-edit"><a href="#">Edit</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-checkout-product-section">
+      <div class="phone-checkout-product-section">
+        <div class="phone-package-system">
+          <div class="phone-package">
+            <span class="package-icons"><i class="fa fa-box"></i></span>
+            <span class="package-text">Package 1 0f 1</span>
+          </div>
+          <div class="phone-shipped">
+            <span class="shipped-text">Shipped by</span>
+            <span class="shipped-name">Bahadur</span>
+          </div>
+        </div>
+        <div class="phone-delivery-option">
+          <div class="phd-title">
+            <span>Delivery option</span>
+          </div>
+          <div class="phone-delivery-box">
+            <div class="phd-box-content">
+              <div class="box-content">
+                <span class="bc-icons"><i class="fa fa-check"></i></span>
+                <span class="bc-delivery-amount">৳ 250</span>
+              </div>
+              <div class="box-content-text">
+                <div class="bc-delivery-type">Home delivery</div>
+                <div class="bc-delivery-time">
+                  <span class="delivery-time-text">Est. Arrival:</span>
+                  <span class="delivery-time"> 15-10 nov </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-checkout-product">
+      <!-- product-start -->
+      <div class="phone-checkout-product-container">
+        <div class="phone-checkout-product-img-section">
+          <div class="phc-product-img">
+            <img src="/static/app/image/procut-5.webp" alt="" />
+          </div>
+        </div>
+        <div class="phc-product-details">
+          <div class="phc-product-title">
+            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
+          </div>
+          <div class="phc-product-all">
+            <div class="phc-brand">
+              <span class="phc-brand-name">NO</span>
+              <span class="phc-brand-text">Brand</span>
+            </div>
+            <div class="phc-color">
+              <span class="phc-color-text">Color Family</span>
+              <span class="phc-color-name">red</span>
+            </div>
+          </div>
+          <div class="phone-product-btm">
+            <div class="phone-price-section">
+              <div class="php-price">৳ 75</div>
+              <div class="php-price-frr">
+                <span class="rtbp"> ৳ 150</span>
+                <span class="pccc">-50%</span>
+              </div>
+            </div>
+            <div class="phone-product-quantity">
+              <span class="pp-quantity-text">Qty: </span>
+              <span class="pp-quantity">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- product-end -->
+
+      <!-- product-start -->
+      <div class="phone-checkout-product-container">
+        <div class="phone-checkout-product-img-section">
+          <div class="phc-product-img">
+            <img src="/static/app/image/procut-5.webp" alt="" />
+          </div>
+        </div>
+        <div class="phc-product-details">
+          <div class="phc-product-title">
+            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
+          </div>
+          <div class="phc-product-all">
+            <div class="phc-brand">
+              <span class="phc-brand-name">NO</span>
+              <span class="phc-brand-text">Brand</span>
+            </div>
+            <div class="phc-color">
+              <span class="phc-color-text">Color Family</span>
+              <span class="phc-color-name">red</span>
+            </div>
+          </div>
+          <div class="phone-product-btm">
+            <div class="phone-price-section">
+              <div class="php-price">৳ 75</div>
+              <div class="php-price-frr">
+                <span class="rtbp"> ৳ 150</span>
+                <span class="pccc">-50%</span>
+              </div>
+            </div>
+            <div class="phone-product-quantity">
+              <span class="pp-quantity-text">Qty: </span>
+              <span class="pp-quantity">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- product-end -->
+      <!-- product-start -->
+      <div class="phone-checkout-product-container">
+        <div class="phone-checkout-product-img-section">
+          <div class="phc-product-img">
+            <img src="/static/app/image/procut-5.webp" alt="" />
+          </div>
+        </div>
+        <div class="phc-product-details">
+          <div class="phc-product-title">
+            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
+          </div>
+          <div class="phc-product-all">
+            <div class="phc-brand">
+              <span class="phc-brand-name">NO</span>
+              <span class="phc-brand-text">Brand</span>
+            </div>
+            <div class="phc-color">
+              <span class="phc-color-text">Color Family</span>
+              <span class="phc-color-name">red</span>
+            </div>
+          </div>
+          <div class="phone-product-btm">
+            <div class="phone-price-section">
+              <div class="php-price">৳ 75</div>
+              <div class="php-price-frr">
+                <span class="rtbp"> ৳ 150</span>
+                <span class="pccc">-50%</span>
+              </div>
+            </div>
+            <div class="phone-product-quantity">
+              <span class="pp-quantity-text">Qty: </span>
+              <span class="pp-quantity">5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- product-end -->
+
+      <div class="phone-checkout-total">
+        <div class="phn-subtotal">
+          <div class="phone-subtotal-text">
+            <span class="sub-text">Subtotal</span>
+            <span class="sub-total-items">(2 items)</span>
+          </div>
+          <div class="sub-total-amaount">
+            <span class="sub-amaount"> ৳ 150</span>
+          </div>
+        </div>
+        <div class="phone-shipping-fee">
+          <div class="phn-shipping-text">
+            <span>Shipping fee</span>
+          </div>
+          <div class="phone-shipping-amaount">
+            <span class="ph-amaount"> ৳ 150</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="phone-checkout-btn-section">
+  <div class="phone-checkout-btn-container">
+    <div class="phone-checkout-btn-row">
+      <div class="phn-checkout-btn-total">
+        <div class="pcb-total">
+          <span class="pcb-total-text">Total:</span>
+          <span class="pcb-total-amaount">৳ 150</span>
+        </div>
+        <div class="phone-vat">
+          <span class="vat-text"> VAT included,where applicable </span>
+        </div>
+      </div>
+      <div class="phone-checkout-btn">
+        <a href="#" class="ph-btn">Proceed to pay</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script src="{% static 'app/js/jquery.js' %}"></script>
+<script src="{% static 'app/js/BNCheckout.js' %}"></script>
+{% endblock js %}

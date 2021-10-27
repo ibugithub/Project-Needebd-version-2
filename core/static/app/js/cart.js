@@ -1,5 +1,8 @@
 function PlusCart(element)
-{ 
+{   var quantityElm = element.parentNode.children[1].children[0];
+    quantityValue = parseInt(quantityElm.value) + 1;
+    quantityElm.value = quantityValue;
+    quantityElm.innerHTML = quantityValue;
     var prod_id = element.getAttribute('prod').toString()
     var c = element.getAttribute('flc')
     var tcid = ("tc"+c)
@@ -18,9 +21,8 @@ function PlusCart(element)
             size : element.getAttribute('size')
 
         },
-        success: function(data){
-            var quantityElm = element.parentNode.children[1].children[0]        
-            quantityElm.value  = data.quantity
+        success: function(data){        
+            // quantityElm.value  = data.quantity
             tProdCostElm.innerHTML = data.products_total_cost
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             disCountDom.innerHTML = data.Total_discount
@@ -38,6 +40,9 @@ function MinusCart(element)
     var tcid = ("tc"+c)
     var tProdCostElm = document.getElementById(tcid)
     var quantityElm = element.parentNode.children[1].children[0]
+    quantityValue = parseInt(quantityElm.value) - 1
+    quantityElm.value = quantityValue
+    quantityElm.innerHTML = quantityValue
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var itemCounterDom = document.getElementById('ItemCountDom')
     var disCountDom  = document.getElementById("discountDom")
@@ -59,7 +64,7 @@ function MinusCart(element)
                 var cartItemCount = document.getElementById('count')
                 cartItemCount.innerHTML = data.cartCount
             }
-            quantityElm.value  = data.quantity
+            // quantityElm.value  = data.quantity
             tProdCostElm.innerHTML = data.products_total_cost          
             itemCounterDom.innerHTML  = data.Item
             disCountDom.innerHTML = data.Total_discount  

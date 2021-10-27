@@ -228,7 +228,6 @@ def PlusCartView(request):
             'Total_Cost': Total_Cost,
             'Total_discount': Total_discount
         }
-
         return JsonResponse(data)
 
 def MinusCartView(request):
@@ -793,6 +792,13 @@ def SelectAddressView(request):
         "division" : division
     }
     return JsonResponse(data)
+
+def Buynow(request, pk):
+    newproduct = Product.objects.get(id = pk)
+    context = {
+        "product" : newproduct
+    }
+    return render(request, 'app/buyNowCheckout.html',context = context)
 
 class paymentPageView(TemplateView):
     template_name = "app/paymentPage.html"
