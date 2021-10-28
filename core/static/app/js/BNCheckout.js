@@ -10,10 +10,11 @@ document.getElementById('cancelIcon').addEventListener('click', function(){
 })
 
 
-// for increase or decrease the quantity of product......
+// for increase or decrease the quantity of product........
 var quantity = document.getElementById('quantityValue')
 var buyNowLeft = document.getElementById('buyNowLeft')
 var quantityRightElm = document.getElementById("quantityRight")
+
 function PlusCart(elm){
     quantityValue = parseInt(quantity.value ) + 1
     quantity.value = quantityValue
@@ -32,12 +33,10 @@ function MinusCart(elm){
     quantityRightElm.innerHTML = quantityRightValue;
     if (quantityRightValue == 0)
     {   
-
         buyNowLeft.style.visibility = "hidden"
     }
-
-
 }
+
 
 function RemoveCart(elm) {
     buyNowLeft.style.visibility = 'hidden'

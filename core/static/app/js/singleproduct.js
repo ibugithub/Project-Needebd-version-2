@@ -96,6 +96,7 @@ function addToPreview(elem){
 
 
 // controling the unit size etc
+// this function will take the unit amount and size of the product and send it to the backend
 function addToCart(element){
   let prod_id = element.getAttribute('prod')
   try {
@@ -131,18 +132,21 @@ function addToCart(element){
       }
   })
 }
-
+ 
+// This function will Show the different unit and size on the fontend according to the product 
 function fput() {
   let emptydiv = document.getElementById("EmptyDiv");
   let UnitType = emptydiv.getAttribute("unit");
 
   let ClothObj = ` <div class="color-size">
+    <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
       <div class="p-size">
         <div class="p-size-text">
           <span >Size:</span>
         </div>
         <div class="size-button">
-          <select  id = "size" class="size-button-btn" name = "unit">
+          <select onchange = "uAmountCk()"  id = "size" class="size-button-btn" name = "unit">
+          <option value = "select">Select</option>
             <option value = "small">Small</option>
             <option value = "medium">Medium</option>
             <option value = "large"> Large </option>
@@ -152,12 +156,14 @@ function fput() {
     </div>`;
 
   let ClothPicesObj = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
         <div class="p-size">
           <div class="p-size-text">
             <span >Unit:</span>
           </div>
           <div class="size-button">
-            <select  id = "unit" class="size-button-btn" name = "unit">
+            <select  id = "unit" onchange = "uAmountCk()" class="size-button-btn" name = "unit">
+              <option value = "select">Select</option>
               <option value = "SqureMeter"> Squre Meter </option>
               <option value = "SqureYeard"> Squre Yeard </option>             
             </select>
@@ -172,12 +178,14 @@ function fput() {
     </div>`;
 
   let KgUnit = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
     <div class="p-size-text">
       <span >Weight:</span>
     </div>
     <div class="size-button">
-      <select  id = "unit" class="size-button-btn" name = "unit">
+      <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
+        <option value = "select">Select</option>
         <option value = "Kg"> Kg </option>
         <option value = "Gram"> Gram </option>
         <option value = "Pound"> Pound </option>
@@ -192,12 +200,14 @@ function fput() {
   </div>`;
 
   let LiterUnit = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
     <div class="p-size-text">
       <span >Weight:</span>
     </div>
     <div class="size-button">
-      <select  id = "unit" class="size-button-btn" name = "unit">
+      <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
+        <option value = "select">Select</option>
         <option value = "Liter"> Liter </option>
         <option value = "MiliLiter"> Mili Liter </option>
       </select> <br> 
@@ -211,12 +221,14 @@ function fput() {
   </div>`;
 
   let ShoeSizeUnit = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > select the unit </span> </div>
   <div class="p-size">
     <div class="p-size-text">
       <span >Size:</span>
     </div>
     <div class="size-button">
-      <select  id = "size" class="size-button-btn" name = "unit">
+      <select  id = "size" onchange = "uAmountCk()" class="size-button-btn" name = "unit">
+      <option value = "select">Select</option>
         <option value = "41">41</option>
         <option value = "42">42</option>
         <option value = "43"> 43 </option>
@@ -239,28 +251,124 @@ function fput() {
   } else if (UnitType == "ShoeSize") {
     emptydiv.innerHTML += ShoeSizeUnit
   }
-
 }
 
-try{
-  aTCBtn = document.getElementById('aTCButton')
+aTCBtn = document.getElementById('aTCButton')
+buyNowBTN = document.getElementById('buyNowBTN')
+buyNowa = document.getElementById('buyNowa')
 aTCBtn.addEventListener("mouseover", uAmountCk)
-}
-catch{}
+buyNowBTN.addEventListener("mouseover", uAmountCk)
 
+// This function will prevent clicking the 'add to cart' and 'buynow' button if not you select the unit amount
 function uAmountCk() {
+  var STNAlert = document.getElementById('sAlert')
+  var unitAlertElm = document.getElementById('unitAlert')
+
+  // This try is for The product of having kg and liter unit and clothAreasize unit
   try {
-  unitAmount = document.getElementById('unitAmount').value
-  STNAlert = document.getElementById('sAlert')
-  if (unitAmount != " " && unitAmount > 0) {
-    aTCBtn.style.cursor = "pointer";
-    aTCBtn.disabled = false;
-    STNAlert.style.display = "none"
-  } else {
-    aTCBtn.style.cursor = "not-allowed";
-    aTCBtn.disabled = true;
-    STNAlert.style.display = "block"
+  var unitAmount = document.getElementById('unitAmount').value;
+  var unitType = document.getElementById("unit").value;
   }
+  catch{
+  var unitAmount = 'none'
+  var unitType = "none"
   }
-  catch{}
-}
+
+  if (unitAmount != "none" && unitType != "none") {
+    if(unitType == 'select'){
+    console.log("select the unit")
+    unitAlertElm.style.display = "block"
+    }
+
+    else{
+      unitAlertElm.style.display = "none"
+    }
+  
+    if(unitAmount == "" || unitAmount < 1)
+    {
+      console.log("select the  amount")
+      STNAlert.style.display = "block"
+    }
+    else{
+      STNAlert.style.display = "none"
+    }
+  }
+
+  //This section will work for the product having the unit of size......
+  try{
+    var sizeElm = document.getElementById('size').value
+  }
+  catch{
+    var sizeElm = 'none'
+  }
+  
+  if (sizeElm != 'none'){
+    if (sizeElm == 'select'){
+    unitAlertElm.style.display = "block"
+    }
+    else{
+      unitAlertElm.style.display = "none"
+    }
+  }
+  
+  }
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // var STNAlert = document.getElementById('sAlert')
+  // var unitAlertElm = document.getElementById('unitAlert')
+  // console.log(unitAmount)
+  // console.log(unitType)
+
+
+  // if (unitAmount != "" && unitAmount > 0 && unitType != "select") {
+  //   aTCBtn.style.cursor = "pointer";
+  //   aTCBtn.disabled = false;
+  //   buyNowBTN.style.cursor = "pointer";
+  //   buyNowBTN.disabled = false;
+  //   STNAlert.style.display = "none";
+  // } 
+  // else
+  // {
+  //   aTCBtn.style.cursor = "not-allowed";
+  //   aTCBtn.disabled = true;
+  //   buyNowBTN.style.cursor = "not-allowed";
+  //   buyNowBTN.disabled = true;
+  //   STNAlert.style.display = "block";
+  // }
+  
+ 
+
+
+
+    // This try is for The product of having kg and liter unit
+  // try {
+  //   let size = document.getElementById('size').value
+  //   console.log(size)
+  //   STNAlert = document.getElementById('sAlert')
+  //   if (size != 'select') {
+  //     aTCBtn.style.cursor = "pointer";
+  //     aTCBtn.disabled = false;
+  //     buyNowBTN.style.cursor = "pointer";
+  //     buyNowBTN.disabled = false;
+  //     STNAlert.style.display = "none";
+  //   } 
+  //   else 
+  //   {
+  //     aTCBtn.style.cursor = "not-allowed";
+  //     aTCBtn.disabled = true;
+  //     buyNowBTN.style.cursor = "not-allowed";
+  //     buyNowBTN.disabled = true;
+  //     STNAlert.style.display = "block";
+  //   }
+  //   }
+  // catch{}
+
