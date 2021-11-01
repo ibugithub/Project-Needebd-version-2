@@ -20,13 +20,17 @@ function imageZoom(imgID, resultID) {
   /*and also for touch screens:*/
   lens.addEventListener("touchmove", moveLens);
   img.addEventListener("touchmove", moveLens);
-  
+
   /*initialise and hide lens result*/
   result.style.display = "none";
   /*Reveal and hide on mouseover or out*/
-  lens.onmouseover = function(){result.style.display = "block";};
-  lens.onmouseout = function(){result.style.display = "none";};
-  
+  lens.onmouseover = function () {
+    result.style.display = "block";
+  };
+  lens.onmouseout = function () {
+    result.style.display = "none";
+  };
+
   function moveLens(e) {
     var pos, x, y;
     /*prevent any other actions that may occur when moving over the image:*/
@@ -37,18 +41,28 @@ function imageZoom(imgID, resultID) {
     x = pos.x - (lens.offsetWidth / 2);
     y = pos.y - (lens.offsetHeight / 2);
     /*prevent the lens from being positioned outside the image:*/
-    if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
-    if (x < 0) {x = 0;}
-    if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
-    if (y < 0) {y = 0;}
+    if (x > img.width - lens.offsetWidth) {
+      x = img.width - lens.offsetWidth;
+    }
+    if (x < 0) {
+      x = 0;
+    }
+    if (y > img.height - lens.offsetHeight) {
+      y = img.height - lens.offsetHeight;
+    }
+    if (y < 0) {
+      y = 0;
+    }
     /*set the position of the lens:*/
     lens.style.left = x + "px";
     lens.style.top = y + "px";
     /*display what the lens "sees":*/
     result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
   }
+
   function getCursorPos(e) {
-    var a, x = 0, y = 0;
+    var a, x = 0,
+      y = 0;
     e = e || window.event;
     /*get the x and y positions of the image:*/
     a = img.getBoundingClientRect();
@@ -58,7 +72,10 @@ function imageZoom(imgID, resultID) {
     /*consider any page scrolling:*/
     x = x - window.pageXOffset;
     y = y - window.pageYOffset;
-    return {x : x, y : y};
+    return {
+      x: x,
+      y: y
+    };
   }
 };
 
@@ -68,71 +85,68 @@ var preview = document.getElementsByClassName('pretend_view');
 var images = document.getElementById('pretend_images');
 var thumbnails = document.querySelectorAll('#pretend_images > div');
 
-thumbnails.forEach(function(elem){
+thumbnails.forEach(function (elem) {
   elem.onclick = onClick.bind(null, elem);
 });
 
-function onClick(elem, e){
+function onClick(elem, e) {
   clearPreview();
   addToPreview(elem);
 }
 
-function clearPreview(){
+function clearPreview() {
   var elem = document.querySelector('.preview');
-  
-  if(elem){
+
+  if (elem) {
     elem.className = elem.className.replace('preview', '');
     images.appendChild(elem);
   }
 }
 
-function addToPreview(elem){
+function addToPreview(elem) {
   elem.className = 'preview';
   preview.appendChild(elem);
 }
 
 // controling the unit size etc
 // this function will take the unit amount and size of the product and send it to the backend
-function addToCart(element){
+function addToCart(element) {
   let prod_id = element.getAttribute('prod')
   try {
-      unit = document.getElementById('unit').value
+    unit = document.getElementById('unit').value
+  } catch {
+    unit = "-"
   }
-  catch{
-      unit = "-"
+  try {
+    unit_amount = document.getElementById('unitAmount').value
+  } catch {
+    unit_amount = "-"
   }
-  try{
-      unit_amount = document.getElementById('unitAmount').value
-  }
-  catch{
-      unit_amount = "-"
-  }
-  try{
-       size = document.getElementById('size').value
-  }
-  catch {
-      size = "-"
+  try {
+    size = document.getElementById('size').value
+  } catch {
+    size = "-"
   }
   $.ajax({
-      method : "GET",
-      url : '/addtocarturl/',
-      data : {
-          productid : prod_id,
-          unit : unit,
-          unit_amount : unit_amount,
-          Size : size
-      },
-      success: function(){
-        document.getElementById('Rproduct').style.display = "none"
-        document.getElementById('Sproduct').style.display = 'block'        
-      }
+    method: "GET",
+    url: '/addtocarturl/',
+    data: {
+      productid: prod_id,
+      unit: unit,
+      unit_amount: unit_amount,
+      Size: size
+    },
+    success: function () {
+      document.getElementById('Rproduct').style.display = "none"
+      document.getElementById('Sproduct').style.display = 'block'
+    }
   })
 }
- 
+
 // This function will Show the different unit and size on the fontend according to the product 
 function fput() {
   let emptydiv = document.getElementById("EmptyDiv");
-  let UnitType = emptydiv.getAttribute("unit");
+  let UnitType = emptydiv.getAttribute("unitGroup");
 
   let ClothObj = ` <div class="color-size">
     <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the Size </span> </div>
@@ -260,148 +274,139 @@ buyNowBTN.addEventListener("mouseover", uAmountCk)
 function uAmountCk() {
   var STNAlert = document.getElementById('sAlert')
   var unitAlertElm = document.getElementById('unitAlert')
+  if (unitAlertElm != null) {
 
-  // This try is for The product of having kg and liter unit and clothAreasize unit
-  try {
-  var unitAmount = document.getElementById('unitAmount').value;
-  var unitType = document.getElementById("unit").value;
-  }
-  catch{
-  var unitAmount = 'none';
-  var unitType = "none";
-  }
-
-  if (unitAmount != "none" && unitType != "none") {
-
-    if(unitType == 'select'){
-    unitAlertElm.style.display = "block";
-    aTCBtn.disabled = true;
-    aTCBtn.style.cursor = "not-allowed";
-    buyNowBTN.disabled = true;
-    buyNowBTN.style.cursor = "not-allowed";
-    
+    // This try is for The product of having kg and liter unit and clothAreasize unit
+    try {
+      var unitAmount = document.getElementById('unitAmount').value;
+      var unitType = document.getElementById("unit").value;
+    } catch {
+      var unitAmount = 'none';
+      var unitType = "none";
     }
 
-    else{
+    if (unitType == 'select') {
+      unitAlertElm.style.display = "block";
+      aTCBtn.disabled = true;
+      aTCBtn.style.cursor = "not-allowed";
+      buyNowBTN.disabled = true;
+      buyNowBTN.style.cursor = "not-allowed";
+    } else {
+      var attempt1 = "success"
       unitAlertElm.style.display = "none";
-      aTCBtn.disabled = false;
-      aTCBtn.style.cursor = "pointer";
-      buyNowBTN.disabled = false;
-      buyNowBTN.style.cursor = "pointer";
     }
-  
-    if(unitAmount == "" || unitAmount < 1)
-    {
+
+    if (unitAmount == "" || unitAmount < 1) {
       STNAlert.style.display = "block";
       aTCBtn.disabled = true;
       aTCBtn.style.cursor = "not-allowed";
       buyNowBTN.disabled = true;
       buyNowBTN.style.cursor = "not-allowed";
 
+    } else {
+      var attempt2 = "success"
+      STNAlert.style.display = "none";
     }
-    else{
+
+    if (attempt1 == 'success' && attempt2 == 'success') {
       STNAlert.style.display = "none";
       aTCBtn.disabled = false;
       aTCBtn.style.cursor = "pointer";
       buyNowBTN.disabled = false;
       buyNowBTN.style.cursor = "pointer";
     }
-  }
 
-  //This section will work for the product having the unit of size......
-  try{
-    var sizeElm = document.getElementById('size').value
-  }
-  catch{
-    var sizeElm = 'none';
-  }
-  
-  if (sizeElm != 'none'){
-
-    if (sizeElm == 'select'){
-    unitAlertElm.style.display = "block";
-    aTCBtn.disabled = true;
-    aTCBtn.style.cursor = "not-allowed";
-    buyNowBTN.disabled = true;
-    buyNowBTN.style.cursor = "not-allowed";
+    //This section will work for the product having the unit of size......
+    try {
+      var sizeElm = document.getElementById('size').value
+    } catch {
+      var sizeElm = 'none';
     }
 
-    else{
-      unitAlertElm.style.display = "none"
-      aTCBtn.disabled = false;
-      aTCBtn.style.cursor = "pointer";
-      buyNowBTN.disabled = false;
-      buyNowBTN.style.cursor = "pointer";
+    if (sizeElm != 'none') {
+
+      if (sizeElm == 'select') {
+        unitAlertElm.style.display = "block";
+        aTCBtn.disabled = true;
+        aTCBtn.style.cursor = "not-allowed";
+        buyNowBTN.disabled = true;
+        buyNowBTN.style.cursor = "not-allowed";
+      } else {
+        unitAlertElm.style.display = "none"
+        aTCBtn.disabled = false;
+        aTCBtn.style.cursor = "pointer";
+        buyNowBTN.disabled = false;
+        buyNowBTN.style.cursor = "pointer";
+      }
     }
-  }
     $.ajax({
-      method : "GET",
-      url : "/buynowdataurl",
-      data : {
-        unit : unitType,
-        unitAmount : unitAmount,
-        size : sizeElm,
-        productId : prodId
+      method: "GET",
+      url: "/buynowdataurl",
+      data: {
+        unit: unitType,
+        unitAmount: unitAmount,
+        size: sizeElm,
+        productId: prodId
       }
     })
   }
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  // var STNAlert = document.getElementById('sAlert')
-  // var unitAlertElm = document.getElementById('unitAlert')
-  // console.log(unitAmount)
-  // console.log(unitType)
-
-
-  // if (unitAmount != "" && unitAmount > 0 && unitType != "select") {
-  //   aTCBtn.style.cursor = "pointer";
-  //   aTCBtn.disabled = false;
-  //   buyNowBTN.style.cursor = "pointer";
-  //   buyNowBTN.disabled = false;
-  //   STNAlert.style.display = "none";
-  // } 
-  // else
-  // {
-  //   aTCBtn.style.cursor = "not-allowed";
-  //   aTCBtn.disabled = true;
-  //   buyNowBTN.style.cursor = "not-allowed";
-  //   buyNowBTN.disabled = true;
-  //   STNAlert.style.display = "block";
-  // }
-  
- 
+}
 
 
 
-    // This try is for The product of having kg and liter unit
-  // try {
-  //   let size = document.getElementById('size').value
-  //   console.log(size)
-  //   STNAlert = document.getElementById('sAlert')
-  //   if (size != 'select') {
-  //     aTCBtn.style.cursor = "pointer";
-  //     aTCBtn.disabled = false;
-  //     buyNowBTN.style.cursor = "pointer";
-  //     buyNowBTN.disabled = false;
-  //     STNAlert.style.display = "none";
-  //   } 
-  //   else 
-  //   {
-  //     aTCBtn.style.cursor = "not-allowed";
-  //     aTCBtn.disabled = true;
-  //     buyNowBTN.style.cursor = "not-allowed";
-  //     buyNowBTN.disabled = true;
-  //     STNAlert.style.display = "block";
-  //   }
-  //   }
-  // catch{}
 
+
+
+
+
+
+
+// var STNAlert = document.getElementById('sAlert')
+// var unitAlertElm = document.getElementById('unitAlert')
+// console.log(unitAmount)
+// console.log(unitType)
+
+
+// if (unitAmount != "" && unitAmount > 0 && unitType != "select") {
+//   aTCBtn.style.cursor = "pointer";
+//   aTCBtn.disabled = false;
+//   buyNowBTN.style.cursor = "pointer";
+//   buyNowBTN.disabled = false;
+//   STNAlert.style.display = "none";
+// } 
+// else
+// {
+//   aTCBtn.style.cursor = "not-allowed";
+//   aTCBtn.disabled = true;
+//   buyNowBTN.style.cursor = "not-allowed";
+//   buyNowBTN.disabled = true;
+//   STNAlert.style.display = "block";
+// }
+
+
+
+
+
+// This try is for The product of having kg and liter unit
+// try {
+//   let size = document.getElementById('size').value
+//   console.log(size)
+//   STNAlert = document.getElementById('sAlert')
+//   if (size != 'select') {
+//     aTCBtn.style.cursor = "pointer";
+//     aTCBtn.disabled = false;
+//     buyNowBTN.style.cursor = "pointer";
+//     buyNowBTN.disabled = false;
+//     STNAlert.style.display = "none";
+//   } 
+//   else 
+//   {
+//     aTCBtn.style.cursor = "not-allowed";
+//     aTCBtn.disabled = true;
+//     buyNowBTN.style.cursor = "not-allowed";
+//     buyNowBTN.disabled = true;
+//     STNAlert.style.display = "block";
+//   }
+//   }
+// catch{}

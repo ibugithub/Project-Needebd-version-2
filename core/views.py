@@ -115,20 +115,22 @@ def AddToCartView(request):
         myproduct = Product.objects.get(id=product_id)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
-        if myproduct.unit == "Kg" or myproduct.unit == "Liter" or myproduct.unit == "ClothPicesSize":
+        if myproduct.unitGroup == "Kg" or myproduct.unitGroup == "Liter" or myproduct.unitGroup == "ClothPicesSize":
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
-                                        unit=unit,
-                                        unit_amount=unit_amount)
-                cart.quantity += 1
+                                        unitGroup=unit,
+                                        unit_amount = unit_amount
+                                        )
+
+                cart.unit_amount += 1
                 cart.save()
             except:
                 Cart(user=user,
                      product=myproduct,
                      unit=unit,
                      unit_amount=unit_amount).save()
-        elif myproduct.unit == "ClothSize" or myproduct.unit == "ShoeSize":
+        elif myproduct.unitGroup == "ClothSize" or myproduct.unitGroup == "ShoeSize":
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
@@ -137,7 +139,7 @@ def AddToCartView(request):
                 cart.save()
             except:
                 Cart(user=user, product=myproduct, size=size).save()
-        elif myproduct.unit == "Packet":
+        elif myproduct.unitGroup == "Packet":
             try:
                 cart = Cart.objects.get(user=user, product=myproduct)
                 cart.quantity += 1
@@ -193,18 +195,18 @@ def PlusCartView(request):
         unit_amount = request.GET['unit_amount']
         size = request.GET['size']
 
-        if product.unit == "Kg" or product.unit == "Liter" or product.unit == "ClothPicesSize":
+        if product.unitGroup == "Kg" or product.unitGroup == "Liter" or product.unitGroup == "ClothPicesSize":
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
                                     unit_amount=unit_amount)
             cart.quantity += 1
             cart.save()
-        elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+        elif product.unitGroup == "ClothSize" or product.unitGroup == "ShoeSize":
             cart = Cart.objects.get(user=user, product=product, size=size)
             cart.quantity += 1
             cart.save()
-        elif product.unit == "Packet":
+        elif product.unitGroup == "Packet":
             cart = Cart.objects.get(user=user, product=product)
             cart.quantity += 1
             cart.save()
@@ -247,7 +249,7 @@ def MinusCartView(request):
                 Item += 1
             return Item
 
-        if product.unit == "Liter" or product.unit == "Kg" or product.unit == "ClothPicesSize":
+        if product.unitGroup == "Liter" or product.unitGroup == "Kg" or product.unitGroup == "ClothPicesSize":
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
@@ -258,7 +260,7 @@ def MinusCartView(request):
             if cart.quantity == 0:
                 cart.delete()
                 Item = itemcount()
-        elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+        elif product.unitGroup == "ClothSize" or product.unitGroup == "ShoeSize":
             cart = Cart.objects.get(user=user, product=product, size=size)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -266,7 +268,7 @@ def MinusCartView(request):
             if cart.quantity <= 0:
                 cart.delete()
                 Item = itemcount()
-        elif product.unit == "Packet":
+        elif product.unitGroup == "Packet":
             cart = Cart.objects.get(user=user, product=product)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -317,18 +319,18 @@ def RemoveCartView(request):
     unit = request.GET['unit']
     unit_amount = request.GET['unit_amount']
     size = request.GET['size']
-    if product.unit == "Liter" or product.unit == "Kg" or product.unit == "ClothPicesSize":
+    if product.unitGroup == "Liter" or product.unitGroup == "Kg" or product.unitGroup == "ClothPicesSize":
         cart = Cart.objects.get(user=user,
                                 product=product,
                                 unit=unit,
                                 unit_amount=unit_amount)
         cart.delete()
 
-    elif product.unit == "ClothSize" or product.unit == "ShoeSize":
+    elif product.unitGroup== "ClothSize" or product.unitGroup == "ShoeSize":
         cart = Cart.objects.get(user=user, product=product, size=size)
         cart.delete()
 
-    elif product.unit == "Packet":
+    elif product.unitGroup== "Packet":
         cart = Cart.objects.get(user=user, product=product)
         cart.delete()
 
@@ -798,13 +800,9 @@ def SelectAddressView(request):
 
 # This function will take the unit, unitAmount and size data form the backend and save the data to the session to use it in buynow function
 def buyNowDataView(request):
-    productId = request.GET['productId']
     unit = request.GET['unit']
     unitAmount = request.GET['unitAmount']
     size = request.GET['size']
-    product  = Product.objects.get(id = productId)
-
-
     request.session['unit'] = unit
     request.session['unitAmount'] = unitAmount
     request.session['size'] = size
