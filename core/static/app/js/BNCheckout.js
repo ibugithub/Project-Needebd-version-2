@@ -9,35 +9,163 @@ document.getElementById('cancelIcon').addEventListener('click', function(){
     document.getElementById('hacoupon').style.display = 'block'
 })
 
-
-// for increase or decrease the quantity of product........
+// for increase or decrease the quantity of product on the buyNow page........
 var quantity = document.getElementById('quantityValue')
 var buyNowLeft = document.getElementById('buyNowLeft')
 var quantityRightElm = document.getElementById("quantityRight")
+var prodId = document.getElementById('minusBtn').getAttribute('prod')
+var sellingPrizeElm = document.getElementById('sellPrizeElm')
+var sellingPrize = sellingPrizeElm.getAttribute("sellingPrize")
+var discountedPrizeElm = document.getElementById("discountedPrizeElm")
+var discountedPrize = discountedPrizeElm.getAttribute("discountedPrize")
+var subTotalElm = document.getElementById('subtotal')
+var buyNowTotalElm = document.getElementById('buyNowTotal')
+var couponErrorElm = document.getElementById('coupon_selector')
+var hiddenCouponInfoElm = document.getElementById('hiddenCouponInfo')
+var hiddenDiscountElm = document.getElementById('hiddenDiscount')
+var hiddenNewTotalElm = document.getElementById('hiddenNewTotal')
+var couponApplyElm = document.getElementById('couponApply')
+var haveAnyCouponElm = document.getElementById('hacoupon')
 
-function PlusCart(elm){
-    quantityValue = parseInt(quantity.value ) + 1
-    quantity.value = quantityValue
-    quantity.innerHTML = quantity.value
-    
-    var quantityRightValue = parseInt(quantityRightElm.innerHTML) + 1
-    quantityRightElm.innerHTML = quantityRightValue
-}
 
-function MinusCart(elm){
+function buyNow(elm){
+    // When user will click on the Plus button on the buynow page this section will work
+    if (elm == "plus"){
+
+        quantityValue = parseInt(quantity.value ) + 1
+        quantity.value = quantityValue
+        quantity.innerHTML = quantity.value
+        var quantityRightValue = parseInt(quantityRightElm.innerHTML) + 1
+        quantityRightElm.innerHTML = quantityRightValue
+        var newSellingPrize = parseInt(sellingPrize) * quantity.value
+        sellingPrizeElm.innerHTML = newSellingPrize
+        var newDiscountedPrize = discountedPrize * quantity.value
+        discountedPrizeElm.innerHTML = newDiscountedPrize
+        hiddenCouponInfoElm.style.display = 'none'
+        couponApplyElm.style.display = 'none'
+        haveAnyCouponElm.style.display = "block"
+    }
+
+    // When user will click on the minus button on the buynow page this section will work
+    if (elm == "minus"){
     quantityValue = parseInt(quantity.value) - 1
     quantity.value = quantityValue
     quantity.innerHTML = quantity.value
-
     var quantityRightValue = parseInt(quantityRightElm.innerHTML) - 1;
     quantityRightElm.innerHTML = quantityRightValue;
-    if (quantityRightValue == 0)
+    var newSellingPrize = parseInt(sellingPrize) * quantity.value
+    sellingPrizeElm.innerHTML = newSellingPrize
+    var newDiscountedPrize = discountedPrize * quantity.value
+    discountedPrizeElm.innerHTML = newDiscountedPrize
+    hiddenCouponInfoElm.style.display = 'none'
+    couponApplyElm.style.display = 'none'
+    haveAnyCouponElm.style.display = "block"
+    // When quantity will be zero then the product will be hidden and delected...
+    if (quantityValue == 0)
     {   
         buyNowLeft.style.visibility = "hidden"
     }
+    }
+
+    // When user will click on the Remove button on the buynow page this section will work
+    if (elm == "remove"){
+        buyNowLeft.style.visibility = 'hidden'
+        hiddenCouponInfoElm.style.display = 'none'
+        couponApplyElm.style.display = 'none'
+        haveAnyCouponElm.style.display = "block"
+    }
+    $.ajax({
+        method : "GET",
+        url : "/buynowurl",
+        data : {
+            productId : prodId,
+            quantity : quantityValue
+        },
+        success : function(data){
+        subTotalElm.innerHTML = data.subTotal
+        buyNowTotalElm.innerHTML = data.total
+        }
+    })
 }
 
+// When we will click on the apply button on the coupon apply form
+document.getElementById('apply').addEventListener('click', function(){
+  var code = document.getElementById('code').value
+  $.ajax({
+    method : "GET",
+    url : '/bNVCheckerurl',
+    data : {
+      codeV : code
+    },
+    success : function(data){
+      couponErrorElm.innerHTML = data.message
+      if (data.total != undefined){
+        hiddenCouponInfoElm.style.display = "block"
+        hiddenDiscountElm.innerHTML = data.discount
+        hiddenNewTotalElm.innerHTML = data.total
+      }
+      else{
+        hiddenCouponInfoElm.style.display = 'none'
+      }
+    }
+  })
+})
 
-function RemoveCart(elm) {
-    buyNowLeft.style.visibility = 'hidden'
+// This Script will work on the changing the default address in checkout page on order summery. 
+let adrEditElm = document.getElementById("adredit");
+adrEditElm.addEventListener("click", adrEditFunc);
+
+function adrEditFunc() {
+  document.getElementById("ptp").innerText = "Select your shipping address";
+  let editDiv = document.getElementById("editDiv");
+  let adrDiv = document.getElementById("adrDiv");
+  editDiv.style.display = "none";
+  adrDiv.style.display = "block";
 }
+let clickChecker = document.getElementsByClassName("cHK");
+let len = clickChecker.length;
+for (let i = 0; i < len; i++) {
+  clickChecker[i].addEventListener("click", function () {
+    addrSelector(this);
+  });
+}
+
+function addrSelector(elm) {
+  document.getElementById("ptp").innerText = "Proceed To Pay";
+  let sAdrDiv = document.getElementById("adrDiv");
+  let odrSDiv = document.getElementById("editDiv");
+  let adrId = elm.getAttribute("CAddressId");
+  let checkedBox = document.getElementById("checked");
+  checkedBox.style.display = "none";
+  let circleBox = document.getElementsByClassName("isDefaultClass");
+  let len = circleBox.length;
+  for (let i = 0; i < len; i++) {
+    if (circleBox[i].value == "True") {
+      circleBox[i].style.display = "inline-block";
+    }
+  }
+  $.ajax({
+    type: "GET",
+    url: "/sadrurl",
+    data: {
+      adrId: adrId,
+    },
+    success: function (data) {
+      document.getElementById("shAdrName").innerText = data.name;
+      document.getElementById(
+        "adrWithLocations"
+      ).innerText = `${data.address}, ${data.union}, ${data.upazila},${data.district}, ${data.division}`;
+      console.log();
+    },
+  });
+  sAdrDiv.style.display = "none";
+  odrSDiv.style.display = "block";
+}
+
+// when the Checked Icon will be clicked then it will work...
+document.getElementById("checked").addEventListener("click", function () {
+    console.log("checked item has been clicked")
+    document.getElementById("adrDiv").style.display = "none";
+    document.getElementById("editDiv").style.display = "block";
+  });
+
