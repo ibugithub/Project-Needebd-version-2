@@ -91,10 +91,6 @@ function addToPreview(elem){
   preview.appendChild(elem);
 }
 
-// endof zomming section
-
-
-
 // controling the unit size etc
 // this function will take the unit amount and size of the product and send it to the backend
 function addToCart(element){
@@ -139,7 +135,7 @@ function fput() {
   let UnitType = emptydiv.getAttribute("unit");
 
   let ClothObj = ` <div class="color-size">
-    <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
+    <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the Size </span> </div>
       <div class="p-size">
         <div class="p-size-text">
           <span >Size:</span>
@@ -178,7 +174,7 @@ function fput() {
     </div>`;
 
   let KgUnit = ` <div class="color-size">
-  <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
+  <div  id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
     <div class="p-size-text">
       <span >Weight:</span>
@@ -221,7 +217,7 @@ function fput() {
   </div>`;
 
   let ShoeSizeUnit = ` <div class="color-size">
-  <div id = "unitAlert" style = "color: red; display: none;"> <span > select the unit </span> </div>
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > select the size </span> </div>
   <div class="p-size">
     <div class="p-size-text">
       <span >Size:</span>
@@ -253,9 +249,10 @@ function fput() {
   }
 }
 
-aTCBtn = document.getElementById('aTCButton')
-buyNowBTN = document.getElementById('buyNowBTN')
-buyNowa = document.getElementById('buyNowa')
+var aTCBtn = document.getElementById('aTCButton')
+var buyNowBTN = document.getElementById('buyNowBTN')
+var buyNowa = document.getElementById('buyNowa')
+var prodId = aTCBtn.getAttribute('prod')
 aTCBtn.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener("mouseover", uAmountCk)
 
@@ -270,27 +267,44 @@ function uAmountCk() {
   var unitType = document.getElementById("unit").value;
   }
   catch{
-  var unitAmount = 'none'
-  var unitType = "none"
+  var unitAmount = 'none';
+  var unitType = "none";
   }
 
   if (unitAmount != "none" && unitType != "none") {
+
     if(unitType == 'select'){
-    console.log("select the unit")
-    unitAlertElm.style.display = "block"
+    unitAlertElm.style.display = "block";
+    aTCBtn.disabled = true;
+    aTCBtn.style.cursor = "not-allowed";
+    buyNowBTN.disabled = true;
+    buyNowBTN.style.cursor = "not-allowed";
+    
     }
 
     else{
-      unitAlertElm.style.display = "none"
+      unitAlertElm.style.display = "none";
+      aTCBtn.disabled = false;
+      aTCBtn.style.cursor = "pointer";
+      buyNowBTN.disabled = false;
+      buyNowBTN.style.cursor = "pointer";
     }
   
     if(unitAmount == "" || unitAmount < 1)
     {
-      console.log("select the  amount")
-      STNAlert.style.display = "block"
+      STNAlert.style.display = "block";
+      aTCBtn.disabled = true;
+      aTCBtn.style.cursor = "not-allowed";
+      buyNowBTN.disabled = true;
+      buyNowBTN.style.cursor = "not-allowed";
+
     }
     else{
-      STNAlert.style.display = "none"
+      STNAlert.style.display = "none";
+      aTCBtn.disabled = false;
+      aTCBtn.style.cursor = "pointer";
+      buyNowBTN.disabled = false;
+      buyNowBTN.style.cursor = "pointer";
     }
   }
 
@@ -299,18 +313,37 @@ function uAmountCk() {
     var sizeElm = document.getElementById('size').value
   }
   catch{
-    var sizeElm = 'none'
+    var sizeElm = 'none';
   }
   
   if (sizeElm != 'none'){
+
     if (sizeElm == 'select'){
-    unitAlertElm.style.display = "block"
+    unitAlertElm.style.display = "block";
+    aTCBtn.disabled = true;
+    aTCBtn.style.cursor = "not-allowed";
+    buyNowBTN.disabled = true;
+    buyNowBTN.style.cursor = "not-allowed";
     }
+
     else{
       unitAlertElm.style.display = "none"
+      aTCBtn.disabled = false;
+      aTCBtn.style.cursor = "pointer";
+      buyNowBTN.disabled = false;
+      buyNowBTN.style.cursor = "pointer";
     }
   }
-  
+    $.ajax({
+      method : "GET",
+      url : "/buynowdataurl",
+      data : {
+        unit : unitType,
+        unitAmount : unitAmount,
+        size : sizeElm,
+        productId : prodId
+      }
+    })
   }
 
 

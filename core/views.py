@@ -372,8 +372,6 @@ def VoucherChecker(request, redirect = False):
     else:
         code = request.GET['code']
     
-    print('The msg is', redirect)
-
     now = timezone.now()
     try:
         coupon = Coupon.objects.get(coupon_code=code,
@@ -381,13 +379,19 @@ def VoucherChecker(request, redirect = False):
                                     valid_to__gte=now,
                                     active=True)
         discount = coupon.discount
-        if total_amount >= coupon.condition_rate:
+        if not coupon.condition_rate == None:
+            if total_amount >= coupon.condition_rate:
+                message = ""
+                total_amount = (total_amount - coupon.discount) + delivery_cost
+                request.session['code'] = code
+            else:
+                message = f"You will have to buy more than {coupon.condition_rate}. "
+                total_amount = "Nan"
+        else:
             message = ""
             total_amount = (total_amount - coupon.discount) + delivery_cost
             request.session['code'] = code
-        else:
-            message = f"You will have to buy more than {coupon.condition_rate}. "
-            total_amount = "Nan"
+
     except ObjectDoesNotExist:
         try:
             voucher = Voucher.objects.get(
@@ -415,7 +419,6 @@ def VoucherChecker(request, redirect = False):
             elif total_amount < voucher.voucher_offer.condition_rate:
                 message = f"You will have to buy more than {voucher.voucher_offer.condition_rate}."
                 total_amount = "Nan"
-
             else:
                 total_amount = (total_amount -
                                 voucher.voucher_offer.discount) + delivery_cost
@@ -730,11 +733,11 @@ class CancellationView(TemplateView):
 def Checkout(request):
     newCart = Cart.objects.filter(user = request.user)
     length = len(newCart)
-    shippingCost = 70
+    deliveryCharge = 70
     subTotal = 0
     for cart in newCart:
         subTotal += cart.products_total_cost
-    total = subTotal + shippingCost
+    total = subTotal + deliveryCharge
   
     newProfile = CustomerProfile.objects.get(user = request.user)
     newAddress = CustomerAddress.objects.filter(user = request.user)
@@ -751,7 +754,7 @@ def Checkout(request):
         "carts" : newCart,
         "len" :length,
         "subTotal" : subTotal,
-        "shippingCost" : shippingCost,
+        "deliveryCharge" : deliveryCharge,
         "profile" : newProfile,
         "newaddress" :newAddress,
         "daddress" : defaultAddress,
@@ -793,53 +796,201 @@ def SelectAddressView(request):
     }
     return JsonResponse(data)
 
-def Buynow(request, pk):
-    newproduct = Product.objects.get(id = pk)
-    context = {
-        "product" : newproduct
+# This function will take the unit, unitAmount and size data form the backend and save the data to the session to use it in buynow function
+def buyNowDataView(request):
+    productId = request.GET['productId']
+    unit = request.GET['unit']
+    unitAmount = request.GET['unitAmount']
+    size = request.GET['size']
+    product  = Product.objects.get(id = productId)
+
+
+    request.session['unit'] = unit
+    request.session['unitAmount'] = unitAmount
+    request.session['size'] = size
+
+    data = {
+        'test' : 'demo'
     }
-    return render(request, 'app/buyNowCheckout.html',context = context)
+    return JsonResponse(data)
+
+# This function will show the product info in the buynow page....
+def Buynow(request, pk = None):
+    # initial product info will be shown by this section
+    request.session['buyNowSubTotal'] = 'none'
+    request.session['buyNowTotal'] = 'none'
+    request.session['buyNowDiscount'] = 'none'
+    context = {}
+
+    try:
+        defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    except:
+        return redirect('/aaddressurl')
+    newProfile = CustomerProfile.objects.get(user = request.user)
+    newAddress = CustomerAddress.objects.filter(user = request.user)
+    if  len(newAddress) < 1:
+            return redirect('/abookurl')    
+    context['newaddress'] = newAddress
+    context["daddress"] = defaultAddress
+    context["profile"] = newProfile
+
+    if pk != None:
+        newProduct = Product.objects.get(id = pk)
+        subTotal = newProduct.discounted_prize
+        shippingCost = 70
+        total = subTotal + shippingCost
+        context["product"] = newProduct
+        context['subtotal'] = subTotal
+        context["shippingCost"] = shippingCost
+        context["total"] = total
+        request.session['buyNowSubTotal'] = subTotal
+        request.session['buyNowTotal'] = total
+        return render(request, 'app/buyNowCheckout.html',context = context)
+
+    # plus and minus action in buy now page will work on this section...    
+    if pk == None:
+        productId = request.GET['productId']
+        quantity = int(request.GET['quantity'])
+        newProduct = Product.objects.get(id = productId)
+        shippingCost = 70      
+        subTotal = newProduct.discounted_prize * quantity
+        total = subTotal + shippingCost
+        request.session['buyNowSubTotal'] = subTotal
+        request.session["buyNowTotal"] = total
+        data = {
+            'subTotal': subTotal,
+            "total" : total
+        }
+        return JsonResponse(data)
+
+def buyNowVoucherCheckerView(request):
+    code = request.GET['codeV']
+    subTotal = request.session['buyNowSubTotal']
+    shoppingCost = 70
+    now = timezone.now()
+    data = {}
+    try:
+        coupon = Coupon.objects.get(
+            coupon_code = code,
+            valid_from__lte = now,
+            valid_to__gte= now,
+            active = True
+        )
+        discount = coupon.discount
+        if not coupon.condition_rate == None:
+            if subTotal >= coupon.condition_rate:
+                total = (subTotal - discount)+ shoppingCost
+                data['message'] = ""
+                data['total'] = total
+                data['discount'] = discount
+                request.session['buyNowTotal'] = total
+                request.session['buyNowDiscount'] = discount
+            else:
+                message = f"You will have to buy more than {coupon.condition_rate}. "
+                data['message'] = message
+        else:
+            total = (subTotal - discount)+ shoppingCost
+            data['total'] = total
+            data['message'] = ""
+            data['discount'] = discount
+            request.session['buyNowTotal'] = total
+            request.session['buyNowDiscount'] = discount
+
+    except ObjectDoesNotExist:
+        try:
+            voucher = Voucher.objects.get(
+                user = request.user,
+                voucher_code = code,
+            )
+            discount = voucher.voucher_offer.discount
+            if not voucher.user_valid_to == None:
+                if now > voucher.user_valid_to:
+                    result = True
+                else:
+                    result = False
+            else:
+                result = False            
+            if now > voucher.voucher_offer.offer_valid_to or result:
+                data['message'] = "This voucher has been expired"
+            elif voucher.count > voucher.voucher_offer.limit:
+                data['message'] = "you have already used maximum of it"
+            elif subTotal < voucher.voucher_offer.condition_rate:
+                message = f"You will have to buy more than {voucher.voucher_offer.condition_rate}."
+                data['message'] = message
+            else:
+                total = (subTotal - discount) + shoppingCost
+                data['message'] = ""
+                data['total'] = total
+                data['discount'] = discount
+                request.session['buyNowTotal'] = total
+                request.session['buyNowDiscount'] = discount
+        except:
+            data['message'] = "Code Doesn't Found"
+            if code == "":
+                data['message'] = "Plz Enter a Code"
+
+    return JsonResponse(data)
 
 class paymentPageView(TemplateView):
     template_name = "app/paymentPage.html"
     
-    def get (self, request, *args, **kwargs):
-        newCart = Cart.objects.filter(user = request.user)
-        length = len(newCart)
-        shippingCost = 70
-        subTotal = 0
-        for cart in newCart:
-            subTotal += cart.products_total_cost
-        total = subTotal + shippingCost
-    
-        newProfile = CustomerProfile.objects.get(user = request.user)
-        newAddress = CustomerAddress.objects.filter(user = request.user)
-
-        if  len(newAddress) < 1:
-            return redirect('/abookurl')
-
-        try:
-            defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
-        except:
-            return redirect('/aaddressurl')
+    def get (self, request, buyNowTunnel = False,  *args, **kwargs):
+        if buyNowTunnel == False:
+            newCart = Cart.objects.filter(user = request.user)
+            length = len(newCart)
+            shippingCost = 70
+            subTotal = 0
+            for cart in newCart:
+                subTotal += cart.products_total_cost
+            total = subTotal + shippingCost
         
-        context = {
-            "carts" : newCart,
-            "len" :length,
-            "subTotal" : subTotal,
-            "shippingCost" : shippingCost,
-            "profile" : newProfile,
-            "newaddress" :newAddress,
-            "daddress" : defaultAddress,
-        } 
-        if not request.session["code"] == 'none':
-            # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
-            data = VoucherChecker(request, redirect=True)
-            if data['amount'] != "Nan" and data['discount'] != "Nan":
-                context["totalAmount"] = data['amount']
-                context["discount"] = data['discount']
-        else:
-            context["totalAmount"] = total 
+            newProfile = CustomerProfile.objects.get(user = request.user)
+            newAddress = CustomerAddress.objects.filter(user = request.user)
+
+            if  len(newAddress) < 1:
+                return redirect('/abookurl')
+
+            try:
+                defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+            except:
+                return redirect('/aaddressurl')
+            
+            context = {
+                "carts" : newCart,
+                "len" :length,
+                "subTotal" : subTotal,
+                "shippingCost" : shippingCost,
+                "profile" : newProfile,
+                "newaddress" :newAddress,
+                "daddress" : defaultAddress,
+            } 
+            if not request.session["code"] == 'none':
+                # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
+                data = VoucherChecker(request, redirect=True)
+                if data['amount'] != "Nan" and data['discount'] != "Nan":
+                    context["totalAmount"] = data['amount']
+                    context["discount"] = data['discount']
+            else:
+                context["totalAmount"] = total 
+        
+        if not buyNowTunnel == False:
+            context = {}
+            newProfile = CustomerProfile.objects.get(user = request.user)
+            newAddress = CustomerAddress.objects.filter(user = request.user)
+            shippingCost = 70
+            if  len(newAddress) < 1:
+                return redirect('/abookurl')
+            try:
+                defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+            except:
+                return redirect('/aaddressurl')
+            context['profile'] = newProfile
+            context['newaddress'] = newAddress
+            context['daddress'] = defaultAddress
+            context['subTotal'] = request.session['buyNowSubTotal']
+            context['shippingCost'] = shippingCost
+            context['totalAmount'] = request.session['buyNowTotal']
+            context['buyNowDiscount'] = request.session['buyNowDiscount']
 
         return render(request,self.template_name, context = context)
             

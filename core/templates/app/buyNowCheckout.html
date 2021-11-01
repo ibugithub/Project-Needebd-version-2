@@ -17,7 +17,7 @@
   <div class="check-out-container">
     <div class="check-out-section">
       <div class="check-out-row">
-        <div id = "buyNowLeft" class="check-out-left">
+        <div id="buyNowLeft" class="check-out-left">
           <div class="checkout-header">
             <div class="checkout-header-row">
               <div class="checkout-items">
@@ -88,28 +88,28 @@
 
                     <div class="ck-checkout-right">
                       <div class="ck-qun">
-                        <span  class="qun-text">Qty: <span id = "quantityRight"> 1 </span> </span>
+                        <span class="qun-text">Qty: <span id="quantityRight"> 1 </span> </span>
                       </div>
                       <div>
-                        <span style="text-decoration: line-through">cost: {{cart.products_total_selling_cost}}</span>
+                        <span style="text-decoration: line-through">cost: <span id="sellPrizeElm"
+                            sellingPrize="{{product.selling_prize}}">{{product.selling_prize}}</span></span>
                       </div>
-                      <div>cost: {{cart.products_total_cost}}</div>
+                      <div>cost: <span id="discountedPrizeElm"
+                          discountedPrize="{{product.discounted_prize}}">{{product.discounted_prize}}</span> </div>
                     </div>
                   </div>
                 </div>
                 <div class="add-to-cart-d-btn">
                   <div class="cart-d-p-btn">
-                    <button  onclick="MinusCart(this)" prod={{cart.product.id}}
-                      size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
+                    <button id="minusBtn" onclick="buyNow('minus')" prod={{product.id}} class="btn-sub"> -
                     </button>
                     <div class="cart-d-input">
 
-                      <input id = "quantityValue" type="text" class="cart-d-rp" value="1">
+                      <input id="quantityValue" type="text" class="cart-d-rp" value="1">
 
                     </div>
 
-                    <button  onclick="PlusCart(this)" prod={{cart.product.id}} size={{cart.size}}
-                      unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-add"> + </button>
+                    <button onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
                   <div class="cart-save-remove">
@@ -117,12 +117,12 @@
                       save for later
                     </div>
                     <div prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
-                      unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
+                      unit_amount={{cart.unit_amount}} onclick="buyNow('remove')" class="cart-d-remove"> remove </div>
                   </div>
                 </div>
               </div>
               <div style="margin: 0;" class="checkout-package ">
-               
+
               </div>
             </div>
           </div>
@@ -240,11 +240,11 @@
                 <div class="os-total-section">
                   <div class="os-total-text">
                     <div class="os-total">
-                      Subtotal <span class="tottal">({{len}} items)</span>
+                      Subtotal <span class="tottal">(1 items)</span>
                     </div>
                   </div>
                   <div class="os-tatal-con">
-                    <span> ৳ {{subTotal}}</span>
+                    ৳ <span id="subtotal"> {{subtotal}}</span>
                   </div>
                 </div>
                 {% if discount %}
@@ -267,16 +267,40 @@
                 </div>
                 <div class="total-section">
                   <div class="total-text">
-                    <span>Total:</span>
+                    <span id="buyNowOrderSummeryTotal">Total:</span>
                   </div>
                   <div class="total-amount">
-                    <span class="amount"> ৳ {{totalAmount}}</span>
+                    ৳ <span class="amount" id="buyNowTotal"> {{total}}</span>
                   </div>
                 </div>
 
+                <div id="hiddenCouponInfo" style="display: none;">
+                  <div class="total-section">
+
+                    <div class="total-text">
+                      <span id="buyNowOrderSummeryTotal">Discount:</span>
+                    </div>
+                    <div class="total-amount">
+                      -৳ <span class="amount" id="hiddenDiscount"> </span>
+                    </div>
+
+                  </div>
+
+                  <div class="total-section">
+
+                    <div class="total-text">
+                      <span id="buyNowOrderSummeryTotal">New Total:</span>
+                    </div>
+                    <div class="total-amount">
+                      ৳ <span class="amount" id="hiddenNewTotal"> </span>
+                    </div>
+
+                  </div>
+                </div>
 
                 <div id='couponApply' style="display: none;" class="card ">
                   <div class="card-body">
+
                     <div id="titleCont">
                       <div id="title"><small class="text-muted">Apply your coupon here</small></div>
                       <div id="cancelIcon"><i class="far fa-times-circle"></i></div>
@@ -287,12 +311,11 @@
                       <button class="coupon btn btn-sm btn-outline-primary mt-3" id="apply">Apply</button>
                     </div>
 
-
                   </div>
                 </div>
                 <span id="hacoupon">have any coupon or voucher?</span>
                 <div class="ck-pay-btn">
-                  <a href="{% url 'paymentpageurlname' %}">
+                  <a href="{% url 'paymentpageurlname' 'buyNowTunnel' %}">
                     <button class="pay-btn">Proceed to pay</button>
                   </a>
 

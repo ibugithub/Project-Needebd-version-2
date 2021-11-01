@@ -30,6 +30,10 @@ urlpatterns = [
     path('cancellationurl/', views.CancellationView.as_view(), name = "cancellationurlname"),
     path('checkouturl/', views.Checkout, name = "checkouturlname"),
     path('sadrurl/', views.SelectAddressView, name = "sadrurlname"),
+    url(r'^buynow/(?P<pk>\d+)$', views.Buynow, name = "buynowurlname"),
+    path('buynowurl/',views.Buynow),
+    path('buynowdataurl/', views.buyNowDataView, name = 'buynowdataurlname'),
+    path('bNVCheckerurl/', views.buyNowVoucherCheckerView, name = "bNVCheckerurlname"),
     path('paymentpageurl/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
-    url(r'^buynow/(?P<pk>\d+)$', views.Buynow, name = "buynowurlname")
+    path('paymentpageurl/<buyNowTunnel>/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
