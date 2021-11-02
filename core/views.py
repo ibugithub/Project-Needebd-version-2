@@ -115,7 +115,7 @@ def AddToCartView(request):
         myproduct = Product.objects.get(id=product_id)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
-        if myproduct.unitGroup == "Kg" or myproduct.unitGroup == "Liter" or myproduct.unitGroup == "ClothPicesSize":
+        if myproduct.unitGroup == "SolidWeight" or myproduct.unitGroup == "LiquidWeight" or myproduct.unitGroup == "ClothPicesSize":
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
@@ -195,7 +195,7 @@ def PlusCartView(request):
         unit_amount = request.GET['unit_amount']
         size = request.GET['size']
 
-        if product.unitGroup == "Kg" or product.unitGroup == "Liter" or product.unitGroup == "ClothPicesSize":
+        if product.unitGroup == "SolidWeight" or product.unitGroup == "LiquidWeight" or product.unitGroup == "ClothPicesSize":
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
@@ -249,7 +249,7 @@ def MinusCartView(request):
                 Item += 1
             return Item
 
-        if product.unitGroup == "Liter" or product.unitGroup == "Kg" or product.unitGroup == "ClothPicesSize":
+        if product.unitGroup == "LiquidWeight" or product.unitGroup == "SolidWeight" or product.unitGroup == "ClothPicesSize":
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
@@ -319,7 +319,7 @@ def RemoveCartView(request):
     unit = request.GET['unit']
     unit_amount = request.GET['unit_amount']
     size = request.GET['size']
-    if product.unitGroup == "Liter" or product.unitGroup == "Kg" or product.unitGroup == "ClothPicesSize":
+    if product.unitGroup == "LiquidWeight" or product.unitGroup == "SolidWeight" or product.unitGroup == "ClothPicesSize":
         cart = Cart.objects.get(user=user,
                                 product=product,
                                 unit=unit,
@@ -808,10 +808,80 @@ def buyNowDataView(request):
     request.session['size'] = size
 
     data = {
-        'test' : 'demo'
+        'demo' : 'test'
     }
     return JsonResponse(data)
 
+def minMaxUnitCheckerView(request):
+    data = {}
+    productId = request.GET['prodIdV']
+    fontendUnit = request.GET['unitV']
+    fontendUnitAmount = request.GET['unitAmountV']
+    product = Product.objects.get(id = productId)
+    backendUnit = product.unit
+    backendUnitValue = product.unitValue
+    minUnitValue = product.MinimumUnitValue
+    maxUnitValue = product.MaximumUnitValue
+    backendUnitGroup = product.unitGroup
+
+    if backendUnitGroup == "SolidWeight":
+        print("The backendUnit Group is", backendUnitGroup)
+        if backendUnit == "Kg":
+            print("The backend unit is ", backendUnit)
+            if fontendUnit == "Kg":
+                print("the fontendUnit is", fontendUnit)
+            elif fontendUnit == "Gram":
+                print("The fonetendUnit is", fontendUnit)
+            elif fontendUnit == "Pound":
+                print("The fontendUnit is", fontendUnit)
+
+        elif backendUnit == "Gram":
+            print("The backend unit is ", backendUnit)
+            if fontendUnit == "Kg":
+                print("the fontendUnit is", fontendUnit)
+            elif fontendUnit == "Gram":
+                print("The fonetendUnit is", fontendUnit)
+            elif fontendUnit == "Pound":
+                print("The fontendUnit is", fontendUnit)
+        
+        elif backendUnit == "Pound":
+            print("The backend unit is ", backendUnit)
+            if fontendUnit == "Kg":
+                print("the fontendUnit is", fontendUnit)
+            elif fontendUnit == "Gram":
+                print("The fonetendUnit is", fontendUnit)
+            elif fontendUnit == "Pound":
+                print("The fontendUnit is", fontendUnit)
+
+    if backendUnitGroup == "LiquidWeight":
+        print("The backendUnit Group is", backendUnitGroup)
+
+        if backendUnit == "Liter":
+            print("The backend unit is ", backendUnit)
+            if fontendUnit == "Liter":
+                print("the fontendUnit is", fontendUnit)
+            elif fontendUnit == "MiliLiter":
+                print("The fonetendUnit is", fontendUnit)
+
+        elif backendUnit == "MiliLiter":
+            print("The backend unit is ", backendUnit)
+            if fontendUnit == "Liter":
+                print("the fontendUnit is", fontendUnit)
+            elif fontendUnit == "MiliLiter":
+                print("The fonetendUnit is", fontendUnit)
+
+
+
+    # print("This is the productId", productId)
+    # print("This is fontend unit", fontendUnit)
+    # print("This is fontend unitAmount", fontendUnitAmount)
+
+    # print("this is backend unit", backendUnit)
+    # print("This is backend unitvalue", backendUnitValue)
+    # print("This is backend minUnitValue", minUnitValue)
+    # print("This is backend maxUnintValue", maxUnitValue)
+    
+    return JsonResponse(data)
 # This function will show the product info in the buynow page....
 def Buynow(request, pk = None):
     # initial product info will be shown by this section

@@ -62,7 +62,7 @@
                         {% if cart.product.unitGroup == "ClothSize" or cart.product.unitGroup == "ShoeSize"  %}
                         <span>size:{{cart.size}}</span>
                         {% endif %}
-                        {% if cart.product.unitGroup == "ClothPicesSize" or cart.product.unitGroup == "Liter" or cart.product.unitGroup == "Kg" %}
+                        {% if cart.product.unitGroup == "ClothPicesSize" or cart.product.unitGroup == "LiquidWeight" or cart.product.unitGroup == "SolidWeight" %}
                         <span>Amount : {{cart.unit_amount}}{{cart.unit}}</span>
                         {% endif %}
 
@@ -85,9 +85,9 @@
 
                         <span style="font-size: 14px;" class="tk-now"> ৳{{cart.product.discounted_prize}}
                           <!-- filtering for Showing the rate unit in the cart page  -->
-                          {% if cart.product.unitGroup == "Kg" or cart.product.unitGroup == "Gram" or cart.product.unitGroup == "Pound" %}
+                          {% if cart.product.unitGroup == "SolidWeight" or cart.product.unitGroup == "Gram" or cart.product.unitGroup == "Pound" %}
                           /{{cart.product.unitGroup}}
-                          {% elif cart.product.unitGroup == "Liter" or cart.product.unitGroup == "MiliLiter" %}
+                          {% elif cart.product.unitGroup == "LiquidWeight" or cart.product.unitGroup == "MiliLiter" %}
                           /liter
                           {% else %} 
                           /quantity

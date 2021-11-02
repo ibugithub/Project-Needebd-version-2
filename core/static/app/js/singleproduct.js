@@ -146,7 +146,7 @@ function addToCart(element) {
 // This function will Show the different unit and size on the fontend according to the product 
 function fput() {
   let emptydiv = document.getElementById("EmptyDiv");
-  let UnitType = emptydiv.getAttribute("unitGroup");
+  let unitGroup = emptydiv.getAttribute("unitGroup");
 
   let ClothObj = ` <div class="color-size">
     <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the Size </span> </div>
@@ -184,8 +184,27 @@ function fput() {
         <label style = " color : #444;" for = "unitAmount" > Amount: </label>
         <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
       </div>
-        
     </div>`;
+
+  let ShoeSizeUnit = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > select the size </span> </div>
+  <div class="p-size">
+    <div class="p-size-text">
+      <span >Size:</span>
+    </div>
+    <div class="size-button">
+      <select  id = "size" onchange = "uAmountCk()" class="size-button-btn" name = "unit">
+      <option value = "select">Select</option>
+        <option value = "41">41</option>
+        <option value = "42">42</option>
+        <option value = "43"> 43 </option>
+        <option value = "44">44</option>
+        <option value = "45">45</option>
+        <option value = "46"> 46 </option>
+      </select>
+    </div>
+  </div>
+</div>`;
 
   let KgUnit = ` <div class="color-size">
   <div  id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
@@ -230,35 +249,15 @@ function fput() {
     </div>
   </div>`;
 
-  let ShoeSizeUnit = ` <div class="color-size">
-  <div id = "unitAlert" style = "color: red; display: none;"> <span > select the size </span> </div>
-  <div class="p-size">
-    <div class="p-size-text">
-      <span >Size:</span>
-    </div>
-    <div class="size-button">
-      <select  id = "size" onchange = "uAmountCk()" class="size-button-btn" name = "unit">
-      <option value = "select">Select</option>
-        <option value = "41">41</option>
-        <option value = "42">42</option>
-        <option value = "43"> 43 </option>
-        <option value = "44">44</option>
-        <option value = "45">45</option>
-        <option value = "46"> 46 </option>
-      </select>
-    </div>
-  </div>
-</div>`;
-
-  if (UnitType == "ClothSize") {
+  if (unitGroup == "ClothSize") {
     emptydiv.innerHTML += ClothObj;
-  } else if (UnitType == "ClothPicesSize") {
+  } else if (unitGroup == "ClothPicesSize") {
     emptydiv.innerHTML += ClothPicesObj;
-  } else if (UnitType == "Kg") {
+  } else if (unitGroup == "SolidWeight") {
     emptydiv.innerHTML += KgUnit;
-  } else if (UnitType == "Liter") {
+  } else if (unitGroup == "LiquidWeight") {
     emptydiv.innerHTML += LiterUnit
-  } else if (UnitType == "ShoeSize") {
+  } else if (unitGroup == "ShoeSize") {
     emptydiv.innerHTML += ShoeSizeUnit
   }
 }
@@ -274,16 +273,17 @@ buyNowBTN.addEventListener("mouseover", uAmountCk)
 function uAmountCk() {
   var STNAlert = document.getElementById('sAlert')
   var unitAlertElm = document.getElementById('unitAlert')
-  if (unitAlertElm != null) {
 
-    // This try is for The product of having kg and liter unit and clothAreasize unit
-    try {
-      var unitAmount = document.getElementById('unitAmount').value;
-      var unitType = document.getElementById("unit").value;
-    } catch {
-      var unitAmount = 'none';
-      var unitType = "none";
-    }
+  // This try is for The product of having kg and liter unit and clothAreasize unit
+  try {
+    var unitAmount = document.getElementById('unitAmount').value;
+    var unitType = document.getElementById("unit").value;
+  } catch {
+    var unitAmount = 'none';
+    var unitType = "none";
+  }
+
+  if (unitAmount != 'none' && unitType != 'none') {
 
     if (unitType == 'select') {
       unitAlertElm.style.display = "block";
@@ -309,48 +309,74 @@ function uAmountCk() {
     }
 
     if (attempt1 == 'success' && attempt2 == 'success') {
+      if (MinMaxUnitCheck())
+      {
       STNAlert.style.display = "none";
       aTCBtn.disabled = false;
       aTCBtn.style.cursor = "pointer";
       buyNowBTN.disabled = false;
       buyNowBTN.style.cursor = "pointer";
-    }
-
-    //This section will work for the product having the unit of size......
-    try {
-      var sizeElm = document.getElementById('size').value
-    } catch {
-      var sizeElm = 'none';
-    }
-
-    if (sizeElm != 'none') {
-
-      if (sizeElm == 'select') {
-        unitAlertElm.style.display = "block";
-        aTCBtn.disabled = true;
-        aTCBtn.style.cursor = "not-allowed";
-        buyNowBTN.disabled = true;
-        buyNowBTN.style.cursor = "not-allowed";
-      } else {
-        unitAlertElm.style.display = "none"
-        aTCBtn.disabled = false;
-        aTCBtn.style.cursor = "pointer";
-        buyNowBTN.disabled = false;
-        buyNowBTN.style.cursor = "pointer";
       }
+
     }
-    $.ajax({
-      method: "GET",
-      url: "/buynowdataurl",
-      data: {
-        unit: unitType,
-        unitAmount: unitAmount,
-        size: sizeElm,
-        productId: prodId
-      }
-    })
+
   }
 
+  //This section will work for the product having the unit of size......
+  try {
+    var sizeElm = document.getElementById('size').value
+  } catch {
+    var sizeElm = 'none';
+  }
+
+  if (sizeElm != 'none') {
+
+    if (sizeElm == 'select') {
+      unitAlertElm.style.display = "block";
+      aTCBtn.disabled = true;
+      aTCBtn.style.cursor = "not-allowed";
+      buyNowBTN.disabled = true;
+      buyNowBTN.style.cursor = "not-allowed";
+    } else {
+      unitAlertElm.style.display = "none"
+      aTCBtn.disabled = false;
+      aTCBtn.style.cursor = "pointer";
+      buyNowBTN.disabled = false;
+      buyNowBTN.style.cursor = "pointer";
+    }
+  }
+  $.ajax({
+    method: "GET",
+    url: "/buynowdataurl",
+    data: {
+      unit: unitType,
+      unitAmount: unitAmount,
+      size: sizeElm,
+      prodIdV: prodId
+    },
+  })
+}
+
+
+function MinMaxUnitCheck(){
+console.log("connected element2")
+var unit = document.getElementById('unit').value
+var unitAmount = document.getElementById('unitAmount').value
+console.log(unit)
+console.log(unitAmount)
+$.ajax({
+  
+  method : "GET",
+  url : '/mmucheckerurl',
+  data : {
+  prodIdV : prodId,
+  unitV : unit,
+  unitAmountV : unitAmount
+  },
+  success: function(data){
+  }
+})
+return false
 }
 
 

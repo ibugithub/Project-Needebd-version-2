@@ -76,9 +76,9 @@ class Product(models.Model):
     sell_amount= models.IntegerField(null=True, blank=True)
     def __str__(self):
         return str(self.title)
-    Unit_Choices = (
-                        ("Kg", "Kg"),
-                        ("Liter", "Liter"),
+    UnitGroup_Choices = (
+                        ("SolidWeight", "SolidWeight"),
+                        ("LiquidWeight", "LiquidWeight"),
                         ("KgPacket", "KgPacket"),
                         ("LiterPacket", "LiterPacket"),
                         ("ClothSize", "ClothSize"),
@@ -86,8 +86,18 @@ class Product(models.Model):
                         ("ShoeSize", "ShoeSize"),
                         ("Packet", "Packet")
                       )
-    unitGroup = models.CharField(max_length=30, choices = Unit_Choices, null = True)
-    unitValue = models.IntegerField(null = True)
+    Unit_Choices = (
+                        ("Kg", "Kg"),
+                        ("Gram", "Gram"),
+                        ("Pound", "Pound"),
+                        ("Liter", "Liter"),
+                        ("MiliLiter", "MiliLiter")
+                      )
+    unitGroup = models.CharField(max_length=30, choices = UnitGroup_Choices, null = True, blank = True)
+    unit = models.CharField(max_length=30, choices= Unit_Choices, null=True, blank = True)
+    unitValue = models.IntegerField(null = True, blank = True)
+    MinimumUnitValue = models.IntegerField(null = True, blank = True)
+    MaximumUnitValue = models.IntegerField(null = True, blank = True)
     
     def save(self, *args, **kwargs):
         prizeGap =  self.selling_prize - self.discounted_prize
@@ -111,7 +121,8 @@ class Cart(models.Model):
     @property
     def products_total_selling_cost(self):
          # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.unitGroup == "Kg" or self.product.unitGroup == "Liter" or self.product.unitGroup == "ClothPicesSize":
+        print("This is the ",self.product.unitGroup)
+        if self.product.unitGroup == "SolidWeight" or self.product.unitGroup == "LiquidWeight" or self.product.unitGroup == "ClothPicesSize":
             if self.unit == "Gram" or self.unit == "MiliLiter":
                 # Adjusting the prize according to the absolute unit....
                 converted_amount = self.unit_amount * 0.001
@@ -125,14 +136,13 @@ class Cart(models.Model):
             Total_Cost = self.quantity * self.product.selling_prize * converted_amount     
         # For the products which doesn't have the extra unit option....
         if self.product.unitGroup == "ClothSize" or self.product.unitGroup == "Packet" or self.product.unitGroup == "ShoeSize":
-            Total_Cost = self.quantity * self.product.selling_prize
-        
+            Total_Cost = self.quantity * self.product.selling_prize        
         return Total_Cost
 
     @property
     def products_total_cost(self):
         # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.unitGroup == "Kg" or self.product.unitGroup == "Liter" or self.product.unitGroup == "ClothPicesSize":
+        if self.product.unitGroup == "SolidWeight" or self.product.unitGroup == "LiquidWeight" or self.product.unitGroup == "ClothPicesSize":
             if self.unit == "Gram" or self.unit == "MiliLiter":
                 # Adjusting the prize according to the absolute unit....
                 converted_amount = self.unit_amount * 0.001
