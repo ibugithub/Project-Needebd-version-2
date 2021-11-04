@@ -296,8 +296,9 @@ function uAmountCk() {
       unitAlertElm.style.display = "none";
     }
 
-    if (unitAmount == "" || unitAmount < 1) {
+    if (unitAmount == "" || unitAmount < 0 || unitAmount == 0) {
       STNAlert.style.display = "block";
+      STNAlert.innerHTML = "select the amount"
       aTCBtn.disabled = true;
       aTCBtn.style.cursor = "not-allowed";
       buyNowBTN.disabled = true;
@@ -309,15 +310,7 @@ function uAmountCk() {
     }
 
     if (attempt1 == 'success' && attempt2 == 'success') {
-      if (MinMaxUnitCheck())
-      {
-      STNAlert.style.display = "none";
-      aTCBtn.disabled = false;
-      aTCBtn.style.cursor = "pointer";
-      buyNowBTN.disabled = false;
-      buyNowBTN.style.cursor = "pointer";
-      }
-
+      MinMaxUnitCheck()
     }
 
   }
@@ -357,13 +350,13 @@ function uAmountCk() {
   })
 }
 
-
 function MinMaxUnitCheck(){
 console.log("connected element2")
 var unit = document.getElementById('unit').value
 var unitAmount = document.getElementById('unitAmount').value
 console.log(unit)
 console.log(unitAmount)
+
 $.ajax({
   
   method : "GET",
@@ -374,9 +367,26 @@ $.ajax({
   unitAmountV : unitAmount
   },
   success: function(data){
+    var STNAlert = document.getElementById('sAlert')
+    STNAlert.style.display = 'block'
+    STNAlert.innerHTML = data.message
+    if (data.attempt == true)
+    {
+      STNAlert.style.display = "none";
+      aTCBtn.disabled = false;
+      aTCBtn.style.cursor = "pointer";
+      buyNowBTN.disabled = false;
+      buyNowBTN.style.cursor = "pointer";
+    }
+    if (data.attempt == false){
+      aTCBtn.disabled = true;
+      aTCBtn.style.cursor = "not-allowed";
+      buyNowBTN.disabled = true;
+      buyNowBTN.style.cursor = "not-allowed";
+    }
+   
   }
 })
-return false
 }
 
 

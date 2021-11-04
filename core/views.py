@@ -836,7 +836,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    convertedSellingCost =                    
+                                  
                 else:
                     if fontendUnitAmount < minUnitValue:
                         message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
