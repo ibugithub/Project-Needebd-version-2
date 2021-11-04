@@ -122,7 +122,6 @@ def AddToCartView(request):
                                         unitGroup=unit,
                                         unit_amount = unit_amount
                                         )
-
                 cart.unit_amount += 1
                 cart.save()
             except:
@@ -813,75 +812,258 @@ def buyNowDataView(request):
     return JsonResponse(data)
 
 def minMaxUnitCheckerView(request):
+    request.session['buyNowUnit'] = "none"
+    request.session['buyNowUnitAmount'] = "none"
     data = {}
     productId = request.GET['prodIdV']
     fontendUnit = request.GET['unitV']
-    fontendUnitAmount = request.GET['unitAmountV']
+    fontendUnitAmount = float(request.GET['unitAmountV'])
     product = Product.objects.get(id = productId)
+    buyNowSellingCost = product.selling_prize
+    buyNowDiscountedCost = product.discounted_prize
     backendUnit = product.unit
     backendUnitValue = product.unitValue
     minUnitValue = product.MinimumUnitValue
     maxUnitValue = product.MaximumUnitValue
     backendUnitGroup = product.unitGroup
-
+ 
     if backendUnitGroup == "SolidWeight":
-        print("The backendUnit Group is", backendUnitGroup)
         if backendUnit == "Kg":
-            print("The backend unit is ", backendUnit)
+
             if fontendUnit == "Kg":
-                print("the fontendUnit is", fontendUnit)
+                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    convertedSellingCost =                    
+                else:
+                    if fontendUnitAmount < minUnitValue:
+                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
+                    elif fontendUnitAmount > maxUnitValue:
+                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                            
             elif fontendUnit == "Gram":
-                print("The fonetendUnit is", fontendUnit)
+                gramConvertedMinUnitValue = minUnitValue * 1000
+                gramConvertedMaxUnitValue = maxUnitValue * 1000
+                if fontendUnitAmount >= gramConvertedMinUnitValue and fontendUnitAmount <= gramConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < gramConvertedMinUnitValue:
+                        message = f"you have to select  atleast {gramConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > gramConvertedMaxUnitValue:
+                        message = f"you can't select  more than {gramConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "Pound":
                 print("The fontendUnit is", fontendUnit)
+                poundConvertedMinUnitValue = minUnitValue * 2.20462
+                poundConvertedMaxUnitValue = maxUnitValue * 2.20462
+                if fontendUnitAmount >= poundConvertedMinUnitValue and fontendUnitAmount <= poundConvertedMaxUnitValue:                    
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < poundConvertedMinUnitValue:
+                        message = f"you have to select  atleast {poundConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > poundConvertedMaxUnitValue:
+                        message = f"you can't select  more than {poundConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
 
         elif backendUnit == "Gram":
-            print("The backend unit is ", backendUnit)
+ 
             if fontendUnit == "Kg":
-                print("the fontendUnit is", fontendUnit)
+                kgConvertedMinUnitValue = minUnitValue  *.001
+                kgConvertedMaxUnitValue = maxUnitValue  *.001
+                if fontendUnitAmount >= kgConvertedMinUnitValue and fontendUnitAmount <= kgConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:  
+                    if fontendUnitAmount < kgConvertedMinUnitValue:
+                        message = f"you have to select  atleast {kgConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > kgConvertedMaxUnitValue:
+                        message = f"you can't select  more than {kgConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "Gram":
-                print("The fonetendUnit is", fontendUnit)
+                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < minUnitValue:
+                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > maxUnitValue:
+                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "Pound":
-                print("The fontendUnit is", fontendUnit)
-        
+                poundConvertedMinUnitValue = minUnitValue * 0.00220462
+                poundConvertedMaxUnitValue = maxUnitValue * 0.00220462
+                if fontendUnitAmount >=  poundConvertedMinUnitValue and fontendUnitAmount <= poundConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < poundConvertedMinUnitValue:
+                        message = f"you have to select  atleast {poundConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > poundConvertedMaxUnitValue:
+                        message = f"you can't select  more than {poundConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
         elif backendUnit == "Pound":
-            print("The backend unit is ", backendUnit)
             if fontendUnit == "Kg":
-                print("the fontendUnit is", fontendUnit)
+                kgConvertedMinUnitValue = minUnitValue * 0.453592
+                kgConvertedMaxUnitValue = maxUnitValue * 0.453592
+                if fontendUnitAmount >= kgConvertedMinUnitValue and fontendUnitAmount <= kgConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < kgConvertedMinUnitValue:
+                        message = f"you have to select  atleast {kgConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > kgConvertedMaxUnitValue:
+                        message = f"you can't select  more than {kgConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "Gram":
-                print("The fonetendUnit is", fontendUnit)
+                gramConvertedMinUnitValue = minUnitValue * 453.592
+                gramConvertedMaxUnitValue = maxUnitValue * 453.592
+                if fontendUnitAmount >= gramConvertedMinUnitValue and fontendUnitAmount <= gramConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < gramConvertedMinUnitValue:
+                        message = f"you have to select  atleast {gramConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > gramConvertedMaxUnitValue:
+                        message = f"you can't select  more than {gramConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "Pound":
-                print("The fontendUnit is", fontendUnit)
+                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < minUnitValue:
+                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > maxUnitValue:
+                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
 
     if backendUnitGroup == "LiquidWeight":
-        print("The backendUnit Group is", backendUnitGroup)
 
         if backendUnit == "Liter":
-            print("The backend unit is ", backendUnit)
             if fontendUnit == "Liter":
-                print("the fontendUnit is", fontendUnit)
+                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < minUnitValue:
+                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > maxUnitValue:
+                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "MiliLiter":
-                print("The fonetendUnit is", fontendUnit)
+                MLConvertedMinUnitValue = minUnitValue * 1000
+                MLConvertedMaxUnitValue = maxUnitValue * 1000
+                if fontendUnitAmount >= MLConvertedMinUnitValue and fontendUnitAmount <= MLConvertedMaxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                else:
+                    if fontendUnitAmount < MLConvertedMinUnitValue:
+                        message = f"you have to select  atleast {MLConvertedMinUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > MLConvertedMaxUnitValue:
+                        message = f"you can't select  more than {MLConvertedMaxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
 
         elif backendUnit == "MiliLiter":
-            print("The backend unit is ", backendUnit)
             if fontendUnit == "Liter":
-                print("the fontendUnit is", fontendUnit)
+                LiterConvertedMinUnitVAlue = minUnitValue * 0.001
+                LiterConvertedMaxUnitVAlue = maxUnitValue * 0.001
+                if fontendUnitAmount >= LiterConvertedMinUnitVAlue and fontendUnitAmount <= LiterConvertedMaxUnitVAlue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < LiterConvertedMinUnitVAlue:
+                        message = f"you have to select  atleast {LiterConvertedMinUnitVAlue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > LiterConvertedMaxUnitVAlue:
+                        message = f"you can't select  more than {LiterConvertedMaxUnitVAlue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+
             elif fontendUnit == "MiliLiter":
-                print("The fonetendUnit is", fontendUnit)
+                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                    data["message"] = ""
+                    data["attempt"] = True
+                    request.session['buyNowUnit'] = fontendUnit
+                    request.session['buyNowUnitAmount'] = fontendUnitAmount
+                else:
+                    if fontendUnitAmount < minUnitValue:
+                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
+                    elif fontendUnitAmount > maxUnitValue:
+                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                        data["message"] = message
+                        data["attempt"] = False
 
-
-
-    # print("This is the productId", productId)
-    # print("This is fontend unit", fontendUnit)
-    # print("This is fontend unitAmount", fontendUnitAmount)
-
-    # print("this is backend unit", backendUnit)
-    # print("This is backend unitvalue", backendUnitValue)
-    # print("This is backend minUnitValue", minUnitValue)
-    # print("This is backend maxUnintValue", maxUnitValue)
-    
     return JsonResponse(data)
+
 # This function will show the product info in the buynow page....
 def Buynow(request, pk = None):
     # initial product info will be shown by this section
@@ -901,16 +1083,19 @@ def Buynow(request, pk = None):
     context['newaddress'] = newAddress
     context["daddress"] = defaultAddress
     context["profile"] = newProfile
-
+    
     if pk != None:
         newProduct = Product.objects.get(id = pk)
         subTotal = newProduct.discounted_prize
         shippingCost = 70
         total = subTotal + shippingCost
+        context['buyNowUnit'] = request.session['buyNowUnit']
+        context['buyNowUnitAmount'] = request.session['buyNowUnitAmount']
         context["product"] = newProduct
         context['subtotal'] = subTotal
         context["shippingCost"] = shippingCost
         context["total"] = total
+
         request.session['buyNowSubTotal'] = subTotal
         request.session['buyNowTotal'] = total
         return render(request, 'app/buyNowCheckout.html',context = context)
