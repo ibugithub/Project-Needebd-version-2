@@ -3,6 +3,7 @@ from django.db.models.deletion import SET_NULL
 from ProjectNeedeBd import settings
 from django.core.validators import MinValueValidator
 from django.core.validators import RegexValidator
+import math
 # Create your models here.
 
 class DisplayWraper(models.Model):
@@ -72,7 +73,7 @@ class Product(models.Model):
     description = models.TextField()
     brand = models.CharField(max_length=100, null=True, blank=True)
     display_wraper = models.ForeignKey(DisplayWraper, models.SET_NULL, null=True, blank=True)   
-    discount = models.IntegerField(null=True, blank=True)
+    discount = models.FloatField(null=True, blank=True)
     sell_amount= models.IntegerField(null=True, blank=True)
     def __str__(self):
         return str(self.title)
@@ -95,7 +96,7 @@ class Product(models.Model):
                       )
     unitGroup = models.CharField(max_length=30, choices = UnitGroup_Choices, null = True, blank = True)
     unit = models.CharField(max_length=30, choices= Unit_Choices, null=True, blank = True)
-    unitValue = models.IntegerField(null = True, blank = True)
+    unitValue_On_Increase_or_Decrease = models.IntegerField(null = True, blank = True)
     MinimumUnitValue = models.IntegerField(null = True, blank = True)
     MaximumUnitValue = models.IntegerField(null = True, blank = True)
     
@@ -103,7 +104,7 @@ class Product(models.Model):
         prizeGap =  self.selling_prize - self.discounted_prize
         sellingPrizePercent = self.selling_prize / 100 
         PrizeGapPercent = prizeGap / sellingPrizePercent 
-        self.discount = round(PrizeGapPercent)
+        self.discount = round(PrizeGapPercent, 2)
         super().save(*args, **kwargs) 
    
 class Cart(models.Model):
@@ -159,7 +160,6 @@ class Cart(models.Model):
             Total_Cost = self.quantity * self.product.discounted_prize
         return Total_Cost
     
-
 # Account Related Models...
 GENDER_CHOICES = (
     ("Male", "Male"),

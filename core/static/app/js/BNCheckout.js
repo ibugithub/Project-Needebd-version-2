@@ -26,12 +26,54 @@ var hiddenDiscountElm = document.getElementById('hiddenDiscount')
 var hiddenNewTotalElm = document.getElementById('hiddenNewTotal')
 var couponApplyElm = document.getElementById('couponApply')
 var haveAnyCouponElm = document.getElementById('hacoupon')
+var unitGroup = document.getElementById('minusBtn').getAttribute('unitGroup')
+var unitAmount = document.getElementById('buyNowUnitAmount2')
 
 
 function buyNow(elm){
-    // When user will click on the Plus button on the buynow page this section will work
-    if (elm == "plus"){
+    
+  // This section will work for product haveing solid and Liquid weight 
+    if (unitGroup == "SolidWeight" || unitGroup == "LiquidWeight")
+    {  
+      hiddenCouponInfoElm.style.display = 'none'
+      couponApplyElm.style.display = 'none'
+      haveAnyCouponElm.style.display = "block"
+      if (elm == "plus")
+        {
+          Action = "plus"
+        }
+      if (elm == "minus")
+      {
+        Action = "minus"
+      }
+        $.ajax({ 
+          method : "GET",
+          url : "/buynowurl",
+          data : {
+              Group : "nonpacket",
+              productId : prodId,
+              action : Action 
+          },
+          success : function(data){
+          unitAmount.innerHTML = data.unitAmount
+          sellingPrizeElm.innerHTML = data.sellingCost
+          discountedPrizeElm.innerHTML = data.discountedCost
+          subTotalElm.innerHTML = data.discountedCost
+          buyNowTotalElm.innerHTML = data.total
+          if(unitAmount.innerHTML < data.minAmount){
+            buyNowLeft.style.visibility = "hidden"
+          }
+          }
+      })
+      
+     
+    }
 
+    else 
+    // This section will work for packet product
+    {
+      // When user will click on the Plus button on the buynow page on packet Item this section will work
+      if (elm == "plus"){
         quantityValue = parseInt(quantity.value ) + 1
         quantity.value = quantityValue
         quantity.innerHTML = quantity.value
@@ -67,6 +109,21 @@ function buyNow(elm){
     }
     }
 
+    $.ajax({
+      method : "GET",
+      url : "/buynowurl",
+      data : {
+          Group : "packet",
+          productId : prodId,
+          quantity : quantityValue
+      },
+      success : function(data){
+      subTotalElm.innerHTML = data.subTotal
+      buyNowTotalElm.innerHTML = data.total
+      }
+    })
+    }
+
     // When user will click on the Remove button on the buynow page this section will work
     if (elm == "remove"){
         buyNowLeft.style.visibility = 'hidden'
@@ -74,18 +131,6 @@ function buyNow(elm){
         couponApplyElm.style.display = 'none'
         haveAnyCouponElm.style.display = "block"
     }
-    $.ajax({
-        method : "GET",
-        url : "/buynowurl",
-        data : {
-            productId : prodId,
-            quantity : quantityValue
-        },
-        success : function(data){
-        subTotalElm.innerHTML = data.subTotal
-        buyNowTotalElm.innerHTML = data.total
-        }
-    })
 }
 
 // When we will click on the apply button on the coupon apply form

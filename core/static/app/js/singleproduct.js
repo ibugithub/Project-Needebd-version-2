@@ -269,7 +269,7 @@ var prodId = aTCBtn.getAttribute('prod')
 aTCBtn.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener("mouseover", uAmountCk)
 
-// This function will prevent clicking the 'add to cart' and 'buynow' button if not you select the unit amount
+// This function will prevent clicking the 'add to cart' and 'buynow' button if not you select the unit or unit amount
 function uAmountCk() {
   var STNAlert = document.getElementById('sAlert')
   var unitAlertElm = document.getElementById('unitAlert')
@@ -351,14 +351,10 @@ function uAmountCk() {
 }
 
 function MinMaxUnitCheck(){
-console.log("connected element2")
 var unit = document.getElementById('unit').value
 var unitAmount = document.getElementById('unitAmount').value
-console.log(unit)
-console.log(unitAmount)
 
 $.ajax({
-  
   method : "GET",
   url : '/mmucheckerurl',
   data : {
