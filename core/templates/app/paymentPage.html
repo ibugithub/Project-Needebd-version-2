@@ -315,9 +315,15 @@
                                     </div>
                                 </div>
                                 <div class="ck-pay-btn">
-                                    <a href="">
+                                    {% if from == 'buyNow' %}
+                                    <a href="{% url 'bwordermakerurlname' %}">
                                         <button id="PTPayBtn" class="pay-btn">Proceed to pay</button>
                                     </a>
+                                    {% else %} 
+                                    <a href="{% url 'ctordermakerurlname' %}">
+                                        <button id="PTPayBtn" class="pay-btn">Proceed to pay</button>
+                                    </a>
+                                    {% endif %}
 
                                 </div>
                             </div>

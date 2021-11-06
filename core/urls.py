@@ -37,4 +37,6 @@ urlpatterns = [
     path('paymentpageurl/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
     path('paymentpageurl/<buyNowTunnel>/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
     path('mmucheckerurl/', views.minMaxUnitCheckerView, name = "mmucheckerurlname"),
+    path('bwordermakerurl/', views.buyNowOrderMakerView, name = "bwordermakerurlname"),
+    path('ctordermakerurl/',views.cartOrderMakerView, name = 'ctordermakerurlname')
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

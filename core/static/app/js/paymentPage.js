@@ -39,6 +39,7 @@ for (let i = 0; i < len2; i++){
     curierSelector[i].checked = true
     curierSelectionError.innerHTML = ""
     PTPayButton.removeAttribute("disabled")
+    PTPayButton.style.cursor = "pointer"
   })
 }
 
@@ -59,9 +60,11 @@ PTPayButton.addEventListener('mouseover', function(){
   {
     selectionError.innerHTML = "You must select an option"
     PTPayButton.setAttribute('disabled', "disabled")
+    PTPayButton.style.cursor = "not-allowed"
   }
   if(curierValueGetter() == undefined){
     curierSelectionError.innerHTML = "you must select a curier service"
+    PTPayButton.style.cursor = "not-allowed"
     PTPayButton.setAttribute("disabled", "disabled")
   }
 })
@@ -69,7 +72,8 @@ PTPayButton.addEventListener('mouseover', function(){
 // will remove the selection error when cash on delivery checkbox will be checked
 cODElement.addEventListener('change', function(){
   if (cODElement.checked)
-  { PTPayButton.removeAttribute('disabled')
+  { PTPayButton.style.cursor = 'pointer'
+    PTPayButton.removeAttribute('disabled')
     document.getElementById('selectionError').innerHTML = ""
   }
 })

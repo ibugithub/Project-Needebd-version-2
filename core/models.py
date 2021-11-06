@@ -122,7 +122,6 @@ class Cart(models.Model):
     @property
     def products_total_selling_cost(self):
          # <---This is for the product of having Kg or Liter or Area Unit--->
-        print("This is the ",self.product.unitGroup)
         if self.product.unitGroup == "SolidWeight" or self.product.unitGroup == "LiquidWeight" or self.product.unitGroup == "ClothPicesSize":
             if self.unit == "Gram" or self.unit == "MiliLiter":
                 # Adjusting the prize according to the absolute unit....
@@ -222,3 +221,25 @@ class CustomerAddress(models.Model):
     address = models.CharField(max_length = 100)
     isDefault = models.BooleanField(null = True, blank = True, default = False)
 
+STATUS_CHOICE = (
+    ('Accepted', 'Accepted'),
+    ('Packed', 'Packed'),
+    ('On the Way', 'On the Way'),
+    ('Delivered', 'Delivered'),
+    ('Cencel', 'Cencel'),
+    ('Pending', 'pending'),
+)
+
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    profile = models.ForeignKey(CustomerProfile, models.SET_NULL, null=True)
+    address = models.ForeignKey(CustomerAddress, models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, models.SET_NULL, null=True)
+    quantity = models.PositiveIntegerField(default = 1)
+    unit = models.CharField(max_length=20)
+    unitAmount = models.FloatField()
+    size = models.CharField(max_length=20)
+    subTotal = models.FloatField()
+    Total = models.FloatField()
+    ordered_date = models.DateTimeField(auto_now_add = True)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICE, default='Pending')

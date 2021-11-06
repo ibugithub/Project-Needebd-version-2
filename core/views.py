@@ -8,7 +8,7 @@ from .models import (Brand_Logo_row1, Brand_Logo_row2, Brand_Logo_row3,
                      Category, Slider, Mobile_Category, Footer_Colum1,
                      Footer_Colum2, Footer_Colum3, Footer_Colum4, Product,
                      CategoryWraper, Cart, CustomerProfile, Divisions,
-                     Districts, Unions, Upazilas, CustomerAddress)
+                     Districts, Unions, Upazilas, CustomerAddress, Order)
 from django.views.generic.base import ContextMixin
 from django.views.generic import ListView, TemplateView, View
 from django.http import JsonResponse
@@ -511,14 +511,8 @@ class EditProfileView(View):
         if name == "" or len(name) < 3:
             context["nameerror"] = "atleast 3 character Needed"
             attempt1 = "failed"
-            print("name is not here")
         else:
             attempt1 = "success"
-            print('name is here')
-        
-        print("name is", name)
-        print(name == "")
-        print(type(name))
         
         if year == 0:
             context["yearerror"] = "set it"
@@ -545,18 +539,9 @@ class EditProfileView(View):
         else:
             attempt5 = "success"
 
-        print(attempt1)
-        print(attempt2)
-        print(attempt3)
-        print(attempt4)
-        print(attempt5)
-        print(month)
-        print("...", gender)
         if attempt1 == "success" and attempt2 == "success" and attempt3 == "success" and attempt4 == "success" and attempt5 == "success":
-            print("condition matched")
             customerprofile.full_name = name
             customerprofile.birthdate = datetime.date(year, month, day)
-            print("....",gender)
             customerprofile.gender = gender
             customerprofile.save()
             return redirect('profileurlname')
@@ -590,7 +575,6 @@ class AddAddressView(View):
     unions = Unions.objects.all()
 
     def get(self, request, pk = 'none', *args, **kwargs):
-        print("...",pk)
         context = {
             'divisions': self.division,
             'districts': self.districts,
@@ -712,17 +696,13 @@ class AddAddressView(View):
                 
             else:                    
                 newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
-                print(len(newCustomerAddress))
                 if len(newCustomerAddress) == 0:
-                    print("this is the first time")
                     CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address, isDefault = True).save()
                 else:
-                    print("This is not the first time")
                     CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
                
                 return redirect("/abookurl")
         else:
-            print("No you can't save all the data")       
             return render(request, self.template_name, context = context)
 
 class OrderView(TemplateView):
@@ -802,9 +782,12 @@ def buyNowDataView(request):
     request.session['buyNowUnit'] = "none"
     request.session['buyNowUnitAmount'] = "none"
     request.session['size'] = "none"
+    request.session['buyNowProdId'] = "none"
     unit = request.GET['unit']
     unitAmount = request.GET['unitAmount']
     size = request.GET['size']
+    productId = request.GET['prodIdV']
+    request.session['buyNowProdId'] = productId
     request.session['buyNowUnit'] = unit
     request.session['buyNowUnitAmount'] = unitAmount
     request.session['initialUnitAmount'] = unitAmount
@@ -1188,6 +1171,7 @@ def Buynow(request, pk = None):
     request.session['buyNowSubTotal'] = 'none'
     request.session['buyNowTotal'] = 'none'
     request.session['buyNowDiscount'] = 'none'
+    request.session['buyNowQuantity'] = "none"
     context = {}
 
     try:
@@ -1215,6 +1199,7 @@ def Buynow(request, pk = None):
         context["total"] = total
         request.session['buyNowSubTotal'] = subTotal
         request.session['buyNowTotal'] = total
+        request.session['buyNowQuantity'] = 1
 
         # This section will only work on when product will have unit Type of solid weight or Liquid weight
         if newProduct.unitGroup == "SolidWeight" or newProduct.unitGroup == "LiquidWeight":
@@ -1239,6 +1224,7 @@ def Buynow(request, pk = None):
         if Group == "packet":
             productId = request.GET['productId']
             quantity = int(request.GET['quantity'])
+            request.session['buyNowQuantity'] = quantity
             newProduct = Product.objects.get(id = productId)
             shippingCost = 70      
             subTotal = newProduct.discounted_prize * quantity
@@ -1403,25 +1389,66 @@ def Buynow(request, pk = None):
                                 unitAmount -= (unitAmount - diff2)
                                 
             if newProduct.unitGroup == "LiquidWeight":
-                print("This is Liquid weight unit")
                 if unit == "Liter":
-                    print("This is", unit)
                     if userSelectedUnit  == "Liter":
-                        pass
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += unitFrequency
+                        if action == "minus":
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= unitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+
                     if userSelectedUnit == "MiliLiter":
-                        pass
+                        cUnitFrequency = round(unitFrequency * 1000, 2)
+                        minUnitValue = round(minUnitValue * 1000, 2)
+                        maxUnitValue = round(maxUnitValue * 1000, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
 
                 if unit == "MiliLiter":
-                    print("This is ", unit)
                     if userSelectedUnit == "MiliLiter":
-                        pass
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += unitFrequency
+                        if action == "minus":
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= unitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+
                     if userSelectedUnit == "Liter":
-                        pass
+                        cUnitFrequency = round(unitFrequency * .001, 2)
+                        minUnitValue = round(minUnitValue * .001, 2)
+                        maxUnitValue = round(maxUnitValue * .001, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
             
             data['unitAmount'] = round(unitAmount, 2)    
             request.session['buyNowUnitAmount'] = unitAmount
-            sellingCost = unitSellingCost * unitAmount
-            discountedCost = unitDiscountedCost * unitAmount
+            sellingCost = round(unitSellingCost * unitAmount, 2)
+            discountedCost = round(unitDiscountedCost * unitAmount, 2)
             data['sellingCost'] = sellingCost
             data['discountedCost'] = discountedCost
             request.session['buyNow_Total_SellingCost'] = sellingCost
@@ -1431,9 +1458,6 @@ def Buynow(request, pk = None):
             data['total'] = total
             request.session['buyNowSubTotal'] = discountedCost
             request.session['buyNowTotal'] = total
-            
-
-
         return JsonResponse(data)
 
 def buyNowVoucherCheckerView(request):
@@ -1507,6 +1531,7 @@ def buyNowVoucherCheckerView(request):
 class paymentPageView(TemplateView):
     template_name = "app/paymentPage.html"
     
+    # this Section will work for carted Products
     def get (self, request, buyNowTunnel = False,  *args, **kwargs):
         if buyNowTunnel == False:
             newCart = Cart.objects.filter(user = request.user)
@@ -1536,6 +1561,7 @@ class paymentPageView(TemplateView):
                 "profile" : newProfile,
                 "newaddress" :newAddress,
                 "daddress" : defaultAddress,
+                "from": "cart"
             } 
             if not request.session["code"] == 'none':
                 # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
@@ -1546,6 +1572,7 @@ class paymentPageView(TemplateView):
             else:
                 context["totalAmount"] = total 
         
+        # This section will work for buyed now Products.......
         if not buyNowTunnel == False:
             context = {}
             newProfile = CustomerProfile.objects.get(user = request.user)
@@ -1564,9 +1591,37 @@ class paymentPageView(TemplateView):
             context['shippingCost'] = shippingCost
             context['totalAmount'] = request.session['buyNowTotal']
             context['buyNowDiscount'] = request.session['buyNowDiscount']
+            context['from'] = "buyNow"
 
         return render(request,self.template_name, context = context)
             
+def buyNowOrderMakerView(request):
+    user = request.user
+    productId = request.session['buyNowProdId']
+    product = Product.objects.get(id = productId)
+    profile = CustomerProfile.objects.get(user = user)
+    defaultAddress = CustomerAddress.objects.get(user = user, isDefault = True)
+    unit = request.session['buyNowUnit']
+    unitAm = request.session['buyNowUnitAmount']
+    if unitAm == 'none':
+        unitAmount = 0
+    else:
+        unitAmount = float(unitAm)
+    size = request.session['size']
+    quan = request.session['buyNowQuantity']
+    if quan == "none":
+        quantity = 0
+    else:
+        quantity = int(quan)
+    subTotal = float(request.session['buyNowSubTotal'])
+    total =  float(request.session['buyNowTotal'])
+    
+    Order(user = user, profile = profile, address = defaultAddress, product = product, quantity = quantity, unit = unit, unitAmount = unitAmount, size = size, subTotal = subTotal, Total = total).save()
+    return redirect('/orderurl')
+
+def cartOrderMakerView(request):
+    print("Now i'm in cart ")
+    return redirect('/orderurl')
 
 
 

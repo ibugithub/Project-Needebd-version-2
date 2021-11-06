@@ -20,6 +20,7 @@ from .models import (
     Unions,
     Upazilas,
     CustomerAddress,
+    Order
 )
 @admin.register(CategoryWraper)
 class WaraperCategoryAdmin(admin.ModelAdmin):
@@ -100,4 +101,6 @@ class UnionsAdmin(admin.ModelAdmin):
 class CustomerAddressAdmin(admin.ModelAdmin):
     list_display = ['user','full_name','phone_number', 'divisions', 'districts','upazilas', 'unions', 'address', 'isDefault']
 
-
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['user','profile','address', 'product', 'quantity','unit', 'unitAmount', 'size', 'subTotal','Total', 'ordered_date', 'status']
