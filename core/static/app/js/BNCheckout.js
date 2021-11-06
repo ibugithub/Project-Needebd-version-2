@@ -60,9 +60,6 @@ function buyNow(elm){
           discountedPrizeElm.innerHTML = data.discountedCost
           subTotalElm.innerHTML = data.discountedCost
           buyNowTotalElm.innerHTML = data.total
-          if(unitAmount.innerHTML < data.minAmount){
-            buyNowLeft.style.visibility = "hidden"
-          }
           }
       })
       

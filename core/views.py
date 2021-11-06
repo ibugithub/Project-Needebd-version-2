@@ -807,6 +807,7 @@ def buyNowDataView(request):
     size = request.GET['size']
     request.session['buyNowUnit'] = unit
     request.session['buyNowUnitAmount'] = unitAmount
+    request.session['initialUnitAmount'] = unitAmount
     request.session['size'] = size
 
     data = {
@@ -827,7 +828,6 @@ def minMaxUnitCheckerView(request):
     buyNowSellingCost = product.selling_prize
     buyNowDiscountedCost = product.discounted_prize
     backendUnit = product.unit
-    # backendUnitValue = product.unitValue
     minUnitValue = product.MinimumUnitValue
     maxUnitValue = product.MaximumUnitValue
     backendUnitGroup = product.unitGroup
@@ -841,6 +841,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
                     converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
                     request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -867,6 +868,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * .001
                     converted_Total_SellingCost = buyNowSellingCost * .001 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * .001
@@ -886,13 +888,14 @@ def minMaxUnitCheckerView(request):
                         data["attempt"] = False
 
             elif fontendUnit == "Pound":
-                poundConvertedMinUnitValue = minUnitValue * 2.20462
-                poundConvertedMaxUnitValue = maxUnitValue * 2.20462
+                poundConvertedMinUnitValue = round(minUnitValue * 2.20462, 2)
+                poundConvertedMaxUnitValue = round(maxUnitValue * 2.20462, 2)
                 if fontendUnitAmount >= poundConvertedMinUnitValue and fontendUnitAmount <= poundConvertedMaxUnitValue:                    
                     data["message"] = ""
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 0.453592
                     converted_Total_SellingCost = buyNowSellingCost * 0.453592 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.453592
@@ -921,6 +924,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 1000
                     converted_Total_SellingCost = buyNowSellingCost * 1000 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 1000
@@ -945,6 +949,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
                     converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
                     request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -970,6 +975,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 453.592
                     converted_Total_SellingCost = buyNowSellingCost * 453.592 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 453.592
@@ -997,6 +1003,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 2.20462
                     converted_Total_SellingCost = buyNowSellingCost * 2.20462 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 2.20462
@@ -1023,6 +1030,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 0.00220462
                     converted_Total_SellingCost = buyNowSellingCost * 0.00220462 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.00220462
@@ -1048,6 +1056,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
                     converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
                     request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -1073,6 +1082,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
                     converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
                     request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -1098,6 +1108,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 0.001
                     converted_Total_SellingCost = buyNowSellingCost * 0.001 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.001
@@ -1126,6 +1137,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Unit_SellingCost= buyNowSellingCost * 1000
                     converted_Total_SellingCost = buyNowSellingCost * 1000 * fontendUnitAmount
                     converted_Unit_DiscountedCost = buyNowDiscountedCost * 1000
@@ -1151,6 +1163,7 @@ def minMaxUnitCheckerView(request):
                     data["attempt"] = True
                     request.session['buyNowUnit'] = fontendUnit
                     request.session['buyNowUnitAmount'] = fontendUnitAmount
+                    request.session['initialUnitAmount'] = fontendUnitAmount
                     converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
                     converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
                     request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -1243,47 +1256,169 @@ def Buynow(request, pk = None):
             action = request.GET['action']
             prouductId = request.GET['productId']
             newProduct = Product.objects.get(id = prouductId)
-            unitAmount = request.session['buyNowUnitAmount']
+            initialUnitAmount = request.session['initialUnitAmount']
+            unitAmount = float(request.session['buyNowUnitAmount'])
             unitSellingCost = request.session['buyNow_Unit_SellingCost']
             unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
             unit = newProduct.unit
             userSelectedUnit = request.session['buyNowUnit']
             unitFrequency = newProduct.unitValue_On_Increase_or_Decrease
+            minUnitValue = newProduct.MinimumUnitValue
+            maxUnitValue = newProduct.MaximumUnitValue
+
             if newProduct.unitGroup == "SolidWeight":
                 if unit == "Kg":
+                    
                     if userSelectedUnit == "Kg":
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
                         if action == "plus":
-                            unitAmount += unitFrequency
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += unitFrequency
                         if action == "minus":
-                            unitAmount -= unitFrequency
-                        data['minAmount'] = newProduct.MinimumUnitValue
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= unitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+
 
                     if  userSelectedUnit == "Gram":
-                        cUnitFrequency = unitFrequency * 1000
-                        cMinAmount = newProduct.MinimumUnitValue * 1000
+                        cUnitFrequency = round(unitFrequency * 1000, 2)
+                        minUnitValue = round(minUnitValue * 1000, 2)
+                        maxUnitValue = round(maxUnitValue * 1000, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
                         if action == "plus":
-                            unitAmount += cUnitFrequency
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
                         if action == "minus":
-                            unitAmount -= cUnitFrequency
-                        data['minAmount'] = cMinAmount
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
 
-                        
                     
+                    if  userSelectedUnit == "Pound":
+                        cUnitFrequency = round(unitFrequency * 2.20462, 2)
+                        minUnitValue = round(minUnitValue * 2.20462, 2)
+                        maxUnitValue = round(maxUnitValue * 2.20462, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue ,2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff ,2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                                                       
                 if unit == "Gram":
-                    print("This is", unit)
+                    if userSelectedUnit == "Gram":
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += unitFrequency
+                        if action == "minus":
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= unitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                                               
+                    if userSelectedUnit == "Kg":
+                        cUnitFrequency = round(unitFrequency * .001, 2)
+                        minUnitValue = round(minUnitValue * .001, 2)
+                        maxUnitValue = round(maxUnitValue * .001, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                    
+                    if userSelectedUnit == "Pound":
+                        cUnitFrequency = round(unitFrequency * 0.00220462, 2)
+                        minUnitValue = round(minUnitValue * 0.00220462, 2)
+                        maxUnitValue = round(maxUnitValue * 0.00220462, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
 
                 if unit == "Pound":
-                    print("This is", unit)
-            
+                    if userSelectedUnit == "Pound":
+
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += unitFrequency
+                        if action == "minus":
+                            if not unitAmount - diff2 <= minUnitValue:
+                                unitAmount -= unitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                        
+                    if userSelectedUnit == "Kg":
+
+                        cUnitFrequency = round(unitFrequency * 0.453592, 2)
+                        minUnitValue = round(minUnitValue * 0.453592, 2)
+                        maxUnitValue = round(maxUnitValue * 0.453592, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                        
+                    if userSelectedUnit == "Gram":
+
+                        cUnitFrequency = round(unitFrequency * 453.592, 2)
+                        minUnitValue = round(minUnitValue * 453.592, 2)
+                        maxUnitValue = round(maxUnitValue * 453.592, 2)
+                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
+                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
+                        if action == "plus":
+                            if not unitAmount >= maxUnitValue:
+                                unitAmount += cUnitFrequency
+                        if action == "minus":
+                            if not unitAmount-diff2 <= minUnitValue:
+                                unitAmount -= cUnitFrequency
+                            else:
+                                unitAmount -= (unitAmount - diff2)
+                                
             if newProduct.unitGroup == "LiquidWeight":
                 print("This is Liquid weight unit")
                 if unit == "Liter":
                     print("This is", unit)
+                    if userSelectedUnit  == "Liter":
+                        pass
+                    if userSelectedUnit == "MiliLiter":
+                        pass
 
                 if unit == "MiliLiter":
                     print("This is ", unit)
+                    if userSelectedUnit == "MiliLiter":
+                        pass
+                    if userSelectedUnit == "Liter":
+                        pass
             
-            data['unitAmount'] = unitAmount    
+            data['unitAmount'] = round(unitAmount, 2)    
             request.session['buyNowUnitAmount'] = unitAmount
             sellingCost = unitSellingCost * unitAmount
             discountedCost = unitDiscountedCost * unitAmount
