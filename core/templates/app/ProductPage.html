@@ -346,25 +346,28 @@
         <div class="pagination-section">
           <div class="pagination-container">
             <div class="pagination-all-btn">
+              {% if page_obj.has_previous %}
               <button class="pagination-prev-btn">
                 <span class="prev-icon"><i class="fas fa-chevron-left"></i></span>
-                <span class="prev-text">Previous</span>
+                <a href="?page=1">&laquo; </a>
+                <span class="prev-text"><a href="?page={{ page_obj.previous_page_number }}">previous</a></span>
               </button>
-              <button class="pagination-btn pagination-active">1</button>
-              <button class="pagination-btn">2</button>
-              <button class="pagination-btn">3</button>
-              <button class="pagination-btn">4</button>
-              <button class="pagination-btn">5</button>
-              <button class="pagination-btn">6</button>
-              <button class="pagination-btn">7</button>
-              <button class="pagination-btn">8</button>
-              <button class="pagination-btn">9</button>
-              <button class="pagination-btn">10</button>
+              {% endif %}
+              
+              <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
 
+
+              {% if page_obj.has_next %}
               <button class="pagination-next-btn">
-                <span class="next-text">Next</span>
+                <span class="next-text">
+                  <a href="?page={{ page_obj.next_page_number }}">next</a>
+                </span>
+                <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;</a>
                 <span class="next-icon"><i class="fa fa-chevron-right"></i></span>
               </button>
+              {% endif %}
             </div>
           </div>
         </div>

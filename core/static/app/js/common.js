@@ -29,20 +29,3 @@ accountDropDown.addEventListener('mouseout', function(){
 
 //---------- This is the end of account dropdown java scripts----------------//
 
-
-
-
-// //---------- This is the start of site menu java scripts----------------//
-// const navIcon = document.querySelector('.nav_icon')
-// const siteCloseBtn = document.querySelector('.site-menu-close-btn')
-
-// const clickBarSiteMenu = document.querySelector('.click-bar-site-menu')
-
-// navIcon.addEventListener('click', function(){
-// clickBarSiteMenu.classList.add('click-bar-site-menu-active')
-// })
-
-// siteCloseBtn.addEventListener('click',function(){
-//     clickBarSiteMenu.classList.remove('click-bar-site-menu-active')
-// })
-// //---------- This is the end of site menu java scripts----------------//

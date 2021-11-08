@@ -103,4 +103,4 @@ class CustomerAddressAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user','profile','address', 'product', 'quantity','unit', 'unitAmount', 'size', 'subTotal','Total', 'ordered_date', 'status']
+    list_display = ['ordered_date','user','profile','address', 'product', 'quantity','unit', 'unitAmount', 'size', 'subTotal','Total', 'ordered_date', 'status']

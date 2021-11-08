@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from coupons.models import Coupon, Voucher
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -86,6 +87,7 @@ class AllCategoryView(Mycontext, ListView):
 
 class ProductPageView(Mycontext, ListView):
     model = Product
+    paginate_by = 10
     context_object_name = 'products'
     template_name = 'app/ProductPage.html'
 
@@ -98,10 +100,14 @@ def SingleProductView(request, pk):
     product = Product.objects.get(id = pk)
     category = product.product_category
     relatedProduct = Product.objects.filter(product_category = category)
+    paginator = Paginator(relatedProduct, 11)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         "product" : product,
         "relatedProduct" : relatedProduct,
-        "showedProductId" : pk
+        "showedProductId" : pk,
+        "page_obj" : page_obj
     }
     return render(request, template_name, context = context)
     
@@ -707,6 +713,10 @@ class AddAddressView(View):
 
 class OrderView(TemplateView):
     template_name = "app/order.html"
+    def get(self, request, *args, **kwargs):
+        newOrder = Order.objects.filter(user = request.user)
+        context = {"orders": newOrder}
+        return render(request, self.template_name, context=context)
 
 class CancellationView(TemplateView):
     template_name = "app/cancellation.html"
@@ -739,6 +749,7 @@ def Checkout(request):
         "profile" : newProfile,
         "newaddress" :newAddress,
         "daddress" : defaultAddress,
+        "totalAmount": total
     } 
     if not request.session["code"] == 'none':
         # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
@@ -1620,7 +1631,31 @@ def buyNowOrderMakerView(request):
     return redirect('/orderurl')
 
 def cartOrderMakerView(request):
-    print("Now i'm in cart ")
+    user = request.user
+    newCart = Cart.objects.filter(user = user) 
+    profile = CustomerProfile.objects.get(user = user)
+    defaultAddress = CustomerAddress.objects.get(user = user, isDefault = True)
+    shippingCost = 70
+    subTotal = 0
+    for cart in newCart:
+        subTotal += cart.products_total_cost
+    total = subTotal + shippingCost
+    if not request.session["code"] == 'none':
+        # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
+        data = VoucherChecker(request, redirect=True)
+        if data['amount'] != "Nan" and data['discount'] != "Nan":
+            newtotal = data['amount']
+            discount = data['discount']
+        else:
+            newtotal = total
+    else:
+        newtotal = total
+        discount = 0
+    
+    for cart in newCart:
+        Order(user = user, profile = profile, address = defaultAddress, product = cart.product, quantity = cart.quantity, unit = cart.unit, unitAmount = cart.unit_amount, size = cart.size, subTotal = subTotal, Total = newtotal).save()
+        cart.delete()
+
     return redirect('/orderurl')
 
 

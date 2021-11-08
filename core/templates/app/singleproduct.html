@@ -151,7 +151,7 @@
   </div>
   <div class="related-product-main">
     <!-- product start -->
-    {% for product in relatedProduct %}
+    {% for product in page_obj %}
     {% if product.id == showedProductId %} 
     <!---continue-->
     {% else %}
@@ -204,6 +204,34 @@
     </div>
     {% endif %}
     {% endfor %}
+    <div class="pagination-section">
+      <div class="pagination-container">
+        <div class="pagination-all-btn">
+          {% if page_obj.has_previous %}
+          <button class="pagination-prev-btn">
+            <span class="prev-icon"><i class="fas fa-chevron-left"></i></span>
+            <a href="?page=1">&laquo; </a>
+            <span class="prev-text"><a href="?page={{ page_obj.previous_page_number }}">previous</a></span>
+          </button>
+          {% endif %}
+          
+          <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+
+          {% if page_obj.has_next %}
+          <button class="pagination-next-btn">
+            <span class="next-text">
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+            </span>
+            <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;</a>
+            <span class="next-icon"><i class="fa fa-chevron-right"></i></span>
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
     <!-- product-end -->
 
   </div>

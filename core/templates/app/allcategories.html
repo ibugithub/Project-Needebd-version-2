@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'app/css/allCategory.css' %}">
 {% endblock css %}
 
-{% block body %} 
+{% block body %}
 <div class="all-categories-section">
   <div class="categories-section-main">
     <div class="categories-content-lp">
@@ -19,11 +19,27 @@
       <div class="categories-static-nav" id="nav-contain">
         <table class="cg-nav-wearper" style="position:relative; top: auto; left: auto; bottom: auto;">
           <tbody class="tb">
-            
+
             <tr class="t-r ">
               {% for category_wraper in category_wrapers_upper %}
-              <td class="anchor-wrap anchor1-wrap selected bn" data-role="anchor1" >
-                <a class="anchor1 anchor-agricuture" href="#food">
+              
+                <td class="anchor-wrap anchor1-wrap selected bn">  
+                  <a class="anchor1 anchor-agricuture" href="#{{category_wraper.name}}">
+                    <i class="cg-icons">
+                      <img src="{{category_wraper.category_image.url}}" alt="">
+                    </i>
+                    <span class="cg-desc">{{category_wraper.name}}</span>
+                  </a>
+                </td>
+              
+              {% endfor %}
+            </tr>
+
+
+            <tr class="t-r">
+              {% for category_wraper in category_wraper_upper2 %}
+              <td class="anchor-wrap anchor1-wrap" data-role="anchor5">
+                <a class="anchor1 anchor-agricuture" href="#{{category_wraper.name}}">
                   <i class="cg-icons">
                     <img src="{{category_wraper.category_image.url}}" alt="">
                   </i>
@@ -31,25 +47,11 @@
                 </a>
               </td>
               {% endfor %}
-            </tr>
-
-            
-            <tr class="t-r">
-              {% for category_wraper in category_wraper_upper2 %}
-              <td class="anchor-wrap anchor1-wrap" data-role="anchor5">
-                <a class="anchor1 anchor-agricuture" href="#toy">
-                  <i class="cg-icons">
-                    <img src="{{category_wraper.category_image.url}}" alt="">
-                  </i>
-                  <span class="cg-desc">Toys & Hobbies</span>
-                </a>
-              </td>
-              {% endfor %}
 
               <td class="anchor-wrap anchor1-wrap" data-role="anchor6">
-                <a class="anchor1 anchor-agricuture" href="#security">
+                <a class="anchor1 anchor-agricuture" href="#Medical">
                   <i class="cg-icons">
-                   .....
+                    .....
                   </i>
                   <span class="cg-desc">More categories</span>
                 </a>
@@ -62,18 +64,18 @@
 
     <!-- categories-sub -->
     {% for category_wraper in category_wraper_all %}
-    <div class="cg-page" style="margin-top: 0;">
+    <div id="{{category_wraper.name}}" class="cg-page" style="margin-top: 0;">
       <div class="until-clearfix">
         <div class="cg-main">
           <div class="cg-item">
             <div class="item-head">
-              <h2 id="food">{{category_wraper.name}}</h2>
+              <h2>{{category_wraper.name}}</h2>
             </div>
             <div class="sub-item">
               <div class="sub-item-content-warpper">
                 <ul class="sub-item-content">
                   {% load core_filters %}
-                   {% for category in category_wraper.name|filtering %}
+                  {% for category in category_wraper.name|filtering %}
                   <li><a href="{% url 'productpageurlname' category %}">{{category}}</a></li>
                   {% endfor %}
                 </ul>
@@ -89,7 +91,6 @@
 </div>
 {% endblock %}
 
-
-
-
-   
+{% block js %}
+<script src="{% static 'app/js/allCat.js' %}"></script>
+{% endblock js %}

@@ -30,7 +30,8 @@
                 </div>
                 <div class="cancellation-container">
                   <div class="cancellation">
-
+                  
+                    {% for order in orders %}
                     <!-- list-start -->
                     <div class="cancellation-list">
                       <div class="order">
@@ -40,7 +41,7 @@
                               <div class="order-create">
                                 <span class="oc">Order date </span>
                                 <span class="order-date">
-                                  12 Sep 2021
+                                  {{order.ordered_date}}
                                 </span>
                               </div>
                               <div class="order-number">
@@ -54,173 +55,38 @@
                         <div class="order-item-row">
                           <div class="order-image">
                             <div class="image-set">
-                              <img src="/static/app/image/product-1.webp" alt="">
+                              <img src="{{order.product.product_image.url}}" alt="">
 
                             </div>
                           </div>
                           <div class="order-product-title">
                             <span class="op-title">
-                              3 Pcs Drain Hair Wig Removal Clog Tools Bathroom Hair Sewer Outlet Kitchen Sink Anti
-                              Clogging Floor Toilet Cleaner Filter
+                              {{order.product.description}}
                             </span>
                           </div>
+                          {% if order.product.unitGroup == 'Packet' or order.product.unitGroup == 'ClothSize' or order.product.unitGroup == 'ShoeSize'  %}
                           <div class="order-qu">
                             <span>Qty:</span>
                             <span class="qu">
-                              1
+                              {{order.quantity}}
                             </span>
                           </div>
+                          {% elif order.product.unitGroup == 'SolidWeight' or order.product.unitGroup == 'LiquidWeight' %}
+                          <div class="order-qu">
+                            <span>Amount:</span>
+                            <span class="qu">
+                              {{order.unitAmount}} {{order.unit}}
+                            </span>
+                          </div>
+                          {% endif %}
                           <div class="order-status">
-                            <a class="os">remove</a>
+                            <a class="os">manage</a>
                           </div>
                         </div>
                       </div>
                     </div>
                     <!-- list-end -->
-
-                    
-                    <!-- list-start -->
-                    <div class="cancellation-list">
-                      <div class="order">
-                        <div class="order-info">
-                          <div class="order-info-row">
-                            <div class="order-info-left">
-                              <div class="order-create">
-                                <span class="oc">Order date </span>
-                                <span class="order-date">
-                                  12 Sep 2021
-                                </span>
-                              </div>
-                              <div class="order-number">
-                                <span class="on">#2345987493274</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="order-item">
-                        <div class="order-item-row">
-                          <div class="order-image">
-                            <div class="image-set">
-                              <img src="/static/app/image/product-1.webp" alt="">
-
-                            </div>
-                          </div>
-                          <div class="order-product-title">
-                            <span class="op-title">
-                              3 Pcs Drain Hair Wig Removal Clog Tools Bathroom Hair Sewer Outlet Kitchen Sink Anti
-                              Clogging Floor Toilet Cleaner Filter
-                            </span>
-                          </div>
-                          <div class="order-qu">
-                            <span>Qty:</span>
-                            <span class="qu">
-                              1
-                            </span>
-                          </div>
-                          <div class="order-status">
-                            <a class="os">remove</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- list-end -->
-
-                    
-                    <!-- list-start -->
-                    <div class="cancellation-list">
-                      <div class="order">
-                        <div class="order-info">
-                          <div class="order-info-row">
-                            <div class="order-info-left">
-                              <div class="order-create">
-                                <span class="oc">Order date </span>
-                                <span class="order-date">
-                                  12 Sep 2021
-                                </span>
-                              </div>
-                              <div class="order-number">
-                                <span class="on">#2345987493274</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="order-item">
-                        <div class="order-item-row">
-                          <div class="order-image">
-                            <div class="image-set">
-                              <img src="/static/app/image/product-1.webp" alt="">
-
-                            </div>
-                          </div>
-                          <div class="order-product-title">
-                            <span class="op-title">
-                              3 Pcs Drain Hair Wig Removal Clog Tools Bathroom Hair Sewer Outlet Kitchen Sink Anti
-                              Clogging Floor Toilet Cleaner Filter
-                            </span>
-                          </div>
-                          <div class="order-qu">
-                            <span>Qty:</span>
-                            <span class="qu">
-                              1
-                            </span>
-                          </div>
-                          <div class="order-status">
-                            <a class="os">remove</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- list-end -->
-
-                    
-                    <!-- list-start -->
-                    <div class="cancellation-list">
-                      <div class="order">
-                        <div class="order-info">
-                          <div class="order-info-row">
-                            <div class="order-info-left">
-                              <div class="order-create">
-                                <span class="oc">Order date </span>
-                                <span class="order-date">
-                                  12 Sep 2021
-                                </span>
-                              </div>
-                              <div class="order-number">
-                                <span class="on">#2345987493274</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="order-item">
-                        <div class="order-item-row">
-                          <div class="order-image">
-                            <div class="image-set">
-                              <img src="/static/app/image/product-1.webp" alt="">
-
-                            </div>
-                          </div>
-                          <div class="order-product-title">
-                            <span class="op-title">
-                              3 Pcs Drain Hair Wig Removal Clog Tools Bathroom Hair Sewer Outlet Kitchen Sink Anti
-                              Clogging Floor Toilet Cleaner Filter
-                            </span>
-                          </div>
-                          <div class="order-qu">
-                            <span>Qty:</span>
-                            <span class="qu">
-                              1
-                            </span>
-                          </div>
-                          <div class="order-status">
-                            <a class="os">remove</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- list-end -->
+                    {% endfor %}
 
                   </div>
 

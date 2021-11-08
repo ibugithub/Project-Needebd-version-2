@@ -111,10 +111,10 @@ class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(0)],  default = 1)
-    unit = models.CharField(max_length = 30, null = True)
-    unit_amount = models.FloatField(null = True)
-    color = models.CharField(max_length = 30, null = True)
-    size  = models.CharField(max_length = 40, null = True)
+    unit = models.CharField(max_length = 30,  default = "none")
+    unit_amount = models.FloatField( default=0)
+    color = models.CharField(max_length = 30,  default = "none")
+    size  = models.CharField(max_length = 40,  default = "none")
   
     def __str__(self):
         return str(self.id)
@@ -241,5 +241,6 @@ class Order(models.Model):
     size = models.CharField(max_length=20)
     subTotal = models.FloatField()
     Total = models.FloatField()
+    discount = models.FloatField(null=True)
     ordered_date = models.DateTimeField(auto_now_add = True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICE, default='Pending')
