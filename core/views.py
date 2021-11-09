@@ -95,7 +95,7 @@ class ProductPageView(Mycontext, ListView):
         qs = super(ProductPageView, self).get_queryset()
         return qs.filter(product_category__title=self.kwargs.get('category'))
 
-def SingleProductView(request, pk):
+def SingleProductView(request, pk): 
     template_name = 'app/singleproduct.html'
     product = Product.objects.get(id = pk)
     category = product.product_category
@@ -1628,6 +1628,17 @@ def buyNowOrderMakerView(request):
     total =  float(request.session['buyNowTotal'])
     
     Order(user = user, profile = profile, address = defaultAddress, product = product, quantity = quantity, unit = unit, unitAmount = unitAmount, size = size, subTotal = subTotal, Total = total).save()
+    if product.unitGroup == "Packet" or product.unitGroup == "ShoeSize" or product.unitGroup == "ClothSize":
+        product.ProductStock -= quantity
+        product.save()
+
+    del request.session["buyNowProdId"]
+    del request.session["buyNowUnit"]
+    del request.session["buyNowUnitAmount"]
+    del request.session["size"]
+    del request.session["buyNowQuantity"]
+    del request.session["buyNowSubTotal"]
+    del request.session["buyNowTotal"]
     return redirect('/orderurl')
 
 def cartOrderMakerView(request):
@@ -1655,7 +1666,10 @@ def cartOrderMakerView(request):
     for cart in newCart:
         Order(user = user, profile = profile, address = defaultAddress, product = cart.product, quantity = cart.quantity, unit = cart.unit, unitAmount = cart.unit_amount, size = cart.size, subTotal = subTotal, Total = newtotal).save()
         cart.delete()
-
+        if cart.product.unitGroup == "Packet" or cart.product.unitGroup == "ShoeSize" or cart.product.unitGroup == "ClothSize":
+            cart.product.ProductStock -= cart.quantity
+            cart.product.save()
+    del request.session["code"]
     return redirect('/orderurl')
 
 

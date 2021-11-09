@@ -76,7 +76,7 @@
                 <ul class="sub-item-content">
                   {% load core_filters %}
                   {% for category in category_wraper.name|filtering %}
-                  <li><a href="{% url 'productpageurlname' category %}">{{category}}</a></li>
+                  <li><a href="{% url 'productpageurlname' category.title %}">{{category.title}}</a></li>
                   {% endfor %}
                 </ul>
               </div>

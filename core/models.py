@@ -99,6 +99,7 @@ class Product(models.Model):
     unitValue_On_Increase_or_Decrease = models.IntegerField(null = True, blank = True)
     MinimumUnitValue = models.IntegerField(null = True, blank = True)
     MaximumUnitValue = models.IntegerField(null = True, blank = True)
+    ProductStock = models.IntegerField(null = True)
     
     def save(self, *args, **kwargs):
         prizeGap =  self.selling_prize - self.discounted_prize

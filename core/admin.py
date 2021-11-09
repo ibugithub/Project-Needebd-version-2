@@ -35,7 +35,7 @@ class DisplayWraperAdmin(admin.ModelAdmin):
     list_display = ['name',]
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title','product_image', 'product_category','unit','selling_prize', 'discounted_prize', 'description', 'brand')
+    list_display = ('title','product_image', 'product_category','unit','selling_prize', 'discounted_prize', 'description', 'brand', 'ProductStock')
 
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):

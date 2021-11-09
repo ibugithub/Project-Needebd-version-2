@@ -25,7 +25,7 @@
       </div>
       {% for uppercategory in uppercategories %}
       <div class="category-product">
-        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}#{{uppercategory.name}}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{{uppercategory.category_image.url}}">
@@ -231,7 +231,11 @@
 
     {% for shop_with_deal in shop_with_deals %}
     <li>
-      <a href="{% url 'singleproducturlname' shop_with_deal.id %}">
+      {% if shop_with_deal.ProductStock < 1 %}
+      <a style="pointer-events:none" href="{% url 'singleproducturlname' shop_with_deal.id %}">
+      {% else %} 
+      <a  href="{% url 'singleproducturlname' shop_with_deal.id %}">
+      {% endif %}
         <div class="maindiv">
           <div class="imgcontainer">
             <img src="{{shop_with_deal.product_image.url}}" alt="">
@@ -347,7 +351,7 @@
         <div class="body-category-content-row1">
           <div class="body-category-content-container1">
             <div class="body-category-item-content">
-              <a href="" class="body-category-item-content-a">
+              <a href="{% url 'productpageurlname' bookandstudy.0.title %}" class="body-category-item-content-a">
                 <div class="body-category-item-image-container imgch ">
                   <img src="{{bookandstudy.0.category_image.url}}" alt="">
                 </div>
