@@ -2729,4 +2729,10 @@ body>div.container.mgt20>div:nth-child(10) {
         width: 200px !important;
         margin: 0 auto;
     }
-    /*------------------- This is the end account/registration section -------------*/
+}
+
+
+.stockAmount{
+    background: #EB6529;
+    text-align: center;
+}

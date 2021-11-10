@@ -99,7 +99,6 @@
     color: #444;
     font-size: 25px;
     font-weight: 600;
-    margin-left:20px;
 
 }
 .cancellation-container{
@@ -136,17 +135,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.order-image{
-    width: 15%;
-}
-.image-set{
-    width: 70px;
-    height: 70px;
-}
-.order-image img{
-    max-width: 100%;
-    max-height: 100%;
-}
+
 .order-product-title{
     width: 50%;
     padding-right: 10px;
@@ -245,10 +234,7 @@
     .order-product-title{
         width: 60%;
     }
-    .image-set {
-        width: 86%;
-        height: 100%;
-    }
+ 
     .order-qu{
         padding: 20px 0;
     }
@@ -267,4 +253,130 @@
         justify-content: center;
     }
 
+}
+/* Edited by me */
+.orderContainer{
+    display: flex;
+}
+.leftContainer{
+    width: 20%;
+    background: #F2F2F2;
+    height: 160px;
+    margin-right: 20px;
+    font-size: 11px;
+    text-align: center;
+}
+#saveDiv{
+    padding-top: 5px;
+}
+#imageDiv{
+height: 57%;
+position: relative;
+}
+
+@media only screen and (max-width:580px){
+    .orderContainer{
+        display: block;
+    }
+    .leftContainer{
+        width: 96% !important;
+    }
+    .rightContainer{
+        width: 96% !important;
+    }
+    .SSmRight{
+        margin-left: 10px !important;
+    }
+    #cancelDiv{
+        display: none;
+    }
+    #cancelDivM{
+        display: block !important;
+    }
+
+}
+
+
+
+.rightContainer{
+    height: 160px;
+    background: #F2F2F2;
+    width: 76%;
+    font-size: 10px;
+    padding: 0 20px;
+}
+.orderStatus{
+    display: flex;
+    text-align: center;
+}
+
+.statusContainer{
+    width: 25%;
+}
+.verticalLine{
+    width: 42%;
+    background: #D1D1D1;
+    height: 4px;
+    margin-top: 20px;
+}
+
+.iconCircle{
+    max-width: 30%;
+    width: 30%;
+    height: 20px;
+    background: #D1D1D1;
+    margin-top: 11px;
+    display: flex;
+    justify-content: center;
+}
+.LIsection{
+    display: flex;
+}
+
+.shortSummery{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.SSmRight{
+    margin-left: 60px;
+}
+#cancelDiv{
+    margin-top: 65px;
+}
+#cancelDivM{
+    text-align: center;
+    display: none;
+}
+#cancelButton{
+    background: #fd0a0ade;
+    border: none;
+    width: 60px;
+    font-size: 12px;
+    padding: 2px;
+    border-radius: 10px;
+    color: white;
+}
+#returnButton{
+    background: #05c75f;
+    border: none;
+    width: 60px;
+    font-size: 12px;
+    padding: 2px;
+    border-radius: 10px;
+    color: white;
+}
+
+
+
+.order-image{
+    width: 100%;
+    height: 100%;
+}
+.image-set{
+    height: 100%;
+}
+.order-image img{
+    max-width: 100%;
+    max-height: 100%;
 }

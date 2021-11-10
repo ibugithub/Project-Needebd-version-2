@@ -68,9 +68,9 @@
           <ul class="sub-item-cont-until">
             {% load core_filters %}
             {% for category in category_wraper.name|filtering %}
-            
+
             <li><a href="{% url 'productpageurlname' category %}">{{category}}</a></li>
-            
+
             {% endfor %}
           </ul>
         </div>
@@ -85,3 +85,206 @@
 </div>
 <!-- This is the end of the all categories item section -->
 {% endblock body %}
+
+
+
+
+<!-- order section  -->
+<div class="cancellation-container">
+  <div class="cancellation">
+
+    {% for order in orders %}
+    <!-- list-start -->
+    <div class="cancellation-list">
+      <div class="order">
+        <div class="order-info">
+          <div class="order-info-row">
+            <div class="order-info-left">
+              <div class="order-create">
+                <span class="oc">Order date </span>
+                <span class="order-date">
+                  {{order.ordered_date}}
+                </span>
+              </div>
+              <div class="order-number">
+                <span class="on">#2345987493274</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-item-row">
+          <div class="order-image">
+            <div class="image-set">
+              <img src="{{order.product.product_image.url}}" alt="">
+
+            </div>
+          </div>
+          <div class="order-product-title">
+            <span class="op-title">
+              {{order.product.description}}
+            </span>
+          </div>
+          {% if order.product.unitGroup == 'Packet' or order.product.unitGroup == 'ClothSize' or order.product.unitGroup
+          == 'ShoeSize' %}
+          <div class="order-qu">
+            <span>Qty:</span>
+            <span class="qu">
+              {{order.quantity}}
+            </span>
+          </div>
+          {% elif order.product.unitGroup == 'SolidWeight' or order.product.unitGroup == 'LiquidWeight' %}
+          <div class="order-qu">
+            <span>Amount:</span>
+            <span class="qu">
+              {{order.unitAmount}} {{order.unit}}
+            </span>
+          </div>
+          {% endif %}
+          <div class="order-status">
+            <a class="os">manage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- list-end -->
+    {% endfor %}
+
+  </div>
+
+</div>
+
+
+
+
+<!-- postponed structure -->
+{% for order in orders %}
+<div class="orderContainer">
+  <div class="leftContainer">
+    <div id="SaveQuantityDiv">
+      <div id="saveDiv">Saved:<span style="margin-left: 4px;" id="savedAmount">500</span> BDT</div>
+      <div id="quantityDiv">Quantity: <span id="quantityAmount">{{order.quantity}}</span></div>
+    </div>
+
+
+    <div id="imageDiv">
+      <div class="order-image">
+        <div class="image-set">
+          <img src="{{order.product.product_image.url}}" alt="">
+        </div>
+      </div>
+    </div>
+    <div id="titleDiv">Cucumber Face Mask</div>
+  </div>
+  <div class="rightContainer">
+    <div class="orderStatus">
+
+      <div class="statusContainer">
+
+        <div class="LIsection">
+          <div class="verticalLine"></div>
+          <div class="iconCircleContainer">
+          </div>
+          <div class="iconCircle"><i style="color: black; font-size: 10px; margin-top: 5px;" class="fas fa-check"></i>
+          </div>
+          <div class="verticalLine"></div>
+        </div>
+
+        <div class="title">Order Confirmed</div>
+
+      </div>
+
+      <div class="statusContainer">
+        <div class="LIsection">
+          <div class="verticalLine"></div>
+          <div class="iconCircle">
+            <i style="font-size: 11px; color: black; margin-top: 5px;" class="fas fa-user-check"></i>
+          </div>
+          <div class="verticalLine"></div>
+        </div>
+
+        <div class="title">Picked by curier</div>
+
+      </div>
+
+
+      <div class="statusContainer">
+        <div class="LIsection">
+          <div class="verticalLine"></div>
+          <div class="iconCircle">
+            <i style="font-size: 10px;
+                         color: black; margin-top: 5px;" class="fas fa-truck"></i>
+          </div>
+          <div class="verticalLine"></div>
+        </div>
+        <div class="title">On the way</div>
+
+      </div>
+
+
+      <div class="statusContainer">
+        <div class="LIsection">
+          <div class="verticalLine"></div>
+          <div class="iconCircle">
+            <i style="font-size: 10px;
+                       color: black; margin-top: 5px;" class="fas fa-gift"></i>
+          </div>
+          <div class="verticalLine"></div>
+        </div>
+        <div class="title">Delivered</div>
+
+      </div>
+
+    </div>
+
+    <div class="shortSummery">
+      <div class="SSmLeft">
+
+        <div class="item">
+          <span style="margin-right: 10px;" id="orderDate">Order Date </span>
+          <span id="orderDateV">:24 jan 2022</span>
+        </div>
+
+        <div class="itemContainer">
+          <span style="margin-right: 10px;" id="totalAmount">Total Amount</span>
+          <span id="totalAmountV">:100 BDT</span>
+        </div>
+
+        <div class="item">
+          <span style="margin-right: 10px;" id="paymentType">Payment Type</span>
+          <span id="paymentTypeV">:COD</span>
+        </div>
+
+        <div class="item">
+          <span style="margin-right: 10px;" id="deleveryMethod">Delivery Method</span>
+          <span id="deleveryMethodV">:RedEX</span>
+        </div>
+
+      </div>
+      <div class="SSmRight">
+        <div class="item">
+          <span style="margin-right: 10px;" id="orderNum">Order No</span>
+          <span id="orderNumV">:12435335</span>
+        </div>
+
+        <div class="itemContainer">
+          <span style="margin-right: 10px;" id="shippinCost">Shipping cost</span>
+          <span id="shippingCostV">:20 BDT</span>
+        </div>
+
+        <div class="item">
+          <span style="margin-right: 10px;" id="deliveryDate">Delivery Date</span>
+          <span id="deliveryDateV">:26 jan 2022</span>
+        </div>
+
+      </div>
+      <div id="cancelDiv">
+        <button id="cancelButton" style="border: none;">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<br>
+{% endfor %}

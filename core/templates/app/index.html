@@ -236,6 +236,11 @@
       {% else %} 
       <a  href="{% url 'singleproducturlname' shop_with_deal.id %}">
       {% endif %}
+      {% if shop_with_deal.ProductStock < 1 %}
+      <div class="stockAmount">Stock Out</div>
+      {% else %} 
+      <div class="stockAmount">{{shop_with_deal.ProductStock}}</div>
+      {% endif %}
         <div class="maindiv">
           <div class="imgcontainer">
             <img src="{{shop_with_deal.product_image.url}}" alt="">
