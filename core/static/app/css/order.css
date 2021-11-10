@@ -210,6 +210,7 @@
     }
     .cancellation-right-section{
         width: 100%;
+        padding-left: 5px;
     }
 }
 @media only screen and (max-width: 600px) {
@@ -252,7 +253,17 @@
     .order-item-row{
         justify-content: center;
     }
-
+    .shortSummery{
+        display: block !important;
+    }
+    .rightContainer{
+        height: 220px !important;
+        text-align: center;
+        padding: 0px 3px !important;
+    }
+    .iconCircle{
+        width: 40% !important;
+    }
 }
 /* Edited by me */
 .orderContainer{
@@ -279,10 +290,10 @@ position: relative;
         display: block;
     }
     .leftContainer{
-        width: 96% !important;
+        width: 98.5% !important;
     }
     .rightContainer{
-        width: 96% !important;
+        width: 98.5% !important;
     }
     .SSmRight{
         margin-left: 10px !important;
@@ -293,10 +304,11 @@ position: relative;
     #cancelDivM{
         display: block !important;
     }
-
+    .cancellation-right-section {
+        padding-left: 5px !important;
+    }
+    
 }
-
-
 
 .rightContainer{
     height: 160px;
@@ -347,6 +359,7 @@ position: relative;
 #cancelDivM{
     text-align: center;
     display: none;
+    margin-top: 4px;
 }
 #cancelButton{
     background: #fd0a0ade;
@@ -366,8 +379,6 @@ position: relative;
     border-radius: 10px;
     color: white;
 }
-
-
 
 .order-image{
     width: 100%;

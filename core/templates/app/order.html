@@ -32,9 +32,6 @@
               <div class="cancellation-right-title">
                 <h1 class="ocrt">My order</h1>
               </div>
-
-
-
               {% for order in orders %}
               <div class="orderContainer">
                 <div class="leftContainer">
@@ -68,7 +65,7 @@
                         <div class="verticalLine"></div>
                       </div>
 
-                      <div class="title">Order Confirmed</div>
+                      <div class="title"><span id="Rs"></span> Pending</div>
 
                     </div>
 
@@ -81,7 +78,7 @@
                         <div class="verticalLine"></div>
                       </div>
 
-                      <div class="title">Picked by curier</div>
+                      <div class="title">Packed</div>
 
                     </div>
 
@@ -95,7 +92,7 @@
                         </div>
                         <div class="verticalLine"></div>
                       </div>
-                      <div class="title">On the way</div>
+                      <div class="title">Way</div>
 
                     </div>
 
@@ -168,8 +165,6 @@
               </div> 
               <br>
               {% endfor %}
-
-
 
             </div>
           </div>
