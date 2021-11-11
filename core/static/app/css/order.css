@@ -294,20 +294,35 @@ position: relative;
     }
     .rightContainer{
         width: 98.5% !important;
+        position: relative;
     }
     .SSmRight{
         margin-left: 10px !important;
     }
     #cancelDiv{
-        display: none;
+        position: absolute;
+        bottom: -9px;
+        left: 43%;
     }
-    #cancelDivM{
-        display: block !important;
-    }
+   
     .cancellation-right-section {
         padding-left: 5px !important;
     }
-    
+}
+@media only screen and (max-width:380px){
+    #cancelDiv{
+        left: 41%;
+    }
+}
+@media only screen and (max-width:310px){
+    #cancelDiv{
+        left: 39%;
+    }
+}
+@media only screen and (max-width:270px){
+    #cancelDiv{
+        left: 36%;
+    }
 }
 
 .rightContainer{
@@ -356,11 +371,11 @@ position: relative;
 #cancelDiv{
     margin-top: 65px;
 }
-#cancelDivM{
+/* #cancelDivM{
     text-align: center;
-    display: none;
+    display: none !important;
     margin-top: 4px;
-}
+} */
 #cancelButton{
     background: #fd0a0ade;
     border: none;
@@ -390,4 +405,9 @@ position: relative;
 .order-image img{
     max-width: 100%;
     max-height: 100%;
+}
+@media only screen and (max-width: 240px){
+    #rspan{
+        display: none;
+    }
 }

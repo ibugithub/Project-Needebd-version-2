@@ -73,30 +73,7 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="manage-address-right">
-                        <div class="address-right">
-                          <div class="ad-book-title hidden">
-                            <span></span>
-                            <span>|</span>
-                            <a href="#">edit</a>
-                          </div>
-                          <div class="add-shiping">
-                            <span>DEFAULT BIPPING ADDRESS
-                            </span>
-                          </div>
-                          <div class="add-profile-name">
-                            <span class="add-p-text">bahadur mia </span>
-                          </div>
-                          <div class="add-address">
-                            <span>sadar</span>
-                            <span>Dhaka- Gazipur- hazibag</span>
-                            <span class="phone-num">
-                              (+880) 01782808177
-                            </span>
-                          </div>
-                        </div>
-                      </div> -->
-
+                     
                     </div>
 
                   </div>
@@ -153,6 +130,8 @@
                       <div class="next-table-body">
                         <table>
                           <tbody>
+
+                            {% for order in orders %}
                             <tr class="next-table-row">
                               <td class="next-table-cell">
                                 <div class="next-table-cell-warpper">
@@ -168,7 +147,7 @@
                                 <div class="next-table-cell-warpper">
                                   <div class="tttrb">
                                     <div class="recent-item-img">
-                                      <img src="/static/app/image/all-1.png" alt="">
+                                      <img src="{{order.product.product_image.url}}" alt="">
                                     </div>
                                   </div>
                                 </div>
@@ -181,109 +160,13 @@
                               </td>
                               <td class="next-table-cell">
                                 <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
-                                  <a href="#">Manage</a>
+                                  <a href="{% url 'orderurlname' %}">Manage</a>
                                 </div>
                               </td>
                             </tr>
+                            {% endfor %}
+                            
 
-                            <tr class="next-table-row">
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  619095321531865
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  14/09/2021
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  <div class="tttrb">
-                                    <div class="recent-item-img">
-                                      <img src="/static/app/image/all-1.png" alt="">
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper" style="text-align: right;">
-                                  <span>৳</span>
-                                  <span> 155</span>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
-                                  <a href="#">Manage</a>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr class="next-table-row">
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  619095321531865
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  14/09/2021
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  <div class="tttrb">
-                                    <div class="recent-item-img">
-                                      <img src="/static/app/image/all-1.png" alt="">
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper text-rtb" style="text-align: right;">
-                                  <span>৳</span>
-                                  <span> 155</span>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
-                                  <a href="#">Manage</a>
-                                </div>
-                              </td>
-                            </tr>
-
-                            <tr class="next-table-row">
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  619095321531865
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  14/09/2021
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper">
-                                  <div class="tttrb">
-                                    <div class="recent-item-img">
-                                      <img src="/static/app/image/all-1.png" alt="">
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper" style="text-align: right;">
-                                  <span>৳</span>
-                                  <span> 155</span>
-                                </div>
-                              </td>
-                              <td class="next-table-cell">
-                                <div class="next-table-cell-warpper text-rtb" style="text-align: center;">
-                                  <a href="#">Manage</a>
-                                </div>
-                              </td>
-                            </tr>
                           </tbody>
                         </table>
                       </div>

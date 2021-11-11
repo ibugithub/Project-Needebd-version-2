@@ -21,6 +21,10 @@
 
                   <div id="myresult" class="img-zoom-result"></div>
                 </div>
+                {% if product.ProductStock == None or product.ProductStock < 1 %}
+                <div id = "stockDiv">Stock Out</div>
+
+                {% else %}
                 <div class="single-product-cart-button">
                   <div class="add-cart-btn">
                     <button prod="{{product.id}}" id="aTCButton" onclick="addToCart(this)" class="cart-btn">
@@ -31,6 +35,8 @@
                   <a id="buyNowa" href="{% url 'buynowurlname' product.id %}">  <button  id = "buyNowBTN" class="buy-btn"> buy now </button></a>
                   </div>
                 </div>
+                {% endif %}
+
               </div>
             </div>
           </div>

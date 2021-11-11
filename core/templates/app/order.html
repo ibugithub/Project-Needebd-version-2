@@ -54,21 +54,34 @@
                   <div class="orderStatus">
 
                     <div class="statusContainer">
-
+                      
                       <div class="LIsection">
-                        <div class="verticalLine"></div>
+                        <div style="background-color: #F25220;" class="verticalLine"></div>
                         <div class="iconCircleContainer">
                         </div>
-                        <div class="iconCircle"><i style="color: black; font-size: 10px; margin-top: 5px;"
+                        <div style="background-color: #F25220;" class="iconCircle"><i style="color: white; font-size: 10px; margin-top: 5px;"
                             class="fas fa-check"></i>
                         </div>
-                        <div class="verticalLine"></div>
+                        <div style="background-color: #F25220;" class="verticalLine"></div>
                       </div>
 
                       <div class="title"><span id="Rs"></span> Pending</div>
 
                     </div>
+                   
+                    {% if order.status == "Confirmed" or order.status == 'On the way' or order.status == 'Delivered' %}
+                    <div class="statusContainer">
+                      <div class="LIsection">
+                        <div style="background: #F25220;"  class="verticalLine"></div>
+                        <div style="background: #F25220;" class="iconCircle">
+                          <i style="font-size: 11px; color: white; margin-top: 5px;" class="fas fa-user-check"></i>
+                        </div>
+                        <div style="background: #F25220;" class="verticalLine"></div>
+                      </div>
 
+                      <div class="title">Confirmed</div>
+                    </div>
+                    {% else %}
                     <div class="statusContainer">
                       <div class="LIsection">
                         <div class="verticalLine"></div>
@@ -78,11 +91,24 @@
                         <div class="verticalLine"></div>
                       </div>
 
-                      <div class="title">Packed</div>
+                      <div class="title">Confirmed</div>
+                    </div>
+                    {% endif %}
 
+                    {% if order.status == 'On the way' or order.status == 'Delivered' %}
+                    <div class="statusContainer">
+                      <div class="LIsection">
+                        <div style="background: #F25220;" class="verticalLine"></div>
+                        <div style="background: #F25220;" class="iconCircle">
+                          <i style="font-size: 10px;
+                         color: white; margin-top: 5px;" class="fas fa-truck"></i>
+                        </div>
+                        <div style="background: #F25220;" class="verticalLine"></div>
+                      </div>
+                      <div class="title"> <span id = "rspan">On the</span>  Way</div>
                     </div>
 
-
+                    {% else %}
                     <div class="statusContainer">
                       <div class="LIsection">
                         <div class="verticalLine"></div>
@@ -92,11 +118,24 @@
                         </div>
                         <div class="verticalLine"></div>
                       </div>
-                      <div class="title">Way</div>
+                      <div class="title"> <span id = "rspan">On the</span>  Way</div>
+                    </div>
+                    {% endif %}
 
+                    {% if order.status == "Delivered" %}
+                    <div class="statusContainer">
+                      <div class="LIsection">
+                        <div style="background: #F25220;" class="verticalLine"></div>
+                        <div style="background: #F25220;" class="iconCircle">
+                          <i style="font-size: 10px;
+                       color: white; margin-top: 5px;" class="fas fa-gift"></i>
+                        </div>
+                        <div style="background: #F25220;" class="verticalLine"></div>
+                      </div>
+                      <div class="title">Delivered</div>
                     </div>
 
-
+                    {% else %}
                     <div class="statusContainer">
                       <div class="LIsection">
                         <div class="verticalLine"></div>
@@ -107,8 +146,8 @@
                         <div class="verticalLine"></div>
                       </div>
                       <div class="title">Delivered</div>
-
                     </div>
+                    {% endif %}
 
                   </div>
 
@@ -153,12 +192,21 @@
                       </div>
 
                     </div>
-                    <div id="cancelDiv">
+                    
+                    {% if order.status == 'Confirmed' or order.status == "On the way" %}
+                    <div style="display: none;" id="cancelDiv">
                       <button id="cancelButton" style="border: none;">Cancel</button>
                     </div>
-                  </div>
-                  <div id="cancelDivM">
-                    <button id="cancelButton" style="border: none;">Cancel</button>
+                    {% elif order.status == 'Delivered' %} 
+                    <div style="display: block;" id="cancelDiv">
+                      <a href="{% url 'rmakerurlname' order.id %}"><button id="cancelButton" style="border: none; background:#009245; cursor:pointer;">Return</button></a>
+                    </div>
+                    {% else %} 
+                    <div style="display: block;" id="cancelDiv">
+                     <a href="{% url 'cancelorderurlname' order.id %}"> <button id="cancelButton" style="border: none; cursor: pointer;">Cancel</button></a>
+                    </div>
+                    {% endif %}
+
                   </div>
 
                 </div>

@@ -19,15 +19,15 @@
                                     <a href="/templates/app/manageAccount.html"><i class="fa fa-arrow-left"></i></a>
                                 </div>
                                 <div class="phone-cancellation-title-text">
-                                    <h1>Canceled Orders</h1>
+                                    <h1>cancellation</h1>
                                 </div>
                             </div>
                             <div class="cancellation-right-title">
-                                <h1 class="crt">Canceled Orders</h1>
+                                <h1 class="crt">Returned Orders</h1>
                             </div>
                             <div class="cancellation-container">
                                 <div class="cancellation">
-                                    {% for order in corder %}
+                                    {% for order in rorder %}
                                     <!-- list-start -->
                                     <div class="cancellation-list">
                                         <div class="order">
@@ -68,7 +68,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="order-status">
-                                                    <span class="os">Cancelled</span>
+                                                    <span class="os">Returned</span>
                                                 </div>
                                             </div>
                                         </div>

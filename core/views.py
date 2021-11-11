@@ -1,6 +1,5 @@
 from datetime import timedelta
 import datetime
-import json
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic.detail import DetailView
@@ -16,6 +15,7 @@ from coupons.models import Coupon, Voucher
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 # Create your views here.
@@ -470,7 +470,9 @@ class ManageAccountView(TemplateView):
         if len(newCustomerAddress) > 0:
             defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
             context["defaultAddress"] = defaultAddress
-
+        newOrder = Order.objects.filter(Q(user = request.user, status = 'Pending') | Q(user = request.user, status = 'Confirmed') | Q(user = request.user, status = 'On the way') | Q(user = request.user, status = 'Delivered') )
+        if len(newOrder) > 0:
+            context["orders"] = newOrder
         return render(request, self.template_name, context = context)
 
 class ProfileView(TemplateView):
@@ -714,12 +716,35 @@ class AddAddressView(View):
 class OrderView(TemplateView):
     template_name = "app/order.html"
     def get(self, request, *args, **kwargs):
-        newOrder = Order.objects.filter(user = request.user)
+        newOrder = Order.objects.filter(Q(user = request.user, status = 'Pending') | Q(user = request.user, status = 'Confirmed') | Q(user = request.user, status = 'On the way') | Q(user = request.user, status = 'Delivered') )
         context = {"orders": newOrder}
         return render(request, self.template_name, context=context)
 
+def CancelOrderView(request, pk):
+    order = Order.objects.get(id = pk)
+    order.status = 'Canceled'
+    order.save()
+    return redirect('/orderurl')
+
 class CancellationView(TemplateView):
     template_name = "app/cancellation.html"
+    def get(self, request, *args, **kwargs):
+        cancelOrder = Order.objects.filter(user = request.user, status = 'Canceled') 
+        return render(request, self.template_name, {'corder':cancelOrder})
+
+class ReturnedOrderView(TemplateView):
+    template_name = "app/returnedOrder.html"
+    def get(self, request, *args, **kwargs):
+        returnedOrder = Order.objects.filter(user = request.user, status = 'Returned') 
+        return render(request, self.template_name, {'rorder':returnedOrder})
+
+def ReturnOrderView(request, pk):
+    order = Order.objects.get(id = pk)
+    order.status = 'Returned'
+    order.save()
+    return redirect('/orderurl')    
+
+
 
 def Checkout(request):
     newCart = Cart.objects.filter(user = request.user)

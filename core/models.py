@@ -223,12 +223,13 @@ class CustomerAddress(models.Model):
     isDefault = models.BooleanField(null = True, blank = True, default = False)
 
 STATUS_CHOICE = (
-    ('Accepted', 'Accepted'),
-    ('Packed', 'Packed'),
-    ('On the Way', 'On the Way'),
+    ('Pending', 'Pending'),
+    ('Confirmed', 'Confirmed'),
+    ('On the way', 'On the way'),
     ('Delivered', 'Delivered'),
-    ('Cencel', 'Cencel'),
-    ('Pending', 'pending'),
+    ('Canceled', 'Canceled'),
+    ('Returned',"Returned")
+    
 )
 
 class Order(models.Model):

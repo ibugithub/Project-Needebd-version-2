@@ -2733,6 +2733,6 @@ body>div.container.mgt20>div:nth-child(10) {
 
 
 .stockAmount{
-    background: #EB6529;
-    text-align: center;
+    color: #EB6529;
+    font-size: 12px;
 }
