@@ -744,8 +744,6 @@ def ReturnOrderView(request, pk):
     order.save()
     return redirect('/orderurl')    
 
-
-
 def Checkout(request):
     newCart = Cart.objects.filter(user = request.user)
     length = len(newCart)

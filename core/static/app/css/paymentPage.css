@@ -22,6 +22,8 @@
 }
 
 
+
+
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -68,16 +70,19 @@
       flex-wrap: wrap;
   }
   .visa-card{
-      width: 35%;
+      width: 25%;
       padding: 10px;
      
   }
   .visa-card-content{
       padding:10px;
       background-color: #fff;
+      text-align: center;
+      color: #444;
   }
   .visa-logo{
-      width: 100px;
+    max-width: 100px;
+      margin: 0 auto;
   }
   .visa-logo img{
       max-width: 100%;
@@ -97,12 +102,13 @@
 }
 
 .master-card{
-    width: 35%;
+    width: 25%;
     padding: 10px;
   
 }
 .master-logo{
-    width: 55px;
+   max-width: 55px;
+    margin: 0 auto;
 }
 .master-logo img{
     max-width: 100%;
@@ -127,6 +133,8 @@
 .master-card-content{
     background-color: #ffff;
     padding: 10px;
+    text-align: center;
+    color: #444;
 }
 
 
@@ -155,40 +163,406 @@
 
 .courier-content{
     width: 100%;
-    background-color: #fff;
-     margin-top: 10px;
+     margin-top: 10px; 
 }
 .courier-content-row{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    flex-flow: wrap;
-    justify-content: space-between;
-    padding: 10px 20px;
 }
-.courier-box{
-    width: 20%;
-    line-height: 50px;
-}
-
 .courier-name{
-    width: 60%;
-    text-align: left;
-    line-height: 50px;
+    width: 33%;
+    text-align: center;
 }
-.courier-text{
+.courier-btn{
+    border: none;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    font-family: "cairo";
+    background-color: #fff;
+    height: 70px;
+}
+.courier-btn:hover{
+    transition: transform .5s;
+    transform: scale(1.2);
+}
+.name-logo{
+    
+    max-width: 150px;
+    height: 30px;
+    margin: 0 auto;
+}
+.name-logo img{
+    max-width: 100%;
+    max-height: 100%;
+    
+    transition: transform .5s;
+}
+.c-name{
+    width: 100%;
     color: #444;
-    text-transform: capitalize;
-    font-weight: 400;
-
 }
 
-.courier-logo{
-    width: 50px;
-    line-height: 68px;
+.courier-name-content{
+    padding: 10px;
 }
-.courier-logo img{
+
+
+.net-banking-content{
+    width: 100%;
+}
+.net-banking-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.banking-card{
+    width: 25%;
+    padding: 10px;
+}
+.banking-pad{
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+   
+}
+.net-card-img{
+    width: 100px;
+    max-width: 100px;
+    margin: 0 auto;
+    height: 50px;
+}
+.net-card-img img{
+    max-width: 100%;
+}
+
+.cash-on-delivery{
+    width: 25%;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+}
+.cash-on-delivery-content{
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    text-align: center;
+}
+.cash-on-delivery-img{
+    width: 100px;
+    max-width: 100px;
+    margin: 0 auto;
+    height: 50px;
+}
+.cash-on-delivery-img img{
     max-width: 100%;
     max-height: 100%;
 }
+.cash-on-text{
+    width: 100%;
+    color: #444;
+}
 
+.payment-right{
+    width: 35%;
+    padding-left: 10px;
+  
+}
+.payment-right-main{
+    width: 100%;
+    padding: 10px ;
+    background-color: #fff;
+  
+}
+.ck-pay-btn{
+    width: 100%;
+}
+.pay-btn{
+    width: 100%;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    color: #fff;
+    background:#EB6529;
+    text-transform: capitalize;
+    font-family: cairo;
+}
+.payment-right-title{
+    padding: 10px 0;
+}
+.ck-r-t{
+    font-size: 18px;
+    font-weight: 600;
+    color: #444;
+    text-transform: capitalize;
+}
+.ck-profile{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+.ck-icn{
+    color: #EB6529;
+    padding-right: 5px;
+}
+.ck-profile-name{
+    text-transform: capitalize;
+    color: #444;
+    font-weight: bold;
+}
+.ck-edit{
+    text-transform: uppercase;
+    color: #EB6529;
+}
+.ck-all-address{
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+.ck-address{
+    color: #444;
+}
+.billing-address{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.billing-address-tex{
+    color: #444;
+}
+
+.billing-icons{
+    color: #EB6529;
+    padding-right: 5px;
+}
+.b-address-edit{
+    color: #EB6529;
+    text-transform: uppercase;
+}
+
+
+
+.phone-address{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.phone-address-tex{
+    color: #444;
+}
+
+.phone-icons{
+    color: #EB6529;
+    padding-right: 5px;
+}
+.p-address-edit{
+    color: #EB6529;
+    text-transform: uppercase;
+}
+
+
+.email-address{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.email-address-tex{
+    color: #444;
+}
+
+.email-icons{
+    color: #EB6529;
+    padding-right: 5px;
+}
+.e-address-edit{
+    color: #EB6529;
+    text-transform: uppercase;
+}
+.order-summery{
+    width: 100%;
+    padding: 20px 0;
+}
+.os-title{
+    padding-bottom: 20px;
+}
+.os-title h1{
+    font-size: 18px;
+    color: #444;
+    font-weight: 600;
+}
+.os-total-section, .os-shipping, .total-section{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+.total-text{
+    color: #444;
+    text-transform: uppercase;
+}
+.amount{
+    color: #EB6529;
+}
+
+.check-out-posi{
+    position: sticky;
+    top: 76px;
+    bottom: 0;
+}
+
+.footer-section{
+    display: none;
+}
+
+.phone-checkout-btn-container{
+    width: 100%;
+    
+}
+.phone-checkout-btn-row{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 10px;
+}
+.phn-checkout-btn-total{
+    width: 60%;
+}
+.pcb-total{
+    /* padding-bottom: 5px; */
+}
+.pcb-total-text{
+    color: #444;
+    padding-right: 5px;
+}
+.pcb-total-amaount{
+    color: #EB6529;
+    font-size: 18px;
+}
+.vat-text{
+    color: #444;
+    font-size: 10px;
+}
+.phone-checkout-btn{
+    width: 40%;
+}
+.ph-btn{
+    display: block;
+    padding: 8px;
+    background-color: #EB6529;
+    margin-top: 5px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .phone-checkout-btn-section{
+        display: none;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .payment-left{
+        width: 100%;
+    }
+    .payment-right{
+        width: 100%;
+        padding: 0;
+    }
+    .ck-pay-btn{
+        display: none;
+    }
+    .payment-right-main{
+        margin-bottom: 28px;
+    }
+    .payment-container{
+        padding: 0 13px;
+    }
+}
+
+
+@media only screen and (max-width: 425px){
+    .payment-row{
+        margin-top: 40px;
+    }
+    .visa-card{
+        width: 50%;
+    }
+    .master-card{
+        width: 50%;
+    }
+    .courier-name{
+        width: 33.333%;
+    }
+    .banking-card{
+        width: 50%;
+    }
+    .cash-on-delivery{
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 320px){
+    .tab button{
+        width: 100%;
+    }
+    .net-card-img{
+        width: 75px;
+   
+            max-width: 75px
+        
+    
+    }
+}
+
+
+@media only screen and (max-width: 250px){
+    .visa-card{
+        width: 100%;
+    }
+    .master-card {
+        width: 100%;
+    }
+    .tabcontent{
+        padding: 0;
+    }
+    .banking-card {
+        width: 100%;
+    }
+    .courier-btn{
+        width: 100%;
+    }
+    .cash-on-delivery{
+        width: 100%;
+    }
+    .courier-name{
+        width: 50%;
+    }
+    .payment-right-main{
+        margin-bottom: 200px;
+    }
+}
+.border{
+    border: 1px solid green;
+}
+
+.phone-checkout-btn-section{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
+    
+}
+.warning{
+    color: red;
+    padding-left: 10px;
+}
