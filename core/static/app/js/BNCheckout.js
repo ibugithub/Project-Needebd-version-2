@@ -26,14 +26,14 @@ var hiddenDiscountElm = document.getElementById('hiddenDiscount')
 var hiddenNewTotalElm = document.getElementById('hiddenNewTotal')
 var couponApplyElm = document.getElementById('couponApply')
 var haveAnyCouponElm = document.getElementById('hacoupon')
-var unitGroup = document.getElementById('minusBtn').getAttribute('unitGroup')
+var ProductGroup = document.getElementById('minusBtn').getAttribute('ProductGroup')
 var unitAmount = document.getElementById('buyNowUnitAmount2')
 
 
 function buyNow(elm){
     
   // This section will work for product haveing solid and Liquid weight 
-    if (unitGroup == "SolidWeight" || unitGroup == "LiquidWeight")
+    if (ProductGroup == "SolidWeight" || ProductGroup == "LiquidWeight")
     {  
       hiddenCouponInfoElm.style.display = 'none'
       couponApplyElm.style.display = 'none'

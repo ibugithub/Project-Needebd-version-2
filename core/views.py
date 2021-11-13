@@ -114,28 +114,27 @@ def SingleProductView(request, pk):
 def AddToCartView(request):
     product_id = request.GET['productid']
     unit = request.GET['unit']
-    unit_amount = request.GET['unit_amount']
     size = request.GET['Size']
     if request.user.is_authenticated:
         user = request.user
         myproduct = Product.objects.get(id=product_id)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
-        if myproduct.unitGroup == "SolidWeight" or myproduct.unitGroup == "LiquidWeight" or myproduct.unitGroup == "ClothPicesSize":
+        if myproduct.ProductGroup == "SolidWeight" or myproduct.ProductGroup == "LiquidWeight" or myproduct.ProductGroup == "ClothPices":
+            unit_amount = float(request.GET['unit_amount'])
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
-                                        unitGroup=unit,
-                                        unit_amount = unit_amount
-                                        )
-                cart.unit_amount += 1
+                                        unit=unit,
+                                        )               
+                cart.unit_amount += unit_amount
                 cart.save()
             except:
                 Cart(user=user,
                      product=myproduct,
                      unit=unit,
                      unit_amount=unit_amount).save()
-        elif myproduct.unitGroup == "ClothSize" or myproduct.unitGroup == "ShoeSize":
+        elif myproduct.ProductGroup == "Cloth" or myproduct.ProductGroup == "Shoe":
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
@@ -144,7 +143,7 @@ def AddToCartView(request):
                 cart.save()
             except:
                 Cart(user=user, product=myproduct, size=size).save()
-        elif myproduct.unitGroup == "Packet":
+        elif myproduct.ProductGroup == "Packet":
             try:
                 cart = Cart.objects.get(user=user, product=myproduct)
                 cart.quantity += 1
@@ -193,25 +192,28 @@ class ShowCartView(TemplateView):
 def PlusCartView(request):
     request.session['code'] = 'none'
     if request.user.is_authenticated:
+        data = {}
         user = request.user
         product_key = request.GET['id']
         product = Product.objects.get(id=product_key)
         unit = request.GET['unit']
-        unit_amount = request.GET['unit_amount']
         size = request.GET['size']
+        unitFrequency = product.unitValue_On_Increase_or_Decrease
 
-        if product.unitGroup == "SolidWeight" or product.unitGroup == "LiquidWeight" or product.unitGroup == "ClothPicesSize":
+        if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
-                                    unit_amount=unit_amount)
-            cart.quantity += 1
+                                    )
+            cart.unit_amount += unitFrequency
             cart.save()
-        elif product.unitGroup == "ClothSize" or product.unitGroup == "ShoeSize":
+            data['unitAmount'] = cart.unit_amount
+
+        elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
             cart.quantity += 1
             cart.save()
-        elif product.unitGroup == "Packet":
+        elif product.ProductGroup == "Packet":
             cart = Cart.objects.get(user=user, product=product)
             cart.quantity += 1
             cart.save()
@@ -227,24 +229,24 @@ def PlusCartView(request):
                                tccart.products_total_cost)
         delivery_charge = 70
         Total_Cost = Total_products_cost + delivery_charge
-
-        data = {
-            'quantity': cart.quantity,
-            "TotalSell_Cost": TotalSell_Cost,
-            'products_total_cost': cart.products_total_cost,
-            'Total_Cost': Total_Cost,
-            'Total_discount': Total_discount
-        }
+       
+        data['quantity'] = cart.quantity,
+        data["TotalSell_Cost"] = TotalSell_Cost,
+        data['products_total_cost'] = cart.products_total_cost,
+        data['Total_Cost'] = Total_Cost,
+        data['Total_discount'] = Total_discount
+        
         return JsonResponse(data)
 
 def MinusCartView(request):
     request.session['code'] = 'none'
     user = request.user
     if user.is_authenticated:
+        data = {}
+
         product_key = request.GET['id']
         product = Product.objects.get(id=product_key)
         unit = request.GET['unit']
-        unit_amount = request.GET['unit_amount']
         size = request.GET['size']
 
         def itemcount():
@@ -254,18 +256,39 @@ def MinusCartView(request):
                 Item += 1
             return Item
 
-        if product.unitGroup == "LiquidWeight" or product.unitGroup == "SolidWeight" or product.unitGroup == "ClothPicesSize":
+        if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
+            unitFrequency = product.unitValue_On_Increase_or_Decrease
+            minUnitAmount = product.MinimumUnitValue
             cart = Cart.objects.get(user=user,
                                     product=product,
                                     unit=unit,
-                                    unit_amount=unit_amount)
-            if cart.quantity >= 1:
-                cart.quantity -= 1
+                                   )
+            if cart.unit_amount > minUnitAmount:
+                cart.unit_amount -= unitFrequency
                 cart.save()
-            if cart.quantity == 0:
+                data['unitAmount'] = cart.unit_amount
+            if cart.unit_amount <= minUnitAmount:
                 cart.delete()
+                data['deleted'] = True
                 Item = itemcount()
-        elif product.unitGroup == "ClothSize" or product.unitGroup == "ShoeSize":
+
+
+        # if not cart.unit_amount - diff2 <= minUnitValue :
+        #         cart.unit_amount -= unitFrequency
+        #         cart.save()
+        #         data['unitAmount'] = cart.unit_amount
+        #     else:
+        #         cart.unit_amount -= (cart.unit_amount - diff2)
+        #     if cart.unit_amount <= minUnitValue:
+        #         cart.delete()
+        #         data['deleted'] = True
+        #         Item = itemcount()
+
+
+
+
+
+        elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -273,7 +296,7 @@ def MinusCartView(request):
             if cart.quantity <= 0:
                 cart.delete()
                 Item = itemcount()
-        elif product.unitGroup == "Packet":
+        elif product.ProductGroup == "Packet":
             cart = Cart.objects.get(user=user, product=product)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -305,15 +328,15 @@ def MinusCartView(request):
             for icart in newcart:
                 Item += 1
 
-        data = {
-            'quantity': cart.quantity,
-            "TotalSell_Cost": TotalSell_Cost,
-            'products_total_cost': cart.products_total_cost,
-            'cartCount': cartCount,
-            "Total_Cost": Total_Cost,
-            "Item": Item,
-            "Total_discount": Total_discount
-        }
+        
+        data['quantity'] = cart.quantity,
+        data["TotalSell_Cost"] = TotalSell_Cost,
+        data['products_total_cost'] = cart.products_total_cost,
+        data['cartCount'] = cartCount,
+        data["Total_Cost"] = Total_Cost,
+        data["Item"] = Item,
+        data["Total_discount"] = Total_discount
+        
         return JsonResponse(data)
 
 def RemoveCartView(request):
@@ -324,18 +347,18 @@ def RemoveCartView(request):
     unit = request.GET['unit']
     unit_amount = request.GET['unit_amount']
     size = request.GET['size']
-    if product.unitGroup == "LiquidWeight" or product.unitGroup == "SolidWeight" or product.unitGroup == "ClothPicesSize":
+    if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPice":
         cart = Cart.objects.get(user=user,
                                 product=product,
                                 unit=unit,
                                 unit_amount=unit_amount)
         cart.delete()
 
-    elif product.unitGroup== "ClothSize" or product.unitGroup == "ShoeSize":
+    elif product.ProductGroup== "Cloth" or product.ProductGroup == "Shoe":
         cart = Cart.objects.get(user=user, product=product, size=size)
         cart.delete()
 
-    elif product.unitGroup== "Packet":
+    elif product.ProductGroup== "Packet":
         cart = Cart.objects.get(user=user, product=product)
         cart.delete()
 
@@ -826,7 +849,6 @@ def buyNowDataView(request):
     request.session['buyNowUnitAmount'] = unitAmount
     request.session['initialUnitAmount'] = unitAmount
     request.session['size'] = size
-
     data = {
         'demo' : 'test'
     }
@@ -847,356 +869,133 @@ def minMaxUnitCheckerView(request):
     backendUnit = product.unit
     minUnitValue = product.MinimumUnitValue
     maxUnitValue = product.MaximumUnitValue
-    backendUnitGroup = product.unitGroup
+    backendUnitGroup = product.ProductGroup
  
     if backendUnitGroup == "SolidWeight":
         if backendUnit == "Kg":
+            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                data["message"] = ""
+                data["attempt"] = True
+                request.session['buyNowUnit'] = fontendUnit
+                request.session['buyNowUnitAmount'] = fontendUnitAmount
+                request.session['initialUnitAmount'] = fontendUnitAmount
+                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
+                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
+                               
+            else:
+                if fontendUnitAmount < minUnitValue:
+                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
 
-            if fontendUnit == "Kg":
-                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-                                  
-                else:
-                    if fontendUnitAmount < minUnitValue:
-                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
-                    elif fontendUnitAmount > maxUnitValue:
-                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+                elif fontendUnitAmount > maxUnitValue:
+                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
                             
-            elif fontendUnit == "Gram":
-                gramConvertedMinUnitValue = minUnitValue * 1000
-                gramConvertedMaxUnitValue = maxUnitValue * 1000
-                if fontendUnitAmount >= gramConvertedMinUnitValue and fontendUnitAmount <= gramConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * .001
-                    converted_Total_SellingCost = buyNowSellingCost * .001 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * .001
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * .001 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                else:
-                    if fontendUnitAmount < gramConvertedMinUnitValue:
-                        message = f"you have to select  atleast {gramConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > gramConvertedMaxUnitValue:
-                        message = f"you can't select  more than {gramConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
-            elif fontendUnit == "Pound":
-                poundConvertedMinUnitValue = round(minUnitValue * 2.20462, 2)
-                poundConvertedMaxUnitValue = round(maxUnitValue * 2.20462, 2)
-                if fontendUnitAmount >= poundConvertedMinUnitValue and fontendUnitAmount <= poundConvertedMaxUnitValue:                    
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 0.453592
-                    converted_Total_SellingCost = buyNowSellingCost * 0.453592 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.453592
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 0.453592 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                else:
-                    if fontendUnitAmount < poundConvertedMinUnitValue:
-                        message = f"you have to select  atleast {poundConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > poundConvertedMaxUnitValue:
-                        message = f"you can't select  more than {poundConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
         elif backendUnit == "Gram":
- 
-            if fontendUnit == "Kg":
-                kgConvertedMinUnitValue = minUnitValue  *.001
-                kgConvertedMaxUnitValue = maxUnitValue  *.001
-                if fontendUnitAmount >= kgConvertedMinUnitValue and fontendUnitAmount <= kgConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 1000
-                    converted_Total_SellingCost = buyNowSellingCost * 1000 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 1000
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 1000 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                else:  
-                    if fontendUnitAmount < kgConvertedMinUnitValue:
-                        message = f"you have to select  atleast {kgConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > kgConvertedMaxUnitValue:
-                        message = f"you can't select  more than {kgConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                data["message"] = ""
+                data["attempt"] = True
+                request.session['buyNowUnit'] = fontendUnit
+                request.session['buyNowUnitAmount'] = fontendUnitAmount
+                request.session['initialUnitAmount'] = fontendUnitAmount
+                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
+                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
 
-            elif fontendUnit == "Gram":
-                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-
-                else:
-                    if fontendUnitAmount < minUnitValue:
-                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > maxUnitValue:
-                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
-            elif fontendUnit == "Pound":
-                poundConvertedMinUnitValue = minUnitValue * 0.00220462
-                poundConvertedMaxUnitValue = maxUnitValue * 0.00220462
-                if fontendUnitAmount >=  poundConvertedMinUnitValue and fontendUnitAmount <= poundConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 453.592
-                    converted_Total_SellingCost = buyNowSellingCost * 453.592 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 453.592
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 453.592 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                else:
-                    if fontendUnitAmount < poundConvertedMinUnitValue:
-                        message = f"you have to select  atleast {poundConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > poundConvertedMaxUnitValue:
-                        message = f"you can't select  more than {poundConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+            else:
+                if fontendUnitAmount < minUnitValue:
+                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
+                elif fontendUnitAmount > maxUnitValue:
+                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
 
         elif backendUnit == "Pound":
-            if fontendUnit == "Kg":
-                kgConvertedMinUnitValue = minUnitValue * 0.453592
-                kgConvertedMaxUnitValue = maxUnitValue * 0.453592
-                if fontendUnitAmount >= kgConvertedMinUnitValue and fontendUnitAmount <= kgConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 2.20462
-                    converted_Total_SellingCost = buyNowSellingCost * 2.20462 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 2.20462
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 2.20462 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                else:
-                    if fontendUnitAmount < kgConvertedMinUnitValue:
-                        message = f"you have to select  atleast {kgConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > kgConvertedMaxUnitValue:
-                        message = f"you can't select  more than {kgConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
 
-            elif fontendUnit == "Gram":
-                gramConvertedMinUnitValue = minUnitValue * 453.592
-                gramConvertedMaxUnitValue = maxUnitValue * 453.592
-                if fontendUnitAmount >= gramConvertedMinUnitValue and fontendUnitAmount <= gramConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 0.00220462
-                    converted_Total_SellingCost = buyNowSellingCost * 0.00220462 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.00220462
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 0.00220462 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-                    
-                else:
-                    if fontendUnitAmount < gramConvertedMinUnitValue:
-                        message = f"you have to select  atleast {gramConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > gramConvertedMaxUnitValue:
-                        message = f"you can't select  more than {gramConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
-            elif fontendUnit == "Pound":
-                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-                else:
-                    if fontendUnitAmount < minUnitValue:
-                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > maxUnitValue:
-                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                data["message"] = ""
+                data["attempt"] = True
+                request.session['buyNowUnit'] = fontendUnit
+                request.session['buyNowUnitAmount'] = fontendUnitAmount
+                request.session['initialUnitAmount'] = fontendUnitAmount
+                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
+                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
+            else:
+                if fontendUnitAmount < minUnitValue:
+                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
+                elif fontendUnitAmount > maxUnitValue:
+                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
 
     if backendUnitGroup == "LiquidWeight":
 
         if backendUnit == "Liter":
-            if fontendUnit == "Liter":
-                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-                   
-                else:
-                    if fontendUnitAmount < minUnitValue:
-                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > maxUnitValue:
-                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-
-            elif fontendUnit == "MiliLiter":
-                MLConvertedMinUnitValue = minUnitValue * 1000
-                MLConvertedMaxUnitValue = maxUnitValue * 1000
-                if fontendUnitAmount >= MLConvertedMinUnitValue and fontendUnitAmount <= MLConvertedMaxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 0.001
-                    converted_Total_SellingCost = buyNowSellingCost * 0.001 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 0.001
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 0.001 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
-
-                else:
-                    if fontendUnitAmount < MLConvertedMinUnitValue:
-                        message = f"you have to select  atleast {MLConvertedMinUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > MLConvertedMaxUnitValue:
-                        message = f"you can't select  more than {MLConvertedMaxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                data["message"] = ""
+                data["attempt"] = True
+                request.session['buyNowUnit'] = fontendUnit
+                request.session['buyNowUnitAmount'] = fontendUnitAmount
+                request.session['initialUnitAmount'] = fontendUnitAmount
+                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
+                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
+                
+            else:
+                if fontendUnitAmount < minUnitValue:
+                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
+                elif fontendUnitAmount > maxUnitValue:
+                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
 
         elif backendUnit == "MiliLiter":
-            if fontendUnit == "Liter":
-                LiterConvertedMinUnitVAlue = minUnitValue * 0.001
-                LiterConvertedMaxUnitVAlue = maxUnitValue * 0.001
-                if fontendUnitAmount >= LiterConvertedMinUnitVAlue and fontendUnitAmount <= LiterConvertedMaxUnitVAlue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Unit_SellingCost= buyNowSellingCost * 1000
-                    converted_Total_SellingCost = buyNowSellingCost * 1000 * fontendUnitAmount
-                    converted_Unit_DiscountedCost = buyNowDiscountedCost * 1000
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * 1000 * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = round(converted_Unit_SellingCost,2)
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = round(converted_Unit_DiscountedCost,2)
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost, 2)
 
-                else:
-                    if fontendUnitAmount < LiterConvertedMinUnitVAlue:
-                        message = f"you have to select  atleast {LiterConvertedMinUnitVAlue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > LiterConvertedMaxUnitVAlue:
-                        message = f"you can't select  more than {LiterConvertedMaxUnitVAlue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
 
-            elif fontendUnit == "MiliLiter":
-                if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                    data["message"] = ""
-                    data["attempt"] = True
-                    request.session['buyNowUnit'] = fontendUnit
-                    request.session['buyNowUnitAmount'] = fontendUnitAmount
-                    request.session['initialUnitAmount'] = fontendUnitAmount
-                    converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                    converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                    request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                    request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                    request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                    request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
+            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
+                data["message"] = ""
+                data["attempt"] = True
+                request.session['buyNowUnit'] = fontendUnit
+                request.session['buyNowUnitAmount'] = fontendUnitAmount
+                request.session['initialUnitAmount'] = fontendUnitAmount
+                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
+                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
 
-                else:
-                    if fontendUnitAmount < minUnitValue:
-                        message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
-                    elif fontendUnitAmount > maxUnitValue:
-                        message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                        data["message"] = message
-                        data["attempt"] = False
+            else:
+                if fontendUnitAmount < minUnitValue:
+                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
+                elif fontendUnitAmount > maxUnitValue:
+                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
+                    data["message"] = message
+                    data["attempt"] = False
 
     return JsonResponse(data)
 
@@ -1223,6 +1022,7 @@ def Buynow(request, pk = None):
      # initial product info will be shown by this section
     if pk != None:
         # This section will work for packet product.............
+        request.session['buyNowProdId'] = pk
         newProduct = Product.objects.get(id = pk)
         subTotal = newProduct.discounted_prize
         shippingCost = 70
@@ -1236,7 +1036,7 @@ def Buynow(request, pk = None):
         request.session['buyNowQuantity'] = 1
 
         # This section will only work on when product will have unit Type of solid weight or Liquid weight
-        if newProduct.unitGroup == "SolidWeight" or newProduct.unitGroup == "LiquidWeight":
+        if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":
             context['buyNowUnit'] = request.session['buyNowUnit']
             context['buyNowUnitAmount'] = request.session['buyNowUnitAmount']
             context['Unit_SellingCost'] = request.session['buyNow_Unit_SellingCost']
@@ -1252,7 +1052,7 @@ def Buynow(request, pk = None):
        
         return render(request, 'app/buyNowCheckout.html',context = context)
 
-    # plus and minus action in buy now page will work on this section when product having packet unitGroup...    
+    # plus and minus action in buy now page will work on this section when product having packet ProductGroup...    
     if pk == None:
         Group = request.GET['Group']
         if Group == "packet":
@@ -1270,13 +1070,13 @@ def Buynow(request, pk = None):
                 "total" : total
             }
 
-        # plus and minus action in buy now page will work on this section when product having solid and Liquid weight unitGroup...  
+        # plus and minus action in buy now page will work on this section when product having solid and Liquid weight ProductGroup...  
         elif Group == "nonpacket":
             data = {}
             action = request.GET['action']
             prouductId = request.GET['productId']
             newProduct = Product.objects.get(id = prouductId)
-            initialUnitAmount = request.session['initialUnitAmount']
+            initialUnitAmount = float(request.session['initialUnitAmount'])
             unitAmount = float(request.session['buyNowUnitAmount'])
             unitSellingCost = request.session['buyNow_Unit_SellingCost']
             unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
@@ -1286,9 +1086,8 @@ def Buynow(request, pk = None):
             minUnitValue = newProduct.MinimumUnitValue
             maxUnitValue = newProduct.MaximumUnitValue
 
-            if newProduct.unitGroup == "SolidWeight":
-                if unit == "Kg":
-                    
+            if newProduct.ProductGroup == "SolidWeight":
+                if unit == "Kg":                   
                     if userSelectedUnit == "Kg":
                         diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
                         diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
@@ -1301,38 +1100,6 @@ def Buynow(request, pk = None):
                             else:
                                 unitAmount -= (unitAmount - diff2)
 
-
-                    if  userSelectedUnit == "Gram":
-                        cUnitFrequency = round(unitFrequency * 1000, 2)
-                        minUnitValue = round(minUnitValue * 1000, 2)
-                        maxUnitValue = round(maxUnitValue * 1000, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-
-                    
-                    if  userSelectedUnit == "Pound":
-                        cUnitFrequency = round(unitFrequency * 2.20462, 2)
-                        minUnitValue = round(minUnitValue * 2.20462, 2)
-                        maxUnitValue = round(maxUnitValue * 2.20462, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue ,2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff ,2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                                                       
                 if unit == "Gram":
                     if userSelectedUnit == "Gram":
                         diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
@@ -1346,36 +1113,6 @@ def Buynow(request, pk = None):
                             else:
                                 unitAmount -= (unitAmount - diff2)
                                                
-                    if userSelectedUnit == "Kg":
-                        cUnitFrequency = round(unitFrequency * .001, 2)
-                        minUnitValue = round(minUnitValue * .001, 2)
-                        maxUnitValue = round(maxUnitValue * .001, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                    
-                    if userSelectedUnit == "Pound":
-                        cUnitFrequency = round(unitFrequency * 0.00220462, 2)
-                        minUnitValue = round(minUnitValue * 0.00220462, 2)
-                        maxUnitValue = round(maxUnitValue * 0.00220462, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-
                 if unit == "Pound":
                     if userSelectedUnit == "Pound":
 
@@ -1390,39 +1127,8 @@ def Buynow(request, pk = None):
                             else:
                                 unitAmount -= (unitAmount - diff2)
                         
-                    if userSelectedUnit == "Kg":
 
-                        cUnitFrequency = round(unitFrequency * 0.453592, 2)
-                        minUnitValue = round(minUnitValue * 0.453592, 2)
-                        maxUnitValue = round(maxUnitValue * 0.453592, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                        
-                    if userSelectedUnit == "Gram":
-
-                        cUnitFrequency = round(unitFrequency * 453.592, 2)
-                        minUnitValue = round(minUnitValue * 453.592, 2)
-                        maxUnitValue = round(maxUnitValue * 453.592, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                                
-            if newProduct.unitGroup == "LiquidWeight":
+            if newProduct.ProductGroup == "LiquidWeight":
                 if unit == "Liter":
                     if userSelectedUnit  == "Liter":
                         diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
@@ -1433,21 +1139,6 @@ def Buynow(request, pk = None):
                         if action == "minus":
                             if not unitAmount - diff2 <= minUnitValue:
                                 unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-
-                    if userSelectedUnit == "MiliLiter":
-                        cUnitFrequency = round(unitFrequency * 1000, 2)
-                        minUnitValue = round(minUnitValue * 1000, 2)
-                        maxUnitValue = round(maxUnitValue * 1000, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
                             else:
                                 unitAmount -= (unitAmount - diff2)
 
@@ -1464,21 +1155,6 @@ def Buynow(request, pk = None):
                             else:
                                 unitAmount -= (unitAmount - diff2)
 
-                    if userSelectedUnit == "Liter":
-                        cUnitFrequency = round(unitFrequency * .001, 2)
-                        minUnitValue = round(minUnitValue * .001, 2)
-                        maxUnitValue = round(maxUnitValue * .001, 2)
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += cUnitFrequency
-                        if action == "minus":
-                            if not unitAmount-diff2 <= minUnitValue:
-                                unitAmount -= cUnitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-            
             data['unitAmount'] = round(unitAmount, 2)    
             request.session['buyNowUnitAmount'] = unitAmount
             sellingCost = round(unitSellingCost * unitAmount, 2)
@@ -1630,6 +1306,7 @@ class paymentPageView(TemplateView):
         return render(request,self.template_name, context = context)
             
 def buyNowOrderMakerView(request):
+    print("the size is ", request.session['size'])
     user = request.user
     productId = request.session['buyNowProdId']
     product = Product.objects.get(id = productId)
@@ -1641,6 +1318,7 @@ def buyNowOrderMakerView(request):
         unitAmount = 0
     else:
         unitAmount = float(unitAm)
+    
     size = request.session['size']
     quan = request.session['buyNowQuantity']
     if quan == "none":
@@ -1651,17 +1329,17 @@ def buyNowOrderMakerView(request):
     total =  float(request.session['buyNowTotal'])
     
     Order(user = user, profile = profile, address = defaultAddress, product = product, quantity = quantity, unit = unit, unitAmount = unitAmount, size = size, subTotal = subTotal, Total = total).save()
-    if product.unitGroup == "Packet" or product.unitGroup == "ShoeSize" or product.unitGroup == "ClothSize":
+    if product.ProductGroup == "Packet" or product.ProductGroup == "Shoe" or product.ProductGroup == "Cloth":
         product.ProductStock -= quantity
         product.save()
 
-    del request.session["buyNowProdId"]
-    del request.session["buyNowUnit"]
-    del request.session["buyNowUnitAmount"]
-    del request.session["size"]
-    del request.session["buyNowQuantity"]
-    del request.session["buyNowSubTotal"]
-    del request.session["buyNowTotal"]
+    request.session["buyNowProdId"] = 'none'
+    request.session["buyNowUnit"] = 'none'
+    request.session["buyNowUnitAmount"] = 'none'
+    request.session["size"] = 'none'
+    request.session["buyNowQuantity"] = 'none'
+    request.session["buyNowSubTotal"] = 'none'
+    request.session["buyNowTotal"] = 'none'
     return redirect('/orderurl')
 
 def cartOrderMakerView(request):
@@ -1689,7 +1367,7 @@ def cartOrderMakerView(request):
     for cart in newCart:
         Order(user = user, profile = profile, address = defaultAddress, product = cart.product, quantity = cart.quantity, unit = cart.unit, unitAmount = cart.unit_amount, size = cart.size, subTotal = subTotal, Total = newtotal).save()
         cart.delete()
-        if cart.product.unitGroup == "Packet" or cart.product.unitGroup == "ShoeSize" or cart.product.unitGroup == "ClothSize":
+        if cart.product.ProductGroup == "Packet" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Cloth":
             cart.product.ProductStock -= cart.quantity
             cart.product.save()
     del request.session["code"]

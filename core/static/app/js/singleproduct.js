@@ -146,7 +146,9 @@ function addToCart(element) {
 // This function will Show the different unit and size on the fontend according to the product 
 function fput() {
   let emptydiv = document.getElementById("EmptyDiv");
-  let unitGroup = emptydiv.getAttribute("unitGroup");
+  let ProductGroup = emptydiv.getAttribute("ProductGroup");
+  let ProductUnit = emptydiv.getAttribute("ProductUnit");
+  console.log("This is the product unit",ProductUnit)
 
   let ClothObj = ` <div class="color-size">
     <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the Size </span> </div>
@@ -206,6 +208,7 @@ function fput() {
   </div>
 </div>`;
 
+
   let KgUnit = ` <div class="color-size">
   <div  id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
@@ -214,10 +217,7 @@ function fput() {
     </div>
     <div class="size-button">
       <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
-        <option value = "select">Select</option>
         <option value = "Kg"> Kg </option>
-        <option value = "Gram"> Gram </option>
-        <option value = "Pound"> Pound </option>
       </select> <br> 
     </div>
   </div>
@@ -228,6 +228,45 @@ function fput() {
   </div>
   </div>`;
 
+  let GramUnit = ` <div class="color-size">
+  <div  id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
+  <div class="p-size">
+    <div class="p-size-text">
+      <span >Weight:</span>
+    </div>
+    <div class="size-button">
+      <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
+        <option value = "Gram"> Gram </option>
+      </select> <br> 
+    </div>
+  </div>
+  <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+  <div> 
+    <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+    <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+  </div>
+  </div>`;
+
+  let PoundUnit = ` <div class="color-size">
+  <div  id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
+  <div class="p-size">
+    <div class="p-size-text">
+      <span >Weight:</span>
+    </div>
+    <div class="size-button">
+      <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
+        <option value = "Gram"> Pound </option>
+      </select> <br> 
+    </div>
+  </div>
+  <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+  <div> 
+    <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+    <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+  </div>
+  </div>`;
+
+
   let LiterUnit = ` <div class="color-size">
   <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
@@ -236,8 +275,26 @@ function fput() {
     </div>
     <div class="size-button">
       <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
-        <option value = "select">Select</option>
         <option value = "Liter"> Liter </option>
+      </select> <br> 
+    </div>
+  </div>
+  <div id = "sAlert" style = "color: red; display: none;"> <span > slect the amount </span> </div>
+  <div> 
+    <label style = " color : #444;" for = "unitAmount" > Amount: </label>
+    <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
+    </div>
+  </div>`;
+
+
+  let MiliLiterUnit = ` <div class="color-size">
+  <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
+  <div class="p-size">
+    <div class="p-size-text">
+      <span >Weight:</span>
+    </div>
+    <div class="size-button">
+      <select onchange = "uAmountCk()"  id = "unit" class="size-button-btn" name = "unit">
         <option value = "MiliLiter"> Mili Liter </option>
       </select> <br> 
     </div>
@@ -249,15 +306,19 @@ function fput() {
     </div>
   </div>`;
 
-  if (unitGroup == "ClothSize") {
+  if (ProductGroup == "Cloth") {
     emptydiv.innerHTML += ClothObj;
-  } else if (unitGroup == "ClothPicesSize") {
+  } else if (ProductGroup == "ClothPices") {
     emptydiv.innerHTML += ClothPicesObj;
-  } else if (unitGroup == "SolidWeight") {
+  } else if (ProductGroup == "SolidWeight" && ProductUnit == "Kg") {
     emptydiv.innerHTML += KgUnit;
-  } else if (unitGroup == "LiquidWeight") {
+  } 
+  else if (ProductGroup == "SolidWeight" && ProductUnit == "Gram") {
+    emptydiv.innerHTML += GramUnit;
+  } 
+  else if (ProductGroup == "LiquidWeight") {
     emptydiv.innerHTML += LiterUnit
-  } else if (unitGroup == "ShoeSize") {
+  } else if (ProductGroup == "Shoe") {
     emptydiv.innerHTML += ShoeSizeUnit
   }
 }
@@ -268,6 +329,7 @@ var buyNowa = document.getElementById('buyNowa')
 var prodId = aTCBtn.getAttribute('prod')
 aTCBtn.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener("mouseover", uAmountCk)
+buyNowBTN.addEventListener('click', uAmountCk)
 
 // This function will prevent clicking the 'add to cart' and 'buynow' button if not you select the unit or unit amount
 function uAmountCk() {
@@ -391,54 +453,3 @@ $.ajax({
 
 
 
-
-
-
-// var STNAlert = document.getElementById('sAlert')
-// var unitAlertElm = document.getElementById('unitAlert')
-// console.log(unitAmount)
-// console.log(unitType)
-
-
-// if (unitAmount != "" && unitAmount > 0 && unitType != "select") {
-//   aTCBtn.style.cursor = "pointer";
-//   aTCBtn.disabled = false;
-//   buyNowBTN.style.cursor = "pointer";
-//   buyNowBTN.disabled = false;
-//   STNAlert.style.display = "none";
-// } 
-// else
-// {
-//   aTCBtn.style.cursor = "not-allowed";
-//   aTCBtn.disabled = true;
-//   buyNowBTN.style.cursor = "not-allowed";
-//   buyNowBTN.disabled = true;
-//   STNAlert.style.display = "block";
-// }
-
-
-
-
-
-// This try is for The product of having kg and liter unit
-// try {
-//   let size = document.getElementById('size').value
-//   console.log(size)
-//   STNAlert = document.getElementById('sAlert')
-//   if (size != 'select') {
-//     aTCBtn.style.cursor = "pointer";
-//     aTCBtn.disabled = false;
-//     buyNowBTN.style.cursor = "pointer";
-//     buyNowBTN.disabled = false;
-//     STNAlert.style.display = "none";
-//   } 
-//   else 
-//   {
-//     aTCBtn.style.cursor = "not-allowed";
-//     aTCBtn.disabled = true;
-//     buyNowBTN.style.cursor = "not-allowed";
-//     buyNowBTN.disabled = true;
-//     STNAlert.style.display = "block";
-//   }
-//   }
-// catch{}

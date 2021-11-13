@@ -77,14 +77,14 @@ class Product(models.Model):
     sell_amount= models.IntegerField(null=True, blank=True)
     def __str__(self):
         return str(self.title)
-    UnitGroup_Choices = (
+    ProductGroup_Choices = (
                         ("SolidWeight", "SolidWeight"),
                         ("LiquidWeight", "LiquidWeight"),
                         ("KgPacket", "KgPacket"),
                         ("LiterPacket", "LiterPacket"),
-                        ("ClothSize", "ClothSize"),
-                        ("ClothPicesSize", "ClothPicesSize"),
-                        ("ShoeSize", "ShoeSize"),
+                        ("Cloth", "Cloth"),
+                        ("ClothPices", "ClothPices"),
+                        ("Shoe", "Shoe"),
                         ("Packet", "Packet")
                       )
     Unit_Choices = (
@@ -94,7 +94,7 @@ class Product(models.Model):
                         ("Liter", "Liter"),
                         ("MiliLiter", "MiliLiter")
                       )
-    unitGroup = models.CharField(max_length=30, choices = UnitGroup_Choices, null = True, blank = True)
+    ProductGroup = models.CharField(max_length=30, choices = ProductGroup_Choices, null = True, blank = True)
     unit = models.CharField(max_length=30, choices= Unit_Choices, null=True, blank = True)
     unitValue_On_Increase_or_Decrease = models.IntegerField(null = True, blank = True)
     MinimumUnitValue = models.IntegerField(null = True, blank = True)
@@ -123,40 +123,20 @@ class Cart(models.Model):
     @property
     def products_total_selling_cost(self):
          # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.unitGroup == "SolidWeight" or self.product.unitGroup == "LiquidWeight" or self.product.unitGroup == "ClothPicesSize":
-            if self.unit == "Gram" or self.unit == "MiliLiter":
-                # Adjusting the prize according to the absolute unit....
-                converted_amount = self.unit_amount * 0.001
-            elif self.unit == "Pound":
-                converted_amount = self.unit_amount * 0.45359237
-            elif self.unit == "SqureYeard":
-                converted_amount = self.unit_amount * 0.83612736
-        # Keeping the Liter and Kg the unit of weight.....
-            elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
-                converted_amount = self.unit_amount
-            Total_Cost = self.quantity * self.product.selling_prize * converted_amount     
+        if self.product.ProductGroup == "SolidWeight" or self.product.ProductGroup == "LiquidWeight" or self.product.ProductGroup == "ClothPices":
+            Total_Cost = self.quantity * self.product.selling_prize * self.unit_amount     
         # For the products which doesn't have the extra unit option....
-        if self.product.unitGroup == "ClothSize" or self.product.unitGroup == "Packet" or self.product.unitGroup == "ShoeSize":
+        if self.product.ProductGroup == "Cloth" or self.product.ProductGroup == "Packet" or self.product.ProductGroup == "Shoe":
             Total_Cost = self.quantity * self.product.selling_prize        
         return Total_Cost
 
     @property
     def products_total_cost(self):
         # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.unitGroup == "SolidWeight" or self.product.unitGroup == "LiquidWeight" or self.product.unitGroup == "ClothPicesSize":
-            if self.unit == "Gram" or self.unit == "MiliLiter":
-                # Adjusting the prize according to the absolute unit....
-                converted_amount = self.unit_amount * 0.001
-            elif self.unit == "Pound":
-                converted_amount = self.unit_amount * 0.45359237
-            elif self.unit == "SqureYeard":
-                converted_amount = self.unit_amount * 0.83612736
-        # Keeping the Liter and Kg the unit of weight.....
-            elif self.unit == "Kg" or self.unit == "Liter" or self.unit == "SqureMeter":
-                converted_amount = self.unit_amount
-            Total_Cost = round(self.quantity * self.product.discounted_prize * converted_amount)  
+        if self.product.ProductGroup == "SolidWeight" or self.product.ProductGroup == "LiquidWeight" or self.product.ProductGroup == "ClothPices":
+            Total_Cost = round(self.quantity * self.product.discounted_prize * self.unit_amount)  
         # For the products which doesn't have the extra unit option....
-        if self.product.unitGroup == "ClothSize" or self.product.unitGroup == "Packet" or self.product.unitGroup == "ShoeSize":
+        if self.product.ProductGroup == "Cloth" or self.product.ProductGroup == "Packet" or self.product.ProductGroup == "Shoe":
             Total_Cost = self.quantity * self.product.discounted_prize
         return Total_Cost
     

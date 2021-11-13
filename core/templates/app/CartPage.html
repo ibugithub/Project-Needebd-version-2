@@ -59,14 +59,14 @@
 
                       <div class="pro-de-size">
                         <!-- Filtering the product's extra unit info according to the product's unit -->
-                        {% if cart.product.unitGroup == "ClothSize" or cart.product.unitGroup == "ShoeSize"  %}
+                        {% if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe"  %}
                         <span>size:{{cart.size}}</span>
                         {% endif %}
-                        {% if cart.product.unitGroup == "ClothPicesSize" or cart.product.unitGroup == "LiquidWeight" or cart.product.unitGroup == "SolidWeight" %}
-                        <span>Amount : {{cart.unit_amount}}{{cart.unit}}</span>
+                        {% if cart.product.ProductGroup == "ClothPices" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "SolidWeight" %}
+                        <span>Amount : <span id ="uamount{{forloop.counter}}" >{{cart.unit_amount}}</span>{{cart.unit}}</span>
                         {% endif %}
 
-                        {% if cart.product.unitGroup == "Packet" %}
+                        {% if cart.product.ProductGroup == "Packet" %}
                         <span>Amount : Single Item</span>
                         {% endif %}
                       </div>
@@ -85,10 +85,8 @@
 
                         <span style="font-size: 14px;" class="tk-now"> ৳{{cart.product.discounted_prize}}
                           <!-- filtering for Showing the rate unit in the cart page  -->
-                          {% if cart.product.unitGroup == "SolidWeight" or cart.product.unitGroup == "Gram" or cart.product.unitGroup == "Pound" %}
-                          /{{cart.product.unitGroup}}
-                          {% elif cart.product.unitGroup == "LiquidWeight" or cart.product.unitGroup == "MiliLiter" %}
-                          /liter
+                          {% if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight"  %}
+                          /{{cart.product.unit}}
                           {% else %} 
                           /quantity
                           {% endif %}
@@ -119,16 +117,16 @@
                 </div>
                 <div class="add-to-cart-d-btn">
                   <div class="cart-d-p-btn">
-                    <button flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}
-                      size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
+                    <button {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %} {% else %} style="margin-right: 30px;" {% endif %} flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}
+                    ProductGroup = {{cart.product.ProductGroup}}  size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
                     </button>
+                    {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
                     <div class="cart-d-input">
-
                       <input type="text" class="cart-d-rp" value="{{cart.quantity}}">
-
                     </div>
+                    {% endif %}
 
-                    <button flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} size={{cart.size}}
+                    <button flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} ProductGroup = {{cart.product.ProductGroup}} size={{cart.size}}
                       unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-add"> + </button>
 
                   </div>
