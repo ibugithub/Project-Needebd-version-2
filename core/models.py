@@ -96,10 +96,10 @@ class Product(models.Model):
                       )
     ProductGroup = models.CharField(max_length=30, choices = ProductGroup_Choices, null = True, blank = True)
     unit = models.CharField(max_length=30, choices= Unit_Choices, null=True, blank = True)
-    unitValue_On_Increase_or_Decrease = models.IntegerField(null = True, blank = True)
-    MinimumUnitValue = models.IntegerField(null = True, blank = True)
-    MaximumUnitValue = models.IntegerField(null = True, blank = True)
-    ProductStock = models.IntegerField(null = True)
+    unitValue_On_Increase_or_Decrease = models.FloatField(null = True, blank = True)
+    MinimumUnitValue = models.FloatField(null = True, blank = True)
+    MaximumUnitValue = models.FloatField(null = True, blank = True)
+    ProductStock = models.FloatField(null = True)
     
     def save(self, *args, **kwargs):
         prizeGap =  self.selling_prize - self.discounted_prize

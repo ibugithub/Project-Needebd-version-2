@@ -27,7 +27,7 @@
                 {% else %}
                 <div class="single-product-cart-button">
                   <div class="add-cart-btn">
-                    <button prod="{{product.id}}" id="aTCButton" onclick="addToCart(this)" class="cart-btn">
+                    <button prod="{{product.id}}" productStock={{product.ProductStock}} id="aTCButton" onclick="addToCart(this)" class="cart-btn">
                       Add to cart
                     </button>
                   </div>

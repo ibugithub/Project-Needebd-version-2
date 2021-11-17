@@ -54,6 +54,7 @@
                     <div class="ck-product">
                       <div class="ck-product-details">
                         <div class="ck-product-img">
+                          <div class="stockWarning" id="stockWarning"></div>
                           <img src="{{product.product_image.url}}" alt="" />
                         </div>
                         <div class="ck-product-title">
@@ -63,7 +64,7 @@
                           
                           <div class="ck-title">
                             {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %} 
-                            Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{buyNowUnit}}</span> 
+                            Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{product.unit}}</span> 
                             {% endif %}
                           </div>
 
@@ -145,7 +146,7 @@
                     <button style="margin-right: 40px;" id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductGroup}} prod={{product.id}} class="btn-sub"> -
                     </button>
 
-                    <button onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
 
@@ -160,7 +161,7 @@
 
                     </div>
 
-                    <button onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
                   {% endif %}
@@ -369,7 +370,7 @@
                 <span id="hacoupon">have any coupon or voucher?</span>
                 <div class="ck-pay-btn">
                   <a href="{% url 'paymentpageurlname' 'buyNowTunnel' %}">
-                    <button class="pay-btn">Proceed to pay</button>
+                    <button id="PTPBtn" class="pay-btn">Proceed to pay</button>
                   </a>
 
                 </div>

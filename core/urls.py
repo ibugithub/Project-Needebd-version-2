@@ -13,6 +13,7 @@ urlpatterns = [
     path('singleproducturl/<int:pk>/', views.SingleProductView, name= 'singleproducturlname'),
     path('addtocarturl/', views.AddToCartView, name= 'addtocarturlname'),
     path('showcarturl/',views.ShowCartView.as_view(), name= 'showcarturlname'),
+    path('scheckerurl/',views.stockCheckerView, name = "scheckerurlname"),
     path('pluscarturl/', views.PlusCartView, name = 'pluscarturlname'),
     path('minuscarturl/', views.MinusCartView, name= 'minuscarturlname'),
     path('removecarturl/', views.RemoveCartView, name = 'removecarturlname'),

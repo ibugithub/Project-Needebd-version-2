@@ -37,7 +37,11 @@
                 <div class="leftContainer">
                   <div id="SaveQuantityDiv">
                    <div id="saveDiv">Saved:<span style="margin-left: 4px;" id="savedAmount">500</span>  BDT</div> 
+                   {% if order.product.ProductGroup == "SolidWeight" or order.product.ProductGroup == "LiquidWeight" or order.product.ProductGroup == "ClothPices" %} 
+                   <div id="quantityDiv">UnitAmount: <span id="quantityAmount">{{order.unitAmount}}{{order.unit}}</span></div>
+                   {% else %}                   
                    <div id="quantityDiv">Quantity: <span id="quantityAmount">{{order.quantity}}</span></div>
+                   {% endif %}
                   </div>
 
                   

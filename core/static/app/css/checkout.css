@@ -136,6 +136,7 @@
 .ck-product-img{
     width: 40%;
     height: 115px;
+    position: relative;
 }
 .ck-product-img img{
     max-width: 100%;

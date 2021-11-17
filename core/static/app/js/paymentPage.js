@@ -38,11 +38,16 @@ for (let  i = 0; i < len3; i++){
     if (courier[i].classList.contains('border')){
       document.getElementById('courierWarning').innerHTML = "select one courier option"
       courier[i].classList.remove('border');
+      button.style.cursor = "not-allowed"
+      button.disabled = true
     }
     else{
       prevClassRemover()
       courier[i].classList.add('border');
       document.getElementById('courierWarning').innerHTML = ""
+      button.style.cursor = "pointer"
+      button.disabled = false
+      
     }
   })
 }
@@ -62,7 +67,6 @@ function courierSelectionChecker(){
     }
   }
 }
-
 
 // This section is for managing the Procced to button whether to clickable or not
 button.addEventListener("mouseover", buttonManager);

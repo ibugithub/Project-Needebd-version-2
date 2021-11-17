@@ -45,7 +45,14 @@
             <div class="add-to-cart-d">
               <div class="add-cart-d-con">
                 <div class="add-cart-d-con-re">
+                  
                   <div class="cart-d-image">
+                    <!-- <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span> -->
+                    {% if cart.quantity > cart.product.ProductStock %}
+                  <span class="stockWarning" id="stockWarning{{forloop.counter}}">Stock Out</span>
+                  {% else %}
+                  <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span>
+                  {% endif %}
                     <img src="{{cart.product.product_image.url}}" alt="">
                   </div>
 
@@ -117,16 +124,16 @@
                 </div>
                 <div class="add-to-cart-d-btn">
                   <div class="cart-d-p-btn">
-                    <button {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %} {% else %} style="margin-right: 30px;" {% endif %} flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}
+                    <button {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %} {% else %} style="margin-right: 30px;" {% endif %} flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}} productStock= {{cart.product.ProductStock}}
                     ProductGroup = {{cart.product.ProductGroup}}  size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-sub"> -
                     </button>
                     {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
-                    <div class="cart-d-input">
-                      <input type="text" class="cart-d-rp" value="{{cart.quantity}}">
+                    <div  class="cart-d-input">
+                      <input id = "quantity{{forloop.counter}}" type="text" class="cart-d-rp" value="{{cart.quantity}}">
                     </div>
                     {% endif %}
 
-                    <button flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} ProductGroup = {{cart.product.ProductGroup}} size={{cart.size}}
+                    <button id="plusCart{{forloop.counter}}" productStock= {{cart.product.ProductStock}} flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}} ProductGroup = {{cart.product.ProductGroup}} size={{cart.size}}
                       unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="btn-add"> + </button>
 
                   </div>
@@ -134,7 +141,7 @@
                     <div class="cart-d-save">
                       save for later
                     </div>
-                    <div prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
+                    <div flc={{forloop.counter}} prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
                       unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove"> remove </div>
                   </div>
                 </div>
@@ -147,7 +154,7 @@
               <div class="place-or-container">
                 <form action = "{% url 'checkouturlname' %}">
                   <input type="hidden">
-                  <button class="place-order-btn">Proceed to Chekout</button>
+                  <button id = "PTCOB" class="place-order-btn">Proceed to Chekout</button>
                 </form>
               </div>
             </div>

@@ -1,27 +1,38 @@
+var button = document.getElementById("PTCOB")
+var stockWarningElm = document.getElementsByClassName('stockWarning')
+
 function PlusCart(element) {
     productGroup = element.getAttribute('ProductGroup')
-    if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
-    {
-    var quantityElm = element.parentNode.children[1].children[0];
-    quantityValue = parseInt(quantityElm.value) + 1;
-    quantityElm.value = quantityValue;
-    quantityElm.innerHTML = quantityValue;
-    }
-    var prod_id = element.getAttribute('prod').toString()
     var c = element.getAttribute('flc')
     var tcid = ("tc" + c)
+    var quantityElmId = ("quantity" + c)
+    var stockWarningId = ("stockWarning" + c)
+    var plusButton = document.getElementById("plusCart" + c)
+    var sotckWarningElm = document.getElementById(stockWarningId)
     var tProdCostElm = document.getElementById(tcid)
+    productStock = parseFloat(element.getAttribute('productStock'))
+    if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
+    {
+    var quantityElm = document.getElementById(quantityElmId)
+    quantityValue = parseInt(quantityElm.value) + 1;
+    quantityElm.value = quantityValue; 
+    if (quantityValue > productStock)
+    {  
+       sotckWarningElm.innerHTML = "Stock out"
+        plusButton.disabled = true
+    }
+    }
+    var prod_id = element.getAttribute('prod').toString()
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var disCountDom = document.getElementById("discountDom")
     var totalCostDom = document.getElementById('totalCostDom')
-
+    
     $.ajax({
         type: "GET",
         url: "/pluscarturl",
         data: {
             id: prod_id,
             unit: element.getAttribute('unit'),
-            unit_amount: element.getAttribute('unit_amount'),
             size: element.getAttribute('size')
         },
         success: function (data) {
@@ -39,52 +50,57 @@ function PlusCart(element) {
         }
     })
 }
-
 function MinusCart(element) {
     var prod_id = element.getAttribute('prod').toString()
     productGroup = element.getAttribute('ProductGroup')
     var c = element.getAttribute('flc')
     var tcid = ("tc" + c)
+    var quantityElmId = ("quantity" + c) 
+    var quantityElmId = ("quantity" + c) 
+    var stockWarningId = ("stockWarning" + c)
+    var plusButton = document.getElementById("plusCart" + c)
     var tProdCostElm = document.getElementById(tcid)
-
+    productStock = parseFloat(element.getAttribute('productStock'))
     if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
     {
-        var quantityElm = element.parentNode.children[1].children[0]
+        var quantityElm = document.getElementById(quantityElmId)
         quantityValue = parseInt(quantityElm.value) - 1
         quantityElm.value = quantityValue
-        quantityElm.innerHTML = quantityValue
+        plusButton.disabled = false
+        if (quantityValue <= productStock){
+            document.getElementById(stockWarningId).innerHTML = ""
+            button.disabled = false
+            button.style.cursor = "pointer"
+            quantityValue += 1
+        }
+        else{
+            document.getElementById(stockWarningId).innerHTML = "Stock out"
+        }
     }
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var itemCounterDom = document.getElementById('ItemCountDom')
     var disCountDom = document.getElementById("discountDom")
     var totalCostDom = document.getElementById('totalCostDom')
-
     $.ajax({
         type: "GET",
         url: "/minuscarturl",
         data: {
             id: prod_id,
             unit: element.getAttribute('unit'),
-            unit_amount: element.getAttribute('unit_amount'),
             size: element.getAttribute('size')
         },
         success: function (data) {
-            if (data.quantity == 0) {
+            if (data.quantity == 0) 
+            {
                 element.parentNode.parentNode.parentNode.parentNode.style.display = 'none'
                 var cartItemCount = document.getElementById('count')
                 cartItemCount.innerHTML = data.cartCount
             }
-
             if (productGroup == 'SolidWeight' || productGroup == "LiquidWeight" || productGroup == "ClothPices") 
             {
                 var uAmountId = ("uamount" + c)
                 var unitAmountElm = document.getElementById(uAmountId)
                 unitAmountElm.innerHTML = data.unitAmount
-                if(data.deleted){
-                    element.parentNode.parentNode.parentNode.parentNode.style.display = 'none'
-                    var cartItemCount = document.getElementById('count')
-                    cartItemCount.innerHTML = data.cartCount
-                }
             }
             tProdCostElm.innerHTML = data.products_total_cost
             itemCounterDom.innerHTML = data.Item
@@ -103,6 +119,12 @@ function RemoveCart(element) {
     var totalCostDom = document.getElementById('totalCostDom')
     var itemCounterDom = document.getElementById('ItemCountDom')
     var disCountDom = document.getElementById("discountDom")
+    var c = element.getAttribute('flc')
+    var stockWarningId = ("stockWarning" + c)
+    document.getElementById(stockWarningId).innerHTML = ""
+    button.disabled = false
+    button.style.cursor = "pointer"
+
 
     $.ajax({
         method: "GET",
@@ -110,7 +132,6 @@ function RemoveCart(element) {
         data: {
             prod_id: element.getAttribute('prod_id'),
             unit: element.getAttribute('unit'),
-            unit_amount: element.getAttribute('unit_amount'),
             size: element.getAttribute('size')
 
         },
@@ -152,3 +173,20 @@ function voucherChecker() {
         }
     })
 }
+
+// This function will prevent you from checking out if one of carted product has been stock out
+button.addEventListener('mouseover', function() {
+    let len = stockWarningElm.length
+    for (let i = 0; i < len; i++){
+        
+        if(stockWarningElm[i].innerHTML != ""){
+            var stock = true
+        }
+        if (stock == true){
+            button.disabled = true
+            button.style.cursor = "not-allowed"
+        }
+    }
+})
+
+

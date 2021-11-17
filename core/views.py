@@ -95,22 +95,22 @@ class ProductPageView(Mycontext, ListView):
         qs = super(ProductPageView, self).get_queryset()
         return qs.filter(product_category__title=self.kwargs.get('category'))
 
-def SingleProductView(request, pk): 
+def SingleProductView(request, pk):
     template_name = 'app/singleproduct.html'
-    product = Product.objects.get(id = pk)
+    product = Product.objects.get(id=pk)
     category = product.product_category
-    relatedProduct = Product.objects.filter(product_category = category)
+    relatedProduct = Product.objects.filter(product_category=category)
     paginator = Paginator(relatedProduct, 11)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        "product" : product,
-        "relatedProduct" : relatedProduct,
-        "showedProductId" : pk,
-        "page_obj" : page_obj
+        "product": product,
+        "relatedProduct": relatedProduct,
+        "showedProductId": pk,
+        "page_obj": page_obj
     }
-    return render(request, template_name, context = context)
-    
+    return render(request, template_name, context=context)
+
 def AddToCartView(request):
     product_id = request.GET['productid']
     unit = request.GET['unit']
@@ -123,10 +123,11 @@ def AddToCartView(request):
         if myproduct.ProductGroup == "SolidWeight" or myproduct.ProductGroup == "LiquidWeight" or myproduct.ProductGroup == "ClothPices":
             unit_amount = float(request.GET['unit_amount'])
             try:
-                cart = Cart.objects.get(user=user,
-                                        product=myproduct,
-                                        unit=unit,
-                                        )               
+                cart = Cart.objects.get(
+                    user=user,
+                    product=myproduct,
+                    unit=unit,
+                )
                 cart.unit_amount += unit_amount
                 cart.save()
             except:
@@ -139,15 +140,17 @@ def AddToCartView(request):
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
                                         size=size)
-                cart.quantity += 1
-                cart.save()
+                if cart.quantity < cart.product.ProductStock:
+                    cart.quantity += 1
+                    cart.save()
             except:
                 Cart(user=user, product=myproduct, size=size).save()
         elif myproduct.ProductGroup == "Packet":
             try:
                 cart = Cart.objects.get(user=user, product=myproduct)
-                cart.quantity += 1
-                cart.save()
+                if cart.quantity < cart.product.ProductStock:
+                    cart.quantity += 1
+                    cart.save()
             except:
                 Cart(user=user, product=myproduct).save()
     data = {'demo': "data"}
@@ -189,6 +192,10 @@ class ShowCartView(TemplateView):
         else:
             return redirect('/accounts/login/')
 
+def stockCheckerView(request):
+    data = {}
+    return JsonResponse(data)
+
 def PlusCartView(request):
     request.session['code'] = 'none'
     if request.user.is_authenticated:
@@ -201,22 +208,25 @@ def PlusCartView(request):
         unitFrequency = product.unitValue_On_Increase_or_Decrease
 
         if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
-            cart = Cart.objects.get(user=user,
-                                    product=product,
-                                    unit=unit,
-                                    )
+            cart = Cart.objects.get(
+                user=user,
+                product=product,
+                unit=unit,
+            )
             cart.unit_amount += unitFrequency
             cart.save()
             data['unitAmount'] = cart.unit_amount
 
         elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
-            cart.quantity += 1
-            cart.save()
+            if not cart.quantity > product.ProductStock:
+                cart.quantity += 1
+                cart.save()
         elif product.ProductGroup == "Packet":
             cart = Cart.objects.get(user=user, product=product)
-            cart.quantity += 1
-            cart.save()
+            if not cart.quantity >= product.ProductStock:
+                cart.quantity += 1
+                cart.save()
 
         carts = Cart.objects.filter(user=user)
         TotalSell_Cost = 0
@@ -229,13 +239,13 @@ def PlusCartView(request):
                                tccart.products_total_cost)
         delivery_charge = 70
         Total_Cost = Total_products_cost + delivery_charge
-       
+
         data['quantity'] = cart.quantity,
         data["TotalSell_Cost"] = TotalSell_Cost,
         data['products_total_cost'] = cart.products_total_cost,
         data['Total_Cost'] = Total_Cost,
         data['Total_discount'] = Total_discount
-        
+
         return JsonResponse(data)
 
 def MinusCartView(request):
@@ -243,7 +253,6 @@ def MinusCartView(request):
     user = request.user
     if user.is_authenticated:
         data = {}
-
         product_key = request.GET['id']
         product = Product.objects.get(id=product_key)
         unit = request.GET['unit']
@@ -259,34 +268,22 @@ def MinusCartView(request):
         if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
             unitFrequency = product.unitValue_On_Increase_or_Decrease
             minUnitAmount = product.MinimumUnitValue
-            cart = Cart.objects.get(user=user,
-                                    product=product,
-                                    unit=unit,
-                                   )
-            if cart.unit_amount > minUnitAmount:
+            initialUnitAmount = float(request.session['initialUnitAmount'])
+            diff = round((initialUnitAmount / minUnitAmount) - minUnitAmount,
+                         2)
+            diff2 = round((initialUnitAmount / minUnitAmount) - diff, 2)
+            cart = Cart.objects.get(
+                user=user,
+                product=product,
+                unit=unit,
+            )
+            if cart.unit_amount - diff2 > minUnitAmount:
                 cart.unit_amount -= unitFrequency
                 cart.save()
                 data['unitAmount'] = cart.unit_amount
-            if cart.unit_amount <= minUnitAmount:
-                cart.delete()
-                data['deleted'] = True
-                Item = itemcount()
-
-
-        # if not cart.unit_amount - diff2 <= minUnitValue :
-        #         cart.unit_amount -= unitFrequency
-        #         cart.save()
-        #         data['unitAmount'] = cart.unit_amount
-        #     else:
-        #         cart.unit_amount -= (cart.unit_amount - diff2)
-        #     if cart.unit_amount <= minUnitValue:
-        #         cart.delete()
-        #         data['deleted'] = True
-        #         Item = itemcount()
-
-
-
-
+            else:
+                cart.unit_amount -= (cart.unit_amount - diff2)
+                data['unitAmount'] = cart.unit_amount
 
         elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
@@ -328,7 +325,6 @@ def MinusCartView(request):
             for icart in newcart:
                 Item += 1
 
-        
         data['quantity'] = cart.quantity,
         data["TotalSell_Cost"] = TotalSell_Cost,
         data['products_total_cost'] = cart.products_total_cost,
@@ -336,7 +332,7 @@ def MinusCartView(request):
         data["Total_Cost"] = Total_Cost,
         data["Item"] = Item,
         data["Total_discount"] = Total_discount
-        
+
         return JsonResponse(data)
 
 def RemoveCartView(request):
@@ -345,20 +341,20 @@ def RemoveCartView(request):
     product_key = request.GET['prod_id']
     product = Product.objects.get(id=product_key)
     unit = request.GET['unit']
-    unit_amount = request.GET['unit_amount']
     size = request.GET['size']
     if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPice":
-        cart = Cart.objects.get(user=user,
-                                product=product,
-                                unit=unit,
-                                unit_amount=unit_amount)
+        cart = Cart.objects.get(
+            user=user,
+            product=product,
+            unit=unit,
+        )
         cart.delete()
 
-    elif product.ProductGroup== "Cloth" or product.ProductGroup == "Shoe":
+    elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
         cart = Cart.objects.get(user=user, product=product, size=size)
         cart.delete()
 
-    elif product.ProductGroup== "Packet":
+    elif product.ProductGroup == "Packet":
         cart = Cart.objects.get(user=user, product=product)
         cart.delete()
 
@@ -390,7 +386,7 @@ def RemoveCartView(request):
     }
     return JsonResponse(data)
 
-def VoucherChecker(request, redirect = False):
+def VoucherChecker(request, redirect=False):
     carts = Cart.objects.filter(user=request.user)
     total_amount = 0
     for cart in carts:
@@ -401,7 +397,7 @@ def VoucherChecker(request, redirect = False):
         code = request.session['code']
     else:
         code = request.GET['code']
-    
+
     now = timezone.now()
     try:
         coupon = Coupon.objects.get(coupon_code=code,
@@ -465,7 +461,7 @@ def VoucherChecker(request, redirect = False):
 
     # redirect Action will get the data from this return...
     if redirect == True:
-        return {"amount":total_amount, "discount":discount }
+        return {"amount": total_amount, "discount": discount}
 
     data = {
         "discount": discount,
@@ -485,18 +481,21 @@ class ManageAccountView(TemplateView):
     template_name = 'app/manageAccount.html'
 
     def get(self, request, *args, **kwargs):
-        profile = CustomerProfile.objects.get(user = request.user)
-        context = {
-            "profile": profile
-        }
-        newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
+        profile = CustomerProfile.objects.get(user=request.user)
+        context = {"profile": profile}
+        newCustomerAddress = CustomerAddress.objects.filter(user=request.user)
         if len(newCustomerAddress) > 0:
-            defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+            defaultAddress = CustomerAddress.objects.get(user=request.user,
+                                                         isDefault=True)
             context["defaultAddress"] = defaultAddress
-        newOrder = Order.objects.filter(Q(user = request.user, status = 'Pending') | Q(user = request.user, status = 'Confirmed') | Q(user = request.user, status = 'On the way') | Q(user = request.user, status = 'Delivered') )
+        newOrder = Order.objects.filter(
+            Q(user=request.user, status='Pending')
+            | Q(user=request.user, status='Confirmed')
+            | Q(user=request.user, status='On the way')
+            | Q(user=request.user, status='Delivered'))
         if len(newOrder) > 0:
             context["orders"] = newOrder
-        return render(request, self.template_name, context = context)
+        return render(request, self.template_name, context=context)
 
 class ProfileView(TemplateView):
     template_name = "app/profile.html"
@@ -530,9 +529,7 @@ class EditProfileView(View):
 
     def post(self, request):
         customerprofile = CustomerProfile.objects.get(user=request.user)
-        context = {
-            "profile":customerprofile
-        }
+        context = {"profile": customerprofile}
         name = request.POST.get('name')
         year = int(request.POST.get('year'))
         month = request.POST.get('month')
@@ -544,24 +541,24 @@ class EditProfileView(View):
             attempt1 = "failed"
         else:
             attempt1 = "success"
-        
+
         if year == 0:
             context["yearerror"] = "set it"
             attempt2 = "failed"
         else:
             attempt2 = "success"
-        
+
         if month == "":
             context["montherror"] = "set it"
             attempt3 = "failed"
         else:
             attempt3 = "success"
             month = int(month)
-        
+
         if day == 0:
             context["day"] = "set it"
             attempt4 = "failed"
-        else: 
+        else:
             attempt4 = "success"
 
         if gender == "":
@@ -581,21 +578,22 @@ class EditProfileView(View):
 
 class AddressBookView(TemplateView):
     template_name = "app/addressBook.html"
+
     def get(self, request, *args, **kwargs):
-        newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
-        return render(request, self.template_name, {"newaddress":newCustomerAddress})
+        newCustomerAddress = CustomerAddress.objects.filter(user=request.user)
+        return render(request, self.template_name,
+                      {"newaddress": newCustomerAddress})
 
 def defaultAddressMaker(request):
     id = request.GET['id']
-    newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    newCustomerAddress1 = CustomerAddress.objects.get(user=request.user,
+                                                      isDefault=True)
     newCustomerAddress1.isDefault = False
     newCustomerAddress1.save()
-    newCustomerAddress2 = CustomerAddress.objects.get(id = id)
+    newCustomerAddress2 = CustomerAddress.objects.get(id=id)
     newCustomerAddress2.isDefault = True
     newCustomerAddress2.save()
-    data = {
-        "name":"ibrahim"
-    }
+    data = {"name": "ibrahim"}
     return JsonResponse(data)
 
 class AddAddressView(View):
@@ -605,7 +603,7 @@ class AddAddressView(View):
     upazilas = Upazilas.objects.all()
     unions = Unions.objects.all()
 
-    def get(self, request, pk = 'none', *args, **kwargs):
+    def get(self, request, pk='none', *args, **kwargs):
         context = {
             'divisions': self.division,
             'districts': self.districts,
@@ -613,13 +611,12 @@ class AddAddressView(View):
             'unions': self.unions,
         }
         try:
-            newCustomerAddress  = CustomerAddress.objects.get(id = pk)
+            newCustomerAddress = CustomerAddress.objects.get(id=pk)
             context['newaddress'] = newCustomerAddress
-        except :
+        except:
             pass
 
-        return render(
-            request, self.template_name, context = context)
+        return render(request, self.template_name, context=context)
 
     def post(self, request, *args, **kwargs):
         fullName = request.POST.get("fullName")
@@ -630,13 +627,13 @@ class AddAddressView(View):
         unionId = request.POST.get("unionId")
         address = request.POST.get('address')
         pk = request.POST.get('pk')
-    
+
         context = {
-                'divisions': self.division,
-                'districts': self.districts,
-                'upazilas': self.upazilas,
-                'unions': self.unions,
-                }
+            'divisions': self.division,
+            'districts': self.districts,
+            'upazilas': self.upazilas,
+            'unions': self.unions,
+        }
 
         if fullName == "":
             context["nameerror"] = "Write your name"
@@ -690,8 +687,8 @@ class AddAddressView(View):
         else:
             attempt7 = "success"
             context['address'] = address
-        
-        if not divattempt == "failed":  
+
+        if not divattempt == "failed":
             division = Divisions.objects.get(id=divisionId)
             context['divisionName'] = division
             context['divisionId'] = divisionId
@@ -709,11 +706,11 @@ class AddAddressView(View):
             context['unionId'] = unionId
 
         if pk != None:
-            newaddress = CustomerAddress.objects.get(id = pk)
+            newaddress = CustomerAddress.objects.get(id=pk)
             context["newaddress"] = newaddress
 
         if attempt1 == "success" and attempt2 == "success" and attempt3 == "success" and attempt4 == "success" and attempt5 == "success" and attempt6 == "success" and attempt7 == "success":
-            
+
             if pk != None:
                 newaddress.full_name = fullName
                 newaddress.phone_number = phoneNumber
@@ -724,79 +721,105 @@ class AddAddressView(View):
                 newaddress.address = address
                 newaddress.save()
                 return redirect("/abookurl")
-                
-            else:                    
-                newCustomerAddress = CustomerAddress.objects.filter(user = request.user)
+
+            else:
+                newCustomerAddress = CustomerAddress.objects.filter(
+                    user=request.user)
                 if len(newCustomerAddress) == 0:
-                    CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address, isDefault = True).save()
+                    CustomerAddress(user=request.user,
+                                    full_name=fullName,
+                                    phone_number=phoneNumber,
+                                    divisions=division,
+                                    districts=district,
+                                    upazilas=upazila,
+                                    unions=union,
+                                    address=address,
+                                    isDefault=True).save()
                 else:
-                    CustomerAddress(user = request.user, full_name = fullName, phone_number = phoneNumber, divisions = division, districts = district, upazilas = upazila, unions = union, address = address).save()
-               
+                    CustomerAddress(user=request.user,
+                                    full_name=fullName,
+                                    phone_number=phoneNumber,
+                                    divisions=division,
+                                    districts=district,
+                                    upazilas=upazila,
+                                    unions=union,
+                                    address=address).save()
+
                 return redirect("/abookurl")
         else:
-            return render(request, self.template_name, context = context)
+            return render(request, self.template_name, context=context)
 
 class OrderView(TemplateView):
     template_name = "app/order.html"
+
     def get(self, request, *args, **kwargs):
-        newOrder = Order.objects.filter(Q(user = request.user, status = 'Pending') | Q(user = request.user, status = 'Confirmed') | Q(user = request.user, status = 'On the way') | Q(user = request.user, status = 'Delivered') )
+        newOrder = Order.objects.filter(
+            Q(user=request.user, status='Pending')
+            | Q(user=request.user, status='Confirmed')
+            | Q(user=request.user, status='On the way')
+            | Q(user=request.user, status='Delivered'))
         context = {"orders": newOrder}
         return render(request, self.template_name, context=context)
 
 def CancelOrderView(request, pk):
-    order = Order.objects.get(id = pk)
+    order = Order.objects.get(id=pk)
     order.status = 'Canceled'
     order.save()
     return redirect('/orderurl')
 
 class CancellationView(TemplateView):
     template_name = "app/cancellation.html"
+
     def get(self, request, *args, **kwargs):
-        cancelOrder = Order.objects.filter(user = request.user, status = 'Canceled') 
-        return render(request, self.template_name, {'corder':cancelOrder})
+        cancelOrder = Order.objects.filter(user=request.user,
+                                           status='Canceled')
+        return render(request, self.template_name, {'corder': cancelOrder})
 
 class ReturnedOrderView(TemplateView):
     template_name = "app/returnedOrder.html"
+
     def get(self, request, *args, **kwargs):
-        returnedOrder = Order.objects.filter(user = request.user, status = 'Returned') 
-        return render(request, self.template_name, {'rorder':returnedOrder})
+        returnedOrder = Order.objects.filter(user=request.user,
+                                             status='Returned')
+        return render(request, self.template_name, {'rorder': returnedOrder})
 
 def ReturnOrderView(request, pk):
-    order = Order.objects.get(id = pk)
+    order = Order.objects.get(id=pk)
     order.status = 'Returned'
     order.save()
-    return redirect('/orderurl')    
+    return redirect('/orderurl')
 
 def Checkout(request):
-    newCart = Cart.objects.filter(user = request.user)
+    newCart = Cart.objects.filter(user=request.user)
     length = len(newCart)
     deliveryCharge = 70
     subTotal = 0
     for cart in newCart:
         subTotal += cart.products_total_cost
     total = subTotal + deliveryCharge
-  
-    newProfile = CustomerProfile.objects.get(user = request.user)
-    newAddress = CustomerAddress.objects.filter(user = request.user)
 
-    if  len(newAddress) < 1:
+    newProfile = CustomerProfile.objects.get(user=request.user)
+    newAddress = CustomerAddress.objects.filter(user=request.user)
+
+    if len(newAddress) < 1:
         return redirect('/abookurl')
 
     try:
-        defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+        defaultAddress = CustomerAddress.objects.get(user=request.user,
+                                                     isDefault=True)
     except:
         return redirect('/aaddressurl')
-    
+
     context = {
-        "carts" : newCart,
-        "len" :length,
-        "subTotal" : subTotal,
-        "deliveryCharge" : deliveryCharge,
-        "profile" : newProfile,
-        "newaddress" :newAddress,
-        "daddress" : defaultAddress,
+        "carts": newCart,
+        "len": length,
+        "subTotal": subTotal,
+        "deliveryCharge": deliveryCharge,
+        "profile": newProfile,
+        "newaddress": newAddress,
+        "daddress": defaultAddress,
         "totalAmount": total
-    } 
+    }
     if not request.session["code"] == 'none':
         # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
         data = VoucherChecker(request, redirect=True)
@@ -804,17 +827,18 @@ def Checkout(request):
             context["totalAmount"] = data['amount']
             context["discount"] = data['discount']
     else:
-        context["totalAmount"] = total 
+        context["totalAmount"] = total
 
-    return render(request,'app/checkout.html', context = context)
+    return render(request, 'app/checkout.html', context=context)
 
 # This function will work when user will click the Edit option on checkout page for changing the shipping address when checking out
 def SelectAddressView(request):
     id = request.GET['adrId']
-    newCustomerAddress1 = CustomerAddress.objects.get(user = request.user, isDefault = True)
+    newCustomerAddress1 = CustomerAddress.objects.get(user=request.user,
+                                                      isDefault=True)
     newCustomerAddress1.isDefault = False
     newCustomerAddress1.save()
-    newCustomerAddress2 = CustomerAddress.objects.get(id = id)
+    newCustomerAddress2 = CustomerAddress.objects.get(id=id)
     newCustomerAddress2.isDefault = True
     newCustomerAddress2.save()
     address = newCustomerAddress2.address
@@ -825,33 +849,28 @@ def SelectAddressView(request):
     name = newCustomerAddress2.full_name
 
     data = {
-        'name'  : name,
-        "address" : address,
-        "union" : union,
-        "upazila" : upazila,
-        "district" : district,
-        "division" : division
+        'name': name,
+        "address": address,
+        "union": union,
+        "upazila": upazila,
+        "district": district,
+        "division": division
     }
     return JsonResponse(data)
 
 # This function will take the unit, unitAmount and size data form the backend and save the data to the session to use it in buynow function
 def buyNowDataView(request):
-    request.session['buyNowUnit'] = "none"
     request.session['buyNowUnitAmount'] = "none"
     request.session['size'] = "none"
     request.session['buyNowProdId'] = "none"
-    unit = request.GET['unit']
     unitAmount = request.GET['unitAmount']
     size = request.GET['size']
     productId = request.GET['prodIdV']
     request.session['buyNowProdId'] = productId
-    request.session['buyNowUnit'] = unit
     request.session['buyNowUnitAmount'] = unitAmount
     request.session['initialUnitAmount'] = unitAmount
     request.session['size'] = size
-    data = {
-        'demo' : 'test'
-    }
+    data = {'demo': 'test'}
     return JsonResponse(data)
 
 def minMaxUnitCheckerView(request):
@@ -861,146 +880,50 @@ def minMaxUnitCheckerView(request):
     request.session['buyNow_Total_DiscountedCost'] = "none"
     data = {}
     productId = request.GET['prodIdV']
-    fontendUnit = request.GET['unitV']
     fontendUnitAmount = float(request.GET['unitAmountV'])
-    product = Product.objects.get(id = productId)
+    product = Product.objects.get(id=productId)
     buyNowSellingCost = product.selling_prize
     buyNowDiscountedCost = product.discounted_prize
     backendUnit = product.unit
     minUnitValue = product.MinimumUnitValue
     maxUnitValue = product.MaximumUnitValue
     backendUnitGroup = product.ProductGroup
- 
-    if backendUnitGroup == "SolidWeight":
-        if backendUnit == "Kg":
-            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                data["message"] = ""
-                data["attempt"] = True
-                request.session['buyNowUnit'] = fontendUnit
-                request.session['buyNowUnitAmount'] = fontendUnitAmount
-                request.session['initialUnitAmount'] = fontendUnitAmount
-                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-                               
-            else:
-                if fontendUnitAmount < minUnitValue:
-                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
+    stock = product.ProductStock
 
-                elif fontendUnitAmount > maxUnitValue:
-                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-                            
-        elif backendUnit == "Gram":
-            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                data["message"] = ""
-                data["attempt"] = True
-                request.session['buyNowUnit'] = fontendUnit
-                request.session['buyNowUnitAmount'] = fontendUnitAmount
-                request.session['initialUnitAmount'] = fontendUnitAmount
-                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
+    if backendUnitGroup == "SolidWeight" or backendUnit == "LiquidWeight" or backendUnit == "ClothPices":
 
-            else:
-                if fontendUnitAmount < minUnitValue:
-                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-                elif fontendUnitAmount > maxUnitValue:
-                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-
-        elif backendUnit == "Pound":
-
-            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                data["message"] = ""
-                data["attempt"] = True
-                request.session['buyNowUnit'] = fontendUnit
-                request.session['buyNowUnitAmount'] = fontendUnitAmount
-                request.session['initialUnitAmount'] = fontendUnitAmount
-                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-            else:
-                if fontendUnitAmount < minUnitValue:
-                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-                elif fontendUnitAmount > maxUnitValue:
-                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-
-    if backendUnitGroup == "LiquidWeight":
-
-        if backendUnit == "Liter":
-            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                data["message"] = ""
-                data["attempt"] = True
-                request.session['buyNowUnit'] = fontendUnit
-                request.session['buyNowUnitAmount'] = fontendUnitAmount
-                request.session['initialUnitAmount'] = fontendUnitAmount
-                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-                
-            else:
-                if fontendUnitAmount < minUnitValue:
-                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-                elif fontendUnitAmount > maxUnitValue:
-                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-
-        elif backendUnit == "MiliLiter":
-
-
-            if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue:
-                data["message"] = ""
-                data["attempt"] = True
-                request.session['buyNowUnit'] = fontendUnit
-                request.session['buyNowUnitAmount'] = fontendUnitAmount
-                request.session['initialUnitAmount'] = fontendUnitAmount
-                converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
-                converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
-                request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
-                request.session['buyNow_Total_SellingCost'] = round(converted_Total_SellingCost,2)
-                request.session['buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
-                request.session['buyNow_Total_DiscountedCost'] = round(converted_Total_DiscountedCost,2)
-
-            else:
-                if fontendUnitAmount < minUnitValue:
-                    message = f"you have to select  atleast {minUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
-                elif fontendUnitAmount > maxUnitValue:
-                    message = f"you can't select  more than {maxUnitValue} {fontendUnit} for this product"
-                    data["message"] = message
-                    data["attempt"] = False
+        if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue and fontendUnitAmount <= stock:
+            data["message"] = ""
+            data["attempt"] = True
+            request.session['buyNowUnitAmount'] = fontendUnitAmount
+            request.session['initialUnitAmount'] = fontendUnitAmount
+            converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
+            converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
+            request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
+            request.session['buyNow_Total_SellingCost'] = round(
+                converted_Total_SellingCost, 2)
+            request.session[
+                'buyNow_Unit_DiscountedCost'] = buyNowDiscountedCost
+            request.session['buyNow_Total_DiscountedCost'] = round(
+                converted_Total_DiscountedCost, 2)
+        else:
+            if fontendUnitAmount < minUnitValue:
+                message = f"you have to select  atleast {minUnitValue} {backendUnit} for this product"
+                data["message"] = message
+                data["attempt"] = False
+            elif fontendUnitAmount > maxUnitValue:
+                message = f"you can't select  more than {maxUnitValue} {backendUnit} for this product"
+                data["message"] = message
+                data["attempt"] = False
+            elif fontendUnitAmount > stock:
+                message = f"only {stock} {backendUnit} is available for this product now"
+                data["message"] = message
+                data["attempt"] = False
 
     return JsonResponse(data)
 
 # This function will show the product info in the buynow page....
-def Buynow(request, pk = None):
+def Buynow(request, pk=None):
     request.session['buyNowSubTotal'] = 'none'
     request.session['buyNowTotal'] = 'none'
     request.session['buyNowDiscount'] = 'none'
@@ -1008,22 +931,23 @@ def Buynow(request, pk = None):
     context = {}
 
     try:
-        defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+        defaultAddress = CustomerAddress.objects.get(user=request.user,
+                                                     isDefault=True)
     except:
         return redirect('/aaddressurl')
-    newProfile = CustomerProfile.objects.get(user = request.user)
-    newAddress = CustomerAddress.objects.filter(user = request.user)
-    if  len(newAddress) < 1:
-            return redirect('/abookurl')    
+    newProfile = CustomerProfile.objects.get(user=request.user)
+    newAddress = CustomerAddress.objects.filter(user=request.user)
+    if len(newAddress) < 1:
+        return redirect('/abookurl')
     context['newaddress'] = newAddress
     context["daddress"] = defaultAddress
     context["profile"] = newProfile
-    
-     # initial product info will be shown by this section
+
+    # initial product info will be shown by this section
     if pk != None:
         # This section will work for packet product.............
         request.session['buyNowProdId'] = pk
-        newProduct = Product.objects.get(id = pk)
+        newProduct = Product.objects.get(id=pk)
         subTotal = newProduct.discounted_prize
         shippingCost = 70
         total = subTotal + shippingCost
@@ -1037,125 +961,77 @@ def Buynow(request, pk = None):
 
         # This section will only work on when product will have unit Type of solid weight or Liquid weight
         if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":
-            context['buyNowUnit'] = request.session['buyNowUnit']
             context['buyNowUnitAmount'] = request.session['buyNowUnitAmount']
-            context['Unit_SellingCost'] = request.session['buyNow_Unit_SellingCost']
-            context['Total_SellingCost'] = request.session['buyNow_Total_SellingCost']
-            context['Unit_DiscountedCost'] = request.session['buyNow_Unit_DiscountedCost']
-            context["Total_DiscountedCost"] = request.session['buyNow_Total_DiscountedCost']
-            subTotal2 = request.session['buyNow_Total_DiscountedCost']
+            context['Unit_SellingCost'] = request.session[
+                'buyNow_Unit_SellingCost']
+            context['Total_SellingCost'] = request.session[
+                'buyNow_Total_SellingCost']
+            context['Unit_DiscountedCost'] = request.session[
+                'buyNow_Unit_DiscountedCost']
+            context["Total_DiscountedCost"] = request.session[
+                'buyNow_Total_DiscountedCost']
+            subTotal2 = float(request.session['buyNow_Total_DiscountedCost'])
             Total2 = subTotal2 + shippingCost
             context['subtotal'] = subTotal2
             context['total'] = Total2
             request.session['buyNowSubTotal'] = subTotal2
             request.session['buyNowTotal'] = Total2
-       
-        return render(request, 'app/buyNowCheckout.html',context = context)
 
-    # plus and minus action in buy now page will work on this section when product having packet ProductGroup...    
+        return render(request, 'app/buyNowCheckout.html', context=context)
+
+    # plus and minus action in buy now page will work on this section when product having packet ProductGroup...
     if pk == None:
         Group = request.GET['Group']
         if Group == "packet":
             productId = request.GET['productId']
             quantity = int(request.GET['quantity'])
             request.session['buyNowQuantity'] = quantity
-            newProduct = Product.objects.get(id = productId)
-            shippingCost = 70      
+            newProduct = Product.objects.get(id=productId)
+            shippingCost = 70
             subTotal = newProduct.discounted_prize * quantity
             total = subTotal + shippingCost
             request.session['buyNowSubTotal'] = subTotal
             request.session["buyNowTotal"] = total
-            data = {
-                'subTotal': subTotal,
-                "total" : total
-            }
+            data = {'subTotal': subTotal, "total": total}
 
-        # plus and minus action in buy now page will work on this section when product having solid and Liquid weight ProductGroup...  
+        # plus and minus action in buy now page will work on this section when product having solid and Liquid weight ProductGroup...
         elif Group == "nonpacket":
             data = {}
             action = request.GET['action']
             prouductId = request.GET['productId']
-            newProduct = Product.objects.get(id = prouductId)
+            newProduct = Product.objects.get(id=prouductId)
             initialUnitAmount = float(request.session['initialUnitAmount'])
             unitAmount = float(request.session['buyNowUnitAmount'])
             unitSellingCost = request.session['buyNow_Unit_SellingCost']
             unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
-            unit = newProduct.unit
-            userSelectedUnit = request.session['buyNowUnit']
             unitFrequency = newProduct.unitValue_On_Increase_or_Decrease
             minUnitValue = newProduct.MinimumUnitValue
-            maxUnitValue = newProduct.MaximumUnitValue
+            maxUnitValue = newProduct.MaximumUnitValue            
 
-            if newProduct.ProductGroup == "SolidWeight":
-                if unit == "Kg":                   
-                    if userSelectedUnit == "Kg":
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += unitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
+            if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":                           
+                diff = round((initialUnitAmount / minUnitValue) - minUnitValue,
+                                2)
+                diff2 = round((initialUnitAmount / minUnitValue) - diff, 2)
+                if action == "plus":
+                    stock = newProduct.ProductStock
+                    if unitAmount < stock:
+                        if unitAmount < maxUnitValue:
+                            unitAmount += unitFrequency
+                            if unitAmount >= maxUnitValue:
+                                unitAmount = maxUnitValue
+                                data['warning'] = "maxAmount"
+                        if unitAmount >= stock:
+                            unitAmount = stock
+                            data['warning'] = "Stock Out"
+                if action == "minus":
+                    if not unitAmount - diff2 <= minUnitValue:
+                        unitAmount -= unitFrequency
+                    else:
+                        unitAmount -= (unitAmount - diff2)
+                    data['warning'] = ""
 
-                if unit == "Gram":
-                    if userSelectedUnit == "Gram":
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += unitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                                               
-                if unit == "Pound":
-                    if userSelectedUnit == "Pound":
 
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += unitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-                        
-
-            if newProduct.ProductGroup == "LiquidWeight":
-                if unit == "Liter":
-                    if userSelectedUnit  == "Liter":
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += unitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-
-                if unit == "MiliLiter":
-                    if userSelectedUnit == "MiliLiter":
-                        diff = round((initialUnitAmount/minUnitValue) - minUnitValue, 2)
-                        diff2 = round((initialUnitAmount/minUnitValue) - diff, 2)
-                        if action == "plus":
-                            if not unitAmount >= maxUnitValue:
-                                unitAmount += unitFrequency
-                        if action == "minus":
-                            if not unitAmount - diff2 <= minUnitValue:
-                                unitAmount -= unitFrequency
-                            else:
-                                unitAmount -= (unitAmount - diff2)
-
-            data['unitAmount'] = round(unitAmount, 2)    
+            data['unitAmount'] = round(unitAmount, 2)
             request.session['buyNowUnitAmount'] = unitAmount
             sellingCost = round(unitSellingCost * unitAmount, 2)
             discountedCost = round(unitDiscountedCost * unitAmount, 2)
@@ -1177,16 +1053,14 @@ def buyNowVoucherCheckerView(request):
     now = timezone.now()
     data = {}
     try:
-        coupon = Coupon.objects.get(
-            coupon_code = code,
-            valid_from__lte = now,
-            valid_to__gte= now,
-            active = True
-        )
+        coupon = Coupon.objects.get(coupon_code=code,
+                                    valid_from__lte=now,
+                                    valid_to__gte=now,
+                                    active=True)
         discount = coupon.discount
         if not coupon.condition_rate == None:
             if subTotal >= coupon.condition_rate:
-                total = (subTotal - discount)+ shoppingCost
+                total = (subTotal - discount) + shoppingCost
                 data['message'] = ""
                 data['total'] = total
                 data['discount'] = discount
@@ -1196,7 +1070,7 @@ def buyNowVoucherCheckerView(request):
                 message = f"You will have to buy more than {coupon.condition_rate}. "
                 data['message'] = message
         else:
-            total = (subTotal - discount)+ shoppingCost
+            total = (subTotal - discount) + shoppingCost
             data['total'] = total
             data['message'] = ""
             data['discount'] = discount
@@ -1206,8 +1080,8 @@ def buyNowVoucherCheckerView(request):
     except ObjectDoesNotExist:
         try:
             voucher = Voucher.objects.get(
-                user = request.user,
-                voucher_code = code,
+                user=request.user,
+                voucher_code=code,
             )
             discount = voucher.voucher_offer.discount
             if not voucher.user_valid_to == None:
@@ -1216,7 +1090,7 @@ def buyNowVoucherCheckerView(request):
                 else:
                     result = False
             else:
-                result = False            
+                result = False
             if now > voucher.voucher_offer.offer_valid_to or result:
                 data['message'] = "This voucher has been expired"
             elif voucher.count > voucher.voucher_offer.limit:
@@ -1240,39 +1114,40 @@ def buyNowVoucherCheckerView(request):
 
 class paymentPageView(TemplateView):
     template_name = "app/paymentPage.html"
-    
+
     # this Section will work for carted Products
-    def get (self, request, buyNowTunnel = False,  *args, **kwargs):
+    def get(self, request, buyNowTunnel=False, *args, **kwargs):
         if buyNowTunnel == False:
-            newCart = Cart.objects.filter(user = request.user)
+            newCart = Cart.objects.filter(user=request.user)
             length = len(newCart)
             shippingCost = 70
             subTotal = 0
             for cart in newCart:
                 subTotal += cart.products_total_cost
             total = subTotal + shippingCost
-        
-            newProfile = CustomerProfile.objects.get(user = request.user)
-            newAddress = CustomerAddress.objects.filter(user = request.user)
 
-            if  len(newAddress) < 1:
+            newProfile = CustomerProfile.objects.get(user=request.user)
+            newAddress = CustomerAddress.objects.filter(user=request.user)
+
+            if len(newAddress) < 1:
                 return redirect('/abookurl')
 
             try:
-                defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+                defaultAddress = CustomerAddress.objects.get(user=request.user,
+                                                             isDefault=True)
             except:
                 return redirect('/aaddressurl')
-            
+
             context = {
-                "carts" : newCart,
-                "len" :length,
-                "subTotal" : subTotal,
-                "shippingCost" : shippingCost,
-                "profile" : newProfile,
-                "newaddress" :newAddress,
-                "daddress" : defaultAddress,
+                "carts": newCart,
+                "len": length,
+                "subTotal": subTotal,
+                "shippingCost": shippingCost,
+                "profile": newProfile,
+                "newaddress": newAddress,
+                "daddress": defaultAddress,
                 "from": "cart"
-            } 
+            }
             if not request.session["code"] == 'none':
                 # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
                 data = VoucherChecker(request, redirect=True)
@@ -1280,18 +1155,19 @@ class paymentPageView(TemplateView):
                     context["totalAmount"] = data['amount']
                     context["discount"] = data['discount']
             else:
-                context["totalAmount"] = total 
-        
+                context["totalAmount"] = total
+
         # This section will work for buyed now Products.......
         if not buyNowTunnel == False:
             context = {}
-            newProfile = CustomerProfile.objects.get(user = request.user)
-            newAddress = CustomerAddress.objects.filter(user = request.user)
+            newProfile = CustomerProfile.objects.get(user=request.user)
+            newAddress = CustomerAddress.objects.filter(user=request.user)
             shippingCost = 70
-            if  len(newAddress) < 1:
+            if len(newAddress) < 1:
                 return redirect('/abookurl')
             try:
-                defaultAddress = CustomerAddress.objects.get(user = request.user, isDefault = True)
+                defaultAddress = CustomerAddress.objects.get(user=request.user,
+                                                             isDefault=True)
             except:
                 return redirect('/aaddressurl')
             context['profile'] = newProfile
@@ -1303,16 +1179,15 @@ class paymentPageView(TemplateView):
             context['buyNowDiscount'] = request.session['buyNowDiscount']
             context['from'] = "buyNow"
 
-        return render(request,self.template_name, context = context)
-            
+        return render(request, self.template_name, context=context)
+
 def buyNowOrderMakerView(request):
-    print("the size is ", request.session['size'])
     user = request.user
     productId = request.session['buyNowProdId']
-    product = Product.objects.get(id = productId)
-    profile = CustomerProfile.objects.get(user = user)
-    defaultAddress = CustomerAddress.objects.get(user = user, isDefault = True)
-    unit = request.session['buyNowUnit']
+    product = Product.objects.get(id=productId)
+    profile = CustomerProfile.objects.get(user=user)
+    defaultAddress = CustomerAddress.objects.get(user=user, isDefault=True)
+    unit = product.unit
     unitAm = request.session['buyNowUnitAmount']
     if unitAm == 'none':
         unitAmount = 0
@@ -1326,11 +1201,25 @@ def buyNowOrderMakerView(request):
     else:
         quantity = int(quan)
     subTotal = float(request.session['buyNowSubTotal'])
-    total =  float(request.session['buyNowTotal'])
-    
-    Order(user = user, profile = profile, address = defaultAddress, product = product, quantity = quantity, unit = unit, unitAmount = unitAmount, size = size, subTotal = subTotal, Total = total).save()
+    total = float(request.session['buyNowTotal'])
+    if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
+        if quantity > product.ProductStock:
+            return redirect("/showcarturl")
+    Order(user=user,
+          profile=profile,
+          address=defaultAddress,
+          product=product,
+          quantity=quantity,
+          unit=unit,
+          unitAmount=unitAmount,
+          size=size,
+          subTotal=subTotal,
+          Total=total).save()
     if product.ProductGroup == "Packet" or product.ProductGroup == "Shoe" or product.ProductGroup == "Cloth":
         product.ProductStock -= quantity
+        product.save()
+    if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
+        product.ProductStock -= unitAmount
         product.save()
 
     request.session["buyNowProdId"] = 'none'
@@ -1344,12 +1233,15 @@ def buyNowOrderMakerView(request):
 
 def cartOrderMakerView(request):
     user = request.user
-    newCart = Cart.objects.filter(user = user) 
-    profile = CustomerProfile.objects.get(user = user)
-    defaultAddress = CustomerAddress.objects.get(user = user, isDefault = True)
+    newCart = Cart.objects.filter(user=user)
+    profile = CustomerProfile.objects.get(user=user)
+    defaultAddress = CustomerAddress.objects.get(user=user, isDefault=True)
     shippingCost = 70
     subTotal = 0
     for cart in newCart:
+        if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Packet":
+            if cart.quantity > cart.product.ProductStock:
+                return redirect("/showcarturl")
         subTotal += cart.products_total_cost
     total = subTotal + shippingCost
     if not request.session["code"] == 'none':
@@ -1363,15 +1255,21 @@ def cartOrderMakerView(request):
     else:
         newtotal = total
         discount = 0
-    
+
     for cart in newCart:
-        Order(user = user, profile = profile, address = defaultAddress, product = cart.product, quantity = cart.quantity, unit = cart.unit, unitAmount = cart.unit_amount, size = cart.size, subTotal = subTotal, Total = newtotal).save()
+        Order(user=user,
+              profile=profile,
+              address=defaultAddress,
+              product=cart.product,
+              quantity=cart.quantity,
+              unit=cart.unit,
+              unitAmount=cart.unit_amount,
+              size=cart.size,
+              subTotal=subTotal,
+              Total=newtotal).save()
         cart.delete()
         if cart.product.ProductGroup == "Packet" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Cloth":
             cart.product.ProductStock -= cart.quantity
             cart.product.save()
-    del request.session["code"]
+    request.session["code"] = 'none'
     return redirect('/orderurl')
-
-
-

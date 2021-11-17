@@ -306,27 +306,44 @@ function fput() {
     </div>
   </div>`;
 
-  if (ProductGroup == "Cloth") {
+  if (ProductGroup == "Cloth") 
+  {
     emptydiv.innerHTML += ClothObj;
-  } else if (ProductGroup == "ClothPices") {
+  } 
+  else if (ProductGroup == "Shoe") 
+  {
+    emptydiv.innerHTML += ShoeSizeUnit
+  }
+  else if (ProductGroup == "ClothPices") 
+  {
     emptydiv.innerHTML += ClothPicesObj;
-  } else if (ProductGroup == "SolidWeight" && ProductUnit == "Kg") {
+  } 
+  else if (ProductGroup == "SolidWeight" && ProductUnit == "Kg") 
+  {
     emptydiv.innerHTML += KgUnit;
   } 
   else if (ProductGroup == "SolidWeight" && ProductUnit == "Gram") {
     emptydiv.innerHTML += GramUnit;
   } 
-  else if (ProductGroup == "LiquidWeight") {
-    emptydiv.innerHTML += LiterUnit
-  } else if (ProductGroup == "Shoe") {
-    emptydiv.innerHTML += ShoeSizeUnit
+  else if (ProductGroup == "SolidWeight" && ProductUnit == "Pound"){
+    emptydiv.innerHTML += PoundUnit
   }
+  else if (ProductGroup == "LiquidWeight" && ProductUnit == "Liter") 
+  {
+    emptydiv.innerHTML += LiterUnit
+  } 
+  else if (ProductGroup == "LiquidWeight" && ProductUnit == "MiliLiter") 
+  {
+    emptydiv.innerHTML += MiliLiterUnit
+  }
+
 }
 
 var aTCBtn = document.getElementById('aTCButton')
 var buyNowBTN = document.getElementById('buyNowBTN')
 var buyNowa = document.getElementById('buyNowa')
 var prodId = aTCBtn.getAttribute('prod')
+var productStock = aTCBtn.getAttribute('productStock')
 aTCBtn.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener('click', uAmountCk)
@@ -339,26 +356,13 @@ function uAmountCk() {
   // This try is for The product of having kg and liter unit and clothAreasize unit
   try {
     var unitAmount = document.getElementById('unitAmount').value;
-    var unitType = document.getElementById("unit").value;
   } catch {
     var unitAmount = 'none';
-    var unitType = "none";
   }
 
-  if (unitAmount != 'none' && unitType != 'none') {
+  if (unitAmount != 'none') {
 
-    if (unitType == 'select') {
-      unitAlertElm.style.display = "block";
-      aTCBtn.disabled = true;
-      aTCBtn.style.cursor = "not-allowed";
-      buyNowBTN.disabled = true;
-      buyNowBTN.style.cursor = "not-allowed";
-    } else {
-      var attempt1 = "success"
-      unitAlertElm.style.display = "none";
-    }
-
-    if (unitAmount == "" || unitAmount < 0 || unitAmount == 0) {
+    if (unitAmount == "" || unitAmount <= 0 ) {
       STNAlert.style.display = "block";
       STNAlert.innerHTML = "select the amount"
       aTCBtn.disabled = true;
@@ -366,15 +370,11 @@ function uAmountCk() {
       buyNowBTN.disabled = true;
       buyNowBTN.style.cursor = "not-allowed";
 
-    } else {
-      var attempt2 = "success"
+    } 
+    else {
+      MinMaxUnitCheck()
       STNAlert.style.display = "none";
     }
-
-    if (attempt1 == 'success' && attempt2 == 'success') {
-      MinMaxUnitCheck()
-    }
-
   }
 
   //This section will work for the product having the unit of size......
@@ -404,7 +404,6 @@ function uAmountCk() {
     method: "GET",
     url: "/buynowdataurl",
     data: {
-      unit: unitType,
       unitAmount: unitAmount,
       size: sizeElm,
       prodIdV: prodId
@@ -413,7 +412,6 @@ function uAmountCk() {
 }
 
 function MinMaxUnitCheck(){
-var unit = document.getElementById('unit').value
 var unitAmount = document.getElementById('unitAmount').value
 
 $.ajax({
@@ -421,7 +419,6 @@ $.ajax({
   url : '/mmucheckerurl',
   data : {
   prodIdV : prodId,
-  unitV : unit,
   unitAmountV : unitAmount
   },
   success: function(data){
@@ -442,7 +439,6 @@ $.ajax({
       buyNowBTN.disabled = true;
       buyNowBTN.style.cursor = "not-allowed";
     }
-   
   }
 })
 }
