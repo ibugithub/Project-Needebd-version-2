@@ -146,7 +146,7 @@
                     <button style="margin-right: 40px;" id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductGroup}} prod={{product.id}} class="btn-sub"> -
                     </button>
 
-                    <button id ="plusButton" productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
 
@@ -161,7 +161,7 @@
 
                     </div>
 
-                    <button id ="plusButton" productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
                   {% endif %}

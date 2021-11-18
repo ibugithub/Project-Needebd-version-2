@@ -33,6 +33,7 @@ var unitAmount = document.getElementById('buyNowUnitAmount2')
 function buyNow(elm) {
   var plusButton = document.getElementById('plusButton')
   var productStock = plusButton.getAttribute('productStock')
+  var maxAmount = plusButton.getAttribute('maxAmount')
   // This section will work for product haveing solid and Liquid weight 
   if (ProductGroup == "SolidWeight" || ProductGroup == "LiquidWeight") {
     hiddenCouponInfoElm.style.display = 'none'
@@ -58,12 +59,11 @@ function buyNow(elm) {
         discountedPrizeElm.innerHTML = data.discountedCost
         subTotalElm.innerHTML = data.discountedCost
         buyNowTotalElm.innerHTML = data.total
-        if(data.warning != undefined){
-          document.getElementById("stockWarning").innerHTML = data.warning
-        }
+        document.getElementById('stockWarning').innerHTML = data.warning
       }
     })
-  } else
+  } 
+  else
   // This section will work for packet product
   {
     // When user will click on the Plus button on the buynow page on packet Item this section will work
@@ -85,7 +85,6 @@ function buyNow(elm) {
         plusButton.disabled = true
         document.getElementById('PTPBtn').disabled = true
         document.getElementById('PTPBtn').style.cursor = "not-allowed"
-        
       }
     }
 

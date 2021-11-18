@@ -192,10 +192,6 @@ class ShowCartView(TemplateView):
         else:
             return redirect('/accounts/login/')
 
-def stockCheckerView(request):
-    data = {}
-    return JsonResponse(data)
-
 def PlusCartView(request):
     request.session['code'] = 'none'
     if request.user.is_authenticated:
@@ -213,7 +209,17 @@ def PlusCartView(request):
                 product=product,
                 unit=unit,
             )
-            cart.unit_amount += unitFrequency
+            maxUnitValue = product.MaximumUnitValue
+            stock = product.ProductStock
+            if cart.unit_amount <= stock:
+                if cart.unit_amount <= maxUnitValue:
+                    cart.unit_amount += unitFrequency
+                    if cart.unit_amount >= maxUnitValue:
+                        cart.unit_amount = maxUnitValue
+                        data['warning'] = "maxAmount"
+                if cart.unit_amount >= stock:
+                    cart.unit_amount = stock
+                    data['warning'] = "Stock Out"
             cart.save()
             data['unitAmount'] = cart.unit_amount
 
@@ -267,24 +273,20 @@ def MinusCartView(request):
 
         if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
             unitFrequency = product.unitValue_On_Increase_or_Decrease
-            minUnitAmount = product.MinimumUnitValue
-            initialUnitAmount = float(request.session['initialUnitAmount'])
-            diff = round((initialUnitAmount / minUnitAmount) - minUnitAmount,
-                         2)
-            diff2 = round((initialUnitAmount / minUnitAmount) - diff, 2)
+            minUnitValue = product.MinimumUnitValue
             cart = Cart.objects.get(
                 user=user,
                 product=product,
                 unit=unit,
             )
-            if cart.unit_amount - diff2 > minUnitAmount:
+            if cart.unit_amount  > minUnitValue:
                 cart.unit_amount -= unitFrequency
-                cart.save()
-                data['unitAmount'] = cart.unit_amount
-            else:
-                cart.unit_amount -= (cart.unit_amount - diff2)
-                data['unitAmount'] = cart.unit_amount
-
+                if cart.unit_amount <= minUnitValue:
+                    cart.unit_amount = minUnitValue
+                    data['warning'] = ""
+            cart.save()
+            data['unitAmount'] = cart.unit_amount
+           
         elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
             if cart.quantity >= 1:
@@ -868,7 +870,6 @@ def buyNowDataView(request):
     productId = request.GET['prodIdV']
     request.session['buyNowProdId'] = productId
     request.session['buyNowUnitAmount'] = unitAmount
-    request.session['initialUnitAmount'] = unitAmount
     request.session['size'] = size
     data = {'demo': 'test'}
     return JsonResponse(data)
@@ -890,13 +891,12 @@ def minMaxUnitCheckerView(request):
     backendUnitGroup = product.ProductGroup
     stock = product.ProductStock
 
-    if backendUnitGroup == "SolidWeight" or backendUnit == "LiquidWeight" or backendUnit == "ClothPices":
+    if backendUnitGroup == "SolidWeight" or backendUnitGroup == "LiquidWeight" or backendUnitGroup == "ClothPices":
 
         if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue and fontendUnitAmount <= stock:
             data["message"] = ""
             data["attempt"] = True
             request.session['buyNowUnitAmount'] = fontendUnitAmount
-            request.session['initialUnitAmount'] = fontendUnitAmount
             converted_Total_SellingCost = buyNowSellingCost * fontendUnitAmount
             converted_Total_DiscountedCost = buyNowDiscountedCost * fontendUnitAmount
             request.session['buyNow_Unit_SellingCost'] = buyNowSellingCost
@@ -1000,7 +1000,6 @@ def Buynow(request, pk=None):
             action = request.GET['action']
             prouductId = request.GET['productId']
             newProduct = Product.objects.get(id=prouductId)
-            initialUnitAmount = float(request.session['initialUnitAmount'])
             unitAmount = float(request.session['buyNowUnitAmount'])
             unitSellingCost = request.session['buyNow_Unit_SellingCost']
             unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
@@ -1009,28 +1008,31 @@ def Buynow(request, pk=None):
             maxUnitValue = newProduct.MaximumUnitValue            
 
             if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":                           
-                diff = round((initialUnitAmount / minUnitValue) - minUnitValue,
-                                2)
-                diff2 = round((initialUnitAmount / minUnitValue) - diff, 2)
                 if action == "plus":
                     stock = newProduct.ProductStock
-                    if unitAmount < stock:
-                        if unitAmount < maxUnitValue:
+                    if unitAmount <= stock:
+                        if unitAmount <= maxUnitValue:
                             unitAmount += unitFrequency
                             if unitAmount >= maxUnitValue:
                                 unitAmount = maxUnitValue
                                 data['warning'] = "maxAmount"
+                            else:
+                                data['warning'] = "1" 
                         if unitAmount >= stock:
                             unitAmount = stock
                             data['warning'] = "Stock Out"
+                        else:
+                            data['warning'] = "2" 
+                        
                 if action == "minus":
-                    if not unitAmount - diff2 <= minUnitValue:
+                    if unitAmount  > minUnitValue:
                         unitAmount -= unitFrequency
-                    else:
-                        unitAmount -= (unitAmount - diff2)
-                    data['warning'] = ""
-
-
+                        if unitAmount <= minUnitValue:
+                            unitAmount = minUnitValue
+                        data['warning'] = ""
+                
+                print("The data warning is", data['warning'])
+                        
             data['unitAmount'] = round(unitAmount, 2)
             request.session['buyNowUnitAmount'] = unitAmount
             sellingCost = round(unitSellingCost * unitAmount, 2)

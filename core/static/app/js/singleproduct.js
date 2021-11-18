@@ -336,9 +336,7 @@ function fput() {
   {
     emptydiv.innerHTML += MiliLiterUnit
   }
-
 }
-
 var aTCBtn = document.getElementById('aTCButton')
 var buyNowBTN = document.getElementById('buyNowBTN')
 var buyNowa = document.getElementById('buyNowa')
@@ -410,10 +408,8 @@ function uAmountCk() {
     },
   })
 }
-
 function MinMaxUnitCheck(){
 var unitAmount = document.getElementById('unitAmount').value
-
 $.ajax({
   method : "GET",
   url : '/mmucheckerurl',
