@@ -49,7 +49,11 @@
                   <div class="cart-d-image">
                     <!-- <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span> -->
                     {% if cart.quantity > cart.product.ProductStock %}
-                  <span class="stockWarning" id="stockWarning{{forloop.counter}}">Stock Out</span>
+                  <span class="stockWarning" id="stockWarning{{forloop.counter}}">StockOut</span>
+                  {% elif cart.unit_amount > cart.product.ProductStock %} 
+                  <span class="stockWarning" id="stockWarning{{forloop.counter}}">StockOut</span>
+                  {% elif cart.unit_amount > cart.product.MaximumUnitValue %} 
+                  <span class="stockWarning" id="stockWarning{{forloop.counter}}">MaxAmount</span>
                   {% else %}
                   <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span>
                   {% endif %}
@@ -98,8 +102,7 @@
                           /quantity
                           {% endif %}
                         </span>
-
-
+                        
                         </span>
 
                       </div>

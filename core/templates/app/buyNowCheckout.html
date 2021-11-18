@@ -54,21 +54,25 @@
                     <div class="ck-product">
                       <div class="ck-product-details">
                         <div class="ck-product-img">
+                          {% if buyNowUnitAmount > product.ProductStock %}
+                          <div class="stockWarning" id="stockWarning">StockOut</div>
+                          {% elif buyNowUnitAmount > product.MaximumUnitValue %}
+                          <div class="stockWarning" id="stockWarning">MaxAmount</div>
+                          {% else %}
                           <div class="stockWarning" id="stockWarning"></div>
+                          {% endif %}
                           <img src="{{product.product_image.url}}" alt="" />
+
                         </div>
                         <div class="ck-product-title">
                           <div class="ck-title">
                             <h2>{{product.title}}</h2>
                           </div>
-                          
                           <div class="ck-title">
                             {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %} 
                             Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{product.unit}}</span> 
                             {% endif %}
                           </div>
-
-
                           <div class="ck-details">
                             <span class="brand-name">audi brand</span>
                             {% if cart.size %}

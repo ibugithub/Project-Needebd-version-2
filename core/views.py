@@ -211,15 +211,20 @@ def PlusCartView(request):
             )
             maxUnitValue = product.MaximumUnitValue
             stock = product.ProductStock
-            if cart.unit_amount <= stock:
-                if cart.unit_amount <= maxUnitValue:
-                    cart.unit_amount += unitFrequency
-                    if cart.unit_amount >= maxUnitValue:
-                        cart.unit_amount = maxUnitValue
-                        data['warning'] = "maxAmount"
+            if cart.unit_amount <= stock and cart.unit_amount <= maxUnitValue:
+                cart.unit_amount = round(cart.unit_amount + unitFrequency, 2)
+                data['warning'] = ""
+                if cart.unit_amount >= maxUnitValue:
+                    cart.unit_amount = round(maxUnitValue + unitFrequency, 2)
+                    data['warning'] = "MaxAmount"
                 if cart.unit_amount >= stock:
-                    cart.unit_amount = stock
+                    cart.unit_amount = round(stock + unitFrequency, 2)
                     data['warning'] = "Stock Out"
+            else:
+                if cart.unit_amount > stock:
+                    data['warning'] = "Stock Out"
+                if cart.unit_amount > maxUnitValue:
+                    data['warning'] = "MaxAmount"
             cart.save()
             data['unitAmount'] = cart.unit_amount
 
@@ -274,18 +279,24 @@ def MinusCartView(request):
         if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
             unitFrequency = product.unitValue_On_Increase_or_Decrease
             minUnitValue = product.MinimumUnitValue
+            stock = product.ProductStock
             cart = Cart.objects.get(
                 user=user,
                 product=product,
                 unit=unit,
             )
             if cart.unit_amount  > minUnitValue:
-                cart.unit_amount -= unitFrequency
+                cart.unit_amount = round(cart.unit_amount - unitFrequency, 2)
+                data['warning'] = ""
                 if cart.unit_amount <= minUnitValue:
                     cart.unit_amount = minUnitValue
                     data['warning'] = ""
+                if cart.unit_amount > stock:
+                    data['warning'] = "Stock Out"
+                if cart.unit_amount > cart.unit_amount:
+                    data['warning'] = "MaxAmount"                        
             cart.save()
-            data['unitAmount'] = cart.unit_amount
+            data['unitAmount'] = round(cart.unit_amount, 2)
            
         elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
             cart = Cart.objects.get(user=user, product=product, size=size)
@@ -1005,33 +1016,39 @@ def Buynow(request, pk=None):
             unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
             unitFrequency = newProduct.unitValue_On_Increase_or_Decrease
             minUnitValue = newProduct.MinimumUnitValue
-            maxUnitValue = newProduct.MaximumUnitValue            
+            maxUnitValue = newProduct.MaximumUnitValue
+            stock = newProduct.ProductStock            
 
             if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":                           
                 if action == "plus":
-                    stock = newProduct.ProductStock
-                    if unitAmount <= stock:
-                        if unitAmount <= maxUnitValue:
-                            unitAmount += unitFrequency
-                            if unitAmount >= maxUnitValue:
-                                unitAmount = maxUnitValue
-                                data['warning'] = "maxAmount"
-                            else:
-                                data['warning'] = "1" 
+                    if unitAmount <= stock and unitAmount <= maxUnitValue:
+                        unitAmount += unitFrequency
+                        data['warning'] = ""
+                        if unitAmount >= maxUnitValue:
+                            unitAmount = maxUnitValue + unitFrequency
+                            data['warning'] = "MaxAmount"
+
                         if unitAmount >= stock:
                             unitAmount = stock
                             data['warning'] = "Stock Out"
-                        else:
-                            data['warning'] = "2" 
-                        
+                    else:
+                        if unitAmount > stock:
+                            data['warning'] = "Stock Out"
+                        if unitAmount > maxUnitValue:
+                            data['warning'] = "MaxAmount"
+
                 if action == "minus":
                     if unitAmount  > minUnitValue:
                         unitAmount -= unitFrequency
+                        data['warning'] = ""
                         if unitAmount <= minUnitValue:
                             unitAmount = minUnitValue
-                        data['warning'] = ""
+                            data['warning'] = ""
+                        if unitAmount > stock:
+                            data['warning'] = "Stock Out"
+                        if unitAmount > maxUnitValue:
+                            data['warning'] = "MaxAmount"                        
                 
-                print("The data warning is", data['warning'])
                         
             data['unitAmount'] = round(unitAmount, 2)
             request.session['buyNowUnitAmount'] = unitAmount
