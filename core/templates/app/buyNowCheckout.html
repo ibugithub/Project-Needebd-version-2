@@ -374,7 +374,7 @@
                 <span id="hacoupon">have any coupon or voucher?</span>
                 <div class="ck-pay-btn">
                   <a href="{% url 'paymentpageurlname' 'buyNowTunnel' %}">
-                    <button id="PTPBtn" class="pay-btn">Proceed to pay</button>
+                    <button id="PTPBtn" {% if buyNowUnitAmount > product.ProductStock or buyNowUnitAmount > product.MaximumUnitValue %} disabled  style = "cursor:not-allowed;" {% endif %} class="pay-btn">Proceed to pay</button>
                   </a>
 
                 </div>

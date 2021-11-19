@@ -33,7 +33,6 @@ var unitAmount = document.getElementById('buyNowUnitAmount2')
 function buyNow(elm) {
   var plusButton = document.getElementById('plusButton')
   var productStock = plusButton.getAttribute('productStock')
-  var maxAmount = plusButton.getAttribute('maxAmount')
   // This section will work for product haveing solid and Liquid weight 
   if (ProductGroup == "SolidWeight" || ProductGroup == "LiquidWeight") {
     hiddenCouponInfoElm.style.display = 'none'
@@ -60,6 +59,15 @@ function buyNow(elm) {
         subTotalElm.innerHTML = data.discountedCost
         buyNowTotalElm.innerHTML = data.total
         document.getElementById('stockWarning').innerHTML = data.warning
+        if (data.warning == "")
+        {
+          document.getElementById('PTPBtn').disabled = false
+          document.getElementById('PTPBtn').style.cursor = "pointer"
+        }
+        else{
+          document.getElementById('PTPBtn').disabled = true
+          document.getElementById('PTPBtn').style.cursor = "not-allowed"
+        }
       }
     })
   } 

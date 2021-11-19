@@ -202,15 +202,14 @@ def PlusCartView(request):
         unit = request.GET['unit']
         size = request.GET['size']
         unitFrequency = product.unitValue_On_Increase_or_Decrease
-
+        maxUnitValue = product.MaximumUnitValue
+        stock = product.ProductStock
         if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
             cart = Cart.objects.get(
                 user=user,
                 product=product,
                 unit=unit,
             )
-            maxUnitValue = product.MaximumUnitValue
-            stock = product.ProductStock
             if cart.unit_amount <= stock and cart.unit_amount <= maxUnitValue:
                 cart.unit_amount = round(cart.unit_amount + unitFrequency, 2)
                 data['warning'] = ""
@@ -219,25 +218,30 @@ def PlusCartView(request):
                     data['warning'] = "MaxAmount"
                 if cart.unit_amount >= stock:
                     cart.unit_amount = round(stock + unitFrequency, 2)
-                    data['warning'] = "Stock Out"
+                    data['warning'] = "StockOut"
             else:
                 if cart.unit_amount > stock:
-                    data['warning'] = "Stock Out"
+                    data['warning'] = "StockOut"
                 if cart.unit_amount > maxUnitValue:
                     data['warning'] = "MaxAmount"
             cart.save()
             data['unitAmount'] = cart.unit_amount
 
-        elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
-            cart = Cart.objects.get(user=user, product=product, size=size)
-            if not cart.quantity > product.ProductStock:
+        if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
+            if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
+                cart = Cart.objects.get(user=user, product=product, size=size)
+            elif product.ProductGroup == "Packet":
+                cart = Cart.objects.get(user=user, product=product)
+            if cart.quantity <= stock:
                 cart.quantity += 1
-                cart.save()
-        elif product.ProductGroup == "Packet":
-            cart = Cart.objects.get(user=user, product=product)
-            if not cart.quantity >= product.ProductStock:
-                cart.quantity += 1
-                cart.save()
+                data['warning'] = ""
+                if cart.quantity >= stock:
+                    cart.quantity = stock + 1
+                    data['warning'] = "StockOut"
+            else:
+                if cart.quantity > stock:
+                    data['warning'] = "StockOut"
+            cart.save()
 
         carts = Cart.objects.filter(user=user)
         TotalSell_Cost = 0
@@ -268,6 +272,9 @@ def MinusCartView(request):
         product = Product.objects.get(id=product_key)
         unit = request.GET['unit']
         size = request.GET['size']
+        unitFrequency = product.unitValue_On_Increase_or_Decrease
+        minUnitValue = product.MinimumUnitValue
+        stock = product.ProductStock
 
         def itemcount():
             Item = 0
@@ -277,15 +284,12 @@ def MinusCartView(request):
             return Item
 
         if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
-            unitFrequency = product.unitValue_On_Increase_or_Decrease
-            minUnitValue = product.MinimumUnitValue
-            stock = product.ProductStock
             cart = Cart.objects.get(
                 user=user,
                 product=product,
                 unit=unit,
             )
-            if cart.unit_amount  > minUnitValue:
+            if cart.unit_amount  >= minUnitValue:
                 cart.unit_amount = round(cart.unit_amount - unitFrequency, 2)
                 data['warning'] = ""
                 if cart.unit_amount <= minUnitValue:
@@ -298,19 +302,18 @@ def MinusCartView(request):
             cart.save()
             data['unitAmount'] = round(cart.unit_amount, 2)
            
-        elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
-            cart = Cart.objects.get(user=user, product=product, size=size)
+        if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
+            if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
+                cart = Cart.objects.get(user=user, product=product, size=size)
+            elif product.ProductGroup == "Packet":
+                cart = Cart.objects.get(user=user, product=product)
             if cart.quantity >= 1:
                 cart.quantity -= 1
                 cart.save()
-            if cart.quantity <= 0:
-                cart.delete()
-                Item = itemcount()
-        elif product.ProductGroup == "Packet":
-            cart = Cart.objects.get(user=user, product=product)
-            if cart.quantity >= 1:
-                cart.quantity -= 1
-                cart.save()
+            if cart.quantity > stock:
+                data['warning'] = "StockOut"
+            else:
+                data['warning'] = ""
             if cart.quantity <= 0:
                 cart.delete()
                 Item = itemcount()
@@ -1029,7 +1032,7 @@ def Buynow(request, pk=None):
                             data['warning'] = "MaxAmount"
 
                         if unitAmount >= stock:
-                            unitAmount = stock
+                            unitAmount = stock + unitFrequency
                             data['warning'] = "Stock Out"
                     else:
                         if unitAmount > stock:
@@ -1223,7 +1226,10 @@ def buyNowOrderMakerView(request):
     total = float(request.session['buyNowTotal'])
     if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
         if quantity > product.ProductStock:
-            return redirect("/showcarturl")
+            return redirect('/buynow/'+str(product.id))
+    if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
+        if unitAmount > product.ProductStock:
+            return redirect('/buynow/'+str(product.id))            
     Order(user=user,
           profile=profile,
           address=defaultAddress,
@@ -1258,9 +1264,15 @@ def cartOrderMakerView(request):
     shippingCost = 70
     subTotal = 0
     for cart in newCart:
+
         if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Packet":
             if cart.quantity > cart.product.ProductStock:
                 return redirect("/showcarturl")
+
+        if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "ClothPices":
+            if cart.unit_amount > cart.product.ProductStock or cart.unit_amount > cart.product.MaximumUnitValue:
+                return redirect("/showcarturl")
+
         subTotal += cart.products_total_cost
     total = subTotal + shippingCost
     if not request.session["code"] == 'none':
@@ -1289,6 +1301,9 @@ def cartOrderMakerView(request):
         cart.delete()
         if cart.product.ProductGroup == "Packet" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Cloth":
             cart.product.ProductStock -= cart.quantity
+            cart.product.save()
+        if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "ClothPices":
+            cart.product.ProductStock -= cart.unit_amount
             cart.product.save()
     request.session["code"] = 'none'
     return redirect('/orderurl')
