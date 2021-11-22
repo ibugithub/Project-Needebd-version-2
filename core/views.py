@@ -1050,7 +1050,9 @@ def Buynow(request, pk=None):
                         if unitAmount > stock:
                             data['warning'] = "Stock Out"
                         if unitAmount > maxUnitValue:
-                            data['warning'] = "MaxAmount"                        
+                            data['warning'] = "MaxAmount"
+                    else:
+                        data['warning'] = ""                        
                 
                         
             data['unitAmount'] = round(unitAmount, 2)
@@ -1210,40 +1212,39 @@ def buyNowOrderMakerView(request):
     profile = CustomerProfile.objects.get(user=user)
     defaultAddress = CustomerAddress.objects.get(user=user, isDefault=True)
     unit = product.unit
-    unitAm = request.session['buyNowUnitAmount']
-    if unitAm == 'none':
-        unitAmount = 0
-    else:
-        unitAmount = float(unitAm)
-    
+    unitAmount = request.session['buyNowUnitAmount']
     size = request.session['size']
-    quan = request.session['buyNowQuantity']
-    if quan == "none":
-        quantity = 0
-    else:
-        quantity = int(quan)
+    quantity = request.session['buyNowQuantity']
     subTotal = float(request.session['buyNowSubTotal'])
     total = float(request.session['buyNowTotal'])
+
+    # This section will save the order for product having cloth and shoe and packet productGroup
     if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
         if quantity > product.ProductStock:
             return redirect('/buynow/'+str(product.id))
+        Order(user=user,
+            profile=profile,
+            address=defaultAddress,
+            product=product,
+            quantity=quantity,
+            size=size,
+            subTotal=subTotal,
+            Total=total).save()
+        product.ProductStock -= quantity
+        product.save()
+ 
+    # This section will save the order for product having solidweight and liquidweight and ClothPicessweight
     if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
         if unitAmount > product.ProductStock:
             return redirect('/buynow/'+str(product.id))            
-    Order(user=user,
-          profile=profile,
-          address=defaultAddress,
-          product=product,
-          quantity=quantity,
-          unit=unit,
-          unitAmount=unitAmount,
-          size=size,
-          subTotal=subTotal,
-          Total=total).save()
-    if product.ProductGroup == "Packet" or product.ProductGroup == "Shoe" or product.ProductGroup == "Cloth":
-        product.ProductStock -= quantity
-        product.save()
-    if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
+        Order(user=user,
+            profile=profile,
+            address=defaultAddress,
+            product=product,
+            unit=unit,
+            unitAmount=unitAmount,
+            subTotal=subTotal,
+            Total=total).save()
         product.ProductStock -= unitAmount
         product.save()
 

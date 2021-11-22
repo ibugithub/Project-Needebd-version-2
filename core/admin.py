@@ -20,11 +20,34 @@ from .models import (
     Unions,
     Upazilas,
     CustomerAddress,
-    Order
+    Order,
+    ProductType,
+    Attribute,
+    AttributeValue,
+    PTAttributeValue,
+    ProductAttributeValue
 )
-@admin.register(CategoryWraper)
-class WaraperCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ('typeName',)
+
+@admin.register(Attribute)
+class AttributeAdmin(admin.ModelAdmin):
+    list_display = ("attributeName",)
+
+@admin.register(AttributeValue)
+class AttributeValueAdmin(admin.ModelAdmin):
+    list_display = ("attribute","attributeValueName")
+
+@admin.register(PTAttributeValue)
+class PTAValueAdmin(admin.ModelAdmin):
+    list_display = ('productType','attribute', 'attributeValue')
+
+@admin.register(ProductAttributeValue)
+class PAValueAdmin(admin.ModelAdmin):
+    list_display = ('product','PTAttributeValue')
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

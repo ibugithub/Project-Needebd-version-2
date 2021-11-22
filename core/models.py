@@ -64,6 +64,7 @@ class Category(models.Model):
     def __str__(self):
         return str(self.title)
 
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to = 'product_image')
@@ -100,6 +101,7 @@ class Product(models.Model):
     MinimumUnitValue = models.FloatField(null = True, blank = True)
     MaximumUnitValue = models.FloatField(null = True, blank = True)
     ProductStock = models.FloatField(null = True)
+
     
     def save(self, *args, **kwargs):
         prizeGap =  self.selling_prize - self.discounted_prize
@@ -107,7 +109,8 @@ class Product(models.Model):
         PrizeGapPercent = prizeGap / sellingPrizePercent 
         self.discount = round(PrizeGapPercent, 2)
         super().save(*args, **kwargs) 
-   
+
+
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -203,6 +206,7 @@ class CustomerAddress(models.Model):
     isDefault = models.BooleanField(null = True, blank = True, default = False)
 
 STATUS_CHOICE = (
+
     ('Pending', 'Pending'),
     ('Confirmed', 'Confirmed'),
     ('On the way', 'On the way'),
@@ -217,12 +221,47 @@ class Order(models.Model):
     profile = models.ForeignKey(CustomerProfile, models.SET_NULL, null=True)
     address = models.ForeignKey(CustomerAddress, models.SET_NULL, null=True)
     product = models.ForeignKey(Product, models.SET_NULL, null=True)
-    quantity = models.PositiveIntegerField(default = 1)
-    unit = models.CharField(max_length=20)
-    unitAmount = models.FloatField()
-    size = models.CharField(max_length=20)
+    quantity = models.PositiveIntegerField(default = 1, null = True)
+    unit = models.CharField(max_length=20, null = True)
+    unitAmount = models.FloatField(null = True)
+    size = models.CharField(max_length=20, null = True)
     subTotal = models.FloatField()
     Total = models.FloatField()
     discount = models.FloatField(null=True)
     ordered_date = models.DateTimeField(auto_now_add = True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICE, default='Pending')
+
+
+
+class ProductType(models.Model):
+    typeName = models.CharField(max_length=30)
+    def __str__(self):
+        return self.typeName
+
+class ProductAttributeValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    PTAttributeValue = models.CharField(max_length=20)
+    def __str__(self):
+        return self.product.title
+
+class Attribute(models.Model):
+    attributeName = models.CharField(max_length=40)
+    def __str__(self):
+        return self.attributeName
+
+class AttributeValue(models.Model):
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    attributeValueName = models.ForeignKey(ProductAttributeValue, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.attributeValueName.product.PTAttributeValue
+
+class PTAttributeValue(models.Model):
+    productType = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, null=True)
+    attributeValue = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, null = True)
+    def __str__(self): 
+        return self.productType.typeName
+
+
+
+
