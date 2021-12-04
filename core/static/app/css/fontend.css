@@ -1058,7 +1058,7 @@ body>div.main_container>div>form>button.search-icon-container {
 }
 /* -------------The end of the navigation section----------  */
 .spacer {
-    height: 71px;
+    height: 70px;
 }
 .clear {
     clear: both;
@@ -1955,8 +1955,6 @@ body>div.container.mgt20>div:nth-child(10) {
 .footer-section {
     width: 100%;
     clear: both;
-    padding-right: 20px;
-    padding-left: 20px;
 }
 .footer-top-row {
     display: flex;
@@ -2028,7 +2026,6 @@ body>div.container.mgt20>div:nth-child(10) {
     right: 51px;
     padding-left: 16px;
     padding-right: 20px;
-    height: 60%;
     top: 71px;
     display: none;
     border: 1px solid #041e42;
@@ -2061,7 +2058,7 @@ body>div.container.mgt20>div:nth-child(10) {
 }
 .account-title h2{
     margin-top: 15px;
-    margin-left: 20px;
+    margin-left: 4px;
     color: #EB6529;
 }
 .close-section .close-account-btn{
@@ -2735,4 +2732,48 @@ body>div.container.mgt20>div:nth-child(10) {
 .stockAmount{
     color: #EB6529;
     font-size: 12px;
+}
+
+
+@media only screen and (max-width:768px){
+    .account-dropdown-main{
+        width: 35%;
+    }
+}
+@media only screen and (max-width:600px){
+    .account-dropdown-main{
+        width: 40%;
+        top: 65px;
+    }
+}
+
+@media only screen and (max-width:600px){
+    .account-dropdown-main{
+        width: 48%;
+    }
+    .elements{
+        padding: 0;
+    }
+    .account-img img{
+        width: 20px !important;
+    }
+}
+
+@media only screen and (max-width:375px){
+    .account-dropdown-main{
+        width: 55%;
+    }
+}
+@media only screen and (max-width:320px){
+    .account-dropdown-main{
+        width: 66%;
+    }
+}
+
+@media only screen and (max-width:266px){
+    .account-dropdown-main{
+        width: 76%;
+        top: 43px;
+        right: 0;
+    }
 }

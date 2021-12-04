@@ -1,6 +1,6 @@
 .check-out-main{
     width: 100%;
-    padding: 40px 0;
+    padding: 20px 0;
 }
 .check-out-container{
     width: 100%;
@@ -30,21 +30,21 @@
 .checkout-header-row{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 .checkout-items{
-    width: 50%;
+    width: 30%;
     text-transform: uppercase;
     color: #444;
 }
 .checkout-price{
-    width: 25%;
+    width: 20%;
     text-transform: uppercase;
     color: #444;
     text-align: center;
 }
 .checkout-quantity{
-    width: 25%;
+    width: 20%;
     text-transform: capitalize;
     text-align: right;
     color: #444;
@@ -123,19 +123,20 @@
 .checkout-items-row{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
   
 }
 .ck-product{
-    width: 50%;
+    width: 30%;
 }
 .ck-product-details{
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+    flex-direction: column;
 }
 .ck-product-img{
-    width: 40%;
-    height: 115px;
+    width: 60%;
     position: relative;
 }
 .ck-product-img img{
@@ -143,8 +144,7 @@
     max-height: 100%;
 }
 .ck-product-title{
-    width: 60%;
-    padding-left: 20px;
+    width: 100%;
 }
 .ck-title h2{
     color: #444;
@@ -156,7 +156,7 @@
     padding: 10px 0;
 }
 .checkout-middle{
-    width: 35%;
+    width: 20%;
     text-align: center;
 }
 .ck-product-price{
@@ -179,7 +179,7 @@
   margin-top: 10px;
 }
 .ck-checkout-right{
-    width: 15%;
+    width: 20%;
     text-align: right;
 }
 
@@ -416,12 +416,8 @@
 .phone-checkout-address{
     padding-bottom: 20px;
 }
-.ph-checkout-address-information{
-    border-bottom: 2px dotted #EB6529;
-}
 .phone-checkout-product-section{
     width: 100%;
-
 }
 .phone-package-system{
     width: 100%;
@@ -494,8 +490,10 @@
 .phone-checkout-product-container{
     width: 100%;
     display: flex;
-    flex-wrap:nowrap;
+    flex-wrap: nowrap;
     padding-bottom: 5px;
+    justify-content: space-between;
+    padding: 10px 20px;
     
 }
 .phc-product-img{
@@ -534,10 +532,6 @@
     padding-right: 5px;
     font-size: 12px;
 }
-.phone-price-section{
-    display: flex;
-    flex-wrap: nowrap;
-}
 .rtbp{
     color: #444;
     padding-left: 5px;
@@ -545,13 +539,6 @@
 }
 .pccc{
     color: #EB6529;
-}
-.phone-product-btm{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
 }
 
 .phone-checkout-total{
@@ -581,13 +568,11 @@
     border-bottom: 1px solid #444;
     padding: 10px 0;
 }
-
 .phone-checkout-btn-section{
     width: 100%;
     position: fixed;
-    top: 487px;
     background-color: #fff;
-    
+    bottom: 0;
 }
 .phone-checkout-btn-container{
     width: 100%;
@@ -603,9 +588,7 @@
 .phn-checkout-btn-total{
     width: 60%;
 }
-.pcb-total{
-    /* padding-bottom: 5px; */
-}
+
 .pcb-total-text{
     color: #444;
     padding-right: 5px;
@@ -631,21 +614,25 @@
     text-align: center;
 }
 
-@media only screen and (max-width: 768px) {
-  .check-out-main{
-      display: none;
-  }
+@media only screen and (max-width: 767px) {
+  .check-out-row {
+    justify-content: space-around;
+}
+
   .footer-section {
       display: none;
-  }
-  .phone-checkout-container{
-       
   }
 }
 
 @media only screen and (max-width: 600px){
     .phone-checkout-container {
         padding-top: 60px;
+    }
+    .check-out-main {
+        margin-top: 64px;
+    }
+    .cost{
+        display: none;
     }
 }
 
@@ -670,9 +657,6 @@
     .phone-checkout-section{
         display: none;
     }
-    .phone-checkout-btn-section{
-        display: none;
-    }
     .ck-title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
@@ -685,3 +669,81 @@
         font-size: 14px;
     }
 }
+.phone-checkout-btn-section{
+    display: none;
+}
+@media only screen and (max-width: 769px) {
+    .check-out-row {
+        flex-direction: column;
+    }
+    .check-out-left {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .check-out-right {
+        width: 100%;
+        padding-left: 0;
+    }
+    .phone-checkout-btn-section{
+        display: block;
+    }
+    .ck-pay-btn {
+        display: none;
+    }
+
+    .check-out-main {
+        padding: 5px 0;
+    }
+    .check-out-container {
+        padding: 0 5px;
+    }
+    .checkout-package {
+        margin-top: 5px;
+    }
+    .footer-section {
+        display: none;
+    }
+    .order-summery {
+        padding: 0px 0;
+    }
+  }
+
+  @media only screen and (max-width: 300px)
+  {
+    .checkout-middle {
+        display: none;
+    }
+    .ck-checkout-right {
+        width: 70%;
+    }
+    .checkout-price {
+        display: none;
+    }
+    .checkout-items {
+        width: 50%;
+    }
+    .checkout-quantity {
+        width: 50%;
+    }
+  }      
+  @media only screen and (max-width: 310px){
+    .ph-btn {
+        padding: 8px 0;
+    }
+  }
+  @media only screen and (max-width: 292px){
+    .ph-btn {
+        font-size: 12px;
+    }
+    .pcb-total-amaount {
+        font-size: 13px;
+    }
+    .phone-vat{
+        display: none;
+    }
+  }
+  @media only screen and (max-width: 266px){
+    .check-out-main {
+        margin-top: 35px;
+    }
+  }

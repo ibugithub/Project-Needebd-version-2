@@ -102,7 +102,7 @@ class User(AbstractBaseUser):
 
 class Code(models.Model):
     number = models.CharField(max_length=5, blank = True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
 
     def __str__(self):
         return str(self.number)

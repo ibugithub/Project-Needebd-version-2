@@ -20,33 +20,37 @@ from .models import (
     Unions,
     Upazilas,
     CustomerAddress,
+    CourierServices,
     Order,
-    ProductType,
-    Attribute,
-    AttributeValue,
-    PTAttributeValue,
-    ProductAttributeValue
+    OrderSummary
+    # will Think about these model later......................
+    # ProductType,
+    # Attribute,
+    # AttributeValue,
+    # PTAttributeValue,
+    # ProductAttributeValue
 )
 
-@admin.register(ProductType)
-class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ('typeName',)
+# will Think about these model later......................
+# @admin.register(ProductType)
+# class ProductTypeAdmin(admin.ModelAdmin):
+#     list_display = ('typeName',)
 
-@admin.register(Attribute)
-class AttributeAdmin(admin.ModelAdmin):
-    list_display = ("attributeName",)
+# @admin.register(Attribute)
+# class AttributeAdmin(admin.ModelAdmin):
+#     list_display = ("attributeName",)
 
-@admin.register(AttributeValue)
-class AttributeValueAdmin(admin.ModelAdmin):
-    list_display = ("attribute","attributeValueName")
+# @admin.register(AttributeValue)
+# class AttributeValueAdmin(admin.ModelAdmin):
+#     list_display = ("attribute","attributeValueName")
 
-@admin.register(PTAttributeValue)
-class PTAValueAdmin(admin.ModelAdmin):
-    list_display = ('productType','attribute', 'attributeValue')
+# @admin.register(PTAttributeValue)
+# class PTAValueAdmin(admin.ModelAdmin):
+#     list_display = ('productType','attribute', 'attributeValue')
 
-@admin.register(ProductAttributeValue)
-class PAValueAdmin(admin.ModelAdmin):
-    list_display = ('product','PTAttributeValue')
+# @admin.register(ProductAttributeValue)
+# class PAValueAdmin(admin.ModelAdmin):
+#     list_display = ('product','PTAttributeValue')
 
 
 @admin.register(Category)
@@ -124,6 +128,15 @@ class UnionsAdmin(admin.ModelAdmin):
 class CustomerAddressAdmin(admin.ModelAdmin):
     list_display = ['user','full_name','phone_number', 'divisions', 'districts','upazilas', 'unions', 'address', 'isDefault']
 
+@admin.register(CourierServices)
+class UnionsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'courierImage']
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['ordered_date','user','profile','address', 'product', 'quantity','unit', 'unitAmount', 'size', 'subTotal','Total', 'ordered_date', 'status']
+    list_display = ['ordered_date','user','profile','address', 'product', 'quantity','unit', 'unitAmount', 'size','ordered_date', 'status', 'is_summuried']
+
+@admin.register(OrderSummary)
+class OrderAdmin(admin.ModelAdmin):
+    filter_horizontal = ('orderItem',)

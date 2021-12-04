@@ -132,88 +132,21 @@
                                 <div class="courier-content">
                                     <div class="courier-content-row">
                                         <!-- courier name start -->
-                                        <div class="courier-name" value= "Sundorban">
+                                        {% for courier in couriers %}
+                                        <div class="courier-name" value = "{{courier.name}}">
                                             <div class="courier-name-content">
                                                 <div name="sundorban" class="courier-btn">
                                                     <div class="name-logo">
-                                                        <img src="/static/app/image/courier-1.png" alt="">
+                                                        <img src="{{ courier.courierImage.url }}" alt="">
                                                     </div>
                                                     <div class="c-name">
-                                                        <span>Sundarban</span>
+                                                        <span>{{courier.name}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                
-                                        <!-- courier name start -->
-                                        <div class="courier-name" value = "Redex">
-                                            <div class="courier-name-content">
-                                                <div name="sundorban" class="courier-btn">
-                                                    <div class="name-logo">
-                                                        <img src="/static/app/image/courier-2.jpg" alt="">
-                                                    </div>
-                                                    <div class="c-name">
-                                                        <span>Redex</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- courier name start -->
-                                        <div class="courier-name" value = "Jononi">
-                                            <div class="courier-name-content">
-                                                <div name="sundorban" class="courier-btn">
-                                                    <div class="name-logo">
-                                                        <img src="/static/app/image/courier-3.jpg" alt="">
-                                                    </div>
-                                                    <div class="c-name">
-                                                        <span>Jononi</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- courier name start -->
-                                        <div class="courier-name" value = "Edex">
-                                            <div class="courier-name-content">
-                                                <div name="sundorban" class="courier-btn">
-                                                    <div class="name-logo">
-                                                        <img src="/static/app/image/courier-4.jpg" alt="">
-                                                    </div>
-                                                    <div class="c-name">
-                                                        <span>Edex</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- courier name start -->
-                                        <div class="courier-name" value = "Amazon">
-                                            <div class="courier-name-content">
-                                                <div name="sundorban" class="courier-btn">
-                                                    <div class="name-logo">
-                                                        <img src="/static/app/image/courier-5.jpg" alt="">
-                                                    </div>
-                                                    <div class="c-name">
-                                                        <span>Amazon</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- courier name start -->
-                                        <div class="courier-name" value = "Avarest">
-                                            <div class="courier-name-content">
-                                                <div name="sundorban" class="courier-btn">
-                                                    <div class="name-logo">
-                                                        <img src="/static/app/image/courier-3.jpg" alt="">
-                                                    </div>
-                                                    <div class="c-name">
-                                                        <span>Avarest</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
- 
+                                        {% endfor %}
+                                       
                                     </div>
                                 </div>
 
@@ -407,7 +340,7 @@
                 <div class="phn-checkout-btn-total">
                     <div class="pcb-total">
                         <span class="pcb-total-text">Total:</span>
-                        <span class="pcb-total-amaount">৳ 150</span>
+                    <span class="pcb-total-amaount">৳ {{totalAmount}}</span>
                     </div>
                     <div class="phone-vat">
                         <span class="vat-text">
@@ -416,7 +349,7 @@
                     </div>
                 </div>
                 <div class="phone-checkout-btn">
-                    <a href="#" class="ph-btn">Proceed to pay</a>
+                    <a href="/bwordermakerurl/" class="ph-btn">Proceed to pay</a>
                 </div>
             </div>
         </div>

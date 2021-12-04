@@ -196,12 +196,12 @@
     font-size: 20px;
     text-transform: capitalize;
 }
-@media only screen and (min-width: 768px){
+@media only screen and (min-width: 870px){
     .phone-oder-title-section{
         display: none;
     }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 870px) {
     .cancellation-right-title{
         display: none;
     }
@@ -209,7 +209,7 @@
         display: none;
     }
     .cancellation-right-section{
-        width: 100%;
+        width: 100% !important;
         padding-left: 5px;
     }
 }
@@ -243,7 +243,7 @@
         padding: 20px 10px;
     }
 }
-@media only screen and (max-width: 320px){
+@media only screen and (max-width: 450px){
     .order-image{
         width: 100%;
     }
@@ -285,7 +285,7 @@ height: 57%;
 position: relative;
 }
 
-@media only screen and (max-width:580px){
+@media only screen and (max-width:720px){
     .orderContainer{
         display: block;
     }
@@ -371,11 +371,7 @@ position: relative;
 #cancelDiv{
     margin-top: 65px;
 }
-/* #cancelDivM{
-    text-align: center;
-    display: none !important;
-    margin-top: 4px;
-} */
+
 #cancelButton{
     background: #fd0a0ade;
     border: none;
@@ -409,5 +405,16 @@ position: relative;
 @media only screen and (max-width: 240px){
     #rspan{
         display: none;
+    }
+}
+
+@media only screen and (max-width: 983px){
+    .rightContainer {
+        width: 90%;
+        padding: 0px 5px;
+    }
+    .cancellation-right-section {
+        width: 84%;
+        padding-left: 10px;
     }
 }

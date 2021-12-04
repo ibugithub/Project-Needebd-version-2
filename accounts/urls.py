@@ -10,8 +10,8 @@ urlpatterns  = [
     path('login/', views.log_in, name = 'login'),
     path('logout/', views.log_out , name = 'logout'),
     path('changepass/',auth_views.PasswordChangeView.as_view(template_name = 'accounts/changepassword.html', form_class = password_user_change, success_url = '/accounts/changepassdone/'), name= 'changepass'),
-    path('changepassdone/', auth_views.PasswordChangeDoneView.as_view(template_name = 'accounts/password-change-done.html'), name = 'change_pass_done'),
-
+    path('changepassdone/', auth_views.PasswordChangeDoneView.as_view(template_name = 'accounts/change_pass_done.html'), name = 'change_pass_done'),
+    path('logoutinurl/', views.logOut_login, name='logoutinurlname'),
     
     path('passwordreset/', auth_views.PasswordResetView.as_view(template_name ='accounts/password_reset.html', form_class = MyPasswordResetForm), name = 'password_reset'),
 

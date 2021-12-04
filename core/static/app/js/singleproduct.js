@@ -6,6 +6,7 @@ function imageZoom(imgID, resultID) {
   /*create lens:*/
   lens = document.createElement("DIV");
   lens.setAttribute("class", "img-zoom-lens");
+  lens.style.width = img.offsetWidth/2+"px"
   /*insert lens:*/
   img.parentElement.insertBefore(lens, img);
   /*calculate the ratio between result DIV and lens:*/
@@ -13,7 +14,7 @@ function imageZoom(imgID, resultID) {
   cy = result.offsetHeight / lens.offsetHeight;
   /*set background properties for the result DIV:*/
   result.style.backgroundImage = "url('" + img.src + "')";
-  result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+  result.style.backgroundSize = (img.width * cx-300) + "px " + (img.height * cy-300) + "px";
   /*execute a function when someone moves the cursor over the image, or the lens:*/
   lens.addEventListener("mousemove", moveLens);
   img.addEventListener("mousemove", moveLens);
@@ -42,7 +43,7 @@ function imageZoom(imgID, resultID) {
     y = pos.y - (lens.offsetHeight / 2);
     /*prevent the lens from being positioned outside the image:*/
     if (x > img.width - lens.offsetWidth) {
-      x = img.width - lens.offsetWidth;
+      x = img.width - lens.offsetWidth ;
     }
     if (x < 0) {
       x = 0;
@@ -54,7 +55,8 @@ function imageZoom(imgID, resultID) {
       y = 0;
     }
     /*set the position of the lens:*/
-    lens.style.left = x + "px";
+    a = img.getBoundingClientRect();
+    lens.style.left = a.left-20 + x + "px";
     lens.style.top = y + "px";
     /*display what the lens "sees":*/
     result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
@@ -86,7 +88,7 @@ var images = document.getElementById('pretend_images');
 var thumbnails = document.querySelectorAll('#pretend_images > div');
 
 thumbnails.forEach(function (elem) {
-  elem.onclick = onClick.bind(null, elem);
+elem.onclick = onClick.bind(null, elem);
 });
 
 function onClick(elem, e) {
@@ -266,7 +268,6 @@ function fput() {
   </div>
   </div>`;
 
-
   let LiterUnit = ` <div class="color-size">
   <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
   <div class="p-size">
@@ -285,7 +286,6 @@ function fput() {
     <input id = "unitAmount" onchange = "uAmountCk()"  type = "number" value = "">
     </div>
   </div>`;
-
 
   let MiliLiterUnit = ` <div class="color-size">
   <div id = "unitAlert" style = "color: red; display: none;"> <span > slect the unit </span> </div>
@@ -339,12 +339,15 @@ function fput() {
 }
 var aTCBtn = document.getElementById('aTCButton')
 var buyNowBTN = document.getElementById('buyNowBTN')
+if (aTCBtn != null)
+{
 var buyNowa = document.getElementById('buyNowa')
 var prodId = aTCBtn.getAttribute('prod')
 var productStock = aTCBtn.getAttribute('productStock')
 aTCBtn.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener("mouseover", uAmountCk)
 buyNowBTN.addEventListener('click', uAmountCk)
+}
 
 // This function will prevent clicking the 'add to cart' and 'buynow' button if not you select the unit or unit amount
 function uAmountCk() {

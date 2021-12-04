@@ -1,36 +1,28 @@
-{% extends 'accounts/base.html' %} 
+{% extends 'app/base.html' %}
 
 {% load static %}
-{% block css %}   
- <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}"> 
- <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.css' %}">
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+<link rel="stylesheet" href="/static/app/css/fontend.css">
 {% endblock %}
 {% block body %}
-    <div class="container my-5">
-        <div class="row">
-            <h3>Welcome {{user.user_name}}</h3>
-            <div class="col-sm-3 border-end my-5">
-                <ul class="list-unstyled">
-                    <li class="d-grid btn btn-success">
-                  
-                            Change Password Done
-                       
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-8 offset-sm-1 text-center">
-                <h3>
-                    Password Changed Successfully
-                </h3>
-                <div>
-                    <iframe src="https://giphy.com/embed/ibolLe3mOqHE3PQTtk" width="200" height="200" frameborder="0"
-                        class="giphy_embed" allowfullscreen>
+<div class="containeR">
+    <div class="gif">
+        <iframe src="https://giphy.com/embed/ibolLe3mOqHE3PQTtk" width="200" height="200" frameborder="0"
+            class="giphy_embed" allowfullscreen>
 
-                    </iframe>
-                </div>
-            </div>
-            <a href="{% url 'home' %}">Home</a>
-        </div>
+        </iframe>
     </div>
+    <div class="title">
+        <h2 style="font-weight: 500">Well Done!</h2>
+    </div>
+    <div class="description">
+        <p>Your password has been successfully changed.</p>
+        <p>Please use your new password to login</p>
+    </div>
+    <div class="signin">
+        <a href="{% url 'logoutinurlname' %}"><h4 style="color:white">SIGN IN</h4></a>
+    </div>
+</div>
 
 {% endblock %}

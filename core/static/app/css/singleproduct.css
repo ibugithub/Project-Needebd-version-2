@@ -4,14 +4,11 @@
     .single-product-cart-section {
         width: 97%;
         margin: 0px auto;
-        border-bottom: 2px solid #041e42;
-        border-bottom-width: 1px;
-        padding-bottom: 20px;
-
     }
 
     .single-product-cart-main {
         width: 100%;
+        background-color: #fff;
     }
 
     .single-product-cart-row {
@@ -54,6 +51,8 @@
     .img-zoom-container {
         position: relative;
         display: flex;
+        justify-content: space-evenly;
+        
     }
 
     .img-zoom-lens {
@@ -65,9 +64,10 @@
     }
 
     .img-zoom-result {
-        border: 1px solid #d4d4d4;
+        border: 1px solid #201f1f;
         position: absolute;
         left: 530px;
+        top: 5px;
         /*match width of #myimage*/
         /*set the size of the result div:*/
         width: 750px;
@@ -84,22 +84,21 @@
         vertical-align: top;
         max-width: 100%;
     }
-
     .single-product-cart-button {
-        width: 100%;
+        width: 90%;
         display: flex;
         margin: 10px 0;
+        margin-left: 15px;
     }
 
     .add-cart-btn {
         width: 50%;
         margin-right: 10px;
-
     }
 
     .cart-btn {
         width: 100%;
-        padding: 6px 0;
+        padding: 10px 0;
         background-color: #041e42;
         border: none;
         outline: none;
@@ -116,7 +115,7 @@
 
     .buy-btn {
         width: 100%;
-        padding: 6px 0;
+        padding: 10px 0;
         background-color: #041e42;
         border: none;
         outline: none;
@@ -194,6 +193,7 @@
     .p-size {
         width: 100%;
         display: flex;
+        margin-bottom: 15px;
     }
 
     .s-p-price {
@@ -235,19 +235,19 @@
         width: 100%;
         padding: 5px 10px;
         color: #444;
-
     }
 
     .size-button-btn {
         text-decoration: none;
         color: #444;
-        padding: 3px 10px;
+        padding: 3px 18px;
         margin-right: 5px;
         border-radius: 8px;
         background: transparent;
         cursor: pointer;
         text-align: center;
     }
+
 .fa-chevron-down{
     color: #EB6529;
 }
@@ -301,6 +301,7 @@
 
     .product-all-details {
         width: 100%;
+        margin-top: 50px;
     }
 
     .product-all-details .a-unorder-list {
@@ -315,10 +316,11 @@
         width: 97%;
         margin: 20px auto;
         color: #444;
+        background-color: #fff;
     }
 
     .product-description-title {
-        padding: 10px 0;
+        padding: 10px 20px;
     }
 
     .product-description-title .rcb {
@@ -351,13 +353,14 @@
 
     .related-product {
         width: 97%;
-        margin: 20px auto;
+        margin: 5px auto;
     }
 
     .related-product-title {
         width: 100%;
-        padding: 10px 10px 30px 10px;
-        color: #444;
+        padding: 13px;
+        background: white;
+
     }
     .related-product-title h2{
         font-weight: 600;
@@ -367,7 +370,14 @@
         width: 100%;
         display: flex;
         flex-flow: wrap;
+        background-color: #fff  !important;
 
+    }
+    #Sproduct{
+        display: none;
+        text-align: center;
+        padding: 8px 0px;
+        background: #EB6529;
     }
 
     /*============ this is the Single product page End  =============*/
@@ -416,8 +426,7 @@
             padding: 10px 0;
         }
         .product-description{
-         padding-left:10px;
-         padding-right:10px;
+            margin: 7px auto;
         }
     }
 
@@ -464,12 +473,43 @@
     border-radius: 30%;
 }
 
+@media only screen and (max-width: 600px){
+    #Sproduct{
+        display: block;
+        text-align: center;
+        margin-top: 63px !important;
+    }
+}
 
-
-
-
-
-
+@media only screen and (max-width: 266px){
+    #Sproduct{
+        margin-top: 34px !important;
+    }
+    .single-product-cart-main{
+        margin-top: 35px;
+    }
+    .single-product-cart-button{
+        display: block;
+    }
+    .add-cart-btn{
+        width: 93%;
+        margin:10px auto;
+    }
+    .buy-cart-btn{
+        width: 93%;
+        margin: 0 auto;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .single-product-cart-section{
+        margin-top: 64px;
+    }
+}
+@media only screen and (max-width: 266px) {
+    .single-product-cart-section{
+        margin-top: 0 !important;
+    }
+}
 
 
 

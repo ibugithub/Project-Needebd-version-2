@@ -231,3 +231,7 @@ def profile(request):
 def log_out(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def logOut_login(request):
+    logout(request)
+    return redirect('/accounts/login')

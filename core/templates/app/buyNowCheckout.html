@@ -37,16 +37,12 @@
             <div class="checkout-content-section">
               <div class="checkout-package">
                 <div class="package-left">
-                  <span>package {{forloop.counter}} of {{len}}</span>
-                </div>
-                <div class="package-right">
-                  <span class="package-by"> shipped by : </span>
-                  <span class="package-brand-name"> bata shop </span>
+                  <span>package 1 of 1</span>
                 </div>
               </div>
               <div class="checkout-content">
                 <div class="checkout-head">
-                  <span>checkout option</span>
+                  <span>{{product.title}}</span>
                 </div>
 
                 <div class="checkout-items-r">
@@ -65,9 +61,6 @@
 
                         </div>
                         <div class="ck-product-title">
-                          <div class="ck-title">
-                            <h2>{{product.title}}</h2>
-                          </div>
                           <div class="ck-title">
                             {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %} 
                             Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{product.unit}}</span> 
@@ -134,10 +127,10 @@
                         <span class="qun-text">Qty: <span id="quantityRight"> 1 </span> </span>
                       </div>
                       <div>
-                        <span style="text-decoration: line-through">cost: <span id="sellPrizeElm"
+                        <span style="text-decoration: line-through"> <span class="cost">cost:</span> <span id="sellPrizeElm"
                             sellingPrize="{{product.selling_prize}}">{{product.selling_prize}}</span></span>
                       </div>
-                      <div>cost: <span id="discountedPrizeElm"
+                      <div><span class="cost">cost:</span><span id="discountedPrizeElm"
                           discountedPrize="{{product.discounted_prize}}">{{product.discounted_prize}}</span> </div>
                     </div>
                     {% endif %}
@@ -171,9 +164,6 @@
                   {% endif %}
 
                   <div class="cart-save-remove">
-                    <div class="cart-d-save">
-                      save for later
-                    </div>
                     <div prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
                       unit_amount={{cart.unit_amount}} onclick="buyNow('remove')" class="cart-d-remove"> remove </div>
                   </div>
@@ -387,258 +377,25 @@
   </div>
 </div>
 
-<!-- checkout page for phone -->
-<div class="phone-checkout-section">
-  <div class="phone-checkout-container">
-    <div class="ph-checkout-title">
-      <span class="ph-left">
-        <a href="/templates/app/cartPage.html">
-          <i class="fa fa-arrow-left"></i>
-        </a>
-      </span>
-      <span class="ph-title">Checkout</span>
-    </div>
-    <div class="phone-checkout-address">
-      <div class="ph-checkout-address-information">
-        <div class="ph-name-text">
-          <div class="ph-name">
-            <span class="name-icons"><i class="fa fa-map-marker-alt"></i></span>
-            <span class="name-text">Bahadur</span>
-          </div>
-          <div class="ph-edit">
-            <span><a href="#">Edit</a></span>
-          </div>
-        </div>
-        <div class="phone-address-details">
-          <span class="ph-ad-text">sadar, Rajbari Math Joydebpur, Gazipur, Dhaka</span>
-        </div>
-        <div class="phone-bill-address">
-          <div class="phone-bill-left">
-            <span class="bil-icons">
-              <i class="fa fa-list-alt"></i>
-            </span>
-            <span class="bill-text">Bill to the same address</span>
-          </div>
-          <div class="phone-bill-right">
-            <span class="edit-text">
-              <a href="#">Edit</a>
-            </span>
-          </div>
-        </div>
-        <div class="ch-phone-address">
-          <div class="phone-address-left">
-            <span class="phone-d-icons">
-              <i class="fas fa-phone"></i>
-            </span>
-            <span class="phone-d-name">Phone</span>
-          </div>
-          <div class="phone-address-right">
-            <span class="phone-d-edit"><a href="">Edit</a></span>
-          </div>
-        </div>
-        <div class="phone-email-address">
-          <div class="phone-email-left">
-            <span class="phone-email-icons">
-              <i class="fa fa-envelope"></i>
-            </span>
-            <span class="phone-email-text">Email</span>
-          </div>
-          <div class="phone-email-right">
-            <span class="phone-email-edit"><a href="#">Edit</a></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="phone-checkout-product-section">
-      <div class="phone-checkout-product-section">
-        <div class="phone-package-system">
-          <div class="phone-package">
-            <span class="package-icons"><i class="fa fa-box"></i></span>
-            <span class="package-text">Package 1 0f 1</span>
-          </div>
-          <div class="phone-shipped">
-            <span class="shipped-text">Shipped by</span>
-            <span class="shipped-name">Bahadur</span>
-          </div>
-        </div>
-        <div class="phone-delivery-option">
-          <div class="phd-title">
-            <span>Delivery option</span>
-          </div>
-          <div class="phone-delivery-box">
-            <div class="phd-box-content">
-              <div class="box-content">
-                <span class="bc-icons"><i class="fa fa-check"></i></span>
-                <span class="bc-delivery-amount">৳ 250</span>
-              </div>
-              <div class="box-content-text">
-                <div class="bc-delivery-type">Home delivery</div>
-                <div class="bc-delivery-time">
-                  <span class="delivery-time-text">Est. Arrival:</span>
-                  <span class="delivery-time"> 15-10 nov </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="phone-checkout-product">
-      <!-- product-start -->
-      <div class="phone-checkout-product-container">
-        <div class="phone-checkout-product-img-section">
-          <div class="phc-product-img">
-            <img src="/static/app/image/procut-5.webp" alt="" />
-          </div>
-        </div>
-        <div class="phc-product-details">
-          <div class="phc-product-title">
-            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
-          </div>
-          <div class="phc-product-all">
-            <div class="phc-brand">
-              <span class="phc-brand-name">NO</span>
-              <span class="phc-brand-text">Brand</span>
-            </div>
-            <div class="phc-color">
-              <span class="phc-color-text">Color Family</span>
-              <span class="phc-color-name">red</span>
-            </div>
-          </div>
-          <div class="phone-product-btm">
-            <div class="phone-price-section">
-              <div class="php-price">৳ 75</div>
-              <div class="php-price-frr">
-                <span class="rtbp"> ৳ 150</span>
-                <span class="pccc">-50%</span>
-              </div>
-            </div>
-            <div class="phone-product-quantity">
-              <span class="pp-quantity-text">Qty: </span>
-              <span class="pp-quantity">5</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- product-end -->
-
-      <!-- product-start -->
-      <div class="phone-checkout-product-container">
-        <div class="phone-checkout-product-img-section">
-          <div class="phc-product-img">
-            <img src="/static/app/image/procut-5.webp" alt="" />
-          </div>
-        </div>
-        <div class="phc-product-details">
-          <div class="phc-product-title">
-            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
-          </div>
-          <div class="phc-product-all">
-            <div class="phc-brand">
-              <span class="phc-brand-name">NO</span>
-              <span class="phc-brand-text">Brand</span>
-            </div>
-            <div class="phc-color">
-              <span class="phc-color-text">Color Family</span>
-              <span class="phc-color-name">red</span>
-            </div>
-          </div>
-          <div class="phone-product-btm">
-            <div class="phone-price-section">
-              <div class="php-price">৳ 75</div>
-              <div class="php-price-frr">
-                <span class="rtbp"> ৳ 150</span>
-                <span class="pccc">-50%</span>
-              </div>
-            </div>
-            <div class="phone-product-quantity">
-              <span class="pp-quantity-text">Qty: </span>
-              <span class="pp-quantity">5</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- product-end -->
-      <!-- product-start -->
-      <div class="phone-checkout-product-container">
-        <div class="phone-checkout-product-img-section">
-          <div class="phc-product-img">
-            <img src="/static/app/image/procut-5.webp" alt="" />
-          </div>
-        </div>
-        <div class="phc-product-details">
-          <div class="phc-product-title">
-            <span class="phcp-title">পুরুষদের জন্য সাদা রঙের সুপ্রিম শর্ট টি শার্ট</span>
-          </div>
-          <div class="phc-product-all">
-            <div class="phc-brand">
-              <span class="phc-brand-name">NO</span>
-              <span class="phc-brand-text">Brand</span>
-            </div>
-            <div class="phc-color">
-              <span class="phc-color-text">Color Family</span>
-              <span class="phc-color-name">red</span>
-            </div>
-          </div>
-          <div class="phone-product-btm">
-            <div class="phone-price-section">
-              <div class="php-price">৳ 75</div>
-              <div class="php-price-frr">
-                <span class="rtbp"> ৳ 150</span>
-                <span class="pccc">-50%</span>
-              </div>
-            </div>
-            <div class="phone-product-quantity">
-              <span class="pp-quantity-text">Qty: </span>
-              <span class="pp-quantity">5</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- product-end -->
-
-      <div class="phone-checkout-total">
-        <div class="phn-subtotal">
-          <div class="phone-subtotal-text">
-            <span class="sub-text">Subtotal</span>
-            <span class="sub-total-items">(2 items)</span>
-          </div>
-          <div class="sub-total-amaount">
-            <span class="sub-amaount"> ৳ 150</span>
-          </div>
-        </div>
-        <div class="phone-shipping-fee">
-          <div class="phn-shipping-text">
-            <span>Shipping fee</span>
-          </div>
-          <div class="phone-shipping-amaount">
-            <span class="ph-amaount"> ৳ 150</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="phone-checkout-btn-section">
   <div class="phone-checkout-btn-container">
     <div class="phone-checkout-btn-row">
       <div class="phn-checkout-btn-total">
         <div class="pcb-total">
           <span class="pcb-total-text">Total:</span>
-          <span class="pcb-total-amaount">৳ 150</span>
+          ৳ <span id="buyNowTotalM" class="pcb-total-amaount">{{total}}</span>
         </div>
         <div class="phone-vat">
           <span class="vat-text"> VAT included,where applicable </span>
         </div>
       </div>
       <div class="phone-checkout-btn">
-        <a href="#" class="ph-btn">Proceed to pay</a>
+        <a href="{% url 'paymentpageurlname' 'buyNowTunnel' %}" class="ph-btn">Proceed to pay</a>
       </div>
     </div>
   </div>
 </div>
+<div style="height: 62px;"></div>
 
 {% endblock body %}
 

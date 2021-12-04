@@ -80,7 +80,6 @@
                                   class="next-table-cell-wrapper"
                                   style="visibility: hidden"
                                 >
-                                  full name
                                 </div>
                               </th>
                             </tr>
@@ -173,33 +172,43 @@
     <div class="phone-address-container">
       <div class="phone-container-content">
         <div class="address-book-add-list">
-          <a href="/templates/app/addAddress.html">
+          <a href="{% url 'aaddressurlname' %}">
             <i>+</i>
             <span>Add address</span></a
           >
         </div>
       </div>
-
+      {% for address in newaddress %}
       <div class="phone-address-book-body">
         <div class="phone-address-body-details">
           <div class="phone-address-body-icon">
             <i class="fas fa-map-marker-alt"></i>
           </div>
           <div class="phone-address-body-info">
-            <div class="phone-address-info-user">bahadur mia</div>
-            <div class="phone-address-body-info-phone">0178298477</div>
+            <div class="phone-address-info-user">{{address.full_name}}</div>
+            <div class="phone-address-body-info-phone">{{address.phone_number}}</div>
             <div class="phone-address-body-info-address">
-              <span class="info-division">Dhaka</span>
-              <span class="info-distric">Gazipur</span>
-              <span class="info-details">Gazipur-sadar, razbair, hazibag</span>
-              <span class="info-home">home #4444</span>
+              <span class="info-division">{{address.districts}}</span>
+              <span class="info-details">{{address.address}}</span>
             </div>
           </div>
+
+            <div class="next-table-cell-wrapper">
+              {% if address.isDefault == True %}
+              <i style="color: #EB6529;" id="checked" class="fas fa-check-circle"></i>
+              <input style="display: none;"  name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+              {% else %}
+
+              <input  id = 'circlebox' name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+              {% endif %}                                                                                       
+           </div>
+
           <div class="phone-address-body-action">
-            <a href="/templates/app/editprofile.html">Edit</a>
+            <a href="{% url 'aaddressurlname' address.id %}">Edit</a>
           </div>
         </div>
       </div>
+      {% endfor %}
     </div>
   </div>
 </div>

@@ -20,6 +20,7 @@ var discountedPrizeElm = document.getElementById("discountedPrizeElm")
 var discountedPrize = discountedPrizeElm.getAttribute("discountedPrize")
 var subTotalElm = document.getElementById('subtotal')
 var buyNowTotalElm = document.getElementById('buyNowTotal')
+var buyNowTotalM = document.getElementById('buyNowTotalM')
 var couponErrorElm = document.getElementById('coupon_selector')
 var hiddenCouponInfoElm = document.getElementById('hiddenCouponInfo')
 var hiddenDiscountElm = document.getElementById('hiddenDiscount')
@@ -58,6 +59,7 @@ function buyNow(elm) {
         discountedPrizeElm.innerHTML = data.discountedCost
         subTotalElm.innerHTML = data.discountedCost
         buyNowTotalElm.innerHTML = data.total
+
         document.getElementById('stockWarning').innerHTML = data.warning
         if (data.warning == "")
         {
@@ -131,6 +133,7 @@ function buyNow(elm) {
       success: function (data) {
         subTotalElm.innerHTML = data.subTotal
         buyNowTotalElm.innerHTML = data.total
+        buyNowTotalM.innerHTML = data.total
       }
     })
   }
@@ -159,6 +162,7 @@ document.getElementById('apply').addEventListener('click', function () {
         hiddenCouponInfoElm.style.display = "block"
         hiddenDiscountElm.innerHTML = data.discount
         hiddenNewTotalElm.innerHTML = data.total
+        document.getElementById('buyNowTotalM').innerHTML = data.total
       } else {
         hiddenCouponInfoElm.style.display = 'none'
       }

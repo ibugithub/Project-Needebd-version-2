@@ -1,13 +1,13 @@
-from datetime import timedelta
+from datetime import date, timedelta
 import datetime
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, resolve_url
 from django.views.generic.detail import DetailView
 from .models import (Brand_Logo_row1, Brand_Logo_row2, Brand_Logo_row3,
-                     Category, Slider, Mobile_Category, Footer_Colum1,
+                     Category, CourierServices, Slider, Mobile_Category, Footer_Colum1,
                      Footer_Colum2, Footer_Colum3, Footer_Colum4, Product,
                      CategoryWraper, Cart, CustomerProfile, Divisions,
-                     Districts, Unions, Upazilas, CustomerAddress, Order)
+                     Districts, Unions, Upazilas, CustomerAddress, Order, OrderSummary)
 from django.views.generic.base import ContextMixin
 from django.views.generic import ListView, TemplateView, View
 from django.http import JsonResponse
@@ -67,7 +67,6 @@ class IndexView(Mycontext, ListView):
             display_wraper__name='Beauty Product')
         context['mans_fashions'] = Product.objects.filter(
             display_wraper__name='Mans Fashion')
-
         return context
 
 def account(request):
@@ -259,6 +258,7 @@ def PlusCartView(request):
         data["TotalSell_Cost"] = TotalSell_Cost,
         data['products_total_cost'] = cart.products_total_cost,
         data['Total_Cost'] = Total_Cost,
+        
         data['Total_discount'] = Total_discount
 
         return JsonResponse(data)
@@ -781,6 +781,23 @@ def CancelOrderView(request, pk):
     order = Order.objects.get(id=pk)
     order.status = 'Canceled'
     order.save()
+    summary = order.ordersummary_set.first()
+    cancelOrder = summary.orderItem.get(id = pk)
+    CPrdCost = cancelOrder.singleProductCost
+    summary.subTotal -= CPrdCost
+    summary.total -= CPrdCost
+    summary.save()
+    productGroup = order.product.ProductGroup
+    if productGroup == "Cloth" or productGroup == "Shoe" or productGroup == "Packet":
+        order.product.ProductStock += order.quantity
+        order.product.save()
+    if productGroup == "SolidWeight" or productGroup == "LiquidWeight":
+        order.product.ProductStock += order.unitAmount
+        order.product.save()
+
+
+
+    
     return redirect('/orderurl')
 
 class CancellationView(TemplateView):
@@ -1015,8 +1032,6 @@ def Buynow(request, pk=None):
             prouductId = request.GET['productId']
             newProduct = Product.objects.get(id=prouductId)
             unitAmount = float(request.session['buyNowUnitAmount'])
-            unitSellingCost = request.session['buyNow_Unit_SellingCost']
-            unitDiscountedCost = request.session['buyNow_Unit_DiscountedCost']
             unitFrequency = newProduct.unitValue_On_Increase_or_Decrease
             minUnitValue = newProduct.MinimumUnitValue
             maxUnitValue = newProduct.MaximumUnitValue
@@ -1057,12 +1072,10 @@ def Buynow(request, pk=None):
                         
             data['unitAmount'] = round(unitAmount, 2)
             request.session['buyNowUnitAmount'] = unitAmount
-            sellingCost = round(unitSellingCost * unitAmount, 2)
-            discountedCost = round(unitDiscountedCost * unitAmount, 2)
+            sellingCost = round(newProduct.selling_prize * unitAmount, 2)
+            discountedCost = round(newProduct.discounted_prize * unitAmount, 2)
             data['sellingCost'] = sellingCost
             data['discountedCost'] = discountedCost
-            request.session['buyNow_Total_SellingCost'] = sellingCost
-            request.session['buyNow_Total_DiscountedCost'] = discountedCost
             shippingCost = 70
             total = discountedCost + shippingCost
             data['total'] = total
@@ -1202,8 +1215,14 @@ class paymentPageView(TemplateView):
             context['totalAmount'] = request.session['buyNowTotal']
             context['buyNowDiscount'] = request.session['buyNowDiscount']
             context['from'] = "buyNow"
-
+        context['couriers'] = CourierServices.objects.all()
         return render(request, self.template_name, context=context)
+
+def courierSetter(request):
+    courier = request.GET['courierV']
+    request.session['courier'] = courier
+    data = {}
+    return JsonResponse(data)
 
 def buyNowOrderMakerView(request):
     user = request.user
@@ -1217,19 +1236,30 @@ def buyNowOrderMakerView(request):
     quantity = request.session['buyNowQuantity']
     subTotal = float(request.session['buyNowSubTotal'])
     total = float(request.session['buyNowTotal'])
+    courierName = request.session['courier']
+    courier = CourierServices.objects.get(name = courierName)
+    deliveryDate = timezone.now() + timedelta(7)
+    shippingCost = 70
+    discount = request.session['buyNowDiscount']
+    if discount == "none":
+        discount = 0
 
     # This section will save the order for product having cloth and shoe and packet productGroup
     if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
         if quantity > product.ProductStock:
             return redirect('/buynow/'+str(product.id))
-        Order(user=user,
+        Order(
+            user=user,
             profile=profile,
             address=defaultAddress,
             product=product,
             quantity=quantity,
             size=size,
-            subTotal=subTotal,
-            Total=total).save()
+            singleProductCost = subTotal,
+            courier = courier,
+            delivery_date = deliveryDate,
+            shippingCost = shippingCost
+            ).save()
         product.ProductStock -= quantity
         product.save()
  
@@ -1237,17 +1267,33 @@ def buyNowOrderMakerView(request):
     if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
         if unitAmount > product.ProductStock:
             return redirect('/buynow/'+str(product.id))            
-        Order(user=user,
+        Order(
+            user=user,
             profile=profile,
             address=defaultAddress,
             product=product,
             unit=unit,
             unitAmount=unitAmount,
-            subTotal=subTotal,
-            Total=total).save()
+            singleProductCost = total,
+            courier = courier,
+            delivery_date = deliveryDate,
+            shippingCost = shippingCost
+            ).save()
         product.ProductStock -= unitAmount
         product.save()
-
+    
+        orderSumm = OrderSummary.objects.create()
+   
+    orderSumm = OrderSummary.objects.create()
+    orders = Order.objects.filter(Q(user=request.user, status='Pending', is_summuried = False ))
+    for orderItem in orders:
+        orderSumm.orderItem.add(orderItem)
+        orderItem.is_summuried = True
+        orderItem.save()
+    orderSumm.subTotal = subTotal
+    orderSumm.total = total
+    orderSumm.coupon_or_discount = discount
+    orderSumm.save()
     request.session["buyNowProdId"] = 'none'
     request.session["buyNowUnit"] = 'none'
     request.session["buyNowUnitAmount"] = 'none'
@@ -1255,6 +1301,8 @@ def buyNowOrderMakerView(request):
     request.session["buyNowQuantity"] = 'none'
     request.session["buyNowSubTotal"] = 'none'
     request.session["buyNowTotal"] = 'none'
+    request.session['courier'] = 'none'
+    request.session['buyNowDiscount'] = "none"
     return redirect('/orderurl')
 
 def cartOrderMakerView(request):
@@ -1264,18 +1312,14 @@ def cartOrderMakerView(request):
     defaultAddress = CustomerAddress.objects.get(user=user, isDefault=True)
     shippingCost = 70
     subTotal = 0
+    courierName = request.session['courier']
+    courier = CourierServices.objects.get(name = courierName)
+    deliveryDate = timezone.now() + timedelta(7)
+    shippingCost = 70
     for cart in newCart:
-
-        if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Packet":
-            if cart.quantity > cart.product.ProductStock:
-                return redirect("/showcarturl")
-
-        if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "ClothPices":
-            if cart.unit_amount > cart.product.ProductStock or cart.unit_amount > cart.product.MaximumUnitValue:
-                return redirect("/showcarturl")
-
         subTotal += cart.products_total_cost
     total = subTotal + shippingCost
+
     if not request.session["code"] == 'none':
         # This function will get the total amount and coupon or voucher discount from the previous VoucherChecker function..
         data = VoucherChecker(request, redirect=True)
@@ -1289,22 +1333,65 @@ def cartOrderMakerView(request):
         discount = 0
 
     for cart in newCart:
-        Order(user=user,
-              profile=profile,
-              address=defaultAddress,
-              product=cart.product,
-              quantity=cart.quantity,
-              unit=cart.unit,
-              unitAmount=cart.unit_amount,
-              size=cart.size,
-              subTotal=subTotal,
-              Total=newtotal).save()
-        cart.delete()
-        if cart.product.ProductGroup == "Packet" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Cloth":
+        if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Packet":
+            if cart.quantity > cart.product.ProductStock:
+                return redirect("/showcarturl")
+            Order(
+                user=user,
+                profile=profile,
+                address=defaultAddress,
+                product=cart.product,
+                quantity=cart.quantity,
+                size=cart.size,
+                singleProductCost = cart.products_total_cost,
+                courier = courier,
+                delivery_date = deliveryDate,
+                shippingCost = shippingCost
+                ).save()
+            cart.delete()
             cart.product.ProductStock -= cart.quantity
             cart.product.save()
+            
         if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "ClothPices":
+            if cart.unit_amount > cart.product.ProductStock or cart.unit_amount > cart.product.MaximumUnitValue:
+                return redirect("/showcarturl")
+            Order(
+                user=user,
+                profile=profile,
+                address=defaultAddress,
+                product=cart.product, 
+                unit=cart.unit,
+                unitAmount=cart.unit_amount,
+                singleProductCost = cart.products_total_cost,
+                courier = courier,
+                delivery_date = deliveryDate,
+                shippingCost = shippingCost
+                ).save()
+            cart.delete()
             cart.product.ProductStock -= cart.unit_amount
             cart.product.save()
+    orderSumm = OrderSummary.objects.create()
+    orders = Order.objects.filter(Q(user=request.user, status='Pending', is_summuried = False ))
+    for orderItem in orders:
+        orderSumm.orderItem.add(orderItem)
+        orderItem.is_summuried = True
+        orderItem.save()
+    orderSumm.subTotal = subTotal
+    orderSumm.total = newtotal
+    orderSumm.coupon_or_discount = discount
+    orderSumm.save()
     request.session["code"] = 'none'
     return redirect('/orderurl')
+
+def orderToOrderSummery(request, pk):
+    order = Order.objects.get(id = pk)
+    summary = order.ordersummary_set.first()
+    orders = summary.orderItem.filter(Q(user=request.user, status='Pending')
+            | Q(user=request.user, status='Confirmed')
+            | Q(user=request.user, status='On the way')
+            | Q(user=request.user, status='Delivered'))
+    context = {
+        "orders" : orders,
+        "summary": summary
+    }
+    return render(request, 'app/orderSummary.html', context = context)

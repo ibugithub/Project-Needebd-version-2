@@ -278,7 +278,7 @@
 
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 816px) {
    .edit-profile-right-title{
        display: none;
    }
@@ -294,6 +294,9 @@
    .edit-profile-right-main{
        padding-left: 0;
    }
+   .cancellation-menu-left{
+    display: none;
+}
 }
 
 @media only screen and (max-width: 600px) {
@@ -342,8 +345,15 @@
     }
     .info-birthday{
         width: 100%;
+        margin-bottom: 10px;
     }
     .birthday-title{
         margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 350px){
+    .p-save-btn {
+        width: auto;
     }
 }

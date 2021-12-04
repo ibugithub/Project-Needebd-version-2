@@ -188,7 +188,7 @@
     padding: 20px 0;
 }
 
-@media only screen and (min-width: 768px){
+@media only screen and (min-width: 816px){
     .add-address-from-title{
         display: block;
     }
@@ -197,7 +197,7 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 816px) {
    .add-address-from-title{
        display: none;
    }
@@ -220,6 +220,9 @@
        width: 100%;
        text-transform: capitalize;
        border-style: none;
+   }
+   .cancellation-menu-left{
+       display: none;
    }
 }
 @media only screen and (max-width: 600px){

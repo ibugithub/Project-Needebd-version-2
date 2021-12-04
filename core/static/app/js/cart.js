@@ -1,32 +1,41 @@
-var button = document.getElementById("PTCOB")
+var button = document.getElementsByClassName("PTCOB")
+var buttonLen = button.length
 var stockWarningElm = document.getElementsByClassName('stockWarning')
-
 function PlusCart(element) {
     productGroup = element.getAttribute('ProductGroup')
     var c = element.getAttribute('flc')
     var tcid = ("tc" + c)
+    var tcidM = ("tcM" + c)
     var quantityElmId = ("quantity" + c)
+    var quantityElmIdM = ("quantityM" + c)
     var stockWarningId = ("stockWarning" + c)
     var plusButton = document.getElementById("plusCart" + c)
     var stockWarningElm = document.getElementById(stockWarningId)
+    var stockWarningElmM = document.getElementById("stockWarningM" + c)
     var tProdCostElm = document.getElementById(tcid)
+    var tProdCostElmM = document.getElementById(tcidM)
     productStock = parseFloat(element.getAttribute('productStock'))
     if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
     {
     var quantityElm = document.getElementById(quantityElmId)
+    var quantityElmM = document.getElementById(quantityElmIdM)
+
     quantityValue = parseInt(quantityElm.value)
+    quantityValueM = parseInt(quantityElmM.value)
     if (quantityValue > productStock)
     {  
         plusButton.disabled = true
     }
     else{
         quantityElm.value = quantityValue + 1; 
+        quantityElmM.value = quantityValueM + 1; 
     }
     }
     var prod_id = element.getAttribute('prod').toString()
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var disCountDom = document.getElementById("discountDom")
     var totalCostDom = document.getElementById('totalCostDom')
+    var totalCostDomM = document.getElementById('totalCostDomM')
     
     $.ajax({
         type: "GET",
@@ -44,10 +53,13 @@ function PlusCart(element) {
                 unitAmountElm.innerHTML = data.unitAmount
             }
             tProdCostElm.innerHTML = data.products_total_cost
+            tProdCostElmM.innerHTML = data.products_total_cost
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             disCountDom.innerHTML = data.Total_discount
             totalCostDom.innerHTML = data.Total_Cost
+            totalCostDomM.innerHTML = data.Total_Cost
             stockWarningElm.innerHTML = data.warning
+            stockWarningElmM.innerHTML = data.warning
             document.getElementById('DDom').style.display = 'none'
         }
     })
@@ -57,28 +69,44 @@ function MinusCart(element) {
     productGroup = element.getAttribute('ProductGroup')
     var c = element.getAttribute('flc')
     var tcid = ("tc" + c)
+    var tcidM = ("tcM" + c)
     var quantityElmId = ("quantity" + c) 
     var quantityElmId = ("quantity" + c) 
+    var quantityElmIdM = ("quantityM" + c)
     var stockWarningId = ("stockWarning" + c)
     var stockWarningElm = document.getElementById(stockWarningId)
+    var stockWarningElmM = document.getElementById("stockWarningM"+c)
     var plusButton = document.getElementById("plusCart" + c)
     var tProdCostElm = document.getElementById(tcid)
+    var tProdCostElmM = document.getElementById(tcidM)
     productStock = parseFloat(element.getAttribute('productStock'))
     if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
     {
         var quantityElm = document.getElementById(quantityElmId)
+        var quantityElmM = document.getElementById(quantityElmIdM)
+
+        quantityValue = parseInt(quantityElm.value)
+        quantityValueM = parseInt(quantityElmM.value)
+
         quantityValue = parseInt(quantityElm.value) - 1
+        quantityValueM = parseInt(quantityElmM.value) - 1
         quantityElm.value = quantityValue
+        quantityElmM.value = quantityValueM
+
         plusButton.disabled = false
         if (quantityValue <= productStock){
-            button.disabled = false
-            button.style.cursor = "pointer"
+            for (let i = 0; i < buttonLen; i++){
+            button[i].disabled = false
+            button[i].style.cursor = "pointer" 
+            }
+            
         }
     }
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var itemCounterDom = document.getElementById('ItemCountDom')
     var disCountDom = document.getElementById("discountDom")
     var totalCostDom = document.getElementById('totalCostDom')
+    var totalCostDomM = document.getElementById('totalCostDomM')
     $.ajax({
         type: "GET",
         url: "/minuscarturl",
@@ -96,6 +124,7 @@ function MinusCart(element) {
             }
             if (productGroup == 'SolidWeight' || productGroup == "LiquidWeight" || productGroup == "ClothPices"){
                 stockWarningElm.innerHTML = ""
+                stockWarningElmM.innerHTML = ""
                 var uAmountId = ("uamount" + c)
                 var unitAmountElm = document.getElementById(uAmountId)
                 unitAmountElm.innerHTML = data.unitAmount
@@ -103,31 +132,34 @@ function MinusCart(element) {
                 button.style.cursor = "pointer"
             } 
             tProdCostElm.innerHTML = data.products_total_cost
+            tProdCostElmM.innerHTML = data.products_total_cost
             itemCounterDom.innerHTML = data.Item
             disCountDom.innerHTML = data.Total_discount
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             totalCostDom.innerHTML = data.Total_Cost
+            totalCostDomM.innerHTML = data.Total_Cost
             document.getElementById('DDom').style.display = 'none'
             stockWarningElm.innerHTML = data.warning
+            stockWarningElmM.innerHTML = data.warning
         }
     })
 }
-
-
 function RemoveCart(element) {
     element.parentNode.parentNode.parentNode.parentNode.style.display = 'none'
     var cartItemCount = document.getElementById('count')
     var totalSellCostDom = document.getElementById('totalSellCostDom')
     var totalCostDom = document.getElementById('totalCostDom')
+    var totalCostDomM = document.getElementById('totalCostDomM')
     var itemCounterDom = document.getElementById('ItemCountDom')
     var disCountDom = document.getElementById("discountDom")
     var c = element.getAttribute('flc')
     var stockWarningId = ("stockWarning" + c)
     document.getElementById(stockWarningId).innerHTML = ""
-    button.disabled = false
-    button.style.cursor = "pointer"
-
-
+    document.getElementById("stockWarningM"+c).innerHTML = ""
+    for (let i = 0; i < buttonLen; i++){
+        button[i].disabled = false
+        button[i].style.cursor = "pointer" 
+        }
     $.ajax({
         method: "GET",
         url: '/removecarturl',
@@ -135,12 +167,12 @@ function RemoveCart(element) {
             prod_id: element.getAttribute('prod_id'),
             unit: element.getAttribute('unit'),
             size: element.getAttribute('size')
-
         },
         success: function (data) {
             cartItemCount.innerHTML = data.cartCount
             totalSellCostDom.innerHTML = data.TotalSell_Cost
             totalCostDom.innerHTML = data.Total_Cost
+            totalCostDomM.innerHTML = data.Total_Cost
             itemCounterDom.innerHTML = data.Item
             disCountDom.innerHTML = data.Total_discount
             document.getElementById('DDom').style.display = 'none'
@@ -176,7 +208,9 @@ function voucherChecker() {
 }
 
 // This function will prevent you from checking out if one of carted product has been stock out
-button.addEventListener('mouseover', function() {
+for (let i = 0; i < buttonLen; i++)
+{
+   button[i].addEventListener('mouseover', function() {
     let len = stockWarningElm.length
     for (let i = 0; i < len; i++){
         
@@ -184,10 +218,14 @@ button.addEventListener('mouseover', function() {
             var stock = true
         }
         if (stock == true){
-            button.disabled = true
-            button.style.cursor = "not-allowed"
+            for (let i = 0; i < buttonLen; i++){
+                button[i].disabled = true
+                button[i].style.cursor = "not-allowed" 
+            }
         }
     }
-})
+}) 
+}
+
 
 

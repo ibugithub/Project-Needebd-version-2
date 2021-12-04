@@ -47,6 +47,14 @@ for (let  i = 0; i < len3; i++){
       document.getElementById('courierWarning').innerHTML = ""
       button.style.cursor = "pointer"
       button.disabled = false
+      scourier = courier[i].getAttribute('value')
+      $.ajax({
+        method : "GET",
+        url : "/csetterurl",
+        data: {
+          courierV : scourier
+        }
+      })
       
     }
   })

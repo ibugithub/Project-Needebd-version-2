@@ -18,7 +18,7 @@
             <div class="manage-account-right-main">
               <div class="account-right-title">
                <a href="/templates/app/manageAccount.html">
-                <h1 class="ac-rt">Account</h1>
+                <h3 class="ac-rt">Account</h3>
                </a>
               </div>
               <div class="manage-account-r-row">
@@ -187,17 +187,10 @@
 
  <div class="phone-manage-account">
    <div class="phone-manage-account-main">
-     <div class="phone-account-title">
-        <span>
-          <a href="/templates/app/index.html">
-            <i class="fa fa-arrow-left"></i>
-          </a>
-        </span>
-        <span class="otp">my profile</span>
-     </div>
+
      <div class="phone-account-name">
        <span>Hello,</span>
-       <span class="phone-name">Bahadur mia</span>
+       <span class="phone-name">{{request.user}}</span>
      </div>
      <div class="phone-manage-account-container">
        <div class="manage-account-element">
@@ -205,25 +198,37 @@
            <li class="manage-account-link">
              <div class="div-link">
                <div class="link-icon">
-                 <img src="/static/app/image/all-1.png" alt="">
+                 <img src="{% static 'app/image/all-1.png' %}" alt="">
                </div>
                <div class="link-text">
-                 <a href="/templates/app/order.html">
-                   my orders
+                 <a href="{% url 'profileurlname' %}">
+                   Profile
                  </a>
                </div>
              </div>
 
            </li>
-
            <li class="manage-account-link">
             <div class="div-link">
               <div class="link-icon">
                 <img src="/static/app/image/all-1.png" alt="">
               </div>
               <div class="link-text">
-                <a href="/templates/app/addressBook.html">
-                  Address book
+                <a href="{% url 'abookurlname' %}">
+                  Address
+                </a>
+              </div>
+            </div>
+
+          </li>
+           <li class="manage-account-link">
+            <div class="div-link">
+              <div class="link-icon">
+                <img src="/static/app/image/all-1.png" alt="">
+              </div>
+              <div class="link-text">
+                <a href="{% url 'vchrurlname' %}">
+                  Vouchers
                 </a>
               </div>
             </div>
@@ -235,8 +240,8 @@
                 <img src="/static/app/image/all-1.png" alt="">
               </div>
               <div class="link-text">
-                <a href="/templates/app/profile.html">
-                  account information
+                <a href="{% url 'orderurlname' %}">
+                  Orders
                 </a>
               </div>
             </div>
@@ -249,14 +254,24 @@
                 <img src="/static/app/image/all-1.png" alt="">
               </div>
               <div class="link-text">
-                <a href="/templates/app/cancellation.html">
-                 my cancellation
+                <a href="{% url 'cancellationurlname' %}">
+                 Cancel orders
                 </a>
               </div>
             </div>
-
           </li>
-          
+          <li class="manage-account-link">
+            <div class="div-link">
+              <div class="link-icon">
+                <img src="/static/app/image/all-1.png" alt="">
+              </div>
+              <div class="link-text">
+                <a href="{% url 'rorderurlname' %}">
+                 Returned orders
+                </a>
+              </div>
+            </div>
+          </li>
           
           
          </ul>

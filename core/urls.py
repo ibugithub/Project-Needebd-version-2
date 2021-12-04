@@ -38,8 +38,10 @@ urlpatterns = [
     path('buynowdataurl/', views.buyNowDataView, name = 'buynowdataurlname'),
     path('bNVCheckerurl/', views.buyNowVoucherCheckerView, name = "bNVCheckerurlname"),
     path('paymentpageurl/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
+    path('csetterurl/', views.courierSetter),
     path('paymentpageurl/<buyNowTunnel>/', views.paymentPageView.as_view(), name = 'paymentpageurlname'),
     path('mmucheckerurl/', views.minMaxUnitCheckerView, name = "mmucheckerurlname"),
     path('bwordermakerurl/', views.buyNowOrderMakerView, name = "bwordermakerurlname"),
-    path('ctordermakerurl/',views.cartOrderMakerView, name = 'ctordermakerurlname')
+    path('ctordermakerurl/',views.cartOrderMakerView, name = 'ctordermakerurlname'),
+    path('oTOSummaryurl/<int:pk>/', views.orderToOrderSummery, name = 'oTOSurlname')
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

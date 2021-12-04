@@ -172,7 +172,16 @@
     <ul class="extra-option-content-ul">
       {% for shop_with_deal in shop_with_deals %}
       <li class="extra-option-content-li">
-        <a href="" class="a extra-option-content-a">
+        {% if shop_with_deal.ProductStock < 1 %}
+      <a style="pointer-events:none" href="{% url 'singleproducturlname' shop_with_deal.id %}">
+      {% else %} 
+      <a  href="{% url 'singleproducturlname' shop_with_deal.id %}">
+      {% endif %}
+      {% if shop_with_deal.ProductStock < 1 %}
+      <div class="stockAmount">Stock Out</div>
+      {% else %} 
+      <div class="stockAmount"><span>In stock:</span> {{shop_with_deal.ProductStock}}</div>
+      {% endif %}
           <div class="extra-option-content-imagecontainer">
             <img src="{{shop_with_deal.product_image.url}}" alt="">
           </div>

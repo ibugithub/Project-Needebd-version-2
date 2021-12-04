@@ -285,13 +285,13 @@
     font-size: 20px;
 }
 
-@media only screen and (min-width: 768px){
+@media only screen and (min-width: 816px){
     .phone-edit-profile{
         display: none;
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 816px) {
     .edit-profile-right-title{
         display: none;
     }
@@ -303,6 +303,9 @@
     }
     .edit-profile-right-main{
         padding-left: 0;
+    }
+    .cancellation-menu-left{
+        display: none;
     }
 
 }

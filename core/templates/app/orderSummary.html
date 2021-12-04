@@ -1,0 +1,156 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/orderSummary.css' %}">
+{% endblock css %}
+
+
+{% block body %}
+<div class="order-summery">
+    <div class="order-summery-container">
+        <div class="order-summery-content">
+            <div class="order-summery-logo">
+                <a href="index.html">
+                    <img src="{% static 'app/image/logo.png' %}" alt="">
+                </a>
+            </div>
+            <div class="order-confirm-content">
+                <div class="confirm-title">
+                    <h1>Your order confirmed</h1>
+                </div>
+                <div class="confirm-text">
+                    <p>Hi, <span class="name">bahadur</span>,</p>
+                    <p>Your order has been confirm and will be shipping soon</p>
+                </div>
+            </div>
+            <div class="hr"></div>
+            {% for order in orders %}
+            <div class="singleOrder">
+                <div class="order-summery-product">
+                    <div class="order-product-row">
+                        <div class="product-img-col">
+                            <div class="product-img">
+                                <img src="{{order.product.product_image.url}}" alt="">
+                            </div>
+                        </div>
+                        <div class="product-name-col">
+                            <div class="product-name-text">
+                                <span>{{order.product.title}} {% if order.product.ProductGroup == "Shoe" or order.product.ProductGroup == "Cloth" %} ({{order.size}}) {% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="product-quantity-col">
+                            {% if order.product.ProductGroup == "SolidWeight" or order.product.ProductGroup == "LiquidWeight" or order.product.ProductGroup == "ClothPices" %} 
+                            <span class="quantity">{{order.unitAmount}}{{order.unit}}</span>
+                            {% else %} 
+                            <span class="quantity">{{order.quantity}}</span> 
+                            {% endif %}
+
+
+                        </div>
+                        <div class="product-price-col">
+                            <span class="tk-sm">$</span>
+                            <span class="price">{{order.singleProductCost}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="order-summery-product-phn">
+                <div class="order-summery-phn-container">
+                    <div class="order-summery-phn-row">
+                        <div class="order-summery-phn-img-col">
+                            <div class="order-summery-phn-img">
+                                <img src="/static/app/image/product-2.webp" alt="">
+                            </div>
+                        </div>
+                        <div class="order-summery-phn-details">
+                            <div class="order-summery-phn-d-container">
+                                <div class="order-summery-phn-title">
+                                    <span class="product-phn-title">
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci, saepe.
+                                    </span>
+                                </div>
+                                <div class="order-summery-phn-d-all">
+                                    <div class="order-summery-phn-price">
+                                        <span>$</span>
+                                        <span class="phn-price">5646</span>
+                                    </div>
+                                    <div class="order-summery-phn-quantity">
+                                        <span class="phn-quantity-text">Qty:</span>
+                                        <span class="phn-quantity">7</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hr"></div>
+
+            <div class="product-details">
+                <div class="product-details-container">
+                    <div class="sub-total-section">
+                        <div class="subtotal">
+                            <span class="subtotal-text">subtotal</span>
+                        </div>
+                        <div class="subtotal-price">
+                            <span>$</span>
+                            <span class="sub-price">{{summary.subTotal}}</span>
+                        </div>
+                    </div>
+                    <div class="shipping-section">
+                        <div class="shipping">
+                            <span class="shipping-text">shipping</span>
+                        </div>
+                        <div class="shipping-price">
+                            <span>$</span>
+                            <span class="ship-price">
+                                {{orders.0.shippingCost}}
+                            </span>
+                        </div>
+
+                    </div>
+                    {% if summary.coupon_or_discount %}
+                    <div class="discount-section">
+                        <div class="discount">
+                            <span class="di-text">Coupon or Discount</span>
+                            <span class="dis-save" style="color: #EB6529;"></span>
+                        </div>
+                        
+                        <div class="discount-amout">
+                            <span>- $</span>
+                            <span class="discount-price">{{summary.coupon_or_discount}}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="hr"></div>
+
+                    <div class="total-section">
+                        <div class="total-text">
+                            <span class="to-text">Total</span>
+                        </div>
+                        <div class="total-price">
+                            <span>$</span>
+                            <span class="total-amount"> {{summary.total}} </span>
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                </div>
+            </div>
+
+            <div class="order-summery-footer">
+                <div class="summery-footer-container">
+                    <div class="conformation-text">
+                        <p>we'll send you shipping conformation when your item(s) are on the away. we appreciate your
+                            business, and hope you enjoy your purchase</p>
+                    </div>
+                    <div class="last-section">
+                        <p>Thanks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

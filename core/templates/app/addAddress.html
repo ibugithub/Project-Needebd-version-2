@@ -16,13 +16,29 @@
                   <i class="fa fa-arrow-left"></i>
                 </a>
               </div>
+              
+              {% if newaddress %}
               <div class="phone-address-title-text">
-                <h1>Add new Address</h1>
+                <h3>Update address</h3>
               </div>
+              {% else %} 
+              <div class="phone-address-title-text">
+                <h3>Add new Address</h3>
+              </div>
+              {% endif %}
+
             </div>
+
+            {% if newaddress %}
             <div class="add-address-from-title">
-              <h1>Add new address</h1>
+              <h3>Update address</h3>
             </div>
+            {% else %}
+            <div class="add-address-from-title">
+              <h3>Add new address</h3>
+            </div>
+            {% endif %}
+
             <div class="add-address-from-container">
               <form action="" method="post">
                   {% csrf_token %}
@@ -186,7 +202,7 @@
                         </div>
                         <div class="address-form-btn">
                           <a
-                            href="/templates/app/addressBook.html"
+                            href="{% url 'abookurlname' %}"
                             class="cancel-btn"
                             ><span>cancel</span> </a
                           >{% if newaddress %}
@@ -203,6 +219,7 @@
                 </div>
               </form>
             </div>
+
           </div>
         </div>
       </div>

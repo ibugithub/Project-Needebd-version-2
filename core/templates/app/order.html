@@ -44,14 +44,15 @@
                    {% endif %}
                   </div>
 
-                  
-                  <div id="imageDiv">
+                  <a href="{% url 'oTOSurlname' order.id %}">
+                  <div id="imageDiv" >
                     <div class="order-image">
                     <div class="image-set">
                     <img src="{{order.product.product_image.url}}" alt="">
                     </div>
                     </div>
                   </div>
+                  </a>
                   <div id="titleDiv">Cucumber Face Mask</div>
                 </div>
                 <div class="rightContainer">
@@ -165,17 +166,17 @@
 
                       <div class="itemContainer">
                         <span style="margin-right: 10px;" id="totalAmount">Total</span>
-                        <span id="totalAmountV">{{order.Total}}</span>
+                        <span id="totalAmountV">{{order.singleProductCost}}</span>
                       </div>
 
                       <div class="item">
                         <span style="margin-right: 10px;" id="paymentType">Payment Type</span>
-                        <span id="paymentTypeV">:COD</span>
+                        <span id="paymentTypeV">Cash On Delivery</span>
                       </div>
 
                       <div class="item">
                         <span style="margin-right: 10px;" id="deleveryMethod">Delivery Method</span>
-                        <span id="deleveryMethodV">:RedEX</span>
+                        <span id="deleveryMethodV">{{order.courier}}</span>
                       </div>
 
                     </div>
@@ -187,12 +188,12 @@
 
                       <div class="itemContainer">
                         <span style="margin-right: 10px;" id="shippinCost">Shipping cost</span>
-                        <span id="shippingCostV">:20 BDT</span>
+                        <span id="shippingCostV">:{{order.shippingCost}} BDT</span>
                       </div>
 
                       <div class="item">
                         <span style="margin-right: 10px;" id="deliveryDate">Delivery Date</span>
-                        <span id="deliveryDateV">:26 jan 2022</span>
+                        <span id="deliveryDateV">:within {{order.delivery_date}}</span>
                       </div>
 
                     </div>

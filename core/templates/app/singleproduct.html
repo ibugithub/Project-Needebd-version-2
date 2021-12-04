@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="/static/app/css/productpage.css" />
 {% endblock css %} {% block inbfol %} onload ="fput()" {% endblock inbfol %}
 {% block body %}
-<div id="Sproduct" style="display: none; text-align: center; background-color: gray">
-  <a href="{% url 'showcarturlname' %}">Your product has been added. Cart</a>
+<div id="Sproduct" style="display: none;">
+  <a href="{% url 'showcarturlname' %}">Added to cart. view cart</a>
 </div>
 <!---------Single Product ---->
 <div id="Rproduct" class="single-product-cart-section">
@@ -49,66 +49,22 @@
               </h1>
             </div>
 
-            <div class="s-p-rating">
-              <div class="s-p-rating-icon">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-angle-down"></i>
-              </div>
-              <div class="rating-count">
-                <a href="#">
-                  <span>123</span>
-                  <span>ratings</span>
-                </a>
-              </div>
-            </div>
             <div class="hr"></div>
             <div class="s-p-price">
               <span class="price-name">
                 <p>Price:</p>
               </span>
               <span class="s-p-all">
-                <span class="s-p-main-price"> $29.99 </span>
-                <span class="s-p-shiping-fees">+ $357.31</span>
-                <span>Shipping & Import Fees Deposit to Bangladesh Details</span>
+                <span class="s-p-main-price"> $ {{product.selling_prize}} </span>
               </span>
             </div>
 
             <div ProductUnit = {{product.unit}} ProductGroup="{{product.ProductGroup}}" id="EmptyDiv"></div>
 
             <div class="product-all-details">
-              <ul class="a-unorder-list">
-                <li>
-                  <span>Pull On closure </span>
-                </li>
-
-                <li>
                   <span>
-                    95% Polyester, 5% Spandex, fabric has some stretch
+                    {{product.description}}
                   </span>
-                </li>
-                <li>
-                  <span>
-                    Occasion: suitable for spring and fall for work,sports and
-                    daily
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    Graphic sweatshirts with a pocket front, pairing it with
-                    jeans and sneakers
-                  </span>
-                </li>
-                <li>
-                  <span>
-                    Please refer to the size measurement in image before
-                    ordering
-                  </span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -117,39 +73,6 @@
   </div>
 </div>
 
-<!-----Single Product Description----->
-<div class="product-description">
-  <div class="product-description-title rrb">
-    <h1 class="rcb">product Description</h1>
-  </div>
-  <div class="product-description-main">
-    <ul class="details-feature">
-      <li class="feature">
-        <span class="bold">Product Dimensions ‏ :</span>
-        <span>14 x 10.5 x 0.5 inches; 10.41 Ounces</span>
-      </li>
-
-      <li class="feature">
-        <span class="bold">Item model number :</span>
-        <span>swSSH07200627195-XS</span>
-      </li>
-
-      <li class="feature">
-        <span class="bold">Department ‏ :</span>
-        <span>Womens</span>
-      </li>
-
-      <li class="feature">
-        <span class="bold">Date First Available ‏ : ‎</span>
-        <span>July 29, 2020</span>
-      </li>
-      <li class="feature">
-        <span class="bold">ASIN ‏ : ‎</span>
-        <span> B08DTMKF23</span>
-      </li>
-    </ul>
-  </div>
-</div>
 <!-- related Product -->
 <div class="related-product">
   <div class="related-product-title">

@@ -5,7 +5,6 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from .models import Code
 
-
 User = get_user_model()
 
 
@@ -15,11 +14,11 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label="Password", strip = False, widget = forms.PasswordInput(attrs = {'autocomplete': 'current-password', 'class':'form-control', 'placeholder':'Enter Password'}))
 
 class password_user_change(PasswordChangeForm):
-    old_password = forms.CharField(label=_("Old Password"), widget= forms.PasswordInput(attrs= {'autocomplete': 'current-password', 'autofocus': True, 'class': 'form-control'}))
+    old_password = forms.CharField(widget= forms.PasswordInput(attrs= {'autocomplete': 'current-password', 'autofocus': True, 'placeholder': "Enter Old Password"}))
 
-    new_password1 = forms.CharField(label=_("New Password"),strip= False, widget= forms.PasswordInput(attrs={'autocomplete': 'new_password', 'class': 'form-control'}), help_text = password_validation.password_validators_help_text_html())
+    new_password1 = forms.CharField(strip= False, widget= forms.PasswordInput(attrs={'autocomplete': 'new_password', 'placeholder': "Enter New Password"}), help_text = password_validation.password_validators_help_text_html())
 
-    new_password2 = forms.CharField(label=_('Confirm New Password'), strip = False, widget = forms.PasswordInput(attrs={'autocomplete': 'new_password', 'class':'form-control'}))
+    new_password2 = forms.CharField(strip = False, widget = forms.PasswordInput(attrs={'autocomplete': 'new_password', 'placeholder': "Confirm New Password"}))
 
 
 class MyPasswordResetForm(PasswordResetForm):
