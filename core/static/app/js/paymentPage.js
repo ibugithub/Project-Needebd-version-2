@@ -15,6 +15,7 @@ document.getElementById("defaultOpen").click();
 
 
 button = document.getElementById('PTPayBtn')
+buttonM = document.getElementById('PTPayBtnM')
 document.getElementsByClassName('cash-on-delivery')[0].addEventListener('click', function(e){
   if (e.currentTarget.classList.contains('border'))
   {
@@ -26,6 +27,8 @@ document.getElementsByClassName('cash-on-delivery')[0].addEventListener('click',
     document.getElementById('paymentMethodWarning'). innerHTML = ""
     button.disabled = false
     button.style.cursor = "pointer"
+    buttonM.disabled = false
+    buttonM.style.cursor = "pointer"
   }
 })
 
@@ -40,6 +43,8 @@ for (let  i = 0; i < len3; i++){
       courier[i].classList.remove('border');
       button.style.cursor = "not-allowed"
       button.disabled = true
+      buttonM.style.cursor = "not-allowed"
+      buttonM.disabled = true
     }
     else{
       prevClassRemover()
@@ -47,6 +52,8 @@ for (let  i = 0; i < len3; i++){
       document.getElementById('courierWarning').innerHTML = ""
       button.style.cursor = "pointer"
       button.disabled = false
+      buttonM.style.cursor = "pointer"
+      buttonM.disabled = false
       scourier = courier[i].getAttribute('value')
       $.ajax({
         method : "GET",
@@ -78,6 +85,7 @@ function courierSelectionChecker(){
 
 // This section is for managing the Procced to button whether to clickable or not
 button.addEventListener("mouseover", buttonManager);
+buttonM.addEventListener("mouseover", buttonManager);
 function buttonManager(){
   currentTab = document.getElementsByClassName('active')[0].getAttribute('value')
   if (currentTab == "D/CCard"){
@@ -100,12 +108,16 @@ function buttonManager(){
     document.getElementById('paymentMethodWarning').innerHTML = "select one payment method option"
     button.disabled = true
     button.style.cursor = "not-allowed"
+    buttonM.disabled = true
+    buttonM.style.cursor = "not-allowed"
   }
  
   if (courierSelectionChecker() != true){
     document.getElementById('courierWarning').innerHTML = "select one courier option"
     button.disabled = true
     button.style.cursor = "not-allowed"
+    buttonM.disabled = true
+    buttonM.style.cursor = "not-allowed"
   }  
 }
 
