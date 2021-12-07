@@ -48,11 +48,12 @@
                       <div class="form-left">
                         <div class="form-input-field">
                           <label for="">Full name</label>
-                          <span style="font-size: 10px; color: red;">{{nameerror}}</span>
+                          <span id = "nameError" style="font-size: 10px; color: red;">{{nameerror}}</span>
                           <input
+                           id = "fullName"
                             name = 'fullName'
                             type="text"
-                            class="input-field errelm"
+                            class="input-field "
                             placeholder="Enter your full name Example : 'Bahadur mia' "
                             {% if newaddress %}
                             value = "{{newaddress.full_name}}"
@@ -65,11 +66,12 @@
                       </div>
                       <div class="form-input-field">
                         <label for="">phone number</label>
-                        <span style="font-size: 10px; color: red;">{{phoneerror}}</span>
+                        <span id = "phoneError" style="font-size: 10px; color: red;">{{phoneerror}}</span>
                         <input
+                          id = "phoneNumber"
                           name = "phoneNumber"
                           type="text"
-                          class="input-field errelm"
+                          class="input-field "
                           placeholder="Enter your Number"
                           {% if newaddress %}
                           value = {{newaddress.phone_number}}
@@ -79,119 +81,187 @@
                         />
                       </div>
                     </div>
+
+
                     <div class="address-form-right">
+
                       <div class="form-right">
-                        <div class="form-input-field">
+                        
+                        <div  class="form-input-field">
                           <label for="">Division</label>
-                          <span style="font-size: 10px; color: red;">{{diverror}}</span>
+                          <span id = "diverror" style="font-size: 10px; color: red;">{{diverror}}</span>
+
                           <select
-                            
-                            onclick="districtsFilter()"
-                            class="input-field errelm2"
+                            class="input-field "
                             name="divisionId"
                             id="divisions"
-                         
                           > 
-                          {% if newaddress %}
+                             {% if newaddress %}
                           <option value =  "{{newaddress.divisions.id}}" >{{newaddress.divisions}}</option>
-                          {% else %}
-                          {% if divisionId %}
+                          {% elif divisionId %}
                           <option value="{{divisionId}}">{{divisionName}}</option>                             
-                          {% endif %}
-                          {% endif %}
+                          {% else %}
                             <option id="defaultOption1" value = "default">
                               select the division
                             </option>
-                            {% for division in divisions %}
-                            <option value="{{division.id}}">
-                              {{division.name}}
-                            </option>
-
-                            {% endfor %}
+                            {% endif %}
+                            {% for division in divisions %} 
+                            <option value="{{division.id}}">{{division.name}}</option>
+                            {% endfor %}       
                           </select>
                         </div>
-                        <!-- for giving the data to the fontend -->
-                        <div id = "dataGiver" 
-                        {% if newaddress %} 
 
-                        districtId = "{{newaddress.districts.id}}" districtName = "{{newaddress.districts.name}}" upazilaId = "{{newaddress.upazilas.id}}" upazilaName = "{{newaddress.upazilas.name}}" unionId = "{{newaddress.unions.id}}" unionName = "{{newaddress.unions.name}}"
-
-                        {% else %} 
-
-                        districtId = "{{districtId}}" districtName = "{{districtName}}" upazilaId = "{{upazilaId}}" upazilaName = "{{upazilaName}}" unionId = "{{unionId}}" unionName = "{{unionName}}"}
-
-                        {% endif %} 
-                        ></div>
-                        <!-- --- -->
                         <div id="districtDiv" class="form-input-field">
                           <label for="">District</label>
-                          <span style="font-size: 10px; color: red;">{{diserror}}</span>
+                          <span id = "diserror" style="font-size: 10px; color: red;">{{diserror}}</span>
+                           
+                          <!-- hidden select element for sending data to the backend while not hidden select is disabled in the update address page -->
                           <select
-                            style="display: none"
-                            disabled
+                            class="input-field"
+                            name="districtId"
+                            style="display: none;"
+                          >
+                          {% if newaddress %}
+                          <option value =  "{{newaddress.districts.id}}" >{{newaddress.districts}}</option>                          
+                          {% elif districtId %} 
+                          <option value="{{districtId}}">
+                            {{districtName}}
+                          </option>
+                         {% else %}
+                            <option
+                              value = "default"
+                            >
+                            select the district
+                            </option>
+                             {% endif %}
+                          </select>
+                          <!-- hidden select element -->
+                          
+                          <select
                             class="input-field"
                             name="districtId"
                             id="districts"
+                            disabled
                           >
-                            {% for district in districts %}
+                          {% if newaddress %}
+                          <option value =  "{{newaddress.districts.id}}" >{{newaddress.districts}}</option>                          
+                          {% elif districtId %} 
+                          <option value="{{districtId}}">
+                            {{districtName}}
+                          </option>
+                         {% else %}
                             <option
-                              class="allDistrictOptions"
-                              divisionId="{{district.division_id}}"
-                              value="{{district.id}}"
+                              value = "default"
                             >
-                              {{district.name}}
+                            select the district
                             </option>
-                            {% endfor %}
+                             {% endif %}
                           </select>
                         </div>
+
                         <div id="upazilaDiv" class="form-input-field">
                           <label for="">Upazila</label>
-                          <span style="font-size: 10px; color: red;">{{upaerror}}</span>
+                          <span id = "upaerror" style="font-size: 10px; color: red;">{{upaerror}}</span>
+                         
+                          <!-- hidden select element for sending data to the backend while not hidden select is disabled in the update address page -->
                           <select
-                            style="display: none"
-                            id="upazilas"
-                            disabled
-                            class="input-field"
-                            name="upazilas"
+                            class="input-field "
+                            name="upazilaId"
+                            style="display: none;"
                           >
-                            {% for upazila in upazilas %}
+                          {% if newaddress %} 
+                          <option value =  "{{newaddress.upazilas.id}}" >{{newaddress.upazilas}}</option> 
+                          {% elif upazilaId %} 
+                          <option value = {{upazilaId}} >{{upazilaName}}</option>
+                          {% endif %}
                             <option
                               districtId="{{upazila.district_id}}"
                               class="AllUpazilaOptions"
-                              value="{{upazila.id}}"
+                              value="default"
                             >
-                              {{upazila.name}}
+                            select the upazila
                             </option>
-                            {% endfor %}
+                          </select>
+                          <!-- hidden select element -->
+
+                          <select
+                            id="upazilas"
+                            class="input-field "
+                            name="upazilaId"
+                            disabled
+                          >
+                          {% if newaddress %} 
+                          <option value =  "{{newaddress.upazilas.id}}" >{{newaddress.upazilas}}</option> 
+                          {% elif upazilaId %} 
+                          <option value = {{upazilaId}} >{{upazilaName}}</option>
+                          {% endif %}
+                            <option
+                              districtId="{{upazila.district_id}}"
+                              class="AllUpazilaOptions"
+                              value="default"
+                            >
+                            select the upazila
+                            </option>
                           </select>
                         </div>
+
                         <div id="uniondiv" class="form-input-field">
                           <label for="">Union</label>
-                          <span style="font-size: 10px; color: red;">{{unionerror}}</span>
+                          <span id = "unionerror" style="font-size: 10px; color: red;">{{unionerror}}</span>
+                         
+                          <!-- hidden select element for sending data to the backend while not hidden select is disabled in the update address page -->
                           <select
-                            style="display: none"
-                            class="input-field"
-                            name="union"
-                            id="unions"
+                            class="input-field "
+                            name="unionId"
+                            style="display: none;"
                           >
-                            {% for union in unions %}
+                          {% if newaddress %} 
+                          <option value =  "{{newaddress.unions.id}}" >{{newaddress.unions  }}</option> 
+                          {% elif unionId %} 
+                          <option value = {{unionId}} >{{unionName}}</option>
+                          {% endif %}
                             <option
                               upazilaId="{{union.upazilla_id}}"
                               class="unions"
-                              value="{{union.id}}"
+                              value = "default"
                             >
-                              {{union.name}}
+                            select the union
+
                             </option>
-                            {% endfor %}
                           </select>
+                         <!-- hidden select element -->
+
+                          <select
+                            class="input-field "
+                            name="unionId"
+                            id="unions"
+                            disabled
+                          >
+                          {% if newaddress %} 
+                          <option value =  "{{newaddress.unions.id}}" >{{newaddress.unions  }}</option> 
+                          {% elif unionId %} 
+                          <option value = {{unionId}} >{{unionName}}</option>
+                          {% endif %}
+                            <option
+                              upazilaId="{{union.upazilla_id}}"
+                              class="unions"
+                              value = "default"
+                            >
+                            select the union
+
+                            </option>
+                          </select>
+
                         </div>
+
                         <div class="form-input-field">
                           <label for="">Address</label>
-                          <span style="font-size: 10px; color: red;">{{addrerror}}</span>
+                          <span id = "addrerror" style="font-size: 10px; color: red;">{{addrerror}}</span>
                           <input
+                            id = "address"
                             name = "address"
                             type="text"
-                            class="input-field errelm"
+                            class="input-field "
                             {% if newaddress %}
                             value = "{{newaddress.address}}"
                             {% else %}
@@ -200,6 +270,7 @@
                             placeholder="For Example: House #123, street #123, ABC Road"
                           />
                         </div>
+
                         <div class="address-form-btn">
                           <a
                             href="{% url 'abookurlname' %}"
@@ -207,12 +278,13 @@
                             ><span>cancel</span> </a
                           >{% if newaddress %}
                           <input type="text" style="display: none;" name = "pk" value="{{newaddress.id}}">
-                          <button type = "submit" class = "address-save-btn">update</button>
+                          <button id = "updateBtn" type = "submit" class = "address-save-btn">update</button>
                           {% else %}
                           
-                          <button type="submit" class="address-save-btn">save</button>
+                          <button  id = "saveBtn" type="submit" class="address-save-btn">save</button>
                           {% endif %}
                         </div>
+
                       </div>
                     </div>
                   </div>

@@ -13,9 +13,9 @@
 {% include 'accounts/error.html' %}
 <div class="form-section">
     <div class="home-logo">
-        <div class="hl-logo">
+        <div class="hl-logo loginimg">
             <a href="{% url 'home' %}">
-                <span style="color:white;">needebd</span>
+                <img src="{% static 'app/image/logo.png' %}" alt="">
                 <!-- <img src="/static/app/image/logo-1.png" alt=""> -->
             </a>
         </div>
@@ -37,7 +37,7 @@
             {% endfor %}
 
             <div class="forgot-pass-section">
-                <a href="{% url 'password_reset' %}">forgot password?</a>
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
             </div>
             <div class="submit-section">
                 <input type="submit" value="Login" class="submit-btn" />

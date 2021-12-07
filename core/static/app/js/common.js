@@ -27,5 +27,10 @@ accountDropDown.addEventListener('mouseout', function(){
     accountDropDown.classList.remove('account-dropdown-main-active')
 })
 
+document.getElementById('AccountClsBtn').addEventListener('click', accountRemover)
+document.getElementById('navR').addEventListener('click', accountRemover)
+function accountRemover(){
+    accountDropDown.classList.remove('account-dropdown-main-active')
+}
 //---------- This is the end of account dropdown java scripts----------------//
 

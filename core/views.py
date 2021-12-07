@@ -612,23 +612,33 @@ def defaultAddressMaker(request):
     data = {"name": "ibrahim"}
     return JsonResponse(data)
 
+def get_json_district(request, *args, **kwargs):
+    selected_division_id  = kwargs.get('division')
+    districts = list(Districts.objects.filter(division_id = selected_division_id).values())
+    return JsonResponse({"data": districts})
+
+def get_json_upazila(request, *args, **kwargs):
+    selected_district_id  = kwargs.get('district')
+    upazilas = list(Upazilas.objects.filter(district_id = selected_district_id).values())
+    return JsonResponse({"data": upazilas})
+
+def get_json_union(request, *args, **kwargs):
+    selected_upazila_id = kwargs.get('upazila')
+    unions = list(Unions.objects.filter(upazilla_id = selected_upazila_id).values())
+    return JsonResponse({"data": unions})
+
 class AddAddressView(View):
     template_name = "app/addAddress.html"
     division = Divisions.objects.all()
-    districts = Districts.objects.all()
-    upazilas = Upazilas.objects.all()
-    unions = Unions.objects.all()
 
     def get(self, request, pk='none', *args, **kwargs):
         context = {
-            'divisions': self.division,
-            'districts': self.districts,
-            'upazilas': self.upazilas,
-            'unions': self.unions,
+            'divisions': self.division
         }
         try:
             newCustomerAddress = CustomerAddress.objects.get(id=pk)
             context['newaddress'] = newCustomerAddress
+            context['disable'] = 'false'
         except:
             pass
 
@@ -645,10 +655,7 @@ class AddAddressView(View):
         pk = request.POST.get('pk')
 
         context = {
-            'divisions': self.division,
-            'districts': self.districts,
-            'upazilas': self.upazilas,
-            'unions': self.unions,
+            'divisions': self.division
         }
 
         if fullName == "":
@@ -672,7 +679,6 @@ class AddAddressView(View):
         else:
             divattempt = "success"
             attempt3 = "success"
-
         if districtId == "default" or districtId == None:
             context["diserror"] = "Select a district"
             disattempt = "failed"

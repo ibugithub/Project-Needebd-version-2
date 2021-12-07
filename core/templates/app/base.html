@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
   {% endblock css %}
 
-  {% block extraLink %} 
+  {% block extraLink %}
 
   {% endblock extraLink %}
-  
+
   <!-- google font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,23 +33,23 @@
 
 </head>
 
-<body id= 'body' {% block inbfol %}  {% endblock inbfol %}>
+<body id='body' {% block inbfol %} {% endblock inbfol %}>
 
-{% block header %}
+  {% block header %}
   <!-- $Header Menu -->
   <div class="main_container" id="p260">
     <div class="sub_container">
       <div class="logo_and_nav_icon_container">
-        <button class="nav_icon">
+        <button class="nav_icon" id="navR">
           <svg class="icon-svg" style="color: white;" stroke="currentColor" fill="currentColor" stroke-width="0"
             viewBox="0 0 24 24" height="2em" width="2em" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
           </svg>
         </button>
-        <div  class="logo_container">
+        <div class="logo_container">
           <a href="{% url 'home' %}">
-            <img id = "logoimg" src="{% static 'app/image/logo.png' %}" alt="">
-            
+            <img id="logoimg" src="{% static 'app/image/logo.png' %}" alt="">
+
           </a>
 
         </div>
@@ -73,17 +73,17 @@
 
       <div class="account-and-myitem-container">
         <div class="account-container">
-          <button id = 'test2' class="account-subcontainer">
+          <button id='test2' class="account-subcontainer">
             <span class="account-subcontainer2">
               <span class="account-subcontainer3">
-                <span class="account-logo">                  
-                  {% if request.user.is_authenticated %}            
-                  <img style="border-radius:50%" alt="null" aria-hidden="true" width="24" height="24" src = "{{image}}">
+                <span class="account-logo">
+                  {% if request.user.is_authenticated %}
+                  <img style="border-radius:50%" alt="null" aria-hidden="true" width="24" height="24" src="{{image}}">
                   {% endif %}
                 </span>
                 <span class="account-title">
-                  {% if request.user.is_authenticated %} 
-                   {{request.user}}
+                  {% if request.user.is_authenticated %}
+                  {{request.user}}
                   {% else %}
                   Account
                   {% endif %}
@@ -106,7 +106,7 @@
             </span>
           </a>
           {% if request.user.is_authenticated %}
-          <div aria-hidden="true" id = "count">{{item}}</div>
+          <div aria-hidden="true" id="count">{{item}}</div>
           {% endif %}
         </div>
       </div>
@@ -516,22 +516,28 @@
     <div class="account-dropdown">
       <div class="account-dropdown-content" id="act2">
         <div class="account-dropdown-top">
+
           <div class="account-left">
             <div class="account-row">
               <div class="account-img">
-                <img  src="{{image}}" alt="" width="24" height="40">
+                <img src="{{image}}" alt="" width="24" height="40">
               </div>
               <div class="account-title act">
                 {% if request.user.is_authenticated %}
                 <h2>{{request.user}}</h2>
-                {% else %} 
-               <h2>Account</h2>
+                {% else %}
+                <h2>Account</h2>
                 {% endif %}
               </div>
             </div>
           </div>
+
+          <div class="account-close-btn" id = "AccountClsBtn">
+            <img src=" {% static 'app/image/remove.svg' %}" alt="" width="38" height="24">
+          </div>
+
         </div>
-        
+
         <div class="all-elements-link">
           {% if request.user.is_authenticated %}
           <a href="{% url 'maccounturlname' %}" class="elements">
@@ -553,13 +559,24 @@
                 <img src="{% static 'app/image/sign-in-black.svg' %}" alt="" width="18" height="18">
               </div>
               <div class="elements-name">
-                Sign in
+                Log in
+              </div>
+            </div>
+          </a>
+
+          <a href="{% url 'tregister' %}" class="elements">
+            <div class="elements-row">
+              <div class="elements-image">
+                <img src="{% static 'app/image/sign-in-black.svg' %}" alt="" width="18" height="18">
+              </div>
+              <div class="elements-name">
+                Sign Up
               </div>
             </div>
           </a>
           {% endif %}
 
-
+          {% if request.user.is_authenticated %}
           <a href="#" class="elements">
             <div class="elements-row">
               <div class="elements-image">
@@ -570,6 +587,7 @@
               </div>
             </div>
           </a>
+          {% endif %}
 
           <a href="#" class="elements">
             <div class="elements-row">
@@ -611,7 +629,7 @@
       </div>
     </div>
   </div>
-{% endblock header %}
+  {% endblock header %}
 
 
   {% block UpperCategoryDesktop %}
@@ -634,90 +652,90 @@
   {% endblock brand %}
 
 
-{% block footer %}
-<!-- $Footer Section -->
-<div class="footer-section ">
-  <div class="footer-main" style="background-color: #041E42;">
-    <div class="footer-top-row">
-      <!-- about -->
-      <div class="about footer-cl">
-        <ul class="all-link">
-          {% for footer_colum in footer_colum_1  %}
+  {% block footer %}
+  <!-- $Footer Section -->
+  <div class="footer-section ">
+    <div class="footer-main" style="background-color: #041E42;">
+      <div class="footer-top-row">
+        <!-- about -->
+        <div class="about footer-cl">
+          <ul class="all-link">
+            {% for footer_colum in footer_colum_1 %}
+            <li><a href="#">{{footer_colum.content}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <!-- Help -->
+        <div class="about footer-cl mobilehide400">
+
+          <ul class="all-link">
+            {% for footer_colum in footer_colum_2 %}
+            <li><a href="#">{{footer_colum.content}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- SOCIAL -->
+
+
+        <!-- Policy -->
+        <div class="about footer-cl">
+
+          <ul class="all-link">
+            {% for footer_colum in footer_colum_3 %}
+            <li><a href="#">{{footer_colum.content}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- mail us -->
+        <div class="about footer-cl mail adress mobilehide654">
+
+          <ul class="all-link">
+            {% for footer_colum in footer_colum_4 %}
+            <li><a href="#">{{footer_colum.content}}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- mail us -->
+
+      </div>
+
+      <div class="about footer-cl mail adress mobilehide654m desktophide">
+
+        <ul class="all-link ulp30">
+          {% for footer_colum in footer_colum_4 %}
           <li><a href="#">{{footer_colum.content}}</a></li>
-          {% endfor %}         
+          {% endfor %}
+
         </ul>
       </div>
-      <!-- Help -->
-      <div class="about footer-cl mobilehide400">
+      <div class="hr"></div>
+      <!-- footer bottom -->
+      <div class="footer-bottom">
 
-        <ul class="all-link">
-          {% for footer_colum in footer_colum_2  %}
-          <li><a href="#">{{footer_colum.content}}</a></li>
-          {% endfor %}  
-        </ul>
-      </div>
+        <div>
+          <a href="#">
+            <img src="/static/app/image/payment-method.svg" alt="">
 
-      <!-- SOCIAL -->
-
-
-      <!-- Policy -->
-      <div class="about footer-cl">
-
-        <ul class="all-link">
-          {% for footer_colum in footer_colum_3  %}
-          <li><a href="#">{{footer_colum.content}}</a></li>
-          {% endfor %}  
-        </ul>
-      </div>
-
-      <!-- mail us -->
-      <div class="about footer-cl mail adress mobilehide654">
-
-        <ul class="all-link">
-          {% for footer_colum in footer_colum_4  %}
-          <li><a href="#">{{footer_colum.content}}</a></li>
-          {% endfor %}  
-        </ul>
-      </div>
-
-      <!-- mail us -->
-
-    </div>
-
-    <div class="about footer-cl mail adress mobilehide654m desktophide">
-
-      <ul class="all-link ulp30">
-        {% for footer_colum in footer_colum_4  %}
-          <li><a href="#">{{footer_colum.content}}</a></li>
-          {% endfor %}  
-
-      </ul>
-    </div>
-    <div class="hr"></div>
-    <!-- footer bottom -->
-    <div class="footer-bottom">
-
-      <div>
-        <a href="#">
-          <img src="/static/app/image/payment-method.svg" alt="">
-
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-{% endblock footer %}
+  {% endblock footer %}
 
-{% block internaljs %}
+  {% block internaljs %}
 
-{% endblock internaljs %}
+  {% endblock internaljs %}
 
   <!-- Custome js-->
   {% block js %}
 
   {% endblock js %}
 
-  {% block commonjs %} 
+  {% block commonjs %}
   <script src="{% static 'app/js/common.js' %}"></script>
   {% endblock commonjs %}
 </body>
