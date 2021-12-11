@@ -44,6 +44,7 @@
           "adrWithLocations"
         ).innerText = `${data.address}, ${data.union}, ${data.upazila},${data.district}, ${data.division}`;
         console.log();
+        document.getElementById('adrPhone').innerHTML = data.phone
       },
     });
     sAdrDiv.style.display = "none";

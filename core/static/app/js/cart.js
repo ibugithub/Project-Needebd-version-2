@@ -7,7 +7,6 @@ function PlusCart(element) {
     var tcid = ("tc" + c)
     var tcidM = ("tcM" + c)
     var quantityElmId = ("quantity" + c)
-    var quantityElmIdM = ("quantityM" + c)
     var stockWarningId = ("stockWarning" + c)
     var plusButton = document.getElementById("plusCart" + c)
     var stockWarningElm = document.getElementById(stockWarningId)
@@ -18,17 +17,14 @@ function PlusCart(element) {
     if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
     {
     var quantityElm = document.getElementById(quantityElmId)
-    var quantityElmM = document.getElementById(quantityElmIdM)
 
     quantityValue = parseInt(quantityElm.value)
-    quantityValueM = parseInt(quantityElmM.value)
     if (quantityValue > productStock)
     {  
         plusButton.disabled = true
     }
     else{
-        quantityElm.value = quantityValue + 1; 
-        quantityElmM.value = quantityValueM + 1; 
+        quantityElm.value = quantityValue + 1;  
     }
     }
     var prod_id = element.getAttribute('prod').toString()
@@ -72,7 +68,6 @@ function MinusCart(element) {
     var tcidM = ("tcM" + c)
     var quantityElmId = ("quantity" + c) 
     var quantityElmId = ("quantity" + c) 
-    var quantityElmIdM = ("quantityM" + c)
     var stockWarningId = ("stockWarning" + c)
     var stockWarningElm = document.getElementById(stockWarningId)
     var stockWarningElmM = document.getElementById("stockWarningM"+c)
@@ -83,15 +78,10 @@ function MinusCart(element) {
     if (productGroup != 'SolidWeight' && productGroup != "LiquidWeight" && productGroup != "ClothPices") 
     {
         var quantityElm = document.getElementById(quantityElmId)
-        var quantityElmM = document.getElementById(quantityElmIdM)
-
         quantityValue = parseInt(quantityElm.value)
-        quantityValueM = parseInt(quantityElmM.value)
 
         quantityValue = parseInt(quantityElm.value) - 1
-        quantityValueM = parseInt(quantityElmM.value) - 1
         quantityElm.value = quantityValue
-        quantityElmM.value = quantityValueM
 
         plusButton.disabled = false
         if (quantityValue <= productStock){

@@ -193,4 +193,3 @@ function getTimeRemaining(endtime) {
       content2.style.transition = "all .2s"
     }
   })
-

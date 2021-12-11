@@ -52,19 +52,25 @@
         <div class="auto-slider">
           <div class="slider">
             <div class="slide slide1">
+
               <img class="mobileshow desktophide" src="{{msliders.0.slider_image.url}}" alt="">
 
               <img class="mobilehide" src="{{dsliders.0.slider_image.url}}" alt="">
+
             </div>
             <div class="slide slide2">
+
               <img class="mobileshow desktophide" src="{{msliders.1.slider_image.url}}" alt="">
 
               <img class="mobilehide" src="{{dsliders.1.slider_image.url}}" alt="">
+
             </div>
             <div class="slide slide3">
+
               <img class="mobileshow desktophide" src="{{msliders.2.slider_image.url}}" alt="">
 
               <img class="mobilehide" src="{{dsliders.2.slider_image.url}}" alt="">
+              
             </div>
             <div class="slide slide4 active">
               <img class="mobileshow desktophide" src="{{msliders.3.slider_image.url}}" alt="">
@@ -106,7 +112,7 @@
     <div class="category-subcontainer">
 
       <div class="category-product">
-        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
+        <a class="category-product-link" href="{% url 'allcategory-url-name'%}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{% static 'app/images/tcategory/caragory-1.png' %}">
@@ -120,7 +126,7 @@
 
       {% for uppercategory in uppercategories %}
       <div class="category-product">
-        <a class="category-product-link" href="{% url 'allcategory-url-name' %}">
+        <a class="category-product-link" href="{% url 'allcategory-url-name' %}#{{uppercategory.name}}">
           <div class="category-product_container">
             <div class="category-product-item">
               <img alt="Top Offers" src="{{uppercategory.category_image.url}}">

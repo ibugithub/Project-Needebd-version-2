@@ -9,13 +9,6 @@
 <div class="all-categories-section">
   <div class="categories-section-main">
     <div class="categories-content-lp">
-      <div class="us-en">
-        <div class="ux-breadcump">
-          <a href="/templates/app/index.html">Home</a>
-          <span>></span>
-          <h2>all categories</h2>
-        </div>
-      </div>
       <div class="categories-static-nav" id="nav-contain">
         <table class="cg-nav-wearper" style="position:relative; top: auto; left: auto; bottom: auto;">
           <tbody class="tb">
@@ -23,8 +16,8 @@
             <tr class="t-r ">
               {% for category_wraper in category_wrapers_upper %}
               
-                <td class="anchor-wrap anchor1-wrap selected bn">  
-                  <a class="anchor1 anchor-agricuture" href="#{{category_wraper.name}}">
+                <td class="anchor-wrap anchor1-wrap selected bn" targetElm ="{{category_wraper.name}}"  onclick="scrollFunc(this)">  
+                  <a class="anchor1 anchor-agricuture">
                     <i class="cg-icons">
                       <img src="{{category_wraper.category_image.url}}" alt="">
                     </i>
@@ -38,8 +31,8 @@
 
             <tr class="t-r">
               {% for category_wraper in category_wraper_upper2 %}
-              <td class="anchor-wrap anchor1-wrap" data-role="anchor5">
-                <a class="anchor1 anchor-agricuture" href="#{{category_wraper.name}}">
+              <td class="anchor-wrap anchor1-wrap" data-role="anchor5" targetElm ="{{category_wraper.name}}"  onclick="scrollFunc(this)">
+                <a class="anchor1 anchor-agricuture" >
                   <i class="cg-icons">
                     <img src="{{category_wraper.category_image.url}}" alt="">
                   </i>
@@ -64,7 +57,7 @@
 
     <!-- categories-sub -->
     {% for category_wraper in category_wraper_all %}
-    <div id="{{category_wraper.name}}" class="cg-page" style="margin-top: 0;">
+    <div id="{{category_wraper.name}}" class="cg-page" >
       <div class="until-clearfix">
         <div class="cg-main">
           <div class="cg-item">
@@ -93,4 +86,5 @@
 
 {% block js %}
 <script src="{% static 'app/js/allCat.js' %}"></script>
+<script src="{% static 'app/js/jquery.js' %}"></script>
 {% endblock js %}

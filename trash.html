@@ -1,0 +1,183 @@
+
+<!-- cart section for mobile -->
+<div class="small-cart">
+    <div class="small-cart-container">
+      <div class="small-cart-main">
+  
+        <div class="asdf">
+          <div class="rrtb">
+            <div class="small-place-btn  cdfr">
+              <div class="small-place-btn-row">
+                <div class="s-all-price">
+                  <h1>
+                    <span class="smbl">
+                      ৳
+                    </span>
+                    <span class="a-price" id="totalCostDomM">
+                      {{Total_Cost}}
+                    </span>
+                  </h1>
+                </div>
+                <div class="sp-btn">
+                  <a href="{% url 'checkouturlname' %}">
+                  <button class="PTCOB s-place-btn">
+                    Proceed To Checkout
+                  </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- small product details -->
+        <div class="s-cart-details">
+          {% for cart in carts %}
+          <div class="s-cart-m">
+            <div class="s-cart-row">
+              <div class="s-cart-left">
+                <div class="s-cart-left-m">
+                  <div class="cart-m-title">
+                    <a>{{cart.product.title}}</a>
+                  </div>
+                  {% if cart.product.brand != None %}
+                  <div class="cart-m-brand">
+                    <span class="s-brand">
+                      brand:
+                    </span>
+                    <span class="s-brand-n">
+                      {{cart.product.brand}}
+                    </span>
+                  </div>
+                  {% endif %}
+                  <div class="s-cart-prod-d">
+                    {% if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" %}
+                    <div class="cart-prod-size">
+                      <span class="s-size">size:</span>
+                      <span class="s-size-p">
+                        {{cart.size}}
+                      </span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="s-cart-right">
+                <div class="s-cart-right-main">
+                  <div class="s-cart-right-img">
+                    {% if cart.quantity > cart.product.ProductStock %}
+                      <span class="stockWarning" id="stockWarningM{{forloop.counter}}">StockOut</span>
+                      {% elif cart.unit_amount > cart.product.ProductStock %}
+                      <span class="stockWarning" id="stockWarningM{{forloop.counter}}">StockOut</span>
+                      {% elif cart.unit_amount > cart.product.MaximumUnitValue %}
+                      <span class="stockWarning" id="stockWarningM{{forloop.counter}}">MaxAmount</span>
+                      {% else %}
+                      <span class="stockWarning" id="stockWarningM{{forloop.counter}}"></span>
+                      {% endif %}
+                    <img src="{{cart.product.product_image.url}}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="s-cart-price-quty">
+              <div class="price-quty-row">
+                <div class="s-cart-price">
+                  <div class="s-cart-price-main">
+                    <div class="s-cart-price-row">
+                      <div class="s-c-price-now">
+                        {% if cart.product.ProductGroup == 'SolidWeight' and cart.product.ProductGroup == "LiquidWeight" and cart.product.ProductGroup == "ClothPices" %}
+                        <span>৳ {{cart.product.discounted_prize}}/{{cart.product.unit}}</span>
+                        {% else %}
+                        <span>৳ {{cart.product.discounted_prize}}/quantity</span> 
+                        {% endif %}
+  
+                      </div>
+                      <div class="s-cart-price-disc">
+                        ৳ {{cart.product.selling_prize}}
+                      </div>
+                    </div>
+                    <div class="s-price-off">
+                      <span>
+                        {{cart.product.discount}}% off
+                      </span>
+                    </div> 
+                    <div class="s-price-off">
+                      <span>
+                        Total Cost:
+                      </span>
+                      <span id="tcM{{forloop.counter}}">
+                        {{cart.products_total_cost}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="s-cart-quty">
+                  <div class="cart-quty-main">
+                    <div class="cart-quty-row">
+                      <div class="quty-decre">
+                        <button
+                          {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
+                          {% else %} style="margin-right: 30px;" {% endif %} flc={{forloop.counter}}
+                          onclick="MinusCart(this)" prod={{cart.product.id}} productStock={{cart.product.ProductStock}}
+                          ProductGroup={{cart.product.ProductGroup}} size={{cart.size}} unit={{cart.unit}}
+                          unit_amount={{cart.unit_amount}} class="btn-sub pmbtn"> -
+                        </button>
+                      </div>
+  
+                      {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
+                      <div class="qbtn cart-d-input">
+                        <input id="quantityM{{forloop.counter}}" type="text" class=" cart-d-rp" value="{{cart.quantity}}">
+                      </div>
+                      {% endif %}
+                      
+                      <div class="quty-incre">
+                        <button id="plusCart{{forloop.counter}}" productStock={{cart.product.ProductStock}}
+                          flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}}
+                          ProductGroup={{cart.product.ProductGroup}} size={{cart.size}} unit={{cart.unit}}
+                          unit_amount={{cart.unit_amount}} class="btn-add pmbtn"> + </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+  
+              </div>
+            </div>
+  
+            <div class="s-cart-btn-t">
+              <div class="s-cart-btn-main">
+                <div class="s-cart-btn-row">
+                  <div class="save-btn">
+                    <button class="save">save for latter</button>
+                  </div>
+                
+                  <div class="remove-btn" flc={{forloop.counter}} prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
+                        unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove">
+                        <button class="remove">
+                          remove 
+                        </button>
+                       
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <div style=" background:white; border-top: 1px dotted #EB6529; margin:0; margin-top: -5px;" class="s-cart-btn-t">
+            <div class="s-cart-btn-main">
+              <div class="s-cart-btn-row">
+                <div style=" border-right: 0;" class="save-btn">
+                  <button class="save">Shipping Cost:</button>
+                </div>
+              
+                <div class="remove-btn" class="cart-d-remove">
+                  ৳  {{delivery_cost}}
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div style="height: 51px;"></div>
+        </div>
+        <!-- small product details -->
+      </div>
+    </div>
+  </div>

@@ -19,19 +19,8 @@ from django.db.models import Q
 
 
 # Create your views here.
-class Mycontext(ContextMixin):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['footer_colum_1'] = Footer_Colum1.objects.all()
-        context['footer_colum_2'] = Footer_Colum2.objects.all()
-        context['footer_colum_3'] = Footer_Colum3.objects.all()
-        context['footer_colum_4'] = Footer_Colum4.objects.all()
-        if self.request.user.is_authenticated:
-            carts = Cart.objects.filter(user=self.request.user)
-            context['item'] = len(carts)
-        return context
 
-class IndexView(Mycontext, ListView):
+class IndexView(ListView):
     model = Category
     template_name = 'app/index.html'
 
@@ -72,7 +61,7 @@ class IndexView(Mycontext, ListView):
 def account(request):
     return render(request, 'app/account.html')
 
-class AllCategoryView(Mycontext, ListView):
+class AllCategoryView(ListView):
     model = Footer_Colum1
     template_name = 'app/allcategories.html'
 
@@ -84,7 +73,7 @@ class AllCategoryView(Mycontext, ListView):
         context['category'] = Category.objects.all()
         return context
 
-class ProductPageView(Mycontext, ListView):
+class ProductPageView(ListView):
     model = Product
     paginate_by = 10
     context_object_name = 'products'
@@ -886,6 +875,7 @@ def SelectAddressView(request):
     district = newCustomerAddress2.districts.name
     division = newCustomerAddress2.divisions.name
     name = newCustomerAddress2.full_name
+    phone = newCustomerAddress1.phone_number
 
     data = {
         'name': name,
@@ -893,7 +883,8 @@ def SelectAddressView(request):
         "union": union,
         "upazila": upazila,
         "district": district,
-        "division": division
+        "division": division,
+        "phone" : phone,
     }
     return JsonResponse(data)
 

@@ -17,9 +17,9 @@
           <div class="manage-account-right">
             <div class="manage-account-right-main">
               <div class="account-right-title">
-               <a href="/templates/app/manageAccount.html">
+                
                 <h3 class="ac-rt">Account</h3>
-               </a>
+
               </div>
               <div class="manage-account-r-row">
                 <div class="manage-profile">
@@ -29,15 +29,14 @@
                       <span>|</span>
                       <a href = "{% url 'eprofileurlname' %}">Edit</a>
                     </div>
-                    <div class="m-p-title-name">
-                      <span class="t-name">
-                        {{profile.full_name}}
-                      </span>
-                    </div>
+
                     <div class="manage-profile-mail">
-                      <span class="p-mail">
-                        {{profile.email}}
-                      </span>
+                      <div class="p-mail">
+                        <p>
+                          {{profile.email}}
+                        </p>
+                        
+                      </div>
                     </div>
                   </div>
                 </div>

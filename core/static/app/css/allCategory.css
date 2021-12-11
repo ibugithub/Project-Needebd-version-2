@@ -1,18 +1,14 @@
 html {
   scroll-behavior: smooth;
 }
-
 .all-categories-section{
   width: 100%;
-  background-color: #fff;
-}
-.categories-section-main{
-  width: 97%;
-  margin: 0 auto;
- 
+  padding-top: 1px;
 }
 .categories-content-lp{
   width: 100%;
+  padding: 0 20px;
+  margin-bottom: 20px;
 }
 .us-en{
   width: 100%;
@@ -37,13 +33,11 @@ table {
   top: auto;
   left: auto;
   bottom: auto;
+  background: white;
 }
 .cg-nav-wearper{
   overflow: hidden;
   display: block;
-}
-.cg-nav-wearper .selected{
-  /* border: 2px solid rebeccapurple; */
 }
 .cg-nav-wearper td{
   height: 60px;
@@ -96,38 +90,34 @@ table {
 
   display:block;
 }
-.until-clearfix{
-  margin-top: 20px;
-  margin-bottom: 40px;
-}
 .cg-main{
-   width: 80%;
-   margin: 0 auto;
-    background: #fff;
-    overflow: hidden;
+   width: 100%;
 }
-.cg-item{
-  position: relative;
-  margin-top: 25px;
-  border-bottom: 1px solid #e8e8e8;
-  padding-top: 80px;
- 
+.sub-item{
+
+}
+.cg-page{
+  background: white;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom: 30px;
 }
 .item-head{
     height: 22px;
     line-height: 22px;
-    font-size: 16px;
+    font-size: 13px;
     color: #444;
     padding-right: 25px;
-    background-color: #fff;
-    margin-bottom: 15px;
     text-transform: capitalize;
     font-weight: 400;
     position: relative;
-   
+    margin-bottom: 30px;
 }
 .sub-item-content-warpper{
-  margin-bottom: 20px;
+
 }
 .sub-item-content{
   overflow: hidden;
@@ -143,16 +133,12 @@ table {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-transform: capitalize;
-  text-align: center;
+  margin-bottom: 10px;
 }
 .sub-item-content li a{
   color: #444;
   text-transform: capitalize;
 }
-
-
-
-
 @media only screen and (max-width: 768px) {
   .categories-static-nav{
     display: none;
@@ -164,10 +150,35 @@ table {
     width: 23%;
   }
   .sub-item-content{
-    margin-top: 25px;
+ 
   }
 }
-
 .bn{
   border-bottom: none !important;
+}
+@media only screen and (max-width: 768px) {
+  .all-categories-section {
+    margin-top: 48px;
+    margin-bottom: 5px;
+}
+.categories-section-main {
+  width: 100%;
+}
+.cg-page{
+  margin-bottom: 2px;
+  background: white;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.until-clearfix {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.cg-item {
+  margin-top: 0;
+}
 }

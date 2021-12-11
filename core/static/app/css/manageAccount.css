@@ -338,13 +338,13 @@
     text-transform: capitalize;
 }
 
-@media only screen and (max-width: 816px) {
+@media only screen and (max-width: 768px) {
   .manage-account-section{
       display: none;
   }
 }
 
-@media only screen and (min-width: 816px) {
+@media only screen and (min-width: 769px) {
     .manage-account-section{
         display: block;
     }
@@ -352,7 +352,7 @@
         display: none;
     }
 }
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 768px){
   .phone-manage-account{
       padding: 0;
       margin-bottom: 10px;

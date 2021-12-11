@@ -195,7 +195,7 @@
 
             <div class="next-table-cell-wrapper">
               {% if address.isDefault == True %}
-              <i style="color: #EB6529;" id="checked" class="fas fa-check-circle"></i>
+              <i style="color: #EB6529;" id="checkedM" class="fas fa-check-circle"></i>
               <input style="display: none;"  name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
               {% else %}
 
@@ -227,7 +227,9 @@ for (let i = 0; i < len; i++){
 function defaultMaker(elm){
   let addressId = elm.getAttribute('CAddressId')
   let checkedBox = document.getElementById('checked')
+  let checkedBoxM = document.getElementById('checkedM')
   checkedBox.style.display = "none"
+  checkedBoxM.style.display = "none"
   let circleBox = document.getElementsByClassName('isDefaultClass')
   let len = circleBox.length
   for (let i = 0; i < len; i++){
@@ -241,9 +243,6 @@ function defaultMaker(elm){
     data : {
       id : addressId
     },
-    success : function(){
-      console.log("transmission successed...")
-    }
   })
 
 }

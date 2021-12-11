@@ -64,7 +64,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'core.context_processor.cart_item',
                 'core.context_processor.profilepic',
-
+                'core.context_processor.footerCol1',
+                'core.context_processor.footerCol2',
+                'core.context_processor.footerCol3',
+                'core.context_processor.footerCol4',
             ],
         },
     },
