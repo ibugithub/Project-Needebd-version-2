@@ -1,0 +1,38 @@
+#voucherTitle{
+    margin-top: 20px;
+    padding: 0 20px;
+}
+#voucherTitleInner{
+    background: white;
+    padding: 20px 0;
+}
+.voucherMain{
+
+}
+.mainInner{
+    padding: 10px 20px;
+}
+.titleTaka{
+    display: flex;
+    justify-content: space-between;
+
+}
+.title{
+
+}
+.taka{
+
+}
+.code{
+    text-align: start;
+}
+.minTakaValidDate{
+    display: flex;
+    justify-content: space-between;
+}
+.minAmount{
+
+}
+.validDate{
+
+}

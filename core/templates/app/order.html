@@ -11,7 +11,7 @@
 {% endblock extraLink %}
 
 {% block body %}
-<div class="order-section" style="background-color: white;">
+<div class="order-section" >
   <div class="cancellation-section">
     <div class="cancellation-container">
       <div class="cancellation-main">
@@ -19,19 +19,6 @@
           {% include 'app/aLeftSection.html' %}
           <div class="cancellation-right-section">
             <div class="cancellation-right-main">
-              <div class="phone-oder-title-section">
-                <div class="phone-order-icons">
-                  <a href="/templates/app/manageAccount.html">
-                    <i class="fa fa-arrow-left"></i>
-                  </a>
-                </div>
-                <div class="phone-order-title-text">
-                  <h1 class="pot">my order</h1>
-                </div>
-              </div>
-              <div class="cancellation-right-title">
-                <h1 class="ocrt">My order</h1>
-              </div>
               {% for order in orders %}
               <div class="orderContainer">
                 <div class="leftContainer">
@@ -61,13 +48,13 @@
                     <div class="statusContainer">
                       
                       <div class="LIsection">
-                        <div style="background-color: #F25220;" class="verticalLine"></div>
+                        <div style="background-color: #EB6529;" class="verticalLine"></div>
                         <div class="iconCircleContainer">
                         </div>
-                        <div style="background-color: #F25220;" class="iconCircle"><i style="color: white; font-size: 10px; margin-top: 5px;"
+                        <div style="background-color: #EB6529;" class="iconCircle"><i style="color: white; font-size: 10px; margin-top: 5px;"
                             class="fas fa-check"></i>
                         </div>
-                        <div style="background-color: #F25220;" class="verticalLine"></div>
+                        <div style="background-color: #EB6529;" class="verticalLine"></div>
                       </div>
 
                       <div class="title"><span id="Rs"></span> Pending</div>
@@ -77,11 +64,11 @@
                     {% if order.status == "Confirmed" or order.status == 'On the way' or order.status == 'Delivered' %}
                     <div class="statusContainer">
                       <div class="LIsection">
-                        <div style="background: #F25220;"  class="verticalLine"></div>
-                        <div style="background: #F25220;" class="iconCircle">
+                        <div style="background: #EB6529;"  class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="iconCircle">
                           <i style="font-size: 11px; color: white; margin-top: 5px;" class="fas fa-user-check"></i>
                         </div>
-                        <div style="background: #F25220;" class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="verticalLine"></div>
                       </div>
 
                       <div class="title">Confirmed</div>
@@ -103,12 +90,12 @@
                     {% if order.status == 'On the way' or order.status == 'Delivered' %}
                     <div class="statusContainer">
                       <div class="LIsection">
-                        <div style="background: #F25220;" class="verticalLine"></div>
-                        <div style="background: #F25220;" class="iconCircle">
+                        <div style="background: #EB6529;" class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="iconCircle">
                           <i style="font-size: 10px;
                          color: white; margin-top: 5px;" class="fas fa-truck"></i>
                         </div>
-                        <div style="background: #F25220;" class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="verticalLine"></div>
                       </div>
                       <div class="title"> <span id = "rspan">On the</span>  Way</div>
                     </div>
@@ -130,12 +117,12 @@
                     {% if order.status == "Delivered" %}
                     <div class="statusContainer">
                       <div class="LIsection">
-                        <div style="background: #F25220;" class="verticalLine"></div>
-                        <div style="background: #F25220;" class="iconCircle">
+                        <div style="background: #EB6529;" class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="iconCircle">
                           <i style="font-size: 10px;
                        color: white; margin-top: 5px;" class="fas fa-gift"></i>
                         </div>
-                        <div style="background: #F25220;" class="verticalLine"></div>
+                        <div style="background: #EB6529;" class="verticalLine"></div>
                       </div>
                       <div class="title">Delivered</div>
                     </div>
@@ -160,40 +147,40 @@
                     <div class="SSmLeft">
 
                       <div class="item">
-                        <span style="margin-right: 10px;" id="orderDate">Order Date  </span>
+                        <span id="orderDate">Order Date:</span>
                         <span id="orderDateV">{{order.ordered_date}}</span>
                       </div>
 
                       <div class="itemContainer">
-                        <span style="margin-right: 10px;" id="totalAmount">Total</span>
+                        <span  id="totalAmount">Total:</span>
                         <span id="totalAmountV">{{order.singleProductCost}}</span>
                       </div>
 
                       <div class="item">
-                        <span style="margin-right: 10px;" id="paymentType">Payment Type</span>
+                        <span id="paymentType">Payment Type:</span>
                         <span id="paymentTypeV">Cash On Delivery</span>
                       </div>
 
                       <div class="item">
-                        <span style="margin-right: 10px;" id="deleveryMethod">Delivery Method</span>
+                        <span  id="deleveryMethod">Delivery Method:</span>
                         <span id="deleveryMethodV">{{order.courier}}</span>
                       </div>
 
                     </div>
                     <div class="SSmRight">
                       <div class="item">
-                        <span style="margin-right: 10px;" id="orderNum">Order No</span>
+                        <span  id="orderNum">Order No:</span>
                         <span id="orderNumV">{{order.id}}</span>
                       </div>
 
                       <div class="itemContainer">
-                        <span style="margin-right: 10px;" id="shippinCost">Shipping cost</span>
+                        <span  id="shippinCost">Shipping cost:</span>
                         <span id="shippingCostV">:{{order.shippingCost}} BDT</span>
                       </div>
 
                       <div class="item">
-                        <span style="margin-right: 10px;" id="deliveryDate">Delivery Date</span>
-                        <span id="deliveryDateV">:within {{order.delivery_date}}</span>
+                        <span  id="deliveryDate">Delivery Date:</span>
+                        <span id="deliveryDateV">{{order.delivery_date}}</span>
                       </div>
 
                     </div>
@@ -216,7 +203,7 @@
 
                 </div>
               </div> 
-              <br>
+
               {% endfor %}
 
             </div>

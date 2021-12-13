@@ -16,27 +16,35 @@
           {% include 'app/aLeftSection.html' %}         
           <div class="manage-account-right">
             <div class="manage-account-right-main">
-              <div class="account-right-title">
-                
-                <h3 class="ac-rt">Account</h3>
-
-              </div>
               <div class="manage-account-r-row">
                 <div class="manage-profile">
                   <div class="manage-profile-main">
                     <div class="m-profile-title">
-                      <span class="m-p-title-text">personal profile</span>
+                      <span class="m-p-title-text">Profile</span>
                       <span>|</span>
                       <a href = "{% url 'eprofileurlname' %}">Edit</a>
                     </div>
 
                     <div class="manage-profile-mail">
+
+                      <div class="p-mail">
+                        <p>
+                          {{profile.full_name}}
+                        </p>
+                      </div>
+                      
+                      <div class="p-mail">
+                        <p>
+                          {{profile.phone_number}}
+                        </p>
+                      </div>
+
                       <div class="p-mail">
                         <p>
                           {{profile.email}}
                         </p>
-                        
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -83,7 +91,7 @@
               <div class="recent-order-section">
                 <div class="recent-order-main">
                   <div class="recent-order-title">
-                    <h2>recent order</h2>
+                    <span id="rotitle">Recent Order</span>
                   </div>
                   <div class="recent-order-content">
                     <div class="recent-order-con-main">
@@ -186,11 +194,6 @@
 
  <div class="phone-manage-account">
    <div class="phone-manage-account-main">
-
-     <div class="phone-account-name">
-       <span>Hello,</span>
-       <span class="phone-name">{{request.user}}</span>
-     </div>
      <div class="phone-manage-account-container">
        <div class="manage-account-element">
          <ul class="manage-account-list">

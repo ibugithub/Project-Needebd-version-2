@@ -1,45 +1,59 @@
-{% extends 'app/base.html' %} 
-{% load static %} 
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/fontend.css' %}">
+<link rel="stylesheet" href="{% static 'app/css/voucher.css' %}">
+{% endblock css %}
+
 {% block body %}
 <div class="container">
   <div class="row justify-content-center mt-5">
     {% include 'accounts/error.html' %}
     <div style="text-align: center;" class="col-sm-6">
-      <h4>Your voucher</h4>
-      <p>
-        When you'll use this voucher once the code will automatically change. so
-        everytime copy this code before use
-      </p>
-  
+      <div id="voucherTitle">
+        <div id="voucherTitleInner">
+          <h4>Your voucher</h4>
+          <p>
+            When you'll use this voucher once the code will automatically change. so
+            everytime copy this code before use
+          </p>
+        </div>
+      </div>
+
       {% if vouchers %}
-      <table
-        style="width: 100%; text-align: center; margin-top: 20px"
-        class="table"
-      >
-        <thead>
-          <tr>
-            <th scope="col">Voucher name</th>
-            <th scope="col">Code</th>
-            <th scope="col">Valid till</th>
-          </tr>
-        </thead>
-        {% for voucher in vouchers %}
-        <tbody>
-          <tr>
-            <th scope="row">{{voucher.voucher_offer}}</th>
-            <td>{{voucher.voucher_code}}</td>
-            <td>{{voucher.user_valid_to}}</td>
-          </tr>
-        </tbody>
-        {% endfor %}
-      </table>
+      {% for voucher in vouchers %}
+      <div class="voucherMain">
+        <div class="mainInner">
+          <div class="titleTaka">
+
+            <div class="title">{{voucher.voucher_offer}}</div>
+            <div class="taka">Tk {{voucher.voucher_offer.discount}}</div>
+
+          </div>
+
+          <div class="code">
+            {{voucher.voucher_code}}
+          </div>
+
+          <div class="minTakaValidDate">
+
+            <div class="minAmount">minimum Tk {{voucher.voucher_offer.condition_rate}}</div>
+            <div class="validDate">Valid untill {{voucher.user_valid_to}}</div>
+
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
       {% else %}
       <h3>You have no voucher right now</h3>
       {% endif %}
     </div>
   </div>
 </div>
-{% endblock body %} 
 
-{% block footer %} 
+{% endblock body %}
+
+{% block footer %}
 {% endblock footer %}

@@ -1,220 +1,267 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
 
-
-.manage-account-section{
+.manage-account-section {
     width: 100%;
+    margin-top: 20px;
 }
-.manage-account-container{
+
+.manage-account-container {
     width: 100%;
     padding: 0 20px;
-   
+
 }
-.manage-account-main{
+
+.manage-account-main {
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
-.manage-account-row{
+
+.manage-account-row {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.manage-account-menu-left{
+
+.manage-account-menu-left {
     width: 20%;
-    
+
 }
-.manage-account-left-content{
+
+.manage-account-left-content {
     width: 100%;
 }
-.manage-left-head{
+
+.manage-left-head {
     width: 100%;
     color: #444;
     padding: 20px 0;
 }
-.manage-left-head .left-user-name{
-  text-transform: capitalize;
+
+.manage-left-head .left-user-name {
+    text-transform: capitalize;
 }
-.account-manage{
+
+.account-manage {
     width: 100%;
 }
-.account-manage-title{
+
+.account-manage-title {
     width: 100%;
     padding-bottom: 10px;
 }
-.account-manage-title h2{
+
+.account-manage-title h2 {
     font-size: 18px;
     text-transform: capitalize;
     color: #444;
     font-weight: 600;
 }
-.account-manage-title h2:active{
+
+.account-manage-title h2:active {
     color: red;
 }
+
 .account-m-menu {
-    padding-left: 20px;
-    padding-bottom: 30px;
+
 }
-.acc-m{
+
+.acc-m {
     list-style: none;
+    padding-left: 22px;
+    padding-top: 20px;
 }
-.acc-link{
+
+.acc-link {
     padding-bottom: 5px;
     text-transform: capitalize;
     color: #444;
 }
-.acc-link a{
-    color:#444;
+
+.acc-link a {
+    color: #444;
 }
-.manage-account-right{
+
+.manage-account-right {
     width: 80%;
-    margin-left: 20px;
+    margin-left: 10px;
 }
-.manage-account-right-main{
+
+.manage-account-right-main {
     width: 100%;
 }
-.account-right-title{
+
+.account-right-title {
     width: 100%;
     padding: 20px 0;
 }
-.ac-rt{
+
+.ac-rt {
     text-transform: capitalize;
-    color:#444;
+    color: #444;
     font-weight: 600;
 
 }
-.manage-account-r-row{
+
+.manage-account-r-row {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.manage-profile{
-  width: 33%;
-  padding-right: 5px;
- 
+
+.manage-profile {
+    width: 50%;
+    padding-right: 10px;
 }
-.manage-profile-main{
+.manage-profile-main {
     background-color: #fff;
     padding: 20px 10px 20px 10px;
-    height: 210px;
+    height: 240px;
 }
-.m-profile-title{
+
+.m-profile-title {
     margin-bottom: 10px;
     color: #444;
 }
-.m-profile-title a{
+
+.m-profile-title a {
     color: #EB6529;
     text-transform: uppercase;
 }
-.m-p-title-name{
+
+.m-p-title-name {
     margin-bottom: 10px;
     color: #444;
     text-transform: capitalize;
 }
-.manage-profile-mail{
+
+.manage-profile-mail {
     margin-bottom: 10px;
-   color: #444;
+    color: #444;
 
 }
-.manage-adress{
-    width: 67%;
+
+.manage-adress {
+    width: 50%;
 }
-.manage-adress-main{
-    width:100%;
+
+.manage-adress-main {
+    width: 100%;
     background-color: #fff;
     padding: 20px 10px;
-    height:210px ;
+    height: 240px;
 }
-.manage-adress-row{
+
+.manage-adress-row {
     display: flex;
     justify-content: space-around;
 }
-.manage-adress-left{
-    width: 50%;
-   
+
+.manage-adress-left {
+
+
 }
-.address-book{
+
+.address-book {
     width: 100%;
 }
-.ad-book-title{
+
+.ad-book-title {
     color: #444;
     text-transform: capitalize;
     margin-bottom: 10px;
 }
-.ad-book-title a{
+
+.ad-book-title a {
     color: #EB6529;
     text-transform: uppercase;
 }
-.add-shiping{
+
+.add-shiping {
     width: 100%;
     color: #EB6529;
     margin-bottom: 10px;
     text-transform: uppercase;
 }
-.add-profile-name{
+
+.add-profile-name {
     margin-bottom: 10px;
-    
+
 }
-.add-p-text{
+
+.add-p-text {
     color: #041E42;
     text-transform: capitalize;
 }
-.add-address{
+
+.add-address {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.add-address span{
+
+.add-address span {
     display: block;
     width: 100%;
     margin-bottom: 3px;
     color: #444;
 }
-.manage-address-right{
+
+.manage-address-right {
     width: 50%;
     padding-left: 10px;
 }
-.hidden{
+
+.hidden {
     visibility: hidden;
 }
 
-.recent-order-section{
+.recent-order-section {
     width: 100%;
     margin-top: 10px;
     background-color: #fff;
 }
-.recent-order-title{
+
+.recent-order-title {
     width: 100%;
     color: #444;
     padding: 10px;
 }
-.recent-order-title h2{
+
+.recent-order-title h2 {
     color: #444;
     font-weight: 600;
     text-transform: capitalize;
 }
-.recent-order-content{
+
+.recent-order-content {
     border-width: 0;
 }
-.recent-order-con-main{
+
+.recent-order-con-main {
     box-sizing: border-box;
 }
-.next-table-header{
+
+.next-table-header {
     overflow: auto;
     font-size: 14px;
 }
-.next-table-header-inner{
+
+.next-table-header-inner {
     overflow: hidden;
 }
-.recent-order-main table{
+
+.recent-order-main table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
     table-layout: fixed;
     background: #fff;
 }
-.next-table-header-node{
+
+.next-table-header-node {
     padding: 0;
     background: #fafafa;
     color: #444;
@@ -223,23 +270,28 @@
     /* border: 1px solid #eff0f5; */
     border-bottom: 1px solid #eff0f5;
 }
-.next-table-cell-warpper{
+
+.next-table-cell-warpper {
     padding: 16px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-all;
 }
-.next-table-body{
+
+.next-table-body {
     font-size: 14px;
 }
-.next-table-row{
+
+.next-table-row {
     transition: all .3s ease;
 }
-.next-table-cell{
+
+.next-table-cell {
     padding: 0;
     border-bottom: 1px solid #eff0f5;
 }
-.next-table-cell-warpper{
+
+.next-table-cell-warpper {
     padding: 16px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -247,134 +299,210 @@
     text-align: left;
     color: #444;
 }
-.recent-item-img{
+
+.recent-item-img {
     float: left;
     margin-right: 4px;
 }
-.recent-item-img img{
+
+.recent-item-img img {
     height: 40px;
 }
-.text-rtb{
+
+.text-rtb {
     text-align: center;
 }
-.text-rtb a{
+
+.text-rtb a {
     text-transform: uppercase;
     color: #EB6529;
 }
 
 
 
-.phone-manage-account{
+.phone-manage-account {
     width: 100%;
     padding: 0 20px;
     margin-top: 10px;
 }
-.phone-manage-account-main{
+
+.phone-manage-account-main {
     width: 100%;
-   
-  
+
+
 }
-.phone-account-title{
+
+.phone-account-title {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
     padding: 20px 0;
 }
-.phone-account-title span{
+
+.phone-account-title span {
     font-size: 18px;
     color: #444;
 }
-.otp{
+
+.otp {
     color: #444;
     padding-left: 10px;
     text-transform: capitalize;
     font-size: 18px !important;
 }
-.phone-account-name{
+
+.phone-account-name {
     padding: 10px 0;
     color: #444;
 }
-.phone-manage-account-container{
+
+.phone-manage-account-container {
     width: 100%;
 }
-.manage-account-element{
+
+.manage-account-element {
     width: 100%;
-   
+
 }
-.manage-account-list{
+
+.manage-account-list {
     list-style: none;
 }
-.manage-account-link{
+
+.manage-account-link {
     width: 100%;
     height: 60px;
-   background-color: #fff;
+    background-color: #fff;
     line-height: 60px;
     border-bottom: 1px solid #EAEDED;
-  
+
 }
-.div-link{
+
+.div-link {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
     padding: 0 10px;
 }
-.link-icon{
+
+.link-icon {
     width: 40px;
     height: 40px;
     line-height: 82px;
 }
-.link-icon img{
+
+.link-icon img {
     max-height: 100%;
     max-width: 100%;
 }
-.link-text{
+
+.link-text {
     padding-left: 15px;
     width: 100%;
 }
-.link-text a{
+
+.link-text a {
     color: #444;
     font-size: 15px;
     font-weight: 400;
     text-transform: capitalize;
 }
+.phone-manage-account{
+    display: none;
+}
 
 @media only screen and (max-width: 768px) {
-  .manage-account-section{
-      display: none;
-  }
-}
 
-@media only screen and (min-width: 769px) {
-    .manage-account-section{
+    .phone-account-title {
+        margin-top: 69px;
+        padding-left: 10px;
+    }
+
+    .phone-account-name {
+        padding-left: 10px;
+    }
+
+    .phone-account-title {
+        padding: 11px 0;
+    }
+    .manage-account-section {
+        margin-top: 68px;
+    }
+    .manage-account-row {
         display: block;
     }
-    .phone-manage-account{
-        display: none;
+    .cancellation-menu-left {
+        width: 100% !important;
+    }
+    .manage-account-right {
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0;
+    }
+    .manage-account-container {
+        padding: 0 5px;
+    }
+    #ordersec {
+        margin-top: 0 !important;
+    }
+    .account-m-menu {
+        overflow: auto;
+    }
+    .acc-m {
+        display: flex;
+        padding: 8px 20px;
+        width: max-content;
+        padding-right: 0;
+    }
+    .acc-link {
+        margin-right: 35px;
+    }
+
+    .recent-order-section {
+        margin-top: 5px;
+    }
+    .manage-account-main {
+        margin-bottom: 5px;
+    }
+    .manage-profile {
+        padding-right: 5px;
     }
 }
-@media only screen and (max-width: 768px){
-  .phone-manage-account{
-      padding: 0;
-      margin-bottom: 10px;
-  }
-  .phone-account-title{
-      margin-top: 69px;
-      padding-left: 10px;
-  }
-  .phone-account-name{
-      padding-left: 10px;
-  }
-  .phone-account-title{
-      padding: 11px 0;
-  }
+#rotitle{
+font-size: 17px;
 }
 
-@media only screen and (max-width: 250px){
-    .phone-account-title{
+@media only screen and (max-width: 540px) {
+    .manage-account-section {
+        display: none;
+    }
+    .phone-manage-account {
+        display: block;
+        margin-top: 69px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+        padding-right: 7px;
+    }
+}
+
+
+@media only screen and (max-width: 250px) {
+    .phone-account-title {
         margin-top: 40px;
         padding-left: 10px;
     }
-    .phone-account-name{
+
+    .phone-account-name {
         padding-top: 0;
     }
+}
+
+.cancellation-menu-left {
+    background: white;
+    width: 18%;
+}
+
+
+#ordersec{
+    margin-top: 27px;
 }

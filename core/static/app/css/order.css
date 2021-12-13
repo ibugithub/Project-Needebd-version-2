@@ -86,6 +86,7 @@
 .cancellation-right-section{
     width: 80%;
     padding-left: 20px;
+    margin-top: 15px;
 }
 .cancellation-right-main{
     width: 100%;
@@ -99,10 +100,6 @@
     color: #444;
     font-size: 25px;
     font-weight: 600;
-
-}
-.cancellation-container{
-    width: 100%;
 }
 .cancellation{
     width: 100%;
@@ -205,9 +202,6 @@
     .cancellation-right-title{
         display: none;
     }
-    .cancellation-menu-left{
-        display: none;
-    }
     .cancellation-right-section{
         width: 100% !important;
         padding-left: 5px;
@@ -268,12 +262,12 @@
 /* Edited by me */
 .orderContainer{
     display: flex;
+    margin-top: 5px;
 }
 .leftContainer{
     width: 20%;
-    background: #F2F2F2;
+    background: white;
     height: 160px;
-    margin-right: 20px;
     font-size: 11px;
     text-align: center;
 }
@@ -281,34 +275,11 @@
     padding-top: 5px;
 }
 #imageDiv{
-height: 57%;
-position: relative;
+    height: 50%;
+    position: relative;
 }
 
-@media only screen and (max-width:720px){
-    .orderContainer{
-        display: block;
-    }
-    .leftContainer{
-        width: 98.5% !important;
-    }
-    .rightContainer{
-        width: 98.5% !important;
-        position: relative;
-    }
-    .SSmRight{
-        margin-left: 10px !important;
-    }
-    #cancelDiv{
-        position: absolute;
-        bottom: -9px;
-        left: 43%;
-    }
-   
-    .cancellation-right-section {
-        padding-left: 5px !important;
-    }
-}
+
 @media only screen and (max-width:380px){
     #cancelDiv{
         left: 41%;
@@ -327,7 +298,7 @@ position: relative;
 
 .rightContainer{
     height: 160px;
-    background: #F2F2F2;
+    background: white;
     width: 76%;
     font-size: 10px;
     padding: 0 20px;
@@ -343,14 +314,16 @@ position: relative;
 .verticalLine{
     width: 42%;
     background: #D1D1D1;
-    height: 4px;
+    height: 2px;
     margin-top: 20px;
 }
-
+#ordersec {
+    margin-top: 27px;
+}
 .iconCircle{
     max-width: 30%;
-    width: 30%;
-    height: 20px;
+    width: 19%;
+    height: 19px;
     background: #D1D1D1;
     margin-top: 11px;
     display: flex;
@@ -366,20 +339,19 @@ position: relative;
     margin-top: 15px;
 }
 .SSmRight{
-    margin-left: 60px;
+    margin-left: 10px;
 }
 #cancelDiv{
     margin-top: 65px;
 }
 
 #cancelButton{
-    background: #fd0a0ade;
     border: none;
     width: 60px;
     font-size: 12px;
     padding: 2px;
-    border-radius: 10px;
-    color: white;
+    color: #EB6529;
+    font-weight: 600;
 }
 #returnButton{
     background: #05c75f;
@@ -415,6 +387,105 @@ position: relative;
     }
     .cancellation-right-section {
         width: 84%;
-        padding-left: 10px;
+        padding-left: 20px;
     }
+}
+.cancellation-menu-left{
+    background: white;
+    width: 22%;
+    padding-top: 20px;
+    height: 330px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 768px){
+    .cancellation-row {
+        display: block;
+    }
+    .order-section {
+        margin-top: 68px;
+        margin-bottom: 5px !important;
+    }
+    .cancellation-container {
+        padding: 0px 5px;
+    }
+    .cancellation-right-section {
+        padding-left: 0;
+        margin-top: 5px;
+    }
+    .edit-profile-section {
+        width: 100%;
+        margin-top: 68px;
+        padding: 0 5px;
+    }
+    .edit-profile-row {
+        display: block;
+    }
+    .cancellation-menu-left {
+        width: 100%;
+        height: 42px;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .edit-profile-right {
+        margin-top: 5px;
+        width: 100%;
+    }
+    .edit-profile-right-main {
+        padding-left: 0;
+    }
+    #ordersec {
+        margin-top: 0;
+    }
+    .manage-account-section {
+        margin-top: 68px;
+    }
+    .manage-account-row {
+        display: block;
+    }
+    .manage-account-right {
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 0;
+    }
+    .manage-account-container {
+        padding: 0 5px;
+    }
+    #ordersec {
+        margin-top: 0 !important;
+    }
+    .account-m-menu {
+        overflow: auto;
+        padding-bottom: 0;
+        padding-left: 0;
+    }
+    .acc-m {
+        display: flex;
+        padding: 8px 20px;
+        width: max-content;
+        padding-right: 0;
+    }
+    .acc-link {
+        margin-right: 35px;
+    }
+    .footer-top-row {
+        margin-right: 5px;
+    }
+}
+.order-section{
+    margin-bottom: 20px;
+}
+.SSmLeft{
+    width: 40%;
+    line-height: 16px;
+}
+.SSmRight{
+    width: 45%;
+}
+#titleDiv{
+    overflow: hidden;
+    line-height: 13px;
+}
+#SaveQuantityDiv{
+    margin-top: 3px;
 }

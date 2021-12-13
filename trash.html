@@ -181,3 +181,140 @@
       </div>
     </div>
   </div>
+
+
+<!-- Address section for desktop -->
+
+        <!-- <div class="address-book-right">
+          <div class="address-book-main">
+
+            <div class="address-book">
+              <div class="address-book-table">
+                <div class="next-table">
+                  <div class="next-table-inner">
+                    <div class="next-table-header">
+                      <div class="next-table-header-inner">
+                        <table>
+                          <tbody>
+                            <tr>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  full name
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  Address
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  District
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div class="next-table-cell-wrapper">
+                                  Phone
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div
+                                  class="next-table-cell-wrapper"
+                                >
+                                  Address
+                                </div>
+                              </th>
+                              <th
+                                rowspan="1"
+                                class="next-table-header-node firs"
+                              >
+                                <div
+                                  class="next-table-cell-wrapper"
+                                  style="visibility: hidden"
+                                >
+                                </div>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="next-table-body">
+                      <table>
+                        {% for address in newaddress %}
+                        <tbody>
+                          <tr class="next-table-row">
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                {{address.full_name}}
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                {{address.address}}
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                {{address.districts}}
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                {{address.phone_number}}
+                              </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div class="next-table-cell-wrapper">
+                                {% if address.isDefault == True %}
+                                <i style="color: #EB6529;" id="checked" class="fas fa-check-circle"></i>
+                                <input style="display: none;"  name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+                                {% else %}
+
+                                <input  id = 'circlebox' name = "isDefaultName" CAddressId = "{{address.id}}" type="radio" class = "isDefaultClass" value = "{{address.isDefault}}">
+                                {% endif %}                                                                                       
+                             </div>
+                            </td>
+                            <td class="next-table-cell">
+                              <div
+                                class="next-table-cell-wrapper"
+                                style="text-align: center"
+                              >
+                                <a
+                                  href="{% url 'aaddressurlname' address.id %}"
+                                  class="rrtbc"
+                                  >Edit</a
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="address-book-btn">
+                  <a href="{% url 'aaddressurlname' %}" class="book-btn"
+                    >+ add new address</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
