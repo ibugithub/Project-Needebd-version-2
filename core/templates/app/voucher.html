@@ -7,7 +7,9 @@
 {% endblock css %}
 
 {% block body %}
+
 <div class="container">
+  {% include 'app/aLeftSection.html' %}
   <div class="row justify-content-center mt-5">
     {% include 'accounts/error.html' %}
     <div style="text-align: center;" class="col-sm-6">
@@ -25,11 +27,11 @@
       {% for voucher in vouchers %}
       <div class="voucherMain">
         <div class="mainInner">
+          <div class="halfCircle"></div>
+          <div class="halfCircle2"></div>
           <div class="titleTaka">
-
             <div class="title">{{voucher.voucher_offer}}</div>
             <div class="taka">Tk {{voucher.voucher_offer.discount}}</div>
-
           </div>
 
           <div class="code">
@@ -38,8 +40,8 @@
 
           <div class="minTakaValidDate">
 
-            <div class="minAmount">minimum Tk {{voucher.voucher_offer.condition_rate}}</div>
-            <div class="validDate">Valid untill {{voucher.user_valid_to}}</div>
+            <div class="minAmount"> <span class="taka">Tk {{voucher.voucher_offer.condition_rate}}</span> minimum </div>
+            <div class="validDate">Valid untill <span class="taka">{{voucher.user_valid_to}}</span></div>
 
           </div>
         </div>

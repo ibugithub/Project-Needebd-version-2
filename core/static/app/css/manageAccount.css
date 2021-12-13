@@ -500,6 +500,8 @@ font-size: 17px;
 .cancellation-menu-left {
     background: white;
     width: 18%;
+    max-width: 160px;
+    height: 391px;
 }
 
 
