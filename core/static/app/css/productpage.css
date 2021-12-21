@@ -637,3 +637,9 @@
             width: 20% !important;
         }
     }
+
+@media only screen and (max-width: 768px){
+    .product-page {
+        margin-top: 63px;
+    }
+}
