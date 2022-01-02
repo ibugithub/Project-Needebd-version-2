@@ -21,14 +21,15 @@
 
                   <div id="myresult" class="img-zoom-result"></div>
                 </div>
-                {% if product.ProductStock == None or product.ProductStock < 1 %}
+                {% if product.productattributevalue_set.first.productStock == None or product.productattributevalue_set.first.productStock < 1 %}
                 <div id = "stockDiv">Stock Out</div>
 
+                
                 {% else %}
                 <div class="single-product-cart-button">
                   <div class="add-cart-btn">
-                    <button prod="{{product.id}}" productStock={{product.ProductStock}} id="aTCButton" onclick="addToCart(this)" class="cart-btn">
-                      Add to cart
+                    <button prod="{{product.id}}" productStock={{product.productattributevalue_set.first.productStock}} id="aTCButton" onclick="addToCart(this)" class="cart-btn">
+                      Add to cart 
                     </button>
                   </div>
                   <div class="buy-cart-btn">
@@ -59,13 +60,14 @@
               </span>
             </div>
 
-            <div ProductUnit = {{product.unit}} ProductGroup="{{product.ProductGroup}}" id="EmptyDiv"></div>
-
-            <div class="product-all-details">
-                  <span>
-                    {{product.description}}
-                  </span>
+            <div ProductUnit = {{pav.attributeValue}} ProductGroup="{{product.ProductType.typeName }}" id="EmptyDiv">
             </div>
+            <div class="product-all-details">
+              <span>
+                {{product.description}}
+              </span>
+            </div>
+
           </div>
         </div>
       </div>

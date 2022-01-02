@@ -1,0 +1,622 @@
+
+/*------------------- This is the start of sing in section -------------*/
+.form-section {
+
+    background-color: #EAEDED;
+}
+
+.form-main {
+    background-color: #fff;
+}
+
+.home-logo {
+    width: 100%;
+
+}
+
+.hl-logo {
+    /* width: 100%; */
+    text-align: center;
+    padding: 23px 0;
+    width: 320px;
+    margin: 0 auto;
+    background: #041E42;
+}
+
+.hl-logo img {
+    width: 118px;
+}
+
+.form-logo-heading {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-family: 'comfortaa';
+    padding-bottom: 15px;
+
+}
+
+.form-logo-heading a img {
+    width: 150px;
+}
+
+.form-logo-heading h2 {
+    transform: scale(1, .7);
+}
+
+.form-logo-heading h2 a {
+    color: #041E42;
+    font-size: 38px;
+
+
+}
+
+.singin-title {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.singin-title h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+
+}
+
+.input-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-section input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #444;
+}
+
+.input-section input:focus {
+    outline: none;
+}
+
+.email-error,
+.password-error {
+    width: 100%;
+    padding: 5px 0;
+    color: red;
+    display: none;
+}
+
+.forgot-pass-section {
+    width: 100%;
+    text-align: right;
+    margin: 0;
+}
+
+.forgot-pass-section a {
+    margin-top: -4px;
+    color: #444;
+    font-weight: 500;
+}
+
+.submit-section {
+    width: 100%;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.submit-section .submit-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #041E42;
+    color: #fff;
+    
+    cursor: pointer;
+    text-transform: capitalize;
+    display: block;
+    text-align: center;
+}
+
+.crate-account-section {
+
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.crate-account-section h2 {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px 0;
+    color: #444;
+    text-align: left;
+}
+
+.crate-account-section a {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #444;
+    background-color: transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    display: block;
+    text-transform: capitalize;
+    font-size: 14px;
+  
+    
+}
+
+
+
+.form-footer {
+    width: 100%;
+}
+
+.f-link {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-top: 32px;
+}
+.f-link li{
+    padding: 0 7px;
+    font-weight: 500;
+}
+
+
+@media screen and (min-width: 240px) {
+    .home-logo {
+        width: 100%;
+        padding: 20px 0 0 0;
+    }
+
+    .hl-logo {
+        width: 320px;
+        margin: 0 auto;
+    }
+
+    .form-section {
+        width: 100%;
+    }
+
+    .form-main {
+        width: 320px;
+        /* margin-left: auto;
+       margin-right: auto; */
+        margin: 0 auto;
+        overflow: hidden;
+        padding: 16px 20px 64px 20px;
+
+    }
+
+}
+
+@media screen and (max-width: 320px) {
+    .home-logo {
+        width: 100%;
+    }
+
+    #singin-title h2 {
+        font-size: 15px;
+        font-weight: 500;
+        color: #444;
+    }
+
+    .singin-title {
+        padding: 16px 0;
+    }
+
+    .form-section {
+        padding: 0 10px;
+
+    }
+
+    .hl-logo {
+        width: 200px !important;
+    }
+
+    .form-main {
+        width: 200px !important;
+        margin: 0 auto;
+        padding: 39px 5px;
+    }
+
+    .form-logo-heading h2 a {
+        color: #041E42;
+        font-size: 28px;
+
+    }
+
+    .form-main {
+        padding: 3px 5px;
+    }
+
+}
+
+@media screen and (max-width: 250px) {
+    .form-main {
+        width: 214px !important;
+        margin: 0 auto;
+        padding: 39px 12px;
+    }
+
+    .hl-logo {
+        width: 214px !important;
+
+    }
+
+}
+
+/*------------------- This is the end of sing in section -------------*/
+
+
+/*------------------- This is the start forgot pass section -------------*/
+
+
+.forgot-section {
+    width: 100%;
+    padding: 20px 0;
+}
+.forgot-logo-m{
+    width: 320px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 23px 0;
+    background-color: #041E42;
+}
+.forgot-logo-m img{
+    width: 118px;
+}
+.forgot-logo{
+    width: 100%;
+    margin-top: 41px;
+}
+.forgot-main{
+    background-color: #fff;
+}
+.forgot-title {
+    width: 100%;
+   
+}
+
+.forgot-title h2 {
+    font-size: 16px;
+    font-weight: 500;
+    /* margin-bottom: 10px; */
+    padding: 5px 0;
+    color: #444;
+}
+.forgot-title .lgbd{
+    font-size: 14px;
+    padding-bottom: 16px;
+}
+
+.forgot-main .forgot-pass-main {
+    width: 100%;
+}
+
+.forgot-main .forgot-pass-main .forgot-input {
+    width: 100%;
+}
+
+.forgot-main .forgot-pass-main .forgot-input input[type=email] {
+    width: 100%;
+    padding: 15px;
+}
+.forgot-main .forgot-pass-main .forgot-input input::placeholder {
+    font-family: 'cairo', sans-serif;
+    color: rgb(184, 181, 181);
+}
+.forgot-button-section {
+    width: 100%;
+    padding: 15px 0;
+    margin: 10px 0;
+}
+
+.forgot-button-section .forgot-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #041E42;
+    border: none;
+    outline: none;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 14px;
+   
+    border-radius: 20px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.back-to-singin {
+    width: 100%;
+    text-align: center;
+}
+
+.back-to-singin span a {
+    color: #444;
+    text-transform: capitalize;
+    padding: 0 3px;
+   
+}
+.forgot-footer{
+    width: 100%;
+    padding-top: 10px;
+}
+.forgot-footer-link{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+.forgot-footer-link li a:hover{
+    text-decoration: underline;
+}
+.forgot-footer-link li{
+    padding: 0 7px;
+    text-transform: capitalize;
+   color: #444;
+   font-weight: 500;
+    
+}
+@media screen and (min-width: 240px) {
+    .forgot-main {
+        width: 320px;
+        margin: 0 auto;
+        overflow: hidden;
+        /* padding:90px 20px; */
+        padding: 16px 20px 64px 20px; 
+
+    }
+    .forgot-logo-m{
+        width: 320px;
+        margin: 0 auto;
+    }
+    .forgot-main .forgot-pass-main .forgot-input {
+        width: 100%;
+        padding: 2px 2px;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .forgot-logo-m{
+        width: 200px !important;
+        margin: 0 auto;
+    }
+    .forgot-main{
+        width: 200px !important;
+        margin: 0 auto;
+    }
+    .forgot-title h2{
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 250px){
+    .forgot-logo-m{
+        width: 200px !important;
+        margin: 0 auto !important;
+        padding: 10px 5px !important;
+    }
+    .forgot-main{
+        padding: 10px 5px !important;
+    }
+}
+
+/*------------------- This is the end forgot pass section -------------*/
+
+
+/*------------------- This is the start account section -------------*/
+
+.create-account-section-m {
+    width: 100%;
+    padding: 20px 0;
+    font-family:'Cairo' sans-serif;
+}
+
+.create-logo {
+    width: 100%;
+
+}
+
+.create-logo-m {
+    width: 320px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 23px 0;
+    background-color: #041E42;
+}
+
+.create-logo-m img {
+    width: 118px;
+}
+
+.account-main {
+    background-color: #fff;
+}
+
+.form-account {
+    width: 100%;
+}
+
+.form-account h2 {
+    padding: 20px 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    text-transform: capitalize;
+}
+
+.form-control {
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+.form-control small {
+    display: block;
+    color: red;
+    visibility: hidden;
+
+}
+
+.form-control input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #444;
+}
+
+.form-control input::placeholder {
+    font-family: 'cairo', sans-serif;
+    color: rgb(184, 181, 181);
+}
+
+.form-control.error small {
+    visibility: visible;
+}
+
+.form-control.error input {
+    border-color: red;
+}
+
+.form-control.success input {
+    border-color: red;
+}
+
+.form-control .account-create-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    outline: none;
+    background-color: #041E42;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.form-account h3 {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 0;
+    color: #444;
+}
+
+
+.form-control .sgps {
+    padding: 15px;
+    width: 100%;
+    /* background: red; */
+    display: block;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #444;
+    text-transform: capitalize;
+
+}
+
+.form-control .trbs {
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+
+}
+
+.account-footer{
+    width: 100%;
+
+}
+.account-footer-link{
+    list-style: none;
+    width: 100%;
+    display: flex;
+   justify-content: center;
+   padding-top: 32px;
+}
+.af-link-item{
+    padding: 0 7px;
+    text-transform: capitalize;
+}
+@media screen and (min-width: 240px) {
+    .account-main {
+        width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        padding: 16px 20px 64px 20px;
+    }
+
+    .create-logo-m {
+        width: 320px;
+        margin: 0 auto;
+    }
+
+    .form-control {
+        padding: 7px 0;
+    }
+
+}
+
+@media only screen and (max-width: 320px) {
+    .account-main {
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    .create-logo-m {
+        width: 200px;
+    }
+
+    .form-control {
+        margin-top: 2px;
+        padding: 2px 0 !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-control input {
+        padding: 16px;
+    }
+
+    .form-account h2 {
+        font-size: 14px;
+        font-family: 'cairo', sans-serif;
+    }
+    .form-control .trbs{
+        font-size: 14px;
+    }
+
+}
+
+@media only screen and (max-width:240) {
+    .account-main {
+        width: 200px !important;
+        margin: 0 auto;
+    }
+
+    .form-account {
+        width: 90% !important;
+        margin: 0 auto !important;
+
+    }
+
+    .form-account .form-control input {
+        width: 150px !important;
+        margin: 0 auto;
+    }
+
+    .form-control {
+        padding: 5px 0 !important;
+    }
+
+    .create-logo-m {
+        width: 200px !important;
+        margin: 0 auto;
+    }

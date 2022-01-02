@@ -178,15 +178,15 @@
     <ul class="extra-option-content-ul">
       {% for shop_with_deal in shop_with_deals %}
       <li class="extra-option-content-li">
-        {% if shop_with_deal.ProductStock < 1 %}
+        {% if shop_with_deal.productattributevalue_set.first.productStock < 1 %}
       <a style="pointer-events:none" href="{% url 'singleproducturlname' shop_with_deal.id %}">
       {% else %} 
       <a  href="{% url 'singleproducturlname' shop_with_deal.id %}">
       {% endif %}
-      {% if shop_with_deal.ProductStock < 1 %}
+      {% if shop_with_deal.productattributevalue_set.first.productStock < 1 %}
       <div class="stockAmount">Stock Out</div>
       {% else %} 
-      <div class="stockAmount"><span>In stock:</span> {{shop_with_deal.ProductStock}}</div>
+      <div class="stockAmount"><span>In stock:</span> {{shop_with_deal.productattributevalue_set.first.productStock}}</div>
       {% endif %}
           <div class="extra-option-content-imagecontainer">
             <img src="{{shop_with_deal.product_image.url}}" alt="">
@@ -209,7 +209,7 @@
 <!-- $Shop-With-Deal-Section Desktop  -->
 <div class="ShopWithDeal mobilehide">
   <div class="header">
-    <a href="">
+    <a href="{% url 'test' %}">
       <div class="swdleft">
         <div class="title">
           <h2 class="hf">Shop With Deal</h2>
@@ -246,15 +246,15 @@
 
     {% for shop_with_deal in shop_with_deals %}
     <li>
-      {% if shop_with_deal.ProductStock < 1 %}
+      {% if shop_with_deal.productattributevalue_set.first.productStock < 1 %}
       <a style="pointer-events:none" href="{% url 'singleproducturlname' shop_with_deal.id %}">
       {% else %} 
       <a  href="{% url 'singleproducturlname' shop_with_deal.id %}">
       {% endif %}
-      {% if shop_with_deal.ProductStock < 1 %}
+      {% if shop_with_deal.productattributevalue_set.first.productStock < 1 %}
       <div class="stockAmount">Stock Out</div>
       {% else %} 
-      <div class="stockAmount"><span>In stock:</span> {{shop_with_deal.ProductStock}}</div>
+      <div class="stockAmount"><span>In stock:</span> {{shop_with_deal.productattributevalue_set.first.productStock}}</div>
       {% endif %}
         <div class="maindiv">
           <div class="imgcontainer">

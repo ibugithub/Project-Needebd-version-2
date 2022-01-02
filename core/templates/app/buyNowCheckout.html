@@ -50,7 +50,7 @@
                     <div class="ck-product">
                       <div class="ck-product-details">
                         <div class="ck-product-img">
-                          {% if buyNowUnitAmount > product.ProductStock %}
+                          {% if buyNowUnitAmount > pav.productStock %}
                           <div class="stockWarning" id="stockWarning">StockOut</div>
                           {% elif buyNowUnitAmount > product.MaximumUnitValue %}
                           <div class="stockWarning" id="stockWarning">MaxAmount</div>
@@ -62,25 +62,28 @@
                         </div>
                         <div class="ck-product-title">
                           <div class="ck-title">
-                            {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %} 
-                            Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{product.unit}}</span> 
+                            {% if product.ProductType.typeName  == "SolidWeight" or product.ProductType.typeName  == "LiquidWeight" %} 
+                            Amount : <span id = "buyNowAmount"><span id = "buyNowUnitAmount2">{{buyNowUnitAmount}} </span>{{product.productattributevalue_set.first.attributeValue}}</span> 
                             {% endif %}
                           </div>
                           <div class="ck-details">
                             <span class="brand-name">audi brand</span>
-                            {% if cart.size %}
-                            <span class="ck-size-text">size: {{cart.size}}</span>
+                            <br>
+                            {% if product.ProductType.typeName == "Cloth" or product.ProductTypeName == "Shoe" %}
+                            {% if pav.attributeValue %}
+                            <span class="ck-size-text">size: {{pav.attributeValue}}</span>
                             {% endif %} {% if cart.color %}
                             <span class="ck-color-text">Color:{{cart.color}}</span>
+                            {% endif %}
                             {% endif %}
                           </div>
                         </div>
                       </div>
                     </div>
-                    {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %}                   
+                    {% if product.ProductType.typeName  == "SolidWeight" or product.ProductType.typeName  == "LiquidWeight" %}                   
                     <div class="checkout-middle">
                       <div class="ck-product-price">
-                        <span>৳{{Unit_SellingCost}}/{{buyNowUnit}}</span>
+                        <span>৳{{Unit_SellingCost}}/{{product.productattributevalue_set.first.attributeValue}}</span>
                       </div>
 
                       <div class="ck-free-percent">
@@ -88,7 +91,7 @@
                       </div>
 
                       <div class="ck-product-main-price">
-                        <span>৳ {{Unit_DiscountedCost}}/{{buyNowUnit}}</span>
+                        <span>৳ {{Unit_DiscountedCost}}/{{product.productattributevalue_set.first.attributeValue}}</span>
                       </div>
 
                     </div>
@@ -110,7 +113,7 @@
                     {% endif %}
 
 
-                    {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %}
+                    {% if product.ProductType.typeName  == "SolidWeight" or product.ProductType.typeName  == "LiquidWeight" %}
                     
                     <div class="ck-checkout-right">
                       <div>
@@ -137,19 +140,19 @@
                   </div>
                 </div>
                 <div class="add-to-cart-d-btn">
-                  {% if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" %} 
+                  {% if product.ProductType.typeName  == "SolidWeight" or product.ProductType.typeName  == "LiquidWeight" %} 
 
                   <div class="cart-d-p-btn">
-                    <button style="margin-right: 40px;" id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductGroup}} prod={{product.id}} class="btn-sub"> -
+                    <button style="margin-right: 40px;" id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductType.typeName }} prod={{product.id}} class="btn-sub"> -
                     </button>
 
-                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{pav.productStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
 
                   {% else %}
                   <div class="cart-d-p-btn">
-                    <button id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductGroup}} prod={{product.id}} class="btn-sub"> -
+                    <button id="minusBtn" onclick="buyNow('minus')" ProductGroup={{product.ProductType.typeName }} prod={{product.id}} class="btn-sub"> -
                     </button>
                     
                     <div class="cart-d-input">
@@ -158,7 +161,7 @@
 
                     </div>
 
-                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{product.ProductStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
+                    <button id ="plusButton" maxAmount = {{product.MaximumUnitValue}} productStock = {{pav.productStock}} onclick="buyNow('plus')" prod={{product.id}} class="btn-add"> + </button>
 
                   </div>
                   {% endif %}
@@ -364,7 +367,7 @@
                 <span id="hacoupon">have any coupon or voucher?</span>
                 <div class="ck-pay-btn">
                   <a href="{% url 'paymentpageurlname' 'buyNowTunnel' %}">
-                    <button id="PTPBtn" {% if buyNowUnitAmount > product.ProductStock or buyNowUnitAmount > product.MaximumUnitValue %} disabled  style = "cursor:not-allowed;" {% endif %} class="pay-btn">Proceed to pay</button>
+                    <button id="PTPBtn" {% if buyNowUnitAmount > pav.productStock or buyNowUnitAmount > product.MaximumUnitValue %} disabled  style = "cursor:not-allowed;" {% endif %} class="pay-btn">Proceed to pay</button>
                   </a>
 
                 </div>

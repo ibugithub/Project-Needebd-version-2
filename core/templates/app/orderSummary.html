@@ -36,11 +36,11 @@
                         </div>
                         <div class="product-name-col">
                             <div class="product-name-text">
-                                <span>{{order.product.title}} {% if order.product.ProductGroup == "Shoe" or order.product.ProductGroup == "Cloth" %} ({{order.size}}) {% endif %}</span>
+                                <span>{{order.product.title}} {% if order.product.ProductType.typeName  == "Shoe" or order.product.ProductType.typeName  == "Cloth" %} ({{order.size}}) {% endif %}</span>
                             </div>
                         </div>
                         <div class="product-quantity-col">
-                            {% if order.product.ProductGroup == "SolidWeight" or order.product.ProductGroup == "LiquidWeight" or order.product.ProductGroup == "ClothPices" %} 
+                            {% if order.product.ProductType.typeName  == "SolidWeight" or order.product.ProductType.typeName  == "LiquidWeight" or order.product.ProductType.typeName  == "ClothPices" %} 
                             <span class="quantity">{{order.unitAmount}}{{order.unit}}</span>
                             {% else %} 
                             <span class="quantity">{{order.quantity}}</span> 

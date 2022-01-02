@@ -8,54 +8,837 @@
 
 {% block body %}
 
-<div class="container">
-  {% include 'app/aLeftSection.html' %}
-  <div class="row justify-content-center mt-5">
-    {% include 'accounts/error.html' %}
-    <div style="text-align: center;" class="col-sm-6">
-      <div id="voucherTitle">
-        <div id="voucherTitleInner">
-          <h4>Your voucher</h4>
-          <p>
-            When you'll use this voucher once the code will automatically change. so
-            everytime copy this code before use
-          </p>
+    <!--for pc-->
+    <div class="voucher">
+      <div class="voucher-container">
+        <div class="voucher-title">
+          <h2 class="voucher-text">Voucher</h2>
+        </div>
+        <div class="current-voucher">
+          <div class="current-voucher-top-row">
+            <div class="current-top-left">
+              <div class="current-top-text">
+                <p class="current-text">Current</p>
+              </div>
+            </div>
+            <div class="current-top-right">
+              <div class="current-right-line"></div>
+            </div>
+          </div>
+
+          <div class="current-voucher-content">
+            <!-- offer start -->
+            <div class="current-voucher-offer">
+              <div class="current-voucher-offer-row">
+                <div class="current-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="current-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="current-offer-valid-date">
+                <div class="current-offer-valid-date-row">
+                  <div class="current-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="current-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="current-min-order">
+                <div class="current-min-order-row">
+                  <div class="current-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+
+            <!-- offer start -->
+            <div class="current-voucher-offer">
+              <div class="current-voucher-offer-row">
+                <div class="current-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="current-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="current-offer-valid-date">
+                <div class="current-offer-valid-date-row">
+                  <div class="current-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="current-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="current-min-order">
+                <div class="current-min-order-row">
+                  <div class="current-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+          </div>
+        </div>
+
+        <div class="past-voucher">
+          <div class="past-voucher-top-row">
+            <div class="past-top-left">
+              <div class="past-top-text">
+                <p class="past-text">past</p>
+              </div>
+            </div>
+            <div class="past-top-right">
+              <div class="past-right-line"></div>
+            </div>
+          </div>
+
+          <div class="past-voucher-content">
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+            <!-- offer start -->
+            <div class="past-voucher-offer">
+              <div class="past-voucher-offer-row">
+                <div class="past-offer-title">
+                  <p class="offer-title">TK 180 off shops, we missed you</p>
+                </div>
+                <div class="past-voucher-offer-money">
+                  <span class="money-text">Tk</span>
+                  <span class="money">180</span>
+                </div>
+              </div>
+              <div class="past-offer-valid-date">
+                <div class="past-offer-valid-date-row">
+                  <div class="past-offer-date-title">
+                    <p class="valid-date-text">
+                      valid until <span class="valid-date"> 22 dec 2022 </span>
+                    </p>
+                  </div>
+                  <div class="past-offer-take">
+                    <p class="take-offer-text">
+                      <span>4/4</span>
+                      <span>left</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="past-min-order">
+                <div class="past-min-order-row">
+                  <div class="past-min-order-text">
+                    <p class="min-order-text">
+                      <span class="min-text">Tk</span>
+                      <span class="min-money">333</span>
+                      <span class="min-other-text">Min. order</span>
+                    </p>
+                  </div>
+                  <div class="tc">
+                    <p class="pc-text">T&C</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- offer end -->
+          </div>
         </div>
       </div>
-
-      {% if vouchers %}
-      {% for voucher in vouchers %}
-      <div class="voucherMain">
-        <div class="mainInner">
-          <div class="halfCircle"></div>
-          <div class="halfCircle2"></div>
-          <div class="titleTaka">
-            <div class="title">{{voucher.voucher_offer}}</div>
-            <div class="taka">Tk {{voucher.voucher_offer.discount}}</div>
-          </div>
-
-          <div class="code">
-            {{voucher.voucher_code}}
-          </div>
-
-          <div class="minTakaValidDate">
-
-            <div class="minAmount"> <span class="taka">Tk {{voucher.voucher_offer.condition_rate}}</span> minimum </div>
-            <div class="validDate">Valid untill <span class="taka">{{voucher.user_valid_to}}</span></div>
-
-          </div>
-        </div>
-
-      </div>
-      {% endfor %}
-      {% else %}
-      <h3>You have no voucher right now</h3>
-      {% endif %}
     </div>
-  </div>
-</div>
+
+    <!-- for phone -->
+    <div class="voucher-phone">
+      <div class="voucher-phone-container">
+        <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'current')" id="defaultOpen">current</button>
+          <button class="tablinks" onclick="openCity(event, 'past')">
+            past
+          </button>
+         
+        </div>
+
+        <!-- Tab content -->
+        <div id="current" class="tabcontent">
+          <div class="phone-current-offer">
+              <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                <!--offer-content start-->
+             <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+               
+          </div>
+        </div>
+
+        <div id="past" class="tabcontent">
+            <div class="phone-current-offer">
+                <!--offer-content start-->
+               <div class="phone-offer-content">
+                  <div class="phone-current-offer-top">
+                      <div class="phone-current-offer-title">
+                          <p class="phone-offer-title">
+                              Tk <span class="phone-offer-money">145</span>
+                              off shops, we missed you
+                          </p>
+                      </div>
+                      <div class="phone-current-offer-money">
+                          <span>Tk</span>
+                          <span class="tk-money">145</span>
+                      </div>
+                  </div>
+                  <div class="phone-current-valid-date" id="past-offer-valid">
+                      <div class="valid-date-phone">
+                          <span class="date-text">valid until </span>
+                          <span class="phone-valid-date">
+                              12 dec 2020
+                          </span>
+                      </div>
+                      <div class="phone-offer-bar">
+                          <span>4/4</span>
+                          <span class="left">left</span>
+                      </div>
+                  </div>
+                  <div class="phone-current-offer-min">
+                      <div class="phone-offer-minimum">
+                          <span>Tk</span>
+                          <span class="minimun-tk">500</span>
+                          <span>Min. order</span>
+                      </div>
+                      <div class="phone-tc">
+                          <span class="tc">T&C</span>
+                      </div>
+                  </div>
+               </div>
+                <!--offer-content end-->
+                 <!--offer-content start-->
+               <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date" id="past-offer-valid">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+
+               <!--offer-content start-->
+               <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date" id="past-offer-valid">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+               <!--offer-content start-->
+               <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date" id="past-offer-valid">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+               <!--offer-content start-->
+               <div class="phone-offer-content">
+                <div class="phone-current-offer-top">
+                    <div class="phone-current-offer-title">
+                        <p class="phone-offer-title">
+                            Tk <span class="phone-offer-money">145</span>
+                            off shops, we missed you
+                        </p>
+                    </div>
+                    <div class="phone-current-offer-money">
+                        <span>Tk</span>
+                        <span class="tk-money">145</span>
+                    </div>
+                </div>
+                <div class="phone-current-valid-date" id="past-offer-valid">
+                    <div class="valid-date-phone">
+                        <span class="date-text">valid until </span>
+                        <span class="phone-valid-date">
+                            12 dec 2020
+                        </span>
+                    </div>
+                    <div class="phone-offer-bar">
+                        <span>4/4</span>
+                        <span class="left">left</span>
+                    </div>
+                </div>
+                <div class="phone-current-offer-min">
+                    <div class="phone-offer-minimum">
+                        <span>Tk</span>
+                        <span class="minimun-tk">500</span>
+                        <span>Min. order</span>
+                    </div>
+                    <div class="phone-tc">
+                        <span class="tc">T&C</span>
+                    </div>
+                </div>
+             </div>
+              <!--offer-content end-->
+                 
+                 
+            </div>
+        </div>
+
+        
+      </div>
+    </div>
 
 {% endblock body %}
 
 {% block footer %}
 {% endblock footer %}
+
+{% block js %}
+<script src="{% static 'app/js/voucher.js' %}"></script>
+{% endblock js %}

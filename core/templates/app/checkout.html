@@ -82,15 +82,23 @@
                       </div>
 
                       <div class="ck-product-main-price">
-                        <span>৳ {{cart.product.discounted_prize}}</span>
+                        <span>৳ {{cart.product.discounted_prize}}{% if cart.product.ProductType.typeName  == "SolidWeight" or cart.product.ProductType.typeName  == "LiquidWeight" %}
+                          /{{cart.product.productattributevalue_set.first.attributeValue}}   
+                          {% else %}
+                          /quantity
+                          {% endif %}</span>
                       </div>
                       
                     </div>
 
                     <div class="ck-checkout-right">
                       <div class="ck-qun">
+                        {% if cart.product.ProductType.typeName  == "SolidWeight" or cart.product.ProductType.typeName  == "LiquidWeight" %}
+                        <span>{{cart.unit_amount}}</span>{{cart.unit}}</span>
+                          {% else %}
                         <span class="qun-text">Qty:</span>
                         <span class="qun-cunt">{{cart.quantity}}</span>
+                         {% endif %}
                       </div>
                       <div>
                         <span style="text-decoration: line-through"

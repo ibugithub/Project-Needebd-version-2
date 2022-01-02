@@ -46,5 +46,6 @@ urlpatterns = [
     path('mmucheckerurl/', views.minMaxUnitCheckerView, name = "mmucheckerurlname"),
     path('bwordermakerurl/', views.buyNowOrderMakerView, name = "bwordermakerurlname"),
     path('ctordermakerurl/',views.cartOrderMakerView, name = 'ctordermakerurlname'),
-    path('oTOSummaryurl/<int:pk>/', views.orderToOrderSummery, name = 'oTOSurlname')
+    path('oTOSummaryurl/<int:pk>/', views.orderToOrderSummery, name = 'oTOSurlname'),
+    path('test/', views.test, name = "test")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

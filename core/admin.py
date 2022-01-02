@@ -22,35 +22,33 @@ from .models import (
     CustomerAddress,
     CourierServices,
     Order,
-    OrderSummary
-    # will Think about these model later......................
-    # ProductType,
-    # Attribute,
-    # AttributeValue,
-    # PTAttributeValue,
-    # ProductAttributeValue
+    OrderSummary,
+    ProductType,
+    Attribute,
+    AttributeValue,
+    PTAttributeValue,
+    ProductAttributeValue
 )
 
-# will Think about these model later......................
-# @admin.register(ProductType)
-# class ProductTypeAdmin(admin.ModelAdmin):
-#     list_display = ('typeName',)
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ('typeName',)
 
-# @admin.register(Attribute)
-# class AttributeAdmin(admin.ModelAdmin):
-#     list_display = ("attributeName",)
+@admin.register(Attribute)
+class AttributeAdmin(admin.ModelAdmin):
+    list_display = ("attributeName",)
 
-# @admin.register(AttributeValue)
-# class AttributeValueAdmin(admin.ModelAdmin):
-#     list_display = ("attribute","attributeValueName")
+@admin.register(AttributeValue)
+class AttributeValueAdmin(admin.ModelAdmin):
+    list_display = ("attribute","attributeValue")
 
-# @admin.register(PTAttributeValue)
-# class PTAValueAdmin(admin.ModelAdmin):
-#     list_display = ('productType','attribute', 'attributeValue')
+@admin.register(PTAttributeValue)
+class PTAValueAdmin(admin.ModelAdmin):
+    list_display = ('productType','attributeValue')
 
-# @admin.register(ProductAttributeValue)
-# class PAValueAdmin(admin.ModelAdmin):
-#     list_display = ('product','PTAttributeValue')
+@admin.register(ProductAttributeValue)
+class PAValueAdmin(admin.ModelAdmin):
+    list_display = ('product','attributeValue', 'productStock')
 
 
 @admin.register(Category)
@@ -62,7 +60,7 @@ class DisplayWraperAdmin(admin.ModelAdmin):
     list_display = ['name',]
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title','product_image', 'product_category','unit','selling_prize', 'discounted_prize', 'description', 'brand', 'ProductStock')
+    list_display = ('ProductType','title','product_image', 'product_category','selling_prize', 'discounted_prize', 'description', 'brand')
 
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):

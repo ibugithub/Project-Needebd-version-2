@@ -1,0 +1,128 @@
+.email-verification{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.email-verification-main{
+    width: 70%;
+    margin: 0 auto;
+    padding-bottom: 55px;
+    
+}
+.email-verification-content{
+    width: 100%;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.email-verification-c-title{
+    width: 100%;
+    padding: 30px 0;
+}
+.email-verification-c-title h1{
+    color: #444;
+    font-weight: 600;
+    font-size: 27px;
+}
+.email-verification-img{
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+.email-verification-img img{
+      max-width: 100%;
+      max-height: 100%;
+}
+.email-verification-text{
+  
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.email-verification-text p{
+  color: #444;
+  font-weight: 400;
+}
+.email-veri-btn{
+    padding-bottom: 20px;
+}
+.ver-btn{
+    padding: 7px;
+    width: 200px;
+    color: #fff;
+    background-color: #EB6529;
+    border: none;
+    cursor: pointer;
+   
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.ver-btn .fa-envelope{
+    font-size: 20px;
+}
+.ver-btn span{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone-verification-title{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 20px 0;
+}
+.phone-verification-icons{
+    font-size: 20px;
+    color: #444;
+    padding-right: 10px;
+}
+.phone-verification-icons a{
+    color: #444;
+}
+.phone-verification-text h1{
+    color: #444;
+    font-size: 20px;
+}
+
+
+@media only screen and (min-width: 768px){
+    .email-verification-c-title{
+        display: block;
+    }
+    .phone-verification-title{
+         display: none;
+    }
+}
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px){
+    .email-verification-c-title{
+        display: none;
+    }
+}
+@media only screen and (max-width: 600px){
+    .phone-verification-title{
+        margin-top: 60px;
+    }
+    .email-verification-main{
+        width: 100%;
+        padding: 0 15px;
+    }
+
+}
+
+@media only screen and (max-width: 320px){
+    .phone-verification-title{
+        margin-top: 40px;
+    }
+}

@@ -39,22 +39,23 @@
 
             {% for cart in carts %}
             <!-- start cart section -->
-            <div class="add-to-cart-d">
+            <div class="add-to-cart-d" id = "aTCD">
               <div class="add-cart-d-con">
                 <div class="add-cart-d-con-re">
-                  
+
                   <div class="cart-d-image">
                     <!-- <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span> -->
-                    {% if cart.quantity > cart.product.ProductStock %}
+                    {% load core_filters %}
+                    {% if cart.quantity >= cart|PSFiltering %}
                     <span class="stockWarning" id="stockWarning{{forloop.counter}}">StockOut</span>
-                    {% elif cart.unit_amount > cart.product.ProductStock %}
+                    {% elif cart.unit_amount >= cart|PSFiltering %}
                     <span class="stockWarning" id="stockWarning{{forloop.counter}}">StockOut</span>
-                    {% elif cart.unit_amount > cart.product.MaximumUnitValue %}
+                    {% elif cart.unit_amount >= cart.product.MaximumUnitValue %}
                     <span class="stockWarning" id="stockWarning{{forloop.counter}}">MaxAmount</span>
                     {% else %}
                     <span class="stockWarning" id="stockWarning{{forloop.counter}}"></span>
                     {% endif %}
-                    <img src="{{cart.product.product_image.url}}" alt="">                   
+                    <img src="{{cart.product.product_image.url}}" alt="">
                   </div>
 
                   <div class="add-cart-pro-de">
@@ -65,27 +66,27 @@
                         </a>
 
                         <div class="cart-save-remove">
- 
+
                           <div flc={{forloop.counter}} prod_id={{cart.product.id}} size={{cart.size}} unit={{cart.unit}}
                             unit_amount={{cart.unit_amount}} onclick="RemoveCart(this)" class="cart-d-remove">
                             remove
                           </div>
-        
+
                         </div>
 
                       </div>
 
                       <div class="pro-de-size">
                         <!-- Filtering the product's extra unit info according to the product's unit -->
-                        {% if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe"  %}
+                        {% if cart.product.ProductType.typeName  == "Cloth" or cart.product.ProductType.typeName  == "Shoe" %}
                         <span>Size:{{cart.size}}</span>
                         {% endif %}
-                        {% if cart.product.ProductGroup == "ClothPices" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "SolidWeight" %}
+                        {% if cart.product.ProductType.typeName  == "ClothPices" or cart.product.ProductType.typeName  == "LiquidWeight" or cart.product.ProductType.typeName  == "SolidWeight" %}
                         <span>Amount : <span
                             id="uamount{{forloop.counter}}">{{cart.unit_amount}}</span>{{cart.unit}}</span>
                         {% endif %}
 
-                        {% if cart.product.ProductGroup == "Packet" %}
+                        {% if cart.product.ProductType.typeName  == "Packet" %}
                         <span>Amount : Single Item</span>
                         {% endif %}
                       </div>
@@ -93,14 +94,14 @@
                       <div class="pro-de-brand">
                         <span style="text-transform: capitalize;">adidas</span>
                       </div>
-                      <span class="tk-per" >{{cart.product.discount}}% Off</span> <br>
+                      <span class="tk-per">{{cart.product.discount}}% Off</span> <br>
                       <div class="pro-de-size">
                         <span class="tk">৳ {{cart.product.selling_prize}}</span>
 
                         <span style="font-size: 14px;" class="tk-now"> ৳{{cart.product.discounted_prize}}
                           <!-- filtering for Showing the rate unit in the cart page  -->
-                          {% if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight"  %}
-                          /{{cart.product.unit}}
+                          {% if cart.product.ProductType.typeName  == "SolidWeight" or cart.product.ProductType.typeName  == "LiquidWeight" %}
+                          /{{cart.product.productattributevalue_set.first.attributeValue}}
                           {% else %}
                           /quantity
                           {% endif %}
@@ -125,29 +126,28 @@
                 <div class="add-to-cart-d-btn">
 
                   <div class="cart-d-p-btn">
-                    <button
-                      {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
-                      {% else %} style="margin-right: 30px; " {% endif %} flc={{forloop.counter}}
-                      onclick="MinusCart(this)" prod={{cart.product.id}} productStock={{cart.product.ProductStock}}
-                      ProductGroup={{cart.product.ProductGroup}} size={{cart.size}} unit={{cart.unit}}
-                      unit_amount={{cart.unit_amount}} class="pmbtn btn-sub" style = "padding-bottom: 5px;"> -
+                    <button {% if cart.product.ProductType.typeName  != 'SolidWeight' and cart.product.ProductType.typeName  != "LiquidWeight" and cart.product.ProductType.typeName  != "ClothPices" %} {% else %} style="margin-right: 30px; "
+                      {% endif %} flc={{forloop.counter}} onclick="MinusCart(this)" prod={{cart.product.id}}
+                      productStock={{cart|PSFiltering}} ProductGroup={{cart.product.ProductType.typeName }}
+                      size={{cart.size}} unit={{cart.unit}} unit_amount={{cart.unit_amount}} class="pmbtn btn-sub"
+                      style="padding-bottom: 5px;"> -
                     </button>
-                
-                    {% if cart.product.ProductGroup != 'SolidWeight' and cart.product.ProductGroup != "LiquidWeight" and cart.product.ProductGroup != "ClothPices" %}
-                    <div class="qbtn cart-d-input" >
+
+                    {% if cart.product.ProductType.typeName  != 'SolidWeight' and cart.product.ProductType.typeName  != "LiquidWeight" and cart.product.ProductType.typeName  != "ClothPices" %}
+                    <div class="qbtn cart-d-input">
                       <input id="quantity{{forloop.counter}}" type="text" class="cart-d-rp" value="{{cart.quantity}}">
                     </div>
                     {% endif %}
-                
-                    <button id="plusCart{{forloop.counter}}" productStock={{cart.product.ProductStock}}
+
+                    <button id="plusCart{{forloop.counter}}" productStock={{cart|PSFiltering}}
                       flc={{forloop.counter}} onclick="PlusCart(this)" prod={{cart.product.id}}
-                      ProductGroup={{cart.product.ProductGroup}} size={{cart.size}} unit={{cart.unit}}
-                      unit_amount={{cart.unit_amount}} class="pmbtn btn-add"> + 
+                      ProductGroup={{cart.product.ProductType.typeName }} size={{cart.size}} unit={{cart.unit}}
+                      unit_amount={{cart.unit_amount}} class="pmbtn btn-add"> +
                     </button>
-                    
+
                   </div>
                   <div style="width: 68%;"></div>
-                  
+
                 </div>
 
               </div>
@@ -163,25 +163,25 @@
                 </form>
               </div>
             </div>
-           
+
             <!-- <div id="spacer3" ></div> -->
             <div class="asdf">
               <div class="rrtb">
                 <div class="small-place-btn  cdfr">
                   <div class="small-place-btn-row">
                     <div class="s-all-price">
-                        <span class="smbl">
-                          ৳
-                        </span>
-                        <span class="a-price" id="totalCostDomM">
-                          {{Total_Cost}}
-                        </span>
+                      <span class="smbl">
+                        ৳
+                      </span>
+                      <span class="a-price" id="totalCostDomM">
+                        {{Total_Cost}}
+                      </span>
                     </div>
                     <div class="sp-btn">
                       <a href="{% url 'checkouturlname' %}">
-                      <button class="PTCOB s-place-btn">
-                        Proceed To Checkout
-                      </button>
+                        <button class="PTCOB s-place-btn">
+                          Proceed To Checkout
+                        </button>
                       </a>
                     </div>
                   </div>
@@ -265,14 +265,15 @@
               <small id="coup" class="text-muted">Apply your coupon here </small>
             </h5>
             <span id="coupon_selector" style="color:red"></span>
-            <input class="form-control" style="color:gray" type="text" name="code" id="code" placeholder="Apply Your Coupon Here">
+            <input class="form-control" style="color:gray" type="text" name="code" id="code"
+              placeholder="Apply Your Coupon Here">
             <div id="coupapply">
               <button class="coupon btn btn-sm btn-outline-primary " id='apply'>Apply</button>
             </div>
-            
+
           </div>
         </div>
-  
+
       </div>
 
     </div>
@@ -287,6 +288,3 @@
 <script src="{% static 'app/js/jquery.js' %}"></script>
 <script src="{% static 'app/js/cart.js' %}"></script>
 {% endblock js %}
-
-
-

@@ -1,14 +1,10 @@
-from datetime import date, timedelta
+from datetime import timedelta
 import datetime
-from django.http.response import HttpResponseRedirect
-from django.shortcuts import render, redirect, HttpResponse, resolve_url
-from django.views.generic.detail import DetailView
+from django.shortcuts import render, redirect, resolve_url
 from .models import (Brand_Logo_row1, Brand_Logo_row2, Brand_Logo_row3,
-                     Category, CourierServices, Slider, Mobile_Category, Footer_Colum1,
-                     Footer_Colum2, Footer_Colum3, Footer_Colum4, Product,
+                     Category, CourierServices, Slider, Mobile_Category, Footer_Colum1,Product,
                      CategoryWraper, Cart, CustomerProfile, Divisions,
-                     Districts, Unions, Upazilas, CustomerAddress, Order, OrderSummary)
-from django.views.generic.base import ContextMixin
+                     Districts, Unions, Upazilas, CustomerAddress, Order, OrderSummary, ProductAttributeValue)
 from django.views.generic import ListView, TemplateView, View
 from django.http import JsonResponse
 from coupons.models import Coupon, Voucher
@@ -16,6 +12,23 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
+
+def test(request):
+    print("This is for testing....")
+    product = Product.objects.get(id = 7)
+    print(product.ProductType.typeName )
+
+    # this is for attribute vlaue
+    PAV = product.productattributevalue_set.get(attributeValue__attributeValue = '43')
+  
+
+    # this is for product stock amount
+    print(PAV.productStock)
+    
+    # this is for retrive the attribute
+    print(PAV.attributeValue.attribute)
+    return render(request, 'app/test.html')
+
 
 
 # Create your views here.
@@ -86,6 +99,7 @@ class ProductPageView(ListView):
 def SingleProductView(request, pk):
     template_name = 'app/singleproduct.html'
     product = Product.objects.get(id=pk)
+    PAV = product.productattributevalue_set.first()
     category = product.product_category
     relatedProduct = Product.objects.filter(product_category=category)
     paginator = Paginator(relatedProduct, 11)
@@ -95,7 +109,8 @@ def SingleProductView(request, pk):
         "product": product,
         "relatedProduct": relatedProduct,
         "showedProductId": pk,
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "pav": PAV
     }
     return render(request, template_name, context=context)
 
@@ -108,7 +123,7 @@ def AddToCartView(request):
         myproduct = Product.objects.get(id=product_id)
 
         # Carting the product info for the prduct having KG unit or Liter Unit
-        if myproduct.ProductGroup == "SolidWeight" or myproduct.ProductGroup == "LiquidWeight" or myproduct.ProductGroup == "ClothPices":
+        if myproduct.ProductType.typeName == "SolidWeight" or myproduct.ProductType.typeName == "LiquidWeight" or myproduct.ProductType.typeName == "ClothPices":
             unit_amount = float(request.GET['unit_amount'])
             try:
                 cart = Cart.objects.get(
@@ -123,20 +138,20 @@ def AddToCartView(request):
                      product=myproduct,
                      unit=unit,
                      unit_amount=unit_amount).save()
-        elif myproduct.ProductGroup == "Cloth" or myproduct.ProductGroup == "Shoe":
+        elif myproduct.ProductType.typeName  == "Cloth" or myproduct.ProductType.typeName  == "Shoe":
             try:
                 cart = Cart.objects.get(user=user,
                                         product=myproduct,
                                         size=size)
-                if cart.quantity < cart.product.ProductStock:
+                if cart.quantity < cart.product.productattributevalue_set.get(attributeValue__attributeValue = str(size)).productStock:
                     cart.quantity += 1
                     cart.save()
             except:
                 Cart(user=user, product=myproduct, size=size).save()
-        elif myproduct.ProductGroup == "Packet":
+        elif myproduct.ProductType.typeName == "Packet":
             try:
                 cart = Cart.objects.get(user=user, product=myproduct)
-                if cart.quantity < cart.product.ProductStock:
+                if cart.quantity < cart.product.productattributevalue_set.first().productStock:
                     cart.quantity += 1
                     cart.save()
             except:
@@ -191,8 +206,8 @@ def PlusCartView(request):
         size = request.GET['size']
         unitFrequency = product.unitValue_On_Increase_or_Decrease
         maxUnitValue = product.MaximumUnitValue
-        stock = product.ProductStock
-        if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
+        if product.ProductType.typeName == "SolidWeight" or product.ProductType.typeName == "LiquidWeight" or product.ProductType.typeName == "ClothPices":
+            stock = product.productattributevalue_set.first().productStock
             cart = Cart.objects.get(
                 user=user,
                 product=product,
@@ -215,10 +230,12 @@ def PlusCartView(request):
             cart.save()
             data['unitAmount'] = cart.unit_amount
 
-        if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
-            if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
+        if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe" or product.ProductType.typeName == "Packet":
+            if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe":
                 cart = Cart.objects.get(user=user, product=product, size=size)
-            elif product.ProductGroup == "Packet":
+                stock = product.productattributevalue_set.get(attributeValue__attributeValue = str(size)).productStock
+            elif product.ProductType.typeName == "Packet":
+                stock = product.productattributevalue_set.first().productStock
                 cart = Cart.objects.get(user=user, product=product)
             if cart.quantity <= stock:
                 cart.quantity += 1
@@ -263,7 +280,6 @@ def MinusCartView(request):
         size = request.GET['size']
         unitFrequency = product.unitValue_On_Increase_or_Decrease
         minUnitValue = product.MinimumUnitValue
-        stock = product.ProductStock
 
         def itemcount():
             Item = 0
@@ -272,7 +288,8 @@ def MinusCartView(request):
                 Item += 1
             return Item
 
-        if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPices":
+        if product.ProductType.typeName == "LiquidWeight" or product.ProductType.typeName == "SolidWeight" or product.ProductType.typeName == "ClothPices":
+            stock = product.productattributevalue_set.first().productStock
             cart = Cart.objects.get(
                 user=user,
                 product=product,
@@ -291,10 +308,13 @@ def MinusCartView(request):
             cart.save()
             data['unitAmount'] = round(cart.unit_amount, 2)
            
-        if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
-            if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
+        if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe" or product.ProductType.typeName == "Packet":
+            if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe":
                 cart = Cart.objects.get(user=user, product=product, size=size)
-            elif product.ProductGroup == "Packet":
+                stock = product.productattributevalue_set.get(attributeValue__attributeValue = str(size)).productStock
+
+            elif product.ProductType.typeName == "Packet":
+                stock = product.productattributevalue_set.first().productStock
                 cart = Cart.objects.get(user=user, product=product)
             if cart.quantity >= 1:
                 cart.quantity -= 1
@@ -347,7 +367,7 @@ def RemoveCartView(request):
     product = Product.objects.get(id=product_key)
     unit = request.GET['unit']
     size = request.GET['size']
-    if product.ProductGroup == "LiquidWeight" or product.ProductGroup == "SolidWeight" or product.ProductGroup == "ClothPice":
+    if product.ProductType.typeName == "LiquidWeight" or product.ProductType.typeName == "SolidWeight" or product.ProductType.typeName == "ClothPice":
         cart = Cart.objects.get(
             user=user,
             product=product,
@@ -355,11 +375,11 @@ def RemoveCartView(request):
         )
         cart.delete()
 
-    elif product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe":
+    elif product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe":
         cart = Cart.objects.get(user=user, product=product, size=size)
         cart.delete()
 
-    elif product.ProductGroup == "Packet":
+    elif product.ProductType.typeName == "Packet":
         cart = Cart.objects.get(user=user, product=product)
         cart.delete()
 
@@ -782,17 +802,20 @@ def CancelOrderView(request, pk):
     summary.subTotal -= CPrdCost
     summary.total -= CPrdCost
     summary.save()
-    productGroup = order.product.ProductGroup
-    if productGroup == "Cloth" or productGroup == "Shoe" or productGroup == "Packet":
-        order.product.ProductStock += order.quantity
-        order.product.save()
-    if productGroup == "SolidWeight" or productGroup == "LiquidWeight":
-        order.product.ProductStock += order.unitAmount
-        order.product.save()
+    ProductType= order.product.ProductType.typeName 
+    if ProductType== "Cloth" or ProductType== "Shoe" or ProductType== "Packet":
+        if order.product.ProductType.typeName == "Cloth" or order.product.ProductType.typeName == "Shoe":
+                pav = order.product.productattributevalue_set.get(attributeValue__attributeValue = str(order.size))
 
+        elif order.product.ProductType.typeName == "Packet":
+            pav = order.product.productattributevalue_set.first()
+        pav.productStock += order.quantity
+        pav.save()
 
-
-    
+    if ProductType== "SolidWeight" or ProductType== "LiquidWeight":
+        pav = order.product.productattributevalue_set.first()
+        pav.productStock += order.unitAmount
+        pav.save()   
     return redirect('/orderurl')
 
 class CancellationView(TemplateView):
@@ -913,14 +936,14 @@ def minMaxUnitCheckerView(request):
     product = Product.objects.get(id=productId)
     buyNowSellingCost = product.selling_prize
     buyNowDiscountedCost = product.discounted_prize
-    backendUnit = product.unit
+    PAV = product.productattributevalue_set.first().attributeValue
+    backendUnit = PAV
     minUnitValue = product.MinimumUnitValue
     maxUnitValue = product.MaximumUnitValue
-    backendUnitGroup = product.ProductGroup
-    stock = product.ProductStock
+    backendUnitGroup = product.ProductType.typeName 
 
     if backendUnitGroup == "SolidWeight" or backendUnitGroup == "LiquidWeight" or backendUnitGroup == "ClothPices":
-
+        stock = product.productattributevalue_set.first().productStock
         if fontendUnitAmount >= minUnitValue and fontendUnitAmount <= maxUnitValue and fontendUnitAmount <= stock:
             data["message"] = ""
             data["attempt"] = True
@@ -986,9 +1009,17 @@ def Buynow(request, pk=None):
         request.session['buyNowSubTotal'] = subTotal
         request.session['buyNowTotal'] = total
         request.session['buyNowQuantity'] = 1
-
+        if newProduct.ProductType.typeName == "Cloth" or newProduct.ProductType.typeName == "Shoe":
+            size = request.session['size']
+            PAV = newProduct.productattributevalue_set.get(attributeValue__attributeValue = str(size))
+            context["pav"] = PAV
+        elif newProduct.ProductType.typeName == "Packet":
+            PAV = newProduct.productattributevalue_set.first()
+            context["pav"] = PAV
         # This section will only work on when product will have unit Type of solid weight or Liquid weight
-        if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":
+        if newProduct.ProductType.typeName == "SolidWeight" or newProduct.ProductType.typeName == "LiquidWeight":
+            PAV = newProduct.productattributevalue_set.first()
+            context["pav"] = PAV
             context['buyNowUnitAmount'] = request.session['buyNowUnitAmount']
             context['Unit_SellingCost'] = request.session[
                 'buyNow_Unit_SellingCost']
@@ -1004,13 +1035,13 @@ def Buynow(request, pk=None):
             context['total'] = Total2
             request.session['buyNowSubTotal'] = subTotal2
             request.session['buyNowTotal'] = Total2
-
+            
         return render(request, 'app/buyNowCheckout.html', context=context)
 
     # plus and minus action in buy now page will work on this section when product having packet ProductGroup...
     if pk == None:
         Group = request.GET['Group']
-        if Group == "packet":
+        if Group == "nonWeightedProduct":
             productId = request.GET['productId']
             quantity = int(request.GET['quantity'])
             request.session['buyNowQuantity'] = quantity
@@ -1023,7 +1054,7 @@ def Buynow(request, pk=None):
             data = {'subTotal': subTotal, "total": total}
 
         # plus and minus action in buy now page will work on this section when product having solid and Liquid weight ProductGroup...
-        elif Group == "nonpacket":
+        elif Group == "weightedProduct":
             data = {}
             action = request.GET['action']
             prouductId = request.GET['productId']
@@ -1032,9 +1063,8 @@ def Buynow(request, pk=None):
             unitFrequency = newProduct.unitValue_On_Increase_or_Decrease
             minUnitValue = newProduct.MinimumUnitValue
             maxUnitValue = newProduct.MaximumUnitValue
-            stock = newProduct.ProductStock            
-
-            if newProduct.ProductGroup == "SolidWeight" or newProduct.ProductGroup == "LiquidWeight":                           
+            stock = newProduct.productattributevalue_set.first().productStock
+            if newProduct.ProductType.typeName == "SolidWeight" or newProduct.ProductType.typeName == "LiquidWeight":                           
                 if action == "plus":
                     if unitAmount <= stock and unitAmount <= maxUnitValue:
                         unitAmount += unitFrequency
@@ -1065,8 +1095,7 @@ def Buynow(request, pk=None):
                             data['warning'] = "MaxAmount"
                     else:
                         data['warning'] = ""                        
-                
-                        
+                                       
             data['unitAmount'] = round(unitAmount, 2)
             request.session['buyNowUnitAmount'] = unitAmount
             sellingCost = round(newProduct.selling_prize * unitAmount, 2)
@@ -1227,7 +1256,7 @@ def buyNowOrderMakerView(request):
     product = Product.objects.get(id=productId)
     profile = CustomerProfile.objects.get(user=user)
     defaultAddress = CustomerAddress.objects.get(user=user, isDefault=True)
-    unit = product.unit
+    unit = product.productattributevalue_set.first().attributeValue
     unitAmount = request.session['buyNowUnitAmount']
     size = request.session['size']
     quantity = request.session['buyNowQuantity']
@@ -1242,8 +1271,13 @@ def buyNowOrderMakerView(request):
         discount = 0
 
     # This section will save the order for product having cloth and shoe and packet productGroup
-    if product.ProductGroup == "Cloth" or product.ProductGroup == "Shoe" or product.ProductGroup == "Packet":
-        if quantity > product.ProductStock:
+    if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe" or product.ProductType.typeName == "Packet":
+        if product.ProductType.typeName == "Cloth" or product.ProductType.typeName == "Shoe":
+            pav = product.productattributevalue_set.get(attributeValue__attributeValue = str(size))
+        elif product.ProductType.typeName == "Packet":
+            pav = product.productattributevalue_set.first()
+        stock =  pav.productStock
+        if quantity > stock:
             return redirect('/buynow/'+str(product.id))
         Order(
             user=user,
@@ -1257,12 +1291,14 @@ def buyNowOrderMakerView(request):
             delivery_date = deliveryDate,
             shippingCost = shippingCost
             ).save()
-        product.ProductStock -= quantity
-        product.save()
+        pav.productStock -= quantity
+        pav.save()
+
  
     # This section will save the order for product having solidweight and liquidweight and ClothPicessweight
-    if product.ProductGroup == "SolidWeight" or product.ProductGroup == "LiquidWeight" or product.ProductGroup == "ClothPices":
-        if unitAmount > product.ProductStock:
+    if product.ProductType.typeName == "SolidWeight" or product.ProductType.typeName == "LiquidWeight" or product.ProductType.typeName == "ClothPices":
+        pav = product.productattributevalue_set.first()
+        if unitAmount > pav.productStock:
             return redirect('/buynow/'+str(product.id))            
         Order(
             user=user,
@@ -1276,8 +1312,8 @@ def buyNowOrderMakerView(request):
             delivery_date = deliveryDate,
             shippingCost = shippingCost
             ).save()
-        product.ProductStock -= unitAmount
-        product.save()
+        pav.productStock -= unitAmount
+        pav.save()
     
         orderSumm = OrderSummary.objects.create()
    
@@ -1330,8 +1366,14 @@ def cartOrderMakerView(request):
         discount = 0
 
     for cart in newCart:
-        if cart.product.ProductGroup == "Cloth" or cart.product.ProductGroup == "Shoe" or cart.product.ProductGroup == "Packet":
-            if cart.quantity > cart.product.ProductStock:
+        if cart.product.ProductType.typeName == "Cloth" or cart.product.ProductType.typeName == "Shoe" or cart.product.ProductType.typeName == "Packet":
+            if cart.product.ProductType.typeName == "Cloth" or cart.product.ProductType.typeName == "Shoe":
+                pav = cart.product.productattributevalue_set.get(attributeValue__attributeValue = str(cart.size))
+
+            elif cart.product.ProductType.typeName == "Packet":
+                pav = cart.product.productattributevalue_set.first()
+
+            if cart.quantity > pav.productStock:
                 return redirect("/showcarturl")
             Order(
                 user=user,
@@ -1346,11 +1388,12 @@ def cartOrderMakerView(request):
                 shippingCost = shippingCost
                 ).save()
             cart.delete()
-            cart.product.ProductStock -= cart.quantity
-            cart.product.save()
+            pav.productStock -= cart.quantity
+            pav.save()
             
-        if cart.product.ProductGroup == "SolidWeight" or cart.product.ProductGroup == "LiquidWeight" or cart.product.ProductGroup == "ClothPices":
-            if cart.unit_amount > cart.product.ProductStock or cart.unit_amount > cart.product.MaximumUnitValue:
+        if cart.product.ProductType.typeName == "SolidWeight" or cart.product.ProductType.typeName == "LiquidWeight" or cart.product.ProductType.typeName == "ClothPices":
+            pav = cart.product.productattributevalue_set.first()
+            if cart.unit_amount > pav.productStock or cart.unit_amount > cart.product.MaximumUnitValue:
                 return redirect("/showcarturl")
             Order(
                 user=user,
@@ -1365,8 +1408,8 @@ def cartOrderMakerView(request):
                 shippingCost = shippingCost
                 ).save()
             cart.delete()
-            cart.product.ProductStock -= cart.unit_amount
-            cart.product.save()
+            pav.productStock -= cart.unit_amount
+            pav.save()
     orderSumm = OrderSummary.objects.create()
     orders = Order.objects.filter(Q(user=request.user, status='Pending', is_summuried = False ))
     for orderItem in orders:

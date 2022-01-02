@@ -3,7 +3,7 @@ from django.db.models.deletion import SET_NULL
 from ProjectNeedeBd import settings
 from django.core.validators import MinValueValidator
 from django.core.validators import RegexValidator
-import math
+import math 
 # Create your models here.
 
 class DisplayWraper(models.Model):
@@ -21,7 +21,6 @@ DEVICE_CHOICES = (
     ('Mobile', 'Mobile'),
     ('Desktop', 'Desktop')
 )
-
 class Slider(models.Model):
     title = models.CharField(max_length=100, null=True)
     slider_image = models.ImageField(upload_to = 'slider_image')
@@ -64,10 +63,31 @@ class Category(models.Model):
     def __str__(self):
         return str(self.title)
 
+class ProductType(models.Model):
+    typeName = models.CharField(max_length=30)
+    def __str__(self):
+        return self.typeName
+
+class Attribute(models.Model):
+    attributeName = models.CharField(max_length=40)
+    def __str__(self):
+        return self.attributeName
+        
+class AttributeValue(models.Model):
+    attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
+    attributeValue = models.CharField(max_length = 40)
+    def __str__(self):
+        return self.attributeValue
+
+class PTAttributeValue(models.Model):
+    productType = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    attributeValue = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, null = True)
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to = 'product_image')
     product_category = models.ForeignKey(Category, models.SET_NULL, blank = True, null=True)
+    ProductType = models.ForeignKey(ProductType, models.SET_NULL, blank = True, null = True)
     selling_prize =models.FloatField()
     discounted_prize = models.FloatField()
     description = models.TextField()
@@ -77,16 +97,7 @@ class Product(models.Model):
     sell_amount= models.IntegerField(null=True, blank=True)
     def __str__(self):
         return str(self.title)
-    ProductGroup_Choices = (
-                        ("SolidWeight", "SolidWeight"),
-                        ("LiquidWeight", "LiquidWeight"),
-                        ("KgPacket", "KgPacket"),
-                        ("LiterPacket", "LiterPacket"),
-                        ("Cloth", "Cloth"),
-                        ("ClothPices", "ClothPices"),
-                        ("Shoe", "Shoe"),
-                        ("Packet", "Packet")
-                      )
+
     Unit_Choices = (
                         ("Kg", "Kg"),
                         ("Gram", "Gram"),
@@ -94,12 +105,9 @@ class Product(models.Model):
                         ("Liter", "Liter"),
                         ("MiliLiter", "MiliLiter")
                       )
-    ProductGroup = models.CharField(max_length=30, choices = ProductGroup_Choices, null = True, blank = True)
-    unit = models.CharField(max_length=30, choices= Unit_Choices, null=True, blank = True)
     unitValue_On_Increase_or_Decrease = models.FloatField(null = True, blank = True)
     MinimumUnitValue = models.FloatField(null = True, blank = True)
     MaximumUnitValue = models.FloatField(null = True, blank = True)
-    ProductStock = models.FloatField(null = True)
     
     def save(self, *args, **kwargs):
         prizeGap =  self.selling_prize - self.discounted_prize
@@ -107,6 +115,11 @@ class Product(models.Model):
         PrizeGapPercent = prizeGap / sellingPrizePercent 
         self.discount = round(PrizeGapPercent, 2)
         super().save(*args, **kwargs) 
+
+class ProductAttributeValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    attributeValue = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, null = True, blank = True)
+    productStock = models.FloatField(null = True)
 
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -123,20 +136,20 @@ class Cart(models.Model):
     @property
     def products_total_selling_cost(self):
          # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.ProductGroup == "SolidWeight" or self.product.ProductGroup == "LiquidWeight" or self.product.ProductGroup == "ClothPices":
+        if self.product.ProductType.typeName == "SolidWeight" or self.product.ProductType.typeName == "LiquidWeight" or self.product.ProductType.typeName == "ClothPices":
             Total_Cost = self.quantity * self.product.selling_prize * self.unit_amount     
         # For the products which doesn't have the extra unit option....
-        if self.product.ProductGroup == "Cloth" or self.product.ProductGroup == "Packet" or self.product.ProductGroup == "Shoe":
+        if self.product.ProductType.typeName == "Cloth" or self.product.ProductType.typeName == "Packet" or self.product.ProductType.typeName == "Shoe":
             Total_Cost = self.quantity * self.product.selling_prize        
         return Total_Cost
 
     @property
     def products_total_cost(self):
         # <---This is for the product of having Kg or Liter or Area Unit--->
-        if self.product.ProductGroup == "SolidWeight" or self.product.ProductGroup == "LiquidWeight" or self.product.ProductGroup == "ClothPices":
+        if self.product.ProductType.typeName == "SolidWeight" or self.product.ProductType.typeName == "LiquidWeight" or self.product.ProductType.typeName == "ClothPices":
             Total_Cost = round(self.quantity * self.product.discounted_prize * self.unit_amount)  
         # For the products which doesn't have the extra unit option....
-        if self.product.ProductGroup == "Cloth" or self.product.ProductGroup == "Packet" or self.product.ProductGroup == "Shoe":
+        if self.product.ProductType.typeName == "Cloth" or self.product.ProductType.typeName == "Packet" or self.product.ProductType.typeName == "Shoe":
             Total_Cost = self.quantity * self.product.discounted_prize
         return Total_Cost
     
@@ -210,7 +223,7 @@ STATUS_CHOICE = (
     ('Delivered', 'Delivered'),
     ('Canceled', 'Canceled'),
     ('Returned',"Returned")
-    
+
 )
 class CourierServices(models.Model):
     name = models.CharField(max_length=30)
@@ -246,42 +259,6 @@ class OrderSummary(models.Model):
 
 
 
-
-
-
-
-
-
-# will Think about these model later......................
-
-# class ProductType(models.Model):
-#     typeName = models.CharField(max_length=30)
-#     def __str__(self):
-#         return self.typeName
-
-# class ProductAttributeValue(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     PTAttributeValue = models.CharField(max_length=20)
-#     def __str__(self):
-#         return self.product.title
-
-# class Attribute(models.Model):
-#     attributeName = models.CharField(max_length=40)
-#     def __str__(self):
-#         return self.attributeName
-
-# class AttributeValue(models.Model):
-#     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
-#     attributeValueName = models.ForeignKey(ProductAttributeValue, on_delete=models.CASCADE)
-#     def __str__(self):
-#         return self.attributeValueName.product.PTAttributeValue
-
-# class PTAttributeValue(models.Model):
-#     productType = models.ForeignKey(ProductType, on_delete=models.CASCADE)
-#     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE, null=True)
-#     attributeValue = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, null = True)
-#     def __str__(self): 
-#         return self.productType.typeName
 
 
 
