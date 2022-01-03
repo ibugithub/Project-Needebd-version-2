@@ -1,1 +1,1 @@
-web:gunicorn ProjectNeedeBd.wsgi
+web: gunicorn ProjectNeedeBd.wsgi
