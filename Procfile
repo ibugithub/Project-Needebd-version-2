@@ -1,0 +1,1 @@
+web: waitress-serve --port=$PORT ProjectNeedeBd.wsgi:application
