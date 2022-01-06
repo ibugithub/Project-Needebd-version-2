@@ -25,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # # SECURITY WARNING: don't run with debug turned on in production!
 
 # This is for Local Development
-SECRET_KEY = 'django-insecure-gf9sv19irw^96_9*qxr4&zybrx&=6%y!vvx&l1m2f@eyn7oc!j'
-DEBUG = True
-ALLOWED_HOSTS = []
+# SECRET_KEY = 'django-insecure-gf9sv19irw^96_9*qxr4&zybrx&=6%y!vvx&l1m2f@eyn7oc!j'
+# DEBUG = True
+# ALLOWED_HOSTS = []
 
 
 # This is for Production Development
-# SECRET_KEY = os.environ["SECRET_KEY"]
-# DEBUG = False
-# ALLOWED_HOSTS = ['localhost','needebd.herokuapp.com']
+SECRET_KEY = os.environ["SECRET_KEY"]
+DEBUG = False
+ALLOWED_HOSTS = ['localhost','needebd.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -93,27 +93,27 @@ WSGI_APPLICATION = 'ProjectNeedeBd.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'needebd database',
-        'USER': 'postgres',
-        'PASSWORD': 'needebd71%',
-        'HOST':'localhost',
-        'PORT': '5432'
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'd8pkhhsf8m5j4b',
-#         'USER': 'fvrwevddepghkw',
-#         'PASSWORD': 'b518ed726e3ab7c8aaa872b390932c0c1088ee161a1b8c1840f78a6e25a82ffa',
-#         'HOST':'ec2-54-83-152-251.compute-1.amazonaws.com',
+#         'NAME': 'needebd database',
+#         'USER': 'postgres',
+#         'PASSWORD': 'needebd71%',
+#         'HOST':'localhost',
 #         'PORT': '5432'
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd8pkhhsf8m5j4b',
+        'USER': 'fvrwevddepghkw',
+        'PASSWORD': 'b518ed726e3ab7c8aaa872b390932c0c1088ee161a1b8c1840f78a6e25a82ffa',
+        'HOST':'ec2-54-83-152-251.compute-1.amazonaws.com',
+        'PORT': '5432'
+    }
+}
 
 
 
