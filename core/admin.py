@@ -55,9 +55,14 @@ class PAValueAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'category_image')
 
+@admin.register(CategoryWraper)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category_image', 'display_wraper')
+
 @admin.register(DisplayWraper)
 class DisplayWraperAdmin(admin.ModelAdmin):
     list_display = ['name',]
+    
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('ProductType','title','product_image', 'product_category','selling_prize', 'discounted_prize', 'description', 'brand')
