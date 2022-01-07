@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # This is for Production Development
 SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['localhost','needebd.herokuapp.com']
 
 # Application definition
