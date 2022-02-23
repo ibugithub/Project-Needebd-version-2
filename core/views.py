@@ -13,24 +13,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-def test(request):
-    print("This is for testing....")
-    product = Product.objects.get(id = 7)
-    print(product.ProductType.typeName )
-
-    # this is for attribute vlaue
-    PAV = product.productattributevalue_set.get(attributeValue__attributeValue = '43')
-  
-
-    # this is for product stock amount
-    print(PAV.productStock)
-    
-    # this is for retrive the attribute
-    print(PAV.attributeValue.attribute)
-    return render(request, 'app/test.html')
-
-
-
 # Create your views here.
 
 class IndexView(ListView):
@@ -1435,3 +1417,9 @@ def orderToOrderSummery(request, pk):
         "summary": summary
     }
     return render(request, 'app/orderSummary.html', context = context)
+
+def searchSpaceView(request):
+    if request.method == "POST":
+        searched = request.POST['Searched']
+        products = Product.objects.filter(title__icontains=searched)
+        return render(request, 'app/ProductPage.html', {'searched': searched, 'products': products})

@@ -27,15 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # # SECURITY WARNING: don't run with debug turned on in production!
 
 # This is for Local Development
-# SECRET_KEY = 'django-insecure-gf9sv19irw^96_9*qxr4&zybrx&=6%y!vvx&l1m2f@eyn7oc!j'
-# DEBUG = True
-# ALLOWED_HOSTS = []
+SECRET_KEY = 'django-insecure-gf9sv19irw^96_9*qxr4&zybrx&=6%y!vvx&l1m2f@eyn7oc!j'
+DEBUG = True
+ALLOWED_HOSTS = []
 
 
 # This is for Production Development
-SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG = True
-ALLOWED_HOSTS = ['localhost','needebd.herokuapp.com']
+# SECRET_KEY = os.environ["SECRET_KEY"]
+# DEBUG = False
+# ALLOWED_HOSTS = ['localhost','needebd.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -90,18 +90,19 @@ WSGI_APPLICATION = 'ProjectNeedeBd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'needebd database',
-#         'USER': 'postgres',
+#         'NAME': 'Needebd Database',
+#         'USER': 'needebd',
 #         'PASSWORD': 'needebd71%',
 #         'HOST':'localhost',
 #         'PORT': '5432'
@@ -109,17 +110,16 @@ WSGI_APPLICATION = 'ProjectNeedeBd.wsgi.application'
 # }
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd8pkhhsf8m5j4b',
-        'USER': 'fvrwevddepghkw',
-        'PASSWORD': 'b518ed726e3ab7c8aaa872b390932c0c1088ee161a1b8c1840f78a6e25a82ffa',
-        'HOST':'ec2-54-83-152-251.compute-1.amazonaws.com',
-        'PORT': '5432'
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd8pkhhsf8m5j4b',
+#         'USER': 'fvrwevddepghkw',
+#         'PASSWORD': 'b518ed726e3ab7c8aaa872b390932c0c1088ee161a1b8c1840f78a6e25a82ffa',
+#         'HOST':'ec2-54-83-152-251.compute-1.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
 
 
 
@@ -166,13 +166,14 @@ LOGIN_REDIRECT_URL = '/profile/'
 STATIC_ROOT =   os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "dqxxwptju",
-    'API_KEY': "281693915193571",
-    'API_SECRET': "hiAhdJAbOr0JDeBDuqfzn6RCtIM",
-}
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': "dqxxwptju",
+#     'API_KEY': "281693915193571",
+#     'API_SECRET': "hiAhdJAbOr0JDeBDuqfzn6RCtIM",
+# }
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 MESSAGE_TAGS ={
     messages.ERROR:'danger'

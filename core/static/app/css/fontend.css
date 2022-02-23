@@ -2759,3 +2759,13 @@ body>div.container.mgt20>div:nth-child(10) {
         display: none;
     }
 }
+.suggestionMain{
+    position: absolute;
+    background: white;
+    width: 100%;
+    top: 36px;
+} 
+
+.suggestion{
+    padding: 15px;
+}
