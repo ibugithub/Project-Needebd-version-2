@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # This is for Local Development
 SECRET_KEY = 'django-insecure-gf9sv19irw^96_9*qxr4&zybrx&=6%y!vvx&l1m2f@eyn7oc!j'
 DEBUG = True
-ALLOWED_HOSTS = ['147.182.244.228']
+ALLOWED_HOSTS = ['147.182.244.228', 'localhost', '127.0.0.1']
 
 
 # This is for Production Development
@@ -101,11 +101,11 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'Needebd Database',
+#         'NAME': 'needebd_database',
 #         'USER': 'needebd',
-#         'PASSWORD': 'needebd71%',
+#         'PASSWORD': 'needebd71%database',
 #         'HOST':'localhost',
-#         'PORT': '5432'
+#         'PORT': ''
 #     }
 # }
 
@@ -164,7 +164,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 LOGIN_REDIRECT_URL = '/profile/'
 STATIC_ROOT =   os.path.join(BASE_DIR, 'static/')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # CLOUDINARY_STORAGE = {
