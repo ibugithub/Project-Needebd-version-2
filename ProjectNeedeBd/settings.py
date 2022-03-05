@@ -102,7 +102,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'needebd_database',
-        'USER': 'needebd',
+        'USER': 'needebddb',
         'PASSWORD': 'needebd71dbuser',
         'HOST':'localhost',
         'PORT': ''
