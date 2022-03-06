@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'ProjectNeedeBd.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'needebd_database',
+        'NAME': 'needebddatabase',
         'USER': 'needebddb',
         'PASSWORD': 'needebd71dbuser',
         'HOST':'localhost',
